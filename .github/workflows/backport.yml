@@ -21,3 +21,6 @@ jobs:
 
       - name: Open Backport PR
         uses: korthout/backport-action@7c3f6cd5843cac11bc59a04a1b7699af93261670 # v4.5
+        with:
+          github_token: ${{ secrets.UPBOUND_BOT_GITHUB_TOKEN }}
+          github_workspace: ${{ github.workspace }}
