@@ -1,1 +1,10 @@
-["nebius_vpc_v1_allocation","nebius_vpc_v1_network","nebius_vpc_v1_pool","nebius_vpc_v1_route","nebius_vpc_v1_route_table","nebius_vpc_v1_security_group","nebius_vpc_v1_security_rule","nebius_vpc_v1_subnet"]
+[
+"nebius_vpc_v1_allocation",
+"nebius_vpc_v1_network",
+"nebius_vpc_v1_pool",
+"nebius_vpc_v1_route",
+"nebius_vpc_v1_route_table",
+"nebius_vpc_v1_security_group",
+"nebius_vpc_v1_security_rule",
+"nebius_vpc_v1_subnet"
+]
