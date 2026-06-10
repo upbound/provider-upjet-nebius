@@ -1,0 +1,1952 @@
+name: nebius/nebius
+resources:
+    nebius_applications_v1alpha1_k8s_release Resource - nebius:
+        subCategory: ""
+        name: nebius_applications_v1alpha1_k8s_release Resource - nebius
+        title: nebius_applications_v1alpha1_k8s_release Resource - nebius
+        argumentDocs:
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            application_name: (String)
+            cluster_id: (String)
+            created_at: '(String) :'
+            error_message: (String)
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            namespace: (String)
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            product_slug: (String)
+            resource_version: '(Number) :'
+            sensitive: (Attributes, Sensitive) This object mirrors the structure of the resource, providing view on the resource's write-only fields. It is a preferred way to define such fields as they are not stored in the state file. To use any field in write-only mode, do not set it in the main resource, instead set it in the sensitive object. Setting the field in the main resource will overwrite the field in the sensitive object at merging. (see below for nested schema)
+            set: (Map of String, Sensitive)
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            updated_at: '(String) :'
+            values: (String, Sensitive)
+            version: (String) The version of the write-only fields combined. You can use a hash here, some number, or a version of the secret from which you pull the value, or you can concatenate all of that together. This field is not sent to the server, but it is stored in the state, so don't store raw secrets here. Changing this field will trigger an update of the resource even if no other fields are changed. Use of this field is not required, but if you do not use it, changes in write-only fields will not trigger updates of the resource by themselves and therefore might not be reflected.
+        importStatements: []
+    nebius_compute_v1_disk:
+        subCategory: ""
+        name: nebius_compute_v1_disk
+        title: nebius_compute_v1_disk Resource - nebius
+        examples:
+            - name: boot
+              manifest: |-
+                {
+                  "name": "ubuntu-boot-disk",
+                  "parent_id": "project-id",
+                  "size_gibibytes": 64,
+                  "source_image_family": {
+                    "image_family": "ubuntu22.04",
+                    "parent_id": "project-id"
+                  },
+                  "type": "NETWORK_SSD"
+                }
+        argumentDocs:
+            BROKEN: '- Indicates that an error has occurred during the disk''s life cycle, and the disk is broken or unhealthy, but can still be recovered.'
+            DISK_ENCRYPTION_MANAGED: |-
+                :
+                Enables encryption using the platform's default root key from KMS.
+                Available for disks with NETWORK_SSD_NON_REPLICATED and NETWORK_SSD_IO_M3 types only.
+            DISK_ENCRYPTION_UNSPECIFIED: '- No encryption is applied unless explicitly specified.'
+            ERROR: '- Indicates that error happened during disk creation, and the disk cannot be recovered.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            block_size_bytes: '(Number) :'
+            created_at: '(String) :'
+            disk_encryption: (Attributes) Defines how data on the disk is encrypted. By default, no encryption is applied. (see below for nested schema)
+            forbid_deletion: (Boolean) Prevents deletion whilst set
+            id: (String) Identifier for the resource, unique for its resource type.
+            image_family: (String)
+            images: '(List of String) :'
+            labels: '(Map of String) :'
+            lock_state: (Attributes) Indicates resources that prevent the disk from being attached as read-write. (see below for nested schema)
+            managed_by: '(String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            read_only_attachments: (List of String)
+            read_write_attachment: '(String) :'
+            reconciling: (Boolean) Indicates whether there is an ongoing operation
+            resource_version: '(Number) :'
+            size_bytes: (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
+            size_gibibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
+            size_kibibytes: (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
+            size_mebibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+            source_image_cpu_architecture: '(String) :'
+            source_image_family: (Attributes) Cannot be set alongside source_image_id. (see below for nested schema)
+            source_image_id: (String) Cannot be set alongside source_image_family.
+            state: '(String) :'
+            state_description: (String)
+            status: (Attributes) (see below for nested schema)
+            type: '(String) :'
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_compute_v1_filesystem Resource - nebius:
+        subCategory: ""
+        name: nebius_compute_v1_filesystem Resource - nebius
+        title: nebius_compute_v1_filesystem Resource - nebius
+        argumentDocs:
+            NETWORK_SSD: '- the list of available types will be clarified later, it is not final version'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            block_size_bytes: '(Number) :'
+            created_at: '(String) :'
+            forbid_deletion: (Boolean) Prevents deletion whilst set
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            read_only_attachments: (List of String)
+            read_write_attachments: (List of String)
+            reconciling: (Boolean) Indicates whether there is an ongoing operation
+            resource_version: '(Number) :'
+            size_bytes: (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
+            size_gibibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
+            size_kibibytes: (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
+            size_mebibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+            state: '(String) :'
+            state_description: (String)
+            status: (Attributes) (see below for nested schema)
+            type: '(String) :'
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_compute_v1_gpu_cluster Resource - nebius:
+        subCategory: ""
+        name: nebius_compute_v1_gpu_cluster Resource - nebius
+        title: nebius_compute_v1_gpu_cluster Resource - nebius
+        argumentDocs:
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            created_at: '(String) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            infiniband_fabric: '(String) :'
+            infiniband_topology_path: (Attributes) (see below for nested schema)
+            instance_id: (String)
+            instances: (List of String)
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            path: (List of String)
+            reconciling: (Boolean) Indicates whether there is an ongoing operation
+            resource_version: '(Number) :'
+            status: (Attributes) (see below for nested schema)
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_compute_v1_instance:
+        subCategory: ""
+        name: nebius_compute_v1_instance
+        title: nebius_compute_v1_instance Resource - nebius
+        examples:
+            - name: vm
+              manifest: |-
+                {
+                  "boot_disk": {
+                    "attach_mode": "READ_WRITE",
+                    "managed_disk": {
+                      "name": "example-vm-boot",
+                      "spec": {
+                        "size_gibibytes": 64,
+                        "source_image_family": {
+                          "image_family": "ubuntu22.04",
+                          "parent_id": "project-id"
+                        },
+                        "type": "NETWORK_SSD"
+                      }
+                    }
+                  },
+                  "name": "example-vm",
+                  "network_interfaces": [
+                    {
+                      "ip_address": {
+                        "allocation_id": "private-allocation-id"
+                      },
+                      "name": "eth0",
+                      "subnet_id": "subnet-id"
+                    }
+                  ],
+                  "parent_id": "project-id",
+                  "resources": {
+                    "platform": "cpu-e2",
+                    "preset": "2vcpu-8gb"
+                  }
+                }
+        argumentDocs:
+            <hostname>.<network_id>.compute.internal.: or <instance_id>.<network_id>.compute.internal. if hostname is not specified.
+            AUTO: ':'
+            DISK_ENCRYPTION_MANAGED: |-
+                :
+                Enables encryption using the platform's default root key from KMS.
+                Available for disks with NETWORK_SSD_NON_REPLICATED and NETWORK_SSD_IO_M3 types only.
+            DISK_ENCRYPTION_UNSPECIFIED: '- No encryption is applied unless explicitly specified.'
+            Disk.spec.deletion_protection: is enabled.
+            FORBID: |-
+                :
+                The instance is launched only using on-demand (PAYG) capacity.
+                No attempt is made to find or use a Capacity Block.
+                It's an error to provide reservation_ids with policy = FORBID
+            ManagedDisk.name: |-
+                MUST match the current disk name
+                (see DiskService.Get for the disk referenced by ExistingDisk.id).
+            STRICT: ':'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            address: (String) Effective private IPv4 address assigned to the interface.
+            aliases: (Attributes List) Assign ranges of IP addresses as aliases (see below for nested schema)
+            allocation_id: (String) Allocation identifier if it was created before.
+            attach_mode: '(String) :'
+            block_size_bytes: '(Number) :'
+            boot_disk: (Attributes) Specified boot disk attached to the instance. (see below for nested schema)
+            cidrs: (List of String)
+            cloud_init_user_data: '(String, Sensitive) :'
+            created_at: '(String) :'
+            device_id: (String) Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+            disk_attachments: (Attributes List) Status of the requested disk attachments. (see below for nested schema)
+            disk_encryption: (Attributes) Defines how data on the disk is encrypted. By default, no encryption is applied. (see below for nested schema)
+            existing_disk: '(Attributes) :'
+            existing_filesystem: (Attributes) (see below for nested schema)
+            filesystems: (Attributes List) List of Shared Filesystems attached to the instance. (see below for nested schema)
+            forbid_deletion: (Boolean) Prevents deletion whilst set
+            fqdn: (String) FQDN of the interface
+            gpu_cluster: '(Attributes) :'
+            hostname: '(String) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            image_family: (String)
+            index: (Number) The index of the network interface
+            infiniband_topology_path: (Attributes) (see below for nested schema)
+            instance.status.disk_attachments: .
+            ip_address: '(Attributes) :'
+            is_managed: '(Boolean) :'
+            labels: '(Map of String) :'
+            local_disks: '(Attributes) :'
+            mac_address: (String) MAC address
+            maintenance_event_id: (String)
+            managed_disk: '(Attributes) :'
+            metadata: '(Attributes) :'
+            mount_tag: (String) Specifies the user-defined identifier, allowing to use it as a device in mount command.
+            name: (String) Human readable name for the resource.
+            network_interfaces: '(Attributes List) :'
+            nvl_instance_group_id: (String) NVLink Instance Group ID associated with the VM
+            on_preemption: '(String) :'
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            passthrough_group: '(Attributes) :'
+            path: (List of String)
+            platform: (String)
+            policy: '(String) :'
+            preemptible: '(Attributes) :'
+            preset: (String)
+            priority: (Number, Deprecated)
+            public_ip_address: '(Attributes) :'
+            reconciling: (Boolean) Indicates whether there is an ongoing operation
+            recovery_policy: '(String) :'
+            requested: '(Boolean) :'
+            reservation_id: (String)
+            reservation_ids: (List of String) Capacity block groups, order matters
+            reservation_policy: (Attributes) (see below for nested schema)
+            resource_version: '(Number) :'
+            resources: '(Attributes) :'
+            secondary_disks: (Attributes List) List of additional data disks attached to the instance beyond the boot disk. (see below for nested schema)
+            security_groups: '(Attributes List) :'
+            service_account_id: '(String) :'
+            size_bytes: (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
+            size_gibibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
+            size_kibibytes: (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
+            size_mebibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+            source_image_family: (Attributes) Cannot be set alongside source_image_id. (see below for nested schema)
+            source_image_id: (String) Cannot be set alongside source_image_family.
+            spec: (Attributes) Specification of a dependent disk to be created. (see below for nested schema)
+            state: '(String) :'
+            static: '(Boolean) :'
+            status: (Attributes) (see below for nested schema)
+            stopped: (Boolean) Indicates whether the instance should be stopped.
+            subnet_id: (String) Subnet ID
+            type: '(String) :'
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_compute_v1_nvl_instance_group Resource - nebius:
+        subCategory: ""
+        description: Represents an NVLink InstanceGroup.
+        name: nebius_compute_v1_nvl_instance_group Resource - nebius
+        title: nebius_compute_v1_nvl_instance_group Resource - nebius
+        argumentDocs:
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            created_at: '(String) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            instance_state: '(String) :'
+            instances: (Attributes Map) Instances that are associated with this NVLink InstanceGroup (see below for nested schema)
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            reconciling: (Boolean) Indicates whether there is an ongoing operation with any VM in the InstanceGroup
+            resource_version: '(Number) :'
+            status: (Attributes) (see below for nested schema)
+            type: '(String) :'
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_hash:
+        subCategory: ""
+        description: A salted SHA256 hash of a versioned ephemeral value that was passed to the provider
+        name: nebius_hash
+        title: nebius_hash Resource - nebius
+        examples:
+            - name: app_secret
+              manifest: |-
+                {
+                  "name": "app_secret"
+                }
+        argumentDocs:
+            hash: (String) The hash of the versioned ephemeral value
+            name: (String) The name of the versioned ephemeral value
+        importStatements: []
+    nebius_iam_v1_access_permit Resource - nebius:
+        subCategory: ""
+        name: nebius_iam_v1_access_permit Resource - nebius
+        title: nebius_iam_v1_access_permit Resource - nebius
+        argumentDocs:
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            created_at: '(String) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            resource_id: (String) Resource for granting access permit.
+            resource_version: '(Number) :'
+            role: (String) Role for granting access permit.
+            status: (Attributes) (see below for nested schema)
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_iam_v1_auth_public_key:
+        subCategory: ""
+        name: nebius_iam_v1_auth_public_key
+        title: nebius_iam_v1_auth_public_key Resource - nebius
+        examples:
+            - name: terraform
+              manifest: |-
+                {
+                  "account": {
+                    "service_account": {
+                      "id": "${nebius_iam_v1_service_account.terraform.id}"
+                    }
+                  },
+                  "data": "${file(\"${path.module}/public.pem\")}",
+                  "name": "terraform-auth-key",
+                  "parent_id": "project-id"
+                }
+              dependencies:
+                nebius_iam_v1_service_account.terraform: |-
+                    {
+                      "name": "terraform-sa",
+                      "parent_id": "project-id"
+                    }
+        argumentDocs:
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            account: (Attributes) (see below for nested schema)
+            algorithm: (String)
+            anonymous_account: (Attributes) Cannot be set alongside user_account or service_account. (see below for nested schema)
+            created_at: '(String) :'
+            data: (String)
+            description: (String)
+            expires_at: '(String) A string representing a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM'
+            fingerprint: (String)
+            id: (String) Identifier for the resource, unique for its resource type.
+            key_size: (Number)
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            resource_version: '(Number) :'
+            service_account: (Attributes) Cannot be set alongside user_account or anonymous_account. (see below for nested schema)
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            updated_at: '(String) :'
+            user_account: (Attributes) Cannot be set alongside service_account or anonymous_account. (see below for nested schema)
+        importStatements: []
+    nebius_iam_v1_federated_credentials Resource - nebius:
+        subCategory: ""
+        name: nebius_iam_v1_federated_credentials Resource - nebius
+        title: nebius_iam_v1_federated_credentials Resource - nebius
+        argumentDocs:
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            created_at: '(String) :'
+            federated_subject_id: '(String) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            issuer_url: (String) OIDC-compatible JWT issuer URL.
+            jwk_set_json: '(String) :'
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            oidc_provider: '(Attributes) :'
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            resource_version: '(Number) :'
+            status: (Attributes) Federated credentials resource status. (see below for nested schema)
+            subject_id: (String) IAM subject (service account) that the federated subject impersonates.
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_iam_v1_federation Resource - nebius:
+        subCategory: ""
+        name: nebius_iam_v1_federation Resource - nebius
+        title: nebius_iam_v1_federation Resource - nebius
+        argumentDocs:
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            active: (Boolean, Deprecated) Specifies if the federation in active state
+            certificates_count: (Number) Number of certificates attached to the SAML federation for verifying SAML responses.
+            created_at: '(String) :'
+            force_authn: (Boolean) if "true", the identity provider MUST authenticate the presenter directly rather than rely on a previous security context.
+            id: (String) Identifier for the resource, unique for its resource type.
+            idp_issuer: (String) The unique identifier of the SAML Identity Provider. It usually matches the entityID from the IdP metadata.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            resource_version: '(Number) :'
+            saml_settings: (Attributes) SAML federation settings. (see below for nested schema)
+            sso_url: (String) Identity Provider’s Single Sign-On endpoint. This is the URL where the user is redirected to start SAML login.
+            state: '(String) :'
+            status: (Attributes) Federation resource status. (see below for nested schema)
+            updated_at: '(String) :'
+            user_account_auto_creation: '(Boolean) :'
+            users_count: (Number) Number of users registered in the IAM federation. This value may differ from the number of users in the identity provider.
+        importStatements: []
+    nebius_iam_v1_federation_certificate Resource - nebius:
+        subCategory: ""
+        name: nebius_iam_v1_federation_certificate Resource - nebius
+        title: nebius_iam_v1_federation_certificate Resource - nebius
+        argumentDocs:
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            algorithm: (String)
+            created_at: '(String) :'
+            data: (String)
+            description: (String)
+            fingerprint: (String)
+            id: (String) Identifier for the resource, unique for its resource type.
+            key_size: (Number)
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            not_after: '(String) A string representing a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM'
+            not_before: '(String) A string representing a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM'
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            resource_version: '(Number) :'
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_iam_v1_group Resource - nebius:
+        subCategory: ""
+        name: nebius_iam_v1_group Resource - nebius
+        title: nebius_iam_v1_group Resource - nebius
+        argumentDocs:
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            created_at: '(String) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            members_count: (Number)
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            resource_version: '(Number) :'
+            service_accounts_count: (Number)
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            tenant_user_accounts_count: (Number)
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_iam_v1_group_membership Resource - nebius:
+        subCategory: ""
+        name: nebius_iam_v1_group_membership Resource - nebius
+        title: nebius_iam_v1_group_membership Resource - nebius
+        argumentDocs:
+            ACTIVE: ':'
+            BLOCKED: ':'
+            DELETING: |-
+                :
+                federated user can be deleted/forgot, in this state user cannot log into the system and various internal removal interactions are in
+                progress
+            INACTIVE: '- unused'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            active: (Boolean)
+            created_at: '(String) :'
+            federation_id: '(String) :'
+            group_member_metadata: '(Attributes) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            invitation_id: '(String) :'
+            labels: '(Map of String) :'
+            member_id: (String) Member of the group. Can be tenant user account id or service account id.
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            resource_version: '(Number) :'
+            service_account_status: (Attributes) Cannot be set alongside tenant_user_account_status. (see below for nested schema)
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            tenant_user_account_status: (Attributes) Cannot be set alongside service_account_status. (see below for nested schema)
+            updated_at: '(String) :'
+            user_account_state: '(String) :'
+        importStatements: []
+    nebius_iam_v1_invitation Resource - nebius:
+        subCategory: ""
+        name: nebius_iam_v1_invitation Resource - nebius
+        title: nebius_iam_v1_invitation Resource - nebius
+        argumentDocs:
+            ACCEPTED: '- notification is accepted'
+            CREATED: '- notification is not sent yet'
+            CREATING: '- contacts data is not stored in pds yet. probably will GC it later'
+            EXPIRED: '- notification is expired, accept is no longer possible'
+            PENDING: '- notification is sent, we are waiting for the user to approve the notification'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            created_at: '(String) :'
+            description: (String)
+            email: (String, Sensitive)
+            expires_at: '(String) A string representing a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM'
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            resource_version: '(Number) :'
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            tenant_user_account_id: (String)
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_iam_v1_service_account:
+        subCategory: ""
+        name: nebius_iam_v1_service_account
+        title: nebius_iam_v1_service_account Resource - nebius
+        examples:
+            - name: terraform
+              manifest: |-
+                {
+                  "description": "Service account for Terraform automation",
+                  "name": "terraform-sa",
+                  "parent_id": "project-id"
+                }
+        argumentDocs:
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            active: (Boolean)
+            created_at: '(String) :'
+            description: (String)
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            resource_version: '(Number) :'
+            status: (Attributes) (see below for nested schema)
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_iam_v2_access_key:
+        subCategory: ""
+        name: nebius_iam_v2_access_key
+        title: nebius_iam_v2_access_key Resource - nebius
+        examples:
+            - name: storage
+              manifest: |-
+                {
+                  "account": {
+                    "service_account": {
+                      "id": "${nebius_iam_v1_service_account.storage.id}"
+                    }
+                  },
+                  "name": "storage-access-key",
+                  "parent_id": "project-id",
+                  "secret_delivery_mode": "MYSTERY_BOX"
+                }
+              dependencies:
+                nebius_iam_v1_service_account.storage: |-
+                    {
+                      "name": "storage-sa",
+                      "parent_id": "project-id"
+                    }
+        argumentDocs:
+            EXPLICIT: '- The secret value will be accessible via a separate method GetSecret'
+            INLINE: '- The secret value will be returned directly in the API response'
+            MYSTERY_BOX: '- The secret will be delivered via a MysteryBox secret, in case of terraform it is recommended to use that enum'
+            UNSPECIFIED: '- If not specified, the default behaviour will be applied. Currently it''s INLINE, later will be EXPLICIT.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            account: (Attributes) (see below for nested schema)
+            algorithm: (String)
+            anonymous_account: (Attributes) Cannot be set alongside user_account or service_account. (see below for nested schema)
+            aws_access_key_id: (String)
+            created_at: '(String) :'
+            description: (String)
+            expires_at: '(String) A string representing a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM'
+            fingerprint: (String)
+            id: (String) Identifier for the resource, unique for its resource type.
+            key_size: (Number)
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            resource_version: '(Number) :'
+            secret: (String, Sensitive)
+            secret_delivery_mode: '(String) :'
+            secret_reference_id: (String)
+            service_account: (Attributes) Cannot be set alongside user_account or anonymous_account. (see below for nested schema)
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            updated_at: '(String) :'
+            user_account: (Attributes) Cannot be set alongside service_account or anonymous_account. (see below for nested schema)
+        importStatements: []
+    nebius_iam_v2_project Resource - nebius:
+        subCategory: ""
+        name: nebius_iam_v2_project Resource - nebius
+        title: nebius_iam_v2_project Resource - nebius
+        argumentDocs:
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            created_at: '(String) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            project_state: '(String) :'
+            region: '(String) :'
+            resource_version: '(Number) :'
+            status: (Attributes) (see below for nested schema)
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_mk8s_v1alpha1_cluster Resource - nebius:
+        subCategory: ""
+        name: nebius_mk8s_v1alpha1_cluster Resource - nebius
+        title: nebius_mk8s_v1alpha1_cluster Resource - nebius
+        argumentDocs:
+            MAJOR.MINOR: like "1.31". Option for patch version update will be added later.
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            auth: (Attributes) (see below for nested schema)
+            cluster_ca_certificate: (String)
+            control_plane: (Attributes) (see below for nested schema)
+            created_at: '(String) :'
+            endpoints: (Attributes) (see below for nested schema)
+            etcd_cluster_size: '(Number) :'
+            'etcd_cluster_size: 3': |-
+                called "Highly Available" ("HA"), because it's Kubernetes API
+                will be available despite a failure of one control plane instance.
+            https://endpoint/: . (see below for nested schema)
+            id: (String) Identifier for the resource, unique for its resource type.
+            kube_network: (Attributes) Defines kubernetes network configuration, like IP allocation. (see below for nested schema)
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            private_endpoint: (String) DNS name or IP address accessible from the user VPC.
+            public_endpoint: (Attributes) PublicEndpointSpec is a specification of public endpoint for control plane. (see below for nested schema)
+            reconciling: (Boolean) Show that changes are in flight
+            resource_version: '(Number) :'
+            service_cidrs: '(List of String) :'
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            subnet_id: (String) Subnet ID where control plane instances will be located.
+            updated_at: '(String) :'
+            version: '(String) :'
+        importStatements: []
+    nebius_mk8s_v1alpha1_node_group Resource - nebius:
+        subCategory: ""
+        description: NodeGroup represents Kubernetes node pool
+        name: nebius_mk8s_v1alpha1_node_group Resource - nebius
+        title: nebius_mk8s_v1alpha1_node_group Resource - nebius
+        argumentDocs:
+            300ms: ', -1.5h or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h, d.'
+            MAJOR.MINOR: |-
+                like "1.31". Option for patch version update will be added later.
+                By default the cluster control plane MAJOR.MINOR version will be used.
+            NETWORK_SSD: '- the list of available types will be clarified later, it is not final version'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            attach_mode: '(String) :'
+            auto_repair: (Attributes) Parameters for nodes auto repair. (see below for nested schema)
+            autoscaling: (Attributes) Cannot be set alongside fixed_node_count. (see below for nested schema)
+            block_size_bytes: (Number)
+            boot_disk: (Attributes) (see below for nested schema)
+            cloud_init_user_data: (String, Sensitive) cloud-init user-data. Must contain at least one SSH key.
+            conditions: (Attributes List) Conditions that determine whether a node should be auto repaired. (see below for nested schema)
+            count: (Number) Cannot be set alongside percent.
+            created_at: '(String) :'
+            device_name: (String)
+            disabled: '(Boolean) :'
+            drain_timeout: '(String) :'
+            drivers_preset: '(String) :'
+            effect: '(String) :'
+            existing_filesystem: (Attributes) (see below for nested schema)
+            filesystems: (Attributes List) (see below for nested schema)
+            fixed_node_count: (Number) Cannot be set alongside autoscaling.
+            gpu_cluster: (Attributes) (see below for nested schema)
+            gpu_settings: '(Attributes) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            key: (String)
+            labels: '(Map of String) :'
+            max_node_count: (Number)
+            max_surge: '(Attributes) :'
+            max_unavailable: '(Attributes) :'
+            metadata: '(Attributes) :'
+            min_node_count: (Number)
+            name: (String) Human readable name for the resource.
+            nebius: |-
+                CLI or public API requests from the nodes without the need for extra authentication. This service account is also used to
+                make requests to container registry.
+            network_interfaces: (Attributes List) (see below for nested schema)
+            node_count: '(Number) :'
+            os: '(String) :'
+            outdated_node_count: '(Number) :'
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            percent: (Number) Cannot be set alongside count.
+            platform: (String)
+            preemptible: '(Attributes) :'
+            preset: (String)
+            public_ip_address: '(Attributes) :'
+            ready_node_count: '(Number) :'
+            reconciling: (Boolean) Show that changes are in flight
+            resource.serviceaccount.issueAccessToken: permission is required to use this field.
+            resource_version: '(Number) :'
+            resources: (Attributes) (see below for nested schema)
+            service_account_id: '(String) :'
+            size_bytes: (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
+            size_gibibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
+            size_kibibytes: (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
+            size_mebibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            strategy: (Attributes) (see below for nested schema)
+            subnet_id: '(String) :'
+            taints: '(Attributes List) :'
+            target_node_count: '(Number) :'
+            template: (Attributes) (see below for nested schema)
+            timeout: '(String) :'
+            type: '(String) :'
+            updated_at: '(String) :'
+            value: (String)
+            version: '(String) :'
+        importStatements: []
+    nebius_mk8s_v1_cluster:
+        subCategory: ""
+        name: nebius_mk8s_v1_cluster
+        title: nebius_mk8s_v1_cluster Resource - nebius
+        examples:
+            - name: cluster
+              manifest: |-
+                {
+                  "control_plane": {
+                    "endpoints": {
+                      "public_endpoint": {}
+                    },
+                    "etcd_cluster_size": 1,
+                    "subnet_id": "subnet-id",
+                    "version": "1.31"
+                  },
+                  "name": "example-cluster",
+                  "parent_id": "project-id"
+                }
+        argumentDocs:
+            <major>.<minor>: like "1.31". Option for patch version update will be added later.
+            <major>.<minor>.<patch>-nebius-cp.<infra_version>: |-
+                like
+                "1.30.0-nebius-cp.3", where <major>.<minor>.<patch> is Kubernetes version and <infra_version> is version of control plane
+                infrastructure and configuration, updating of which may include bug fixes, security updates and new features of components running on
+                control plane, like CCM or Cluster Autoscaler.
+            DEBUG: '- A debug event providing detailed insight. Such events are used to debug problems with specific resource(s) and process(es)'
+            ERROR: '- Error event. Indicates a serious problem with the API resource and/or the corresponding processes. Requires immediate user action'
+            INFO: '- A normal event or state change. Informs what is happening with the API resource. Does not require user attention or interaction'
+            UNSPECIFIED: '- Unspecified event severity level'
+            WARN: |-
+                :
+                Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
+                but requires no immediate action (yet)
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            audit_logs: '(Attributes) :'
+            auth: (Attributes) (see below for nested schema)
+            cluster_ca_certificate: (String) PEM with the Cluster Certificate Authority, that must be used for TLS connection to Kubernetes API.
+            code: (String) Event code (unique within the API service), in UpperCamelCase, e.g. "DiskAttached"
+            control_plane: (Attributes) (see below for nested schema)
+            created_at: '(String) :'
+            endpoints: (Attributes) Specification of endpoints of cluster control plane. (see below for nested schema)
+            etcd_cluster_size: '(Number) :'
+            'etcd_cluster_size: 3': |-
+                called "Highly Available" ("HA"), because it's Kubernetes API
+                will be available despite a failure of one control plane instance.
+            events: '(Attributes List) :'
+            first_occurred_at: '(String) :'
+            https://endpoint/: . (see below for nested schema)
+            id: (String) Identifier for the resource, unique for its resource type.
+            karpenter: '(Attributes) :'
+            kube_network: (Attributes) Defines kubernetes network configuration, like IP allocation. (see below for nested schema)
+            labels: '(Map of String) :'
+            last_occurrence: '(Attributes) :'
+            level: '(String) :'
+            message: '(String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            occurred_at: '(String) :'
+            occurrence_count: (Number) The number of times this event has occurred between first_occurred_at and last_occurrence.occurred_at. Must be > 0
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            private_endpoint: (String) DNS name or IP address accessible from the user VPC.
+            public_endpoint: (Attributes) Public endpoint specification. When set, a public endpoint is created. (see below for nested schema)
+            reconciling: (Boolean) Show that changes are in flight
+            resource_version: '(Number) :'
+            service_cidrs: '(List of String) :'
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            subnet_id: '(String) :'
+            updated_at: '(String) :'
+            version: '(String) :'
+        importStatements: []
+    nebius_mk8s_v1_node_group:
+        subCategory: ""
+        description: NodeGroup represents Kubernetes node pool - set of worker machines having the same configuration. A Node is a Nebius Compute Instance created in Cluster.metadata.parent_id container, running kubelet that registers in Kubernetes API and a Node object created.
+        name: nebius_mk8s_v1_node_group
+        title: nebius_mk8s_v1_node_group Resource - nebius
+        examples:
+            - name: default
+              manifest: |-
+                {
+                  "fixed_node_count": 2,
+                  "name": "default",
+                  "parent_id": "mk8s-cluster-id",
+                  "template": {
+                    "boot_disk": {
+                      "size_gibibytes": 64,
+                      "type": "NETWORK_SSD"
+                    },
+                    "network_interfaces": [
+                      {
+                        "subnet_id": "subnet-id"
+                      }
+                    ],
+                    "resources": {
+                      "platform": "cpu-e2",
+                      "preset": "2vcpu-8gb"
+                    }
+                  },
+                  "version": "1.31"
+                }
+        argumentDocs:
+            <major>.<minor>: |-
+                like "1.31". Option for patch version update will be added later.
+                By default the cluster control plane <major>.<minor> version will be used.
+            <major>.<minor>.<patch>-nebius-node.<infra_version>: |-
+                like "1.30.0-nebius-node.10".
+                Where <major>.<minor>.<patch> is Kubernetes version and <infra_version> is version of Node infrastructure and configuration,
+                which update may include bug fixes, security updates and new features depending on worker node configuration.
+            32 - ceil(log2(2 * max_pods)): |-
+                , i.e. the smallest IPv4 subnet whose total address
+                count is at least 2 * max_pods. Not all IPs are usable for workload Pods because some of them are consumed by system Pods.
+            300ms: ', -1.5h or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h, d.'
+            AUTO: ':'
+            DEBUG: '- A debug event providing detailed insight. Such events are used to debug problems with specific resource(s) and process(es)'
+            ERROR: '- Error event. Indicates a serious problem with the API resource and/or the corresponding processes. Requires immediate user action'
+            FORBID: |-
+                :
+                The instance is launched only using on-demand (PAYG) capacity.
+                No attempt is made to find or use a Capacity Block.
+                It's an error to provide reservation_ids with policy = FORBID
+            INFO: '- A normal event or state change. Informs what is happening with the API resource. Does not require user attention or interaction'
+            NodeGroupSpec.fixed_node_count: |-
+                or arbitrary number between
+                NodeGroupAutoscalingSpec.min_node_count and NodeGroupAutoscalingSpec.max_node_count decided by autoscaler.
+            STRICT: ':'
+            UNSPECIFIED: '- Unspecified event severity level'
+            WARN: |-
+                :
+                Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
+                but requires no immediate action (yet)
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            attach_mode: '(String) :'
+            auto_repair: (Attributes) Parameters for nodes auto repair. (see below for nested schema)
+            autoscaling: '(Attributes) :'
+            block_size_bytes: (Number)
+            boot_disk: (Attributes) Parameters of a Node Nebius Compute Instance boot disk. (see below for nested schema)
+            cloud_init_user_data: '(String, Sensitive) :'
+            code: (String) Event code (unique within the API service), in UpperCamelCase, e.g. "DiskAttached"
+            compute/v1/instance.proto: . (see below for nested schema)
+            conditions: (Attributes List) Conditions that determine whether a node should be auto repaired. (see below for nested schema)
+            config: '(Attributes) :'
+            count: (Number) Cannot be set alongside percent.
+            created_at: '(String) :'
+            disabled: '(Boolean) :'
+            drain_timeout: '(String) :'
+            drivers_preset: ': ""'
+            effect: '(String) :'
+            events: '(Attributes List) :'
+            existing_filesystem: (Attributes) (see below for nested schema)
+            filesystems: '(Attributes List) :'
+            first_occurred_at: '(String) :'
+            fixed_node_count: '(Number) :'
+            gpu-b200-sxm: ':'
+            gpu-b200-sxm-a: ':'
+            gpu-l40s-a: ', gpu-l40s-d, gpu-h100-sxm, gpu-h200-sxm, cpu-e1, cpu-e2, cpu-d3:'
+            gpu_cluster: (Attributes) Nebius Compute GPUCluster ID that will be attached to node. (see below for nested schema)
+            gpu_settings: '(Attributes) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            key: (String)
+            kubectl drain --timeout: ', which gives up and returns an error.'
+            kubelet_ephemeral: '(Boolean) :'
+            labels: '(Map of String) :'
+            last_occurrence: '(Attributes) :'
+            level: '(String) :'
+            local_disks: '(Attributes) :'
+            max_node_count: (Number)
+            max_pods: '(Number) :'
+            max_surge: '(Attributes) :'
+            max_unavailable: is also set to 0.
+            message: '(String) :'
+            metadata: '(Attributes) :'
+            min_node_count: (Number)
+            mount_tag: (String) Specifies the user-defined identifier, allowing to use it as a device in mount command.
+            name: (String) Human readable name for the resource.
+            nebius: |-
+                CLI or public API requests from the nodes
+                without the need for extra authentication.
+                This service account is also used to make requests to container registry.
+            network_interfaces: (Attributes List) (see below for nested schema)
+            node_count: '(Number) :'
+            none: '(Boolean) :'
+            occurred_at: '(String) :'
+            occurrence_count: (Number) The number of times this event has occurred between first_occurred_at and last_occurrence.occurred_at. Must be > 0
+            os: '(String) :'
+            outdated_node_count: '(Number) :'
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            passthrough_group: '(Attributes) :'
+            percent: (Number) Cannot be set alongside count.
+            platform: (String)
+            policy: '(String) :'
+            preemptible: '(Attributes) :'
+            preset: (String)
+            public_ip_address: '(Attributes) :'
+            ready_node_count: '(Number) :'
+            reconciling: (Boolean) Show that there are changes are in flight.
+            requested: '(Boolean) :'
+            reservation_ids: (List of String) Capacity block groups, order matters
+            reservation_policy: '(Attributes) :'
+            resource.serviceaccount.issueAccessToken: permission is required to use this field.
+            resource_version: '(Number) :'
+            resources: (Attributes) Resources that will have Nebius Compute Instance where Node kubelet will run. (see below for nested schema)
+            service_account_id: '(String) :'
+            size_bytes: (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
+            size_gibibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
+            size_kibibytes: (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
+            size_mebibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            strategy: '(Attributes) :'
+            subnet_id: '(String) :'
+            taints: '(Attributes List) :'
+            target_node_count: '(Number) :'
+            template: '(Attributes) :'
+            timeout: '(String) :'
+            type: '(String) :'
+            updated_at: '(String) :'
+            value: (String)
+            version: '(String) :'
+        importStatements: []
+    nebius_msp_mlflow_v1alpha1_cluster:
+        subCategory: ""
+        name: nebius_msp_mlflow_v1alpha1_cluster
+        title: nebius_msp_mlflow_v1alpha1_cluster Resource - nebius
+        examples:
+            - name: mlflow
+              manifest: |-
+                {
+                  "admin_username": "admin",
+                  "name": "example-mlflow",
+                  "network_id": "network-id",
+                  "parent_id": "project-id",
+                  "public_access": false,
+                  "sensitive": {
+                    "admin_password": "${var.mlflow_admin_password}",
+                    "version": "1"
+                  },
+                  "service_account_id": "${nebius_iam_v1_service_account.mlflow.id}"
+                }
+              references:
+                service_account_id: nebius_iam_v1_service_account.mlflow.id
+              dependencies:
+                nebius_iam_v1_service_account.mlflow: |-
+                    {
+                      "name": "mlflow-sa",
+                      "parent_id": "project-id"
+                    }
+        argumentDocs:
+            PHASE_DELETED: '[deprecated]'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            admin_password: (String, Sensitive) MLflow admin password.
+            admin_username: (String) MLflow admin username.
+            created_at: '(String) :'
+            description: (String) Description of the cluster.
+            effective_storage_bucket_name: (String) Name of the Nebius S3 bucket for MLflow artifacts.
+            experiments_count: (Number) Count of experiments in the MLflow cluster
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            mlflow_version: (String) MLflow version
+            name: (String) Human readable name for the resource.
+            network_id: (String) ID of the vpc network.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            phase: '(String) :'
+            private: (String) Private endpoint
+            public: (String) Public endpoint
+            public_access: (Boolean) Either make cluster public accessible or accessible only via private VPC.
+            resource_version: '(Number) :'
+            sensitive: (Attributes, Sensitive) This object mirrors the structure of the resource, providing view on the resource's write-only fields. It is a preferred way to define such fields as they are not stored in the state file. To use any field in write-only mode, do not set it in the main resource, instead set it in the sensitive object. Setting the field in the main resource will overwrite the field in the sensitive object at merging. (see below for nested schema)
+            service_account_id: (String) Id of the service account that will be used to access S3 bucket (and create one if not provided).
+            size: '(String) :'
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            storage_bucket_name: (String) Name of the Nebius S3 bucket for MLflow artifacts. If not provided, will be created under the same parent.
+            tracking_endpoint: '(String) :'
+            tracking_endpoints: (Attributes) Public and private tracking endpoints (see below for nested schema)
+            updated_at: '(String) :'
+            version: (String) The version of the write-only fields combined. You can use a hash here, some number, or a version of the secret from which you pull the value, or you can concatenate all of that together. This field is not sent to the server, but it is stored in the state, so don't store raw secrets here. Changing this field will trigger an update of the resource even if no other fields are changed. Use of this field is not required, but if you do not use it, changes in write-only fields will not trigger updates of the resource by themselves and therefore might not be reflected.
+        importStatements: []
+    nebius_msp_postgresql_v1alpha1_cluster:
+        subCategory: ""
+        name: nebius_msp_postgresql_v1alpha1_cluster
+        title: nebius_msp_postgresql_v1alpha1_cluster Resource - nebius
+        examples:
+            - name: postgres
+              manifest: |-
+                {
+                  "bootstrap": {
+                    "db_name": "app",
+                    "user_name": "app_user"
+                  },
+                  "config": {
+                    "template": {
+                      "disk": {
+                        "size_gibibytes": 32,
+                        "type": "NETWORK_SSD"
+                      },
+                      "hosts": {
+                        "count": 1
+                      },
+                      "resources": {
+                        "platform": "cpu-e2",
+                        "preset": "2vcpu-8gb"
+                      }
+                    },
+                    "version": "16"
+                  },
+                  "name": "example-postgres",
+                  "network_id": "network-id",
+                  "parent_id": "project-id",
+                  "sensitive": {
+                    "bootstrap": {
+                      "user_password": "${var.postgres_password}"
+                    },
+                    "version": "1"
+                  }
+                }
+        argumentDocs:
+            PHASE_DELETED: '[deprecated]'
+            SESSION: '- Session pooling mode.'
+            TRANSACTION: '- Transaction pooling mode.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            autovacuum_analyze_scale_factor: (Number)
+            autovacuum_naptime: (Number) in seconds.
+            autovacuum_vacuum_cost_delay: (Number) in milliseconds.
+            autovacuum_vacuum_cost_limit: (Number)
+            autovacuum_vacuum_scale_factor: (Number)
+            autovacuum_work_mem: (Number) in kilobytes.
+            backup: (Attributes) (see below for nested schema)
+            backup_window_start: (String) Backup window start in "HH:MM:SS" format (UTC Time)
+            bootstrap: (Attributes) (see below for nested schema)
+            config: (Attributes) (see below for nested schema)
+            connection_endpoints: (Attributes) Connection endpoints of the PostgreSQL cluster. (see below for nested schema)
+            count: (Number)
+            cpu_count: (Number)
+            created_at: '(String) :'
+            db_name: (String) Name of the PostgreSQL database. 1-63 characters long.
+            default_transaction_read_only: (Boolean)
+            description: (String) Description of the PostgreSQL cluster.
+            disk: (Attributes) (see below for nested schema)
+            gpu_count: (Number)
+            hosts: (Attributes) (see below for nested schema)
+            id: (String) Identifier for the resource, unique for its resource type.
+            idle_in_transaction_session_timeout: (Number) in milliseconds.
+            labels: '(Map of String) :'
+            max_connections: (Number)
+            max_pool_size: (Number) Maximum number of connections in the pool for a single user/database pair.
+            memory_gibibytes: (Number)
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            network_id: (String) Network ID in which the cluster is created.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            phase: '(String) :'
+            platform: (String)
+            pooler_config: (Attributes) Configuration of the connection pooler. (see below for nested schema)
+            pooling_mode: '(String) :'
+            postgresql_config_16: (Attributes) Configuration parameters for postgres (see below for nested schema)
+            preset: (String)
+            preset_details: (Attributes) Cluster resource preset details (see below for nested schema)
+            private_read_only: (String) Read only endpoint of the PostgreSQL cluster accessible from the private VPC.
+            private_read_write: (String) Read write endpoint of the PostgreSQL cluster accessible from the private VPC.
+            public_access: (Boolean) Either make cluster public accessible or accessible only via private VPC.
+            public_read_only: (String) Read only endpoint of the PostgreSQL cluster accessible from the internet.
+            public_read_write: (String) Read write endpoint of the PostgreSQL cluster accessible from the internet.
+            resource_version: '(Number) :'
+            resources: (Attributes) reduced msp.v1alpha1.resource.TemplateSpec (see below for nested schema)
+            retention_policy: (String) Retention policy to be used for backups and WALs (i.e. '7d')
+            search_path: (String)
+            sensitive: (Attributes, Sensitive) This object mirrors the structure of the resource, providing view on the resource's write-only fields. It is a preferred way to define such fields as they are not stored in the state file. To use any field in write-only mode, do not set it in the main resource, instead set it in the sensitive object. Setting the field in the main resource will overwrite the field in the sensitive object at merging. (see below for nested schema)
+            shared_buffers: (Number) in kilobytes.
+            size_gibibytes: (Number)
+            state: '(String) :'
+            statement_timeout: (Number) in milliseconds.
+            status: (Attributes) (see below for nested schema)
+            template: (Attributes) Resources allocated to PostgreSQL hosts. (see below for nested schema)
+            type: (String)
+            updated_at: '(String) :'
+            user_name: (String) Name of the bootstrap PostgreSQL user.
+            user_password: (String, Sensitive) Password of the bootstrap PostgreSQL user.
+            version: '(String) :'
+        importStatements: []
+    nebius_mysterybox_v1_secret:
+        subCategory: ""
+        name: nebius_mysterybox_v1_secret
+        title: nebius_mysterybox_v1_secret Resource - nebius
+        examples:
+            - name: app
+              manifest: |-
+                {
+                  "description": "Application secret",
+                  "name": "app-secret",
+                  "parent_id": "project-id"
+                }
+        argumentDocs:
+            ACTIVE: '- Resource is active, ready for use'
+            SCHEDULED_FOR_DELETION: '- Resource was marked as soft deleted'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            binary_value: '(String, Sensitive) :'
+            created_at: '(String) :'
+            deleted_at: '(String) :'
+            description: (String) Description of the secret.
+            effective_kms_key_id: (String)
+            id: (String) Identifier for the resource, unique for its resource type.
+            key: (String, Sensitive) Non-confidential key of the payload entry.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            payload: '(Attributes List) :'
+            primary_version_id: (String) Specifies the primary version of the secret to update its payload. This parameter should only be provided during update operations.
+            purge_at: '(String) :'
+            resource_version: '(Number) :'
+            secret_version: '(Attributes) :'
+            sensitive: (Attributes, Sensitive) This object mirrors the structure of the resource, providing view on the resource's write-only fields. It is a preferred way to define such fields as they are not stored in the state file. To use any field in write-only mode, do not set it in the main resource, instead set it in the sensitive object. Setting the field in the main resource will overwrite the field in the sensitive object at merging. (see below for nested schema)
+            set_primary: (Boolean)
+            state: '(String) :'
+            status: (Attributes) The status of the secret. (see below for nested schema)
+            string_value: '(String, Sensitive) :'
+            updated_at: '(String) :'
+            version: (String) The version of the write-only fields combined. You can use a hash here, some number, or a version of the secret from which you pull the value, or you can concatenate all of that together. This field is not sent to the server, but it is stored in the state, so don't store raw secrets here. Changing this field will trigger an update of the resource even if no other fields are changed. Use of this field is not required, but if you do not use it, changes in write-only fields will not trigger updates of the resource by themselves and therefore might not be reflected.
+        importStatements: []
+    nebius_mysterybox_v1_secret_version:
+        subCategory: ""
+        name: nebius_mysterybox_v1_secret_version
+        title: nebius_mysterybox_v1_secret_version Resource - nebius
+        examples:
+            - name: current
+              manifest: |-
+                {
+                  "name": "current",
+                  "parent_id": "${nebius_mysterybox_v1_secret.app.id}",
+                  "sensitive": {
+                    "payload": [
+                      {
+                        "key": "password",
+                        "string_value": "${var.secret_value}"
+                      }
+                    ],
+                    "version": "1"
+                  },
+                  "set_primary": true
+                }
+              references:
+                parent_id: nebius_mysterybox_v1_secret.app.id
+              dependencies:
+                nebius_mysterybox_v1_secret.app: |-
+                    {
+                      "name": "app-secret",
+                      "parent_id": "project-id"
+                    }
+        argumentDocs:
+            ACTIVE: '- Resource is active, ready for use'
+            SCHEDULED_FOR_DELETION: '- Resource was marked as soft deleted'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            binary_value: '(String, Sensitive) :'
+            created_at: '(String) :'
+            deleted_at: '(String) :'
+            description: (String) Description of the version.
+            id: (String) Identifier for the resource, unique for its resource type.
+            key: (String, Sensitive) Non-confidential key of the payload entry.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            payload: '(Attributes List) :'
+            purge_at: '(String) :'
+            resource_version: '(Number) :'
+            sensitive: (Attributes, Sensitive) This object mirrors the structure of the resource, providing view on the resource's write-only fields. It is a preferred way to define such fields as they are not stored in the state file. To use any field in write-only mode, do not set it in the main resource, instead set it in the sensitive object. Setting the field in the main resource will overwrite the field in the sensitive object at merging. (see below for nested schema)
+            set_primary: (Boolean)
+            state: '(String) :'
+            status: (Attributes) The status of the secret version. (see below for nested schema)
+            string_value: '(String, Sensitive) :'
+            updated_at: '(String) :'
+            version: (String) The version of the write-only fields combined. You can use a hash here, some number, or a version of the secret from which you pull the value, or you can concatenate all of that together. This field is not sent to the server, but it is stored in the state, so don't store raw secrets here. Changing this field will trigger an update of the resource even if no other fields are changed. Use of this field is not required, but if you do not use it, changes in write-only fields will not trigger updates of the resource by themselves and therefore might not be reflected.
+        importStatements: []
+    nebius_quotas_v1_quota_allowance:
+        subCategory: ""
+        name: nebius_quotas_v1_quota_allowance
+        title: nebius_quotas_v1_quota_allowance Resource - nebius
+        examples:
+            - name: bucket_count
+              manifest: |-
+                {
+                  "limit": 20,
+                  "name": "storage.bucket.count",
+                  "parent_id": "project-id"
+                }
+        argumentDocs:
+            STATE_ACTIVE: '- Quota is allocated and can be used.'
+            STATE_DELETED: '- Quota has been removed and is no longer allocated.'
+            STATE_FROZEN: '- Quota is allocated but cannot be used any longer'
+            STATE_PROVISIONING: '- Quota is being allocated; the process can take up to several minutes.'
+            USAGE_STATE_NOT_APPLICABLE: '- Quota usage is not applicable'
+            USAGE_STATE_NOT_USED: '- Quota is not currently in use.'
+            USAGE_STATE_UNKNOWN: |-
+                :
+                Quota region is unreachable, the current usage is therefore unknown.
+                Please, retry the request later.
+            USAGE_STATE_USED: '- Quota is actively in use.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            created_at: '(String) :'
+            description: '(String) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            limit: (Number) Total amount of resources allocated.
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            region: '(String) :'
+            resource_version: '(Number) :'
+            service: '(String) :'
+            service_description: '(String) :'
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            unit: '(String) :'
+            updated_at: '(String) :'
+            usage: (Number) Current quota usage.
+            usage_percentage: '(String) :'
+            usage_state: '(String) :'
+        importStatements: []
+    nebius_registry_v1_registry:
+        subCategory: ""
+        name: nebius_registry_v1_registry
+        title: nebius_registry_v1_registry Resource - nebius
+        examples:
+            - name: app
+              manifest: |-
+                {
+                  "description": "Container images for the application",
+                  "name": "app-registry",
+                  "parent_id": "project-id"
+                }
+        argumentDocs:
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            created_at: '(String) :'
+            description: (String)
+            id: (String) Identifier for the resource, unique for its resource type.
+            images_count: (Number) Registry.Type type = 2;
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            registry_fqdn: (String) regional fqdn "cr.eu-north1.nebius.cloud"
+            resource_version: '(Number) :'
+            state: '(String) :'
+            status: (Attributes) This is filled in by the server and reports the current state of the system. (see below for nested schema)
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_storage_v1alpha1_transfer Resource - nebius:
+        subCategory: ""
+        name: nebius_storage_v1alpha1_transfer Resource - nebius
+        title: nebius_storage_v1alpha1_transfer Resource - nebius
+        argumentDocs:
+            300ms: ', -1.5h or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h, d.'
+            ALWAYS: |-
+                :
+                Always overwrite destination objects unconditionally.
+                Use with caution - may cause data loss in destination.
+                Suitable for full bucket synchronization.
+            IF_NEWER: |-
+                :
+                Overwrite only if source object is newer than destination.
+                Comparison based on Last-Modified timestamp.
+                Recommended for incremental sync scenarios.
+            NEVER: |-
+                :
+                Never overwrite objects that exist in the destination.
+                If object exists in destination bucket, skip it.
+                Safest option to prevent data loss.
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            access_key: (Attributes) Cannot be set alongside anonymous or azure_access_key. (see below for nested schema)
+            access_key_id: (String, Sensitive)
+            account_name: (String, Sensitive)
+            after_n_empty_iterations: (Attributes) Cannot be set alongside after_one_iteration or infinite. (see below for nested schema)
+            after_one_iteration: (Attributes) Cannot be set alongside after_n_empty_iterations or infinite. (see below for nested schema)
+            anonymous: (Attributes) Cannot be set alongside access_key or azure_access_key. (see below for nested schema)
+            average_throughput_bytes: (Number)
+            azure_access_key: (Attributes) Cannot be set alongside anonymous or access_key. (see below for nested schema)
+            bandwidth_bytes_per_second: (Number) Maximum bandwidth in bytes per second. If set to zero, default limit will be applied.
+            bucket_name: (String)
+            created_at: '(String) :'
+            credentials: '(Attributes) :'
+            destination: (Attributes) (see below for nested schema)
+            empty_iterations_threshold: (Number) Number of consecutive iterations with zero transferred objects required to stop transfer.
+            end_time: '(String) A string representing a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM'
+            endpoint: '(String) :'
+            error: (String) Error information if the transfer has failed.
+            id: (String) Identifier for the resource, unique for its resource type.
+            infinite: '(Attributes) :'
+            inter_iteration_interval: '(String) :'
+            labels: '(Map of String) :'
+            last_iteration: (Attributes) (see below for nested schema)
+            limiters: '(Attributes) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            objects_discovered_count: (Number)
+            objects_migrated_count: (Number)
+            objects_migrated_size: (Number)
+            objects_skipped_count: (Number)
+            overwrite_strategy: '(String) :'
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            prefix: '(String) :'
+            region: (String)
+            requests_per_second: (Number) Maximum number of requests per second. If set to zero, default limit will be applied.
+            resource_version: '(Number) :'
+            secret_access_key: (String, Sensitive)
+            sensitive: (Attributes, Sensitive) This object mirrors the structure of the resource, providing view on the resource's write-only fields. It is a preferred way to define such fields as they are not stored in the state file. To use any field in write-only mode, do not set it in the main resource, instead set it in the sensitive object. Setting the field in the main resource will overwrite the field in the sensitive object at merging. (see below for nested schema)
+            sequence_number: (Number)
+            source: (Attributes) (see below for nested schema)
+            start_time: '(String) A string representing a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM'
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            suspension_state: '(String) :'
+            updated_at: '(String) :'
+            version: (String) The version of the write-only fields combined. You can use a hash here, some number, or a version of the secret from which you pull the value, or you can concatenate all of that together. This field is not sent to the server, but it is stored in the state, so don't store raw secrets here. Changing this field will trigger an update of the resource even if no other fields are changed. Use of this field is not required, but if you do not use it, changes in write-only fields will not trigger updates of the resource by themselves and therefore might not be reflected.
+        importStatements: []
+    nebius_storage_v1_bucket:
+        subCategory: ""
+        name: nebius_storage_v1_bucket
+        title: nebius_storage_v1_bucket Resource - nebius
+        examples:
+            - name: state
+              manifest: |-
+                {
+                  "default_storage_class": "STANDARD",
+                  "name": "terraform-state-bucket",
+                  "parent_id": "project-id",
+                  "versioning_policy": "ENABLED"
+                }
+        argumentDocs:
+            ACTIVE: '- Bucket is active and ready for usage.'
+            ALL: '- Logging enabled for all requests.'
+            COPY_OBJECT: |-
+                :
+                Copy object method reads the source object.
+                We account for those operations as source object accesses when calculating days_since_last_access for source object.
+            CREATING: '- Bucket is under creation and cannot be used yet.'
+            EXCLUDE: |-
+                :
+                If an exclude type condition is the first condition that the request match, the request will be ignored in days_since_last_access
+                calculation.
+            FILESYSTEM: '- Special storage class only for filesystem buckets.'
+            INCLUDE: |-
+                type.
+                OR
+            MUTATE_ONLY: '- Logging enabled only for mutating requests.'
+            NONE: '- Logging is disabled.'
+            SCHEDULED_FOR_DELETION: |-
+                :
+                Bucket is scheduled for deletion.
+                It cannot be used in s3 api anymore.
+            UPDATING: |-
+                :
+                Bucket is being updated.
+                It can be used, but some settings are being modified and you can observe their inconsistency.
+            UPLOAD_PART_COPY: |-
+                :
+                Upload part copy method reads the source object.
+                We account for those operations as source object accesses when calculating days_since_last_access for source object.
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            abort_incomplete_multipart_upload: '(Attributes) :'
+            allowed_headers: (List of String) Headers that are allowed in a preflight request through the Access-Control-Request-Headers header
+            allowed_methods: '(List of String) HTTP methods CORS is allowed for: GET, PUT, POST, DELETE, HEAD.'
+            allowed_origins: (List of String) The origins that you want to allow cross-domain requests from. Single wildcard * is allowed.
+            anonymous: '(Attributes) :'
+            anonymous_access_enabled: '(Boolean) :'
+            bucket_policy: '(Attributes) :'
+            conditions: '(Attributes List) :'
+            cors: '(Attributes) :'
+            counters: (Attributes List) (see below for nested schema)
+            created_at: '(String) :'
+            date: '(String) :'
+            days: '(Number) :'
+            days_after_initiation: '(Number) :'
+            days_since_last_access: calculations for all transition rules.
+            default_storage_class: '(String) :'
+            deleted_at: '(String) :'
+            domain_name: '(String) :'
+            expiration: '(Attributes) :'
+            expired_object_delete_marker: '(Boolean) :'
+            expose_headers: (List of String) Headers in the response that you want customers to be able to access from their applications.
+            filter: '(Attributes) :'
+            force_storage_class: (Boolean) Flag to force usage of default_storage_class, ignoring x-amz-storage-class header.
+            group_id: '(String) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            inflight_parts_quantity: (Number)
+            inflight_parts_size: (Number)
+            key: (String)
+            labels: '(Map of String) :'
+            last_access_filter: '(Attributes) :'
+            lifecycle_configuration: '(Attributes) :'
+            max_age_seconds: (Number) Time in seconds that your browser can cache the response for a preflight request as identified by the resource.
+            max_size_bytes: '(Number) :'
+            metadata: '(Attributes) :'
+            methods: '(List of String) :'
+            multipart_objects_quantity: (Number)
+            multipart_objects_size: (Number)
+            multipart_uploads_quantity: (Number)
+            name: (String) Human readable name for the resource.
+            newer_noncurrent_versions: (Number) Specifies how many noncurrent versions the system will retain.
+            non_current_counters: '(Attributes) :'
+            noncurrent_days: (Number) Specifies the number of days an object is noncurrent before the system will expire it.
+            noncurrent_version_expiration: '(Attributes) :'
+            noncurrent_version_transition: '(Attributes) :'
+            object_audit_logging: '(String) :'
+            object_size_greater_than_bytes: (Number) Minimum object size to which the rule applies.
+            object_size_less_than_bytes: (Number) Maximum object size to which the rule applies.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            paths: '(List of String) :'
+            prefix: '(String) :'
+            purge_at: '(String) :'
+            region: (String) The name of the region where the bucket is located for use with S3 clients, i.e. "eu-west1".
+            resource_version: '(Number) :'
+            roles: (List of String) A set of roles which a subject will have. All storage.* roles are supported.
+            rules: '(Attributes List) :'
+            simple_objects_quantity: (Number)
+            simple_objects_size: (Number)
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            storage_class: '(String) :'
+            suspension_state: '(String) :'
+            tags: '(Attributes List) :'
+            transition: '(Attributes) :'
+            type: '(String) :'
+            updated_at: '(String) :'
+            user_agents: '(List of String) :'
+            value: (String)
+            versioning_policy: '(String) :'
+            x-amz-storage-class: |-
+                header.
+                If not set - STANDARD is used as a default storage class.
+        importStatements: []
+    nebius_storage_v1_transfer:
+        subCategory: ""
+        description: Transfer that migrates data from other providers or across different regions of Nebius Object Storage. Transfer consists of consecutive iterations where the service lists objects in the source bucket and moves those that need to be transferred according to the specified overwrite strategy and touch unmanaged flag value. After an iteration completes, the transfer will stop if its stop condition is met. Otherwise, it will wait for the defined inter-iteration interval before starting the next iteration.
+        name: nebius_storage_v1_transfer
+        title: nebius_storage_v1_transfer Resource - nebius
+        examples:
+            - name: copy
+              manifest: |-
+                {
+                  "after_one_iteration": {},
+                  "destination": {
+                    "nebius": {
+                      "access_key": {
+                        "access_key_id": "destination-access-key-id"
+                      },
+                      "bucket_name": "destination-bucket",
+                      "region": "eu-north1"
+                    }
+                  },
+                  "name": "copy-between-buckets",
+                  "overwrite_strategy": "IF_NEWER",
+                  "parent_id": "project-id",
+                  "sensitive": {
+                    "destination": {
+                      "nebius": {
+                        "access_key": {
+                          "secret_access_key": "${var.transfer_secret_access_key}"
+                        }
+                      }
+                    },
+                    "source": {
+                      "nebius": {
+                        "access_key": {
+                          "secret_access_key": "${var.transfer_secret_access_key}"
+                        }
+                      }
+                    },
+                    "version": "1"
+                  },
+                  "source": {
+                    "nebius": {
+                      "access_key": {
+                        "access_key_id": "source-access-key-id"
+                      },
+                      "bucket_name": "source-bucket",
+                      "region": "eu-north1"
+                    }
+                  },
+                  "touch_unmanaged": false
+                }
+        argumentDocs:
+            300ms: ', -1.5h or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h, d.'
+            DESTINATION: '- Error originated from the destination.'
+            IF_NEWER: |-
+                :
+                Overwrite only if source object is newer than destination.
+                Comparison based on Last-Modified timestamp.
+                Recommended for incremental sync scenarios.
+                If touch_unmanaged flag isn't set, we do not overwrite objects that haven't been created by Data Transfer service.
+            NEVER: |-
+                :
+                Never overwrite objects that exist in the destination.
+                If object exists in destination bucket, skip it.
+                Safest option to prevent any data loss.
+            SOURCE: '- Error originated from the source.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            access_key: (Attributes) (see below for nested schema)
+            access_key_id: (String) Access key ID.
+            account_name: (String) Storage account name.
+            after_n_empty_iterations: (Attributes) Cannot be set alongside after_one_iteration or infinite. (see below for nested schema)
+            after_one_iteration: (Attributes) Cannot be set alongside after_n_empty_iterations or infinite. (see below for nested schema)
+            anonymous: (Attributes) Cannot be set alongside access_key. (see below for nested schema)
+            average_throughput_bytes: (Number) Average throughput in bytes per second during the iteration.
+            azure_blob_storage: (Attributes) Cannot be set alongside nebius or s3_compatible. (see below for nested schema)
+            azure_storage_account: (Attributes) Cannot be set alongside anonymous. (see below for nested schema)
+            bandwidth_bytes_per_second: (Number) Maximum bandwidth in bytes per second. If set to zero, default limit will be applied.
+            bucket_name: (String) Name of the destination bucket.
+            code: (String) Error code, usually taken from the endpoint response.
+            container_name: (String) Name of the source Azure Blob Storage container.
+            created_at: '(String) :'
+            destination: (Attributes) Destination to which the transfer writes data. (see below for nested schema)
+            empty_iterations_threshold: (Number) Number of consecutive iterations with zero transferred objects required to stop transfer.
+            end_time: '(String) :'
+            endpoint: '(String) :'
+            error: (Attributes) Error information if the transfer has failed. (see below for nested schema)
+            id: (String) Identifier for the resource, unique for its resource type.
+            infinite: '(Attributes) :'
+            inter_iteration_interval: '(String) :'
+            labels: '(Map of String) :'
+            last_iteration: '(Attributes) :'
+            limiters: '(Attributes) :'
+            message: (String) Error message, usually taken from the endpoint response.
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            nebius: (Attributes) Cannot be set alongside s3_compatible. (see below for nested schema)
+            objects_transferred_count: (Number) Number of objects transferred during this iteration.
+            objects_transferred_size: (Number) Total size of objects transferred during this iteration.
+            origin: '(String) :'
+            overwrite_strategy: '(String) :'
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            prefix: '(String) :'
+            region: (String) Nebius region where the destination bucket is located.
+            requests_per_second: (Number) Maximum number of requests per second. If set to zero, default limit will be applied.
+            resource_version: '(Number) :'
+            s3_compatible: (Attributes) Cannot be set alongside nebius. (see below for nested schema)
+            secret_access_key: (String, Sensitive) Secret access key.
+            sensitive: (Attributes, Sensitive) This object mirrors the structure of the resource, providing view on the resource's write-only fields. It is a preferred way to define such fields as they are not stored in the state file. To use any field in write-only mode, do not set it in the main resource, instead set it in the sensitive object. Setting the field in the main resource will overwrite the field in the sensitive object at merging. (see below for nested schema)
+            sequence_number: (Number) Sequence number of the iteration in the transfer, starting from 1.
+            source: (Attributes) Source from which the transfer reads data. (see below for nested schema)
+            start_time: '(String) :'
+            state: '(String) :'
+            status: (Attributes) (see below for nested schema)
+            suspension_state: '(String) :'
+            touch_unmanaged: '(Boolean) :'
+            updated_at: '(String) :'
+            version: (String) The version of the write-only fields combined. You can use a hash here, some number, or a version of the secret from which you pull the value, or you can concatenate all of that together. This field is not sent to the server, but it is stored in the state, so don't store raw secrets here. Changing this field will trigger an update of the resource even if no other fields are changed. Use of this field is not required, but if you do not use it, changes in write-only fields will not trigger updates of the resource by themselves and therefore might not be reflected.
+        importStatements: []
+    nebius_vpc_v1alpha1_allocation Resource - nebius:
+        subCategory: ""
+        name: nebius_vpc_v1alpha1_allocation Resource - nebius
+        title: nebius_vpc_v1alpha1_allocation Resource - nebius
+        argumentDocs:
+            ALLOCATED: '- Allocation is ready for use.'
+            ASSIGNED: '- Allocation is used.'
+            CREATING: '- Allocation is being created.'
+            DELETING: '- Allocation is being deleted.'
+            IP_VERSION_UNSPECIFIED: '- Default, unspecified IP version.'
+            IPV4: '- IPv4 address.'
+            IPV6: '- IPv6 address.'
+            STATE_UNSPECIFIED: '- Default state, unspecified.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            allocated_cidr: (String)
+            assignment: '(Attributes) :'
+            cidr: '(String) :'
+            created_at: '(String) :'
+            details: '(Attributes) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            instance_id: (String) ID of the Compute instance network interface belongs to.
+            ipv4_private: (Attributes) Cannot be set alongside ipv4_public. (see below for nested schema)
+            ipv4_public: (Attributes) Cannot be set alongside ipv4_private. (see below for nested schema)
+            labels: '(Map of String) :'
+            load_balancer: (Attributes) Cannot be set alongside network_interface. (see below for nested schema)
+            metadata: '(Attributes) :'
+            metadata.parent_id: represents IAM Container.
+            name: (String) Human readable name for the resource.
+            network_interface: (Attributes) Cannot be set alongside load_balancer. (see below for nested schema)
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            pool_id: '(String) :'
+            resource_version: '(Number) :'
+            state: '(String) :'
+            static: (Boolean) If false - Lifecycle of allocation depends on resource that using it.
+            status: (Attributes) Contains the current status of the allocation, indicating its state and any additional details. (see below for nested schema)
+            subnet_id: '(String) :'
+            updated_at: '(String) :'
+            version: '(String) :'
+        importStatements: []
+    nebius_vpc_v1_allocation:
+        subCategory: ""
+        name: nebius_vpc_v1_allocation
+        title: nebius_vpc_v1_allocation Resource - nebius
+        examples:
+            - name: vm_private_ip
+              manifest: |-
+                {
+                  "ipv4_private": {
+                    "cidr": "/32",
+                    "subnet_id": "subnet-id"
+                  },
+                  "name": "vm-private-ip",
+                  "parent_id": "project-id"
+                }
+        argumentDocs:
+            ALLOCATED: '- Allocation is ready for use.'
+            ASSIGNED: '- Allocation is used.'
+            CREATING: '- Allocation is being created.'
+            DELETING: '- Allocation is being deleted.'
+            IP_VERSION_UNSPECIFIED: '- Default, unspecified IP version.'
+            IPV4: '- IPv4 address.'
+            IPV6: '- IPv6 address.'
+            STATE_UNSPECIFIED: '- Default state, unspecified.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            allocated_cidr: (String) The actual CIDR block that has been allocated.
+            assignment: '(Attributes) :'
+            cidr: '(String) :'
+            created_at: '(String) :'
+            details: '(Attributes) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            instance_id: (String) ID of the Compute instance network interface belongs to.
+            ipv4_private: '(Attributes) :'
+            ipv4_public: '(Attributes) :'
+            labels: '(Map of String) :'
+            load_balancer: (Attributes) Cannot be set alongside network_interface. (see below for nested schema)
+            metadata: '(Attributes) :'
+            metadata.parent_id: represents IAM Container.
+            name: (String) Human readable name for the resource.
+            network_interface: (Attributes) Cannot be set alongside load_balancer. (see below for nested schema)
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            pool_id: '(String) :'
+            resource_version: '(Number) :'
+            state: '(String) :'
+            static: (Boolean) If false - Lifecycle of allocation depends on resource that using it.
+            status: '(Attributes) :'
+            subnet_id: '(String) :'
+            updated_at: '(String) :'
+            version: '(String) :'
+        importStatements: []
+    nebius_vpc_v1_network:
+        subCategory: ""
+        description: Defines a Network, which serves as a virtual representation of a traditional LAN within a cloud environment. Networks facilitate communication between subnets.
+        name: nebius_vpc_v1_network
+        title: nebius_vpc_v1_network Resource - nebius
+        examples:
+            - name: default
+              manifest: |-
+                {
+                  "name": "default-network",
+                  "parent_id": "project-id"
+                }
+        argumentDocs:
+            CREATING: '- Network is being created.'
+            DELETING: '- Network is being deleted.'
+            READY: '- Network is ready for use.'
+            STATE_UNSPECIFIED: '- Default state, unspecified.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            created_at: '(String) :'
+            default_route_table_id: (String) ID of the network's default route table.
+            id: (String) Identifier for the resource, unique for its resource type.
+            ipv4_private_pools: '(Attributes) :'
+            ipv4_public_pools: '(Attributes) :'
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            metadata.parent_id: represents IAM container
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            pools: (Attributes List) (see below for nested schema)
+            resource_version: '(Number) :'
+            state: '(String) :'
+            status: (Attributes) Status of the network. (see below for nested schema)
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_vpc_v1_pool:
+        subCategory: ""
+        name: nebius_vpc_v1_pool
+        title: nebius_vpc_v1_pool Resource - nebius
+        examples:
+            - name: private
+              manifest: |-
+                {
+                  "cidrs": [
+                    {
+                      "cidr": "10.10.0.0/16",
+                      "max_mask_length": 32
+                    }
+                  ],
+                  "name": "private-ipv4-pool",
+                  "parent_id": "project-id",
+                  "version": "IPV4",
+                  "visibility": "PRIVATE"
+                }
+        argumentDocs:
+            AVAILABLE: '- Default state. Provision of the IP addresses from this CIDR block is allowed.'
+            CREATING: '- Pool is being created.'
+            DELETING: '- Pool is being deleted.'
+            DISABLED: '- Provision of the IP addresses from this CIDR block is denied.'
+            IP_VERSION_UNSPECIFIED: '- Default, unspecified IP version.'
+            IP_VISIBILITY_UNSPECIFIED: '- Default, unspecified IP visibility.'
+            IPV4: '- IPv4 address.'
+            IPV6: '- IPv6 address.'
+            PRIVATE: '- Private address.'
+            PUBLIC: '- Public address.'
+            READY: '- Pool is ready for use.'
+            STATE_UNSPECIFIED: '- Not used, mandated by the protocol.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            assignment: (Attributes) Assignment details for this Pool (see below for nested schema)
+            cidr: '(String) :'
+            cidrs: '(Attributes List) :'
+            created_at: '(String) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            max_mask_length: '(Number) :'
+            metadata: '(Attributes) :'
+            metadata.parent_id: represents the Project.
+            name: (String) Human readable name for the resource.
+            networks: (List of String) IDs of Networks to which the Pool is assigned.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            resource_version: '(Number) :'
+            scope_id: (String) Scope is the unique identifier for single pool tree.
+            source_pool_id: '(String) :'
+            state: '(String) :'
+            status: (Attributes) Status information for the Pool. (see below for nested schema)
+            subnets: (List of String) IDs of Subnets to which the Pool is assigned.
+            updated_at: '(String) :'
+            version: '(String) :'
+            visibility: '(String) :'
+        importStatements: []
+    nebius_vpc_v1_route Resource - nebius:
+        subCategory: ""
+        description: Routes determine how network traffic is directed within a VPC network, specifying the path that traffic should take based on destination addresses.
+        name: nebius_vpc_v1_route Resource - nebius
+        title: nebius_vpc_v1_route Resource - nebius
+        argumentDocs:
+            READY: '- The route is configured and operational.'
+            STATE_UNSPECIFIED: '- The state is unknown or not yet set.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            allocation: '(Attributes) :'
+            cidr: '(String) :'
+            created_at: '(String) :'
+            default_egress_gateway: '(Boolean) :'
+            description: (String) Optional description of the route.
+            destination: '(Attributes) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            metadata.parent_id: represents the RouteTable.
+            name: (String) Human readable name for the resource.
+            next_hop: (Attributes) Next hop configuration specifying where to send matching traffic. (see below for nested schema)
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            resource_version: '(Number) :'
+            state: '(String) :'
+            status: (Attributes) Current status of the route. (see below for nested schema)
+            type: '(String) :'
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_vpc_v1_route_table Resource - nebius:
+        subCategory: ""
+        description: RouteTable represents a routing configuration for a VPC network. Each route table can be associated with multiple subnets and contains rules for routing traffic to different destinations.
+        name: nebius_vpc_v1_route_table Resource - nebius
+        title: nebius_vpc_v1_route_table Resource - nebius
+        argumentDocs:
+            READY: '- The route table is configured and operational.'
+            STATE_UNSPECIFIED: '- The state is unknown or not yet set.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            assignment: (Attributes) Information about which subnets are using this route table. (see below for nested schema)
+            created_at: '(String) :'
+            default: '(Boolean) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            metadata.parent_id: represents the Project.
+            name: (String) Human readable name for the resource.
+            network_id: (String) ID of the VPC network this route table belongs to.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            resource_version: '(Number) :'
+            state: '(String) :'
+            status: (Attributes) Current status of the route table. (see below for nested schema)
+            subnets: (List of String) List of subnet IDs that use this route table for their routing configuration.
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_vpc_v1_security_group:
+        subCategory: ""
+        description: SecurityGroup is a logical grouping of resources used to manage and apply network security policies collectively. Security group applies implicit deny at the end (traffic not matched by any rule will be denied).
+        name: nebius_vpc_v1_security_group
+        title: nebius_vpc_v1_security_group Resource - nebius
+        examples:
+            - name: web
+              manifest: |-
+                {
+                  "name": "web-security-group",
+                  "network_id": "network-id",
+                  "parent_id": "project-id"
+                }
+        argumentDocs:
+            READY: '- Security group is ready for use.'
+            STATE_UNSPECIFIED: '- Default state, unspecified.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            created_at: '(String) :'
+            default: '(Boolean) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            metadata.parent_id: represents the Project.
+            name: (String) Human readable name for the resource.
+            network_id: (String) ID of the VPC network this security group belongs to.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            resource_version: '(Number) :'
+            state: '(String) :'
+            status: (Attributes) Current status of the security group. (see below for nested schema)
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_vpc_v1_security_rule:
+        subCategory: ""
+        description: SecurityRules define rules for controlling network traffic within a network. These rules specify when traffic is ALLOWED or DENIED based on direction, protocol, match source, and ports.
+        name: nebius_vpc_v1_security_rule
+        title: nebius_vpc_v1_security_rule Resource - nebius
+        examples:
+            - name: allow_https
+              manifest: |-
+                {
+                  "access": "ALLOW",
+                  "ingress": {
+                    "destination_ports": [
+                      443
+                    ],
+                    "source_cidrs": [
+                      "0.0.0.0/0"
+                    ]
+                  },
+                  "name": "allow-https",
+                  "parent_id": "${nebius_vpc_v1_security_group.web.id}",
+                  "priority": 100,
+                  "protocol": "TCP",
+                  "type": "STATEFUL"
+                }
+              references:
+                parent_id: nebius_vpc_v1_security_group.web.id
+              dependencies:
+                nebius_vpc_v1_security_group.web: |-
+                    {
+                      "name": "web-security-group",
+                      "network_id": "network-id",
+                      "parent_id": "project-id"
+                    }
+        argumentDocs:
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            access: '(String) :'
+            cidrs: (List of String) List of CIDR blocks.
+            created_at: '(String) :'
+            destination: (Attributes) Destination of the traffic that matched the rule. (see below for nested schema)
+            destination_cidrs: '(List of String) :'
+            destination_ports: '(List of Number) :'
+            destination_security_group_id: (String) ID of the referenced Security Group as the destination.
+            direction: '(String) :'
+            effective_priority: '(Number) :'
+            egress: '(Attributes) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            ingress: '(Attributes) :'
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            metadata.parent_id: represents the SecurityGroup.
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            ports: (List of Number) List of ports.
+            priority: '(Number) :'
+            protocol: '(String) :'
+            resource_version: '(Number) :'
+            security_group_id: (String) ID of the Security Group.
+            source: (Attributes) Source of the traffic that matched the rule. (see below for nested schema)
+            source_cidrs: '(List of String) :'
+            source_security_group_id: (String) ID of the referenced Security Group as the source.
+            state: '(String) :'
+            status: (Attributes) Current status of the security rule. (see below for nested schema)
+            type: '(String) :'
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_vpc_v1_subnet:
+        subCategory: ""
+        description: Defines a Subnet, a segment of a network used for more granular control and management. Subnet uses pools to organize address space.
+        name: nebius_vpc_v1_subnet
+        title: nebius_vpc_v1_subnet Resource - nebius
+        examples:
+            - name: default
+              manifest: |-
+                {
+                  "ipv4_private_pools": {
+                    "use_network_pools": true
+                  },
+                  "name": "default-subnet",
+                  "network_id": "${nebius_vpc_v1_network.default.id}",
+                  "parent_id": "project-id"
+                }
+              references:
+                network_id: nebius_vpc_v1_network.default.id
+              dependencies:
+                nebius_vpc_v1_network.default: |-
+                    {
+                      "name": "default-network",
+                      "parent_id": "project-id"
+                    }
+        argumentDocs:
+            AVAILABLE: '- Default state. Provision of the IP addresses from this CIDR block is allowed.'
+            CREATING: '- Subnet is being created.'
+            DELETING: '- Subnet is being deleted.'
+            DISABLED: '- Provision of the IP addresses from this CIDR block is denied.'
+            READY: '- Subnet is ready for use.'
+            STATE_UNSPECIFIED: '- Not used, mandated by the protocol.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            cidr: '(String) :'
+            cidrs: (Attributes List) (see below for nested schema)
+            created_at: '(String) :'
+            default: '(Boolean) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            ipv4_private_cidrs: (List of String) CIDR blocks.
+            ipv4_private_pools: '(Attributes) :'
+            ipv4_public_cidrs: (List of String) CIDR blocks.
+            ipv4_public_pools: '(Attributes) :'
+            labels: '(Map of String) :'
+            max_mask_length: (Number) Maximum mask length for an allocation from this block. Defaults to /32 for IPv4.
+            metadata: '(Attributes) :'
+            metadata.parent_id: represents IAM container
+            name: (String) Human readable name for the resource.
+            network_id: (String) ID of the network this subnet belongs to.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            pools: '(Attributes List) :'
+            resource_version: '(Number) :'
+            route_table: '(Attributes) :'
+            route_table_id: '(String) :'
+            state: '(String) :'
+            status: (Attributes) Status of the subnet. (see below for nested schema)
+            updated_at: '(String) :'
+            use_network_pools: is true. (see below for nested schema)
+        importStatements: []
