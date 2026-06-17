@@ -18,28 +18,6 @@ metadata:
       Marketplace](https://marketplace.upbound.io/providers/upbound/provider-{{ .ProviderName }}).
       If you encounter an issue please reach out on support@upbound.io email
       address. This is a subpackage for the {{ .Service }} API group.
-    friendly-name.meta.crossplane.io: Provider Nebius ({{ .Service }})
-    auth.upbound.io/group: {{ .ProviderName }}.upbound.io
-    meta.upbound.io/hardening: |
-      - CVE Remediation
-      - Backporting
-    meta.upbound.io/support: {{ .Support }}
-    meta.upbound.io/verification: {{ .Verification }}
-    meta.upbound.io/host: |
-    {{- if eq .BuildTag "oss" }}
-      - XP
-    {{- end }}
-      - UXP
-      - Spaces
-    {{- if ne .BuildTag "oss" }}
-    meta.upbound.io/subscription: |
-    {{- if eq .BuildTag "community" }}
-      - Community
-    {{- end }}
-      - Standard
-      - Enterprise
-      - Business Critical
-    {{ end }}
 spec:
   capabilities:
   - SafeStart
