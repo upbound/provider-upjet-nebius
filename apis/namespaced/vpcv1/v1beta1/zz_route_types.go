@@ -277,6 +277,13 @@ type RouteStatusObservation struct {
 
 	// :
 	//
+	// Indicates priority of the route.
+	// That is 0 or a positive number.
+	// Lower value = higher priority; 0 is the highest priority.
+	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
+
+	// :
+	//
 	// Current state of the route.
 	//
 	// #### Supported values

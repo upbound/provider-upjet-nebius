@@ -9,8 +9,11 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/controller"
 
+	disk "github.com/upbound/provider-nebius/internal/controller/namespaced/computev1/disk"
 	filesystem "github.com/upbound/provider-nebius/internal/controller/namespaced/computev1/filesystem"
 	gpucluster "github.com/upbound/provider-nebius/internal/controller/namespaced/computev1/gpucluster"
+	record "github.com/upbound/provider-nebius/internal/controller/namespaced/dnsv1/record"
+	zone "github.com/upbound/provider-nebius/internal/controller/namespaced/dnsv1/zone"
 	serviceaccount "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/serviceaccount"
 	cluster "github.com/upbound/provider-nebius/internal/controller/namespaced/mk8sv1/cluster"
 	nodegroup "github.com/upbound/provider-nebius/internal/controller/namespaced/mk8sv1/nodegroup"
@@ -29,8 +32,11 @@ import (
 // the supplied manager.
 func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		disk.Setup,
 		filesystem.Setup,
 		gpucluster.Setup,
+		record.Setup,
+		zone.Setup,
 		serviceaccount.Setup,
 		cluster.Setup,
 		nodegroup.Setup,
@@ -55,8 +61,11 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 // the supplied manager gated.
 func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		disk.SetupGated,
 		filesystem.SetupGated,
 		gpucluster.SetupGated,
+		record.SetupGated,
+		zone.SetupGated,
 		serviceaccount.SetupGated,
 		cluster.SetupGated,
 		nodegroup.SetupGated,

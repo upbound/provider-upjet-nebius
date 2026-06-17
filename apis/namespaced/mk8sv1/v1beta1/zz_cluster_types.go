@@ -299,7 +299,7 @@ type EndpointsInitParameters struct {
 type EndpointsObservation struct {
 
 	// (Attributes) Public endpoint specification. When set, a public endpoint is created. (see below for nested schema)
-	PublicEndpoint *PublicEndpointParameters `json:"publicEndpoint,omitempty" tf:"public_endpoint,omitempty"`
+	PublicEndpoint *PublicEndpointObservation `json:"publicEndpoint,omitempty" tf:"public_endpoint,omitempty"`
 }
 
 type EndpointsParameters struct {
@@ -445,12 +445,34 @@ type MetadataParameters struct {
 }
 
 type PublicEndpointInitParameters struct {
+
+	// (List of String) :
+	// :
+	//
+	// List of CIDR blocks from which access to public endpoint is allowed.
+	// If field is not set, or list is empty, it means that access is not restricted at all.
+	AllowedCidrs []*string `json:"allowedCidrs,omitempty" tf:"allowed_cidrs,omitempty"`
 }
 
 type PublicEndpointObservation struct {
+
+	// (List of String) :
+	// :
+	//
+	// List of CIDR blocks from which access to public endpoint is allowed.
+	// If field is not set, or list is empty, it means that access is not restricted at all.
+	AllowedCidrs []*string `json:"allowedCidrs,omitempty" tf:"allowed_cidrs,omitempty"`
 }
 
 type PublicEndpointParameters struct {
+
+	// (List of String) :
+	// :
+	//
+	// List of CIDR blocks from which access to public endpoint is allowed.
+	// If field is not set, or list is empty, it means that access is not restricted at all.
+	// +kubebuilder:validation:Optional
+	AllowedCidrs []*string `json:"allowedCidrs,omitempty" tf:"allowed_cidrs,omitempty"`
 }
 
 type StatusControlPlaneInitParameters struct {

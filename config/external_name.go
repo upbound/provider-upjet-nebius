@@ -22,8 +22,11 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// compute_v1 resources need to have a valid project prefix in ComputedIdentifier e.g. e00, e01
 	"nebius_compute_v1_gpu_cluster": config.FrameworkResourceWithComputedIdentifier("id", "computegpucluster-e01000000000000000"),
 	"nebius_compute_v1_filesystem":  config.FrameworkResourceWithComputedIdentifier("id", "computefilesystem-e01000000000000000"),
+	"nebius_compute_v1_disk":        config.FrameworkResourceWithComputedIdentifier("id", "computedisk-e01000000000000000"),
 	"nebius_mk8s_v1_cluster":        config.FrameworkResourceWithComputedIdentifier("id", "mk8scluster-e0t000000000000000"),
 	"nebius_mk8s_v1_node_group":     config.FrameworkResourceWithComputedIdentifier("id", "mk8snodegroup-e0t000000000000000"),
+	"nebius_dns_v1_zone":            config.FrameworkResourceWithComputedIdentifier("id", "dnszone-e0t000000000000000"),
+	"nebius_dns_v1_record":          config.FrameworkResourceWithComputedIdentifier("id", "dnsrecord-e0t000000000000000"),
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

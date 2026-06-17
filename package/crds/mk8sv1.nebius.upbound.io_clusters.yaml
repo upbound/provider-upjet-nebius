@@ -86,6 +86,17 @@ spec:
                             description: (Attributes) Public endpoint specification.
                               When set, a public endpoint is created. (see below for
                               nested schema)
+                            properties:
+                              allowedCidrs:
+                                description: |-
+                                  (List of String) :
+                                  :
+
+                                  List of CIDR blocks from which access to public endpoint is allowed.
+                                  If field is not set, or list is empty, it means that access is not restricted at all.
+                                items:
+                                  type: string
+                                type: array
                             type: object
                         type: object
                       etcdClusterSize:
@@ -263,6 +274,17 @@ spec:
                             description: (Attributes) Public endpoint specification.
                               When set, a public endpoint is created. (see below for
                               nested schema)
+                            properties:
+                              allowedCidrs:
+                                description: |-
+                                  (List of String) :
+                                  :
+
+                                  List of CIDR blocks from which access to public endpoint is allowed.
+                                  If field is not set, or list is empty, it means that access is not restricted at all.
+                                items:
+                                  type: string
+                                type: array
                             type: object
                         type: object
                       etcdClusterSize:
@@ -527,6 +549,17 @@ spec:
                             description: (Attributes) Public endpoint specification.
                               When set, a public endpoint is created. (see below for
                               nested schema)
+                            properties:
+                              allowedCidrs:
+                                description: |-
+                                  (List of String) :
+                                  :
+
+                                  List of CIDR blocks from which access to public endpoint is allowed.
+                                  If field is not set, or list is empty, it means that access is not restricted at all.
+                                items:
+                                  type: string
+                                type: array
                             type: object
                         type: object
                       etcdClusterSize:

@@ -283,6 +283,86 @@ resources:
             type: '(String) :'
             updated_at: '(String) :'
         importStatements: []
+    nebius_dns_v1_record Resource - nebius:
+        subCategory: ""
+        description: 'API Resource: DNS Resource Record (RR), an information entry about a specific domain Each record is contained within a DNS zone, which is a container for DNS data of a specific domain, and, possibly, its subdomains DNS zones are represented in this API by the Zone API Resource which is managed by the ZoneService'
+        name: nebius_dns_v1_record Resource - nebius
+        title: nebius_dns_v1_record Resource - nebius
+        argumentDocs:
+            10 xyz.tuv: for a @ 600 IN MX 10 xyz.tuv. resource record in a zonefile
+            A: '- A record: IPv4 address'
+            AAAA: '- AAAA record: IPv6 address'
+            CAA: '- CAA record: certificate issuance settings for this DNS zone and its subzones'
+            CNAME: '- CNAME record: an alias for a canonical domain name'
+            HTTPS: |-
+                :
+                HTTPS record: service binding with HTTPS protocol configuration.
+                See RFC 9460, section 9.1
+            MX: '- MX record: mail server information (domain name, priority)'
+            NS: '- NS record: domain name of an authoritative nameserver for this DNS zone, or one of its subzones'
+            PTR: '- PTR record: mapping from IP address to a domain name'
+            RECORD_TYPE_UNSPECIFIED: '- Record type is not specified'
+            RecordService/Delete: API with force flag set to true
+            SOA: '- SOA record: administrative information about this DNS zone'
+            SRV: '- SRV record: information about a network service (domain name, port, weight)'
+            SVCB: '- SVCB record: service binding. See RFC 9460, section 2.3'
+            TXT: '- TXT record: text data, typically used to verify e-mail addresses, websites and TLS certificates'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            created_at: '(String) :'
+            data: '(String) :'
+            deletion_protection: '(Boolean) :'
+            effective_fqdn: (String) Fully-qualified domain name of this record including . at the end, e.g. www.example.com.
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            metadata.parent_id: must be a DNS zone ID
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            reconciling: (Boolean) Indicates whether there is a running Operation for this Record
+            relative_name: '(String) :'
+            resource_version: '(Number) :'
+            status: '(Attributes) :'
+            ttl: (Number) Record TTL. If absent or negative, will be assumed to be the default value (600)
+            type: '(String) :'
+            updated_at: '(String) :'
+            www: |-
+                for www.<parent zone's domain name>)
+                Use @ for records in zone apex (that is, records that have the same domain name as the zone itself)
+                To see the resolved absolute domain name, see Record.status.effective_fqdn
+            zone_domain_name: (String) Domain name of this record's parent zone including . at the end, e.g. example.com.
+        importStatements: []
+    nebius_dns_v1_zone Resource - nebius:
+        subCategory: ""
+        description: 'API Resource: DNS zone, a container for DNS data Each DNS zone starts at a particular domain within the hierarchical DNS namespace tree, e.g., example.com., and can also include its subdomains, e.g., sales.example.com. DNS Zones contain Resource Records (RRs), which are individual information entries about the domain(s), e.g., a domain''s IP address See the graphical explanation of DNS zones and Resource Records on Wikipedia https://en.wikipedia.org/wiki/Domain_Name_System#/media/File:Domain_name_space.svg A Resource Record is represented in this API by the Record API Resource which is managed by the RecordService'
+        name: nebius_dns_v1_zone Resource - nebius
+        title: nebius_dns_v1_zone Resource - nebius
+        argumentDocs:
+            .: |-
+                at the end
+                Cannot be changed after creating the zone
+            NXDOMAIN: |-
+                ("record not found") DNS responses from this zone (negative caching)
+                Set this TTL to a low value if you frequently delete and recreate records instead of updating them
+                Note: Values of less than 5 will be ignored, and a default negative caching TTL will be used instead
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            created_at: '(String) :'
+            domain_name: '(String) :'
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            metadata.parent_id: must be an IAM Container ID
+            name: (String) Human readable name for the resource.
+            negative_ttl: '(Number) :'
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            primary_network_id: '(String) :'
+            reconciling: (Boolean) Indicates whether there is a running Operation for this Zone
+            record_count: (Number) Number of records in this zone. May be 0 if not calculated (e.g., in listings)
+            resource_version: '(Number) :'
+            soa_spec: '(Attributes) :'
+            status: '(Attributes) :'
+            updated_at: '(String) :'
+            vpc: '(Attributes) :'
+        importStatements: []
     nebius_hash:
         subCategory: ""
         description: A salted SHA256 hash of a versioned ephemeral value that was passed to the provider
@@ -607,6 +687,64 @@ resources:
             status: (Attributes) (see below for nested schema)
             updated_at: '(String) :'
         importStatements: []
+    nebius_kms_v1_asymmetric_key Resource - nebius:
+        subCategory: ""
+        description: An asymmetric KMS key that may contain several versions of the cryptographic material.
+        name: nebius_kms_v1_asymmetric_key Resource - nebius
+        title: nebius_kms_v1_asymmetric_key Resource - nebius
+        argumentDocs:
+            ACTIVE: '- Key is active, ready for use'
+            ECDSA_NIST_P256_SHA_256: '- ECDSA signature with NIST P-256 curve and SHA-256'
+            ECDSA_NIST_P384_SHA_384: '- ECDSA signature with NIST P-384 curve and SHA-384'
+            RSA_4096_ENC_OAEP_SHA_256: '- RSA encryption with RSA-4096 key, OAEP padding and SHA-256.'
+            SCHEDULED_FOR_DELETION: '- Key is scheduled for deletion.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            algorithm: '(String) :'
+            created_at: '(String) :'
+            deleted_at: '(String) :'
+            description: (String) Description of the key.
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            purge_at: '(String) :'
+            resource_version: '(Number) :'
+            state: '(String) :'
+            status: (Attributes) The current status of the asymmetric key. (see below for nested schema)
+            updated_at: '(String) :'
+        importStatements: []
+    nebius_kms_v1_symmetric_key Resource - nebius:
+        subCategory: ""
+        description: A symmetric KMS key.
+        name: nebius_kms_v1_symmetric_key Resource - nebius
+        title: nebius_kms_v1_symmetric_key Resource - nebius
+        argumentDocs:
+            300ms: ', -1.5h or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h, d.'
+            ACTIVE: '- Key is active, ready for use'
+            AES_128: |-
+                :
+                Deprecated. It is impossible to create new keys with this algorithm.
+                AES algorithm with 128-bit keys.
+            AES_256: '- AES algorithm with 256-bit keys.'
+            SCHEDULED_FOR_DELETION: '- Key is scheduled for deletion.'
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            algorithm: '(String) :'
+            created_at: '(String) :'
+            deleted_at: '(String) :'
+            description: (String) Description of the key.
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: '(Map of String) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            purge_at: '(String) :'
+            resource_version: '(Number) :'
+            rotation_period: '(String) :'
+            state: '(String) :'
+            status: (Attributes) The current status of the symmetric key. (see below for nested schema)
+            updated_at: '(String) :'
+        importStatements: []
     nebius_mk8s_v1alpha1_cluster Resource - nebius:
         subCategory: ""
         name: nebius_mk8s_v1alpha1_cluster Resource - nebius
@@ -752,6 +890,7 @@ resources:
                 Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
                 but requires no immediate action (yet)
             YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            allowed_cidrs: '(List of String) :'
             audit_logs: '(Attributes) :'
             auth: (Attributes) (see below for nested schema)
             cluster_ca_certificate: (String) PEM with the Cluster Certificate Authority, that must be used for TLS connection to Kubernetes API.
@@ -919,6 +1058,7 @@ resources:
             resource.serviceaccount.issueAccessToken: permission is required to use this field.
             resource_version: '(Number) :'
             resources: (Attributes) Resources that will have Nebius Compute Instance where Node kubelet will run. (see below for nested schema)
+            security_groups: (Attributes List) User provided VPC Security Groups which will be assigned to all nodes of this NodeGroup. (see below for nested schema)
             service_account_id: '(String) :'
             size_bytes: (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
             size_gibibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
@@ -1571,6 +1711,7 @@ resources:
         name: nebius_vpc_v1alpha1_allocation Resource - nebius
         title: nebius_vpc_v1alpha1_allocation Resource - nebius
         argumentDocs:
+            ALIAS: '- Allocation is attached as an IP alias.'
             ALLOCATED: '- Allocation is ready for use.'
             ASSIGNED: '- Allocation is used.'
             CREATING: '- Allocation is being created.'
@@ -1578,6 +1719,8 @@ resources:
             IP_VERSION_UNSPECIFIED: '- Default, unspecified IP version.'
             IPV4: '- IPv4 address.'
             IPV6: '- IPv6 address.'
+            PRIMARY: '- Allocation is attached as the interface private IPv4 address.'
+            PUBLIC: '- Allocation is attached as the interface public IPv4 address.'
             STATE_UNSPECIFIED: '- Default state, unspecified.'
             YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
             allocated_cidr: (String)
@@ -1602,6 +1745,7 @@ resources:
             static: (Boolean) If false - Lifecycle of allocation depends on resource that using it.
             status: (Attributes) Contains the current status of the allocation, indicating its state and any additional details. (see below for nested schema)
             subnet_id: '(String) :'
+            type: '(String) :'
             updated_at: '(String) :'
             version: '(String) :'
         importStatements: []
@@ -1621,6 +1765,7 @@ resources:
                   "parent_id": "project-id"
                 }
         argumentDocs:
+            ALIAS: '- Allocation is attached as an IP alias.'
             ALLOCATED: '- Allocation is ready for use.'
             ASSIGNED: '- Allocation is used.'
             CREATING: '- Allocation is being created.'
@@ -1628,6 +1773,8 @@ resources:
             IP_VERSION_UNSPECIFIED: '- Default, unspecified IP version.'
             IPV4: '- IPv4 address.'
             IPV6: '- IPv6 address.'
+            PRIMARY: '- Allocation is attached as the interface private IPv4 address.'
+            PUBLIC: '- Allocation is attached as the interface public IPv4 address.'
             STATE_UNSPECIFIED: '- Default state, unspecified.'
             YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
             allocated_cidr: (String) The actual CIDR block that has been allocated.
@@ -1652,6 +1799,7 @@ resources:
             static: (Boolean) If false - Lifecycle of allocation depends on resource that using it.
             status: '(Attributes) :'
             subnet_id: '(String) :'
+            type: '(String) :'
             updated_at: '(String) :'
             version: '(String) :'
         importStatements: []
@@ -1766,6 +1914,7 @@ resources:
             name: (String) Human readable name for the resource.
             next_hop: (Attributes) Next hop configuration specifying where to send matching traffic. (see below for nested schema)
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            priority: '(Number) :'
             resource_version: '(Number) :'
             state: '(String) :'
             status: (Attributes) Current status of the route. (see below for nested schema)

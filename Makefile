@@ -13,7 +13,7 @@ TERRAFORM_VERSION_VALID := $(shell [ "$(TERRAFORM_VERSION)" = "`printf "$(TERRAF
 
 export TERRAFORM_PROVIDER_SOURCE ?= nebius/nebius
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/nebius/terraform-provider-nebius
-export TERRAFORM_PROVIDER_VERSION ?= 0.6.12
+export TERRAFORM_PROVIDER_VERSION ?= 0.6.16
 export TERRAFORM_DOCS_PATH ?= docs/resources
 export PROVIDER_NAME
 

@@ -52,5 +52,8 @@ var GroupMap = map[string]GroupKindCalculator{
 	"nebius_mk8s_v1_node_group":     ReplaceGroupWords("mk8sv1", 2),
 	"nebius_compute_v1_gpu_cluster": ReplaceGroupWords("computev1", 2),
 	"nebius_compute_v1_filesystem":  ReplaceGroupWords("computev1", 2),
+	"nebius_compute_v1_disk":        ReplaceGroupWords("computev1", 2),
 	"nebius_iam_v1_service_account": ReplaceGroupWords("iamv1", 2),
+	"nebius_dns_v1_zone":            ReplaceGroupWords("dnsv1", 2),
+	"nebius_dns_v1_record":          ReplaceGroupWords("dnsv1", 2),
 }

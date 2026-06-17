@@ -682,6 +682,9 @@ type NetworkInterfacesInitParameters struct {
 	// (Attributes) :
 	PublicIPAddress *PublicIPAddressInitParameters `json:"publicIpAddress,omitempty" tf:"public_ip_address,omitempty"`
 
+	// (Attributes List) User provided VPC Security Groups which will be assigned to all nodes of this NodeGroup. (see below for nested schema)
+	SecurityGroups []SecurityGroupsInitParameters `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
 	// (String) :
 	// :
 	//
@@ -706,6 +709,9 @@ type NetworkInterfacesObservation struct {
 	// (Attributes) :
 	PublicIPAddress *PublicIPAddressParameters `json:"publicIpAddress,omitempty" tf:"public_ip_address,omitempty"`
 
+	// (Attributes List) User provided VPC Security Groups which will be assigned to all nodes of this NodeGroup. (see below for nested schema)
+	SecurityGroups []SecurityGroupsObservation `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
 	// (String) :
 	// :
 	//
@@ -720,6 +726,10 @@ type NetworkInterfacesParameters struct {
 	// (Attributes) :
 	// +kubebuilder:validation:Optional
 	PublicIPAddress *PublicIPAddressParameters `json:"publicIpAddress,omitempty" tf:"public_ip_address,omitempty"`
+
+	// (Attributes List) User provided VPC Security Groups which will be assigned to all nodes of this NodeGroup. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	SecurityGroups []SecurityGroupsParameters `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// (String) :
 	// :
@@ -1273,6 +1283,25 @@ type ResourcesParameters struct {
 	// (String)
 	// +kubebuilder:validation:Optional
 	Preset *string `json:"preset,omitempty" tf:"preset,omitempty"`
+}
+
+type SecurityGroupsInitParameters struct {
+
+	// (String) Identifier for the resource, unique for its resource type.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type SecurityGroupsObservation struct {
+
+	// (String) Identifier for the resource, unique for its resource type.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type SecurityGroupsParameters struct {
+
+	// (String) Identifier for the resource, unique for its resource type.
+	// +kubebuilder:validation:Optional
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type StatusEventsInitParameters struct {

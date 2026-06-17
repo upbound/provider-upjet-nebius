@@ -12,7 +12,7 @@ require (
 	github.com/crossplane/upjet/v2 v2.2.1-0.20260610110527-59c45527ebe4
 	github.com/hashicorp/terraform-plugin-framework v1.19.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.40.0
-	github.com/nebius/terraform-provider-nebius v0.6.12
+	github.com/nebius/terraform-provider-nebius v0.6.16
 	github.com/pkg/errors v0.9.1
 	k8s.io/api v0.35.5
 	k8s.io/apiextensions-apiserver v0.35.5
@@ -108,7 +108,7 @@ require (
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/muvaf/typewriter v0.0.0-20240614220100-70f9d4a54ea0 // indirect
-	github.com/nebius/gosdk v0.2.22 // indirect
+	github.com/nebius/gosdk v0.2.27 // indirect
 	github.com/oasdiff/oasdiff v1.11.8 // indirect
 	github.com/oasdiff/yaml v0.0.0-20250309154309-f31be36b4037 // indirect
 	github.com/oasdiff/yaml3 v0.0.0-20250309153720-d2182401db90 // indirect

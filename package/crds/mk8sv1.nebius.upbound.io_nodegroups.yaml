@@ -656,6 +656,18 @@ spec:
                             publicIpAddress:
                               description: '(Attributes) :'
                               type: object
+                            securityGroups:
+                              description: (Attributes List) User provided VPC Security
+                                Groups which will be assigned to all nodes of this
+                                NodeGroup. (see below for nested schema)
+                              items:
+                                properties:
+                                  id:
+                                    description: (String) Identifier for the resource,
+                                      unique for its resource type.
+                                    type: string
+                                type: object
+                              type: array
                             subnetId:
                               description: |-
                                 (String) :
@@ -1542,6 +1554,18 @@ spec:
                             publicIpAddress:
                               description: '(Attributes) :'
                               type: object
+                            securityGroups:
+                              description: (Attributes List) User provided VPC Security
+                                Groups which will be assigned to all nodes of this
+                                NodeGroup. (see below for nested schema)
+                              items:
+                                properties:
+                                  id:
+                                    description: (String) Identifier for the resource,
+                                      unique for its resource type.
+                                    type: string
+                                type: object
+                              type: array
                             subnetId:
                               description: |-
                                 (String) :
@@ -2463,6 +2487,18 @@ spec:
                             publicIpAddress:
                               description: '(Attributes) :'
                               type: object
+                            securityGroups:
+                              description: (Attributes List) User provided VPC Security
+                                Groups which will be assigned to all nodes of this
+                                NodeGroup. (see below for nested schema)
+                              items:
+                                properties:
+                                  id:
+                                    description: (String) Identifier for the resource,
+                                      unique for its resource type.
+                                    type: string
+                                type: object
+                              type: array
                             subnetId:
                               description: |-
                                 (String) :

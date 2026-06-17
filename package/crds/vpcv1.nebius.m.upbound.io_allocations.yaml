@@ -1125,6 +1125,22 @@ spec:
                                   (String) Human readable name for the resource.
                                   Network interface name
                                 type: string
+                              type:
+                                description: |-
+                                  (String) :
+                                  :
+
+                                  Type of allocation attachment on the network interface.
+
+                                  #### Supported values
+
+                                  Possible values:
+
+                                  - `TYPE_UNSPECIFIED`
+                                  - `PRIMARY` - Allocation is attached as the interface private IPv4 address.
+                                  - `ALIAS` - Allocation is attached as an IP alias.
+                                  - `PUBLIC` - Allocation is attached as the interface public IPv4 address.
+                                type: string
                             type: object
                         type: object
                       details:

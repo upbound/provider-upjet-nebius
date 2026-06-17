@@ -9,6 +9,7 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/controller"
 
+	disk "github.com/upbound/provider-nebius/internal/controller/cluster/computev1/disk"
 	filesystem "github.com/upbound/provider-nebius/internal/controller/cluster/computev1/filesystem"
 	gpucluster "github.com/upbound/provider-nebius/internal/controller/cluster/computev1/gpucluster"
 )
@@ -17,6 +18,7 @@ import (
 // the supplied manager.
 func Setup_computev1(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		disk.Setup,
 		filesystem.Setup,
 		gpucluster.Setup,
 	} {
@@ -31,6 +33,7 @@ func Setup_computev1(mgr ctrl.Manager, o controller.Options) error {
 // the supplied manager gated.
 func SetupGated_computev1(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		disk.SetupGated,
 		filesystem.SetupGated,
 		gpucluster.SetupGated,
 	} {

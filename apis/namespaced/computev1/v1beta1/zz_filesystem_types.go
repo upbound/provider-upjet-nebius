@@ -32,7 +32,7 @@ type FilesystemInitParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	Metadata *MetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
+	Metadata *FilesystemMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// Human readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -69,6 +69,15 @@ type FilesystemInitParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
+type FilesystemMetadataInitParameters struct {
+}
+
+type FilesystemMetadataObservation struct {
+}
+
+type FilesystemMetadataParameters struct {
+}
+
 type FilesystemObservation struct {
 
 	// :
@@ -96,7 +105,7 @@ type FilesystemObservation struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
+	Metadata *FilesystemMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// Human readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -124,7 +133,7 @@ type FilesystemObservation struct {
 	// *Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.*
 	SizeMebibytes *float64 `json:"sizeMebibytes,omitempty" tf:"size_mebibytes,omitempty"`
 
-	Status *StatusObservation `json:"status,omitempty" tf:"status,omitempty"`
+	Status *FilesystemStatusObservation `json:"status,omitempty" tf:"status,omitempty"`
 
 	// :
 	//
@@ -172,7 +181,7 @@ type FilesystemParameters struct {
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
+	Metadata *FilesystemMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// Human readable name for the resource.
 	// +kubebuilder:validation:Optional
@@ -216,19 +225,10 @@ type FilesystemParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
-type MetadataInitParameters struct {
+type FilesystemStatusInitParameters struct {
 }
 
-type MetadataObservation struct {
-}
-
-type MetadataParameters struct {
-}
-
-type StatusInitParameters struct {
-}
-
-type StatusObservation struct {
+type FilesystemStatusObservation struct {
 	BlockSizeBytes *float64 `json:"blockSizeBytes,omitempty" tf:"block_size_bytes,omitempty"`
 
 	ReadOnlyAttachments []*string `json:"readOnlyAttachments,omitempty" tf:"read_only_attachments,omitempty"`
@@ -257,7 +257,7 @@ type StatusObservation struct {
 	StateDescription *string `json:"stateDescription,omitempty" tf:"state_description,omitempty"`
 }
 
-type StatusParameters struct {
+type FilesystemStatusParameters struct {
 }
 
 // FilesystemSpec defines the desired state of Filesystem

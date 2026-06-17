@@ -658,6 +658,14 @@ spec:
                           defaultEgressGateway:
                             type: object
                         type: object
+                      priority:
+                        description: |-
+                          :
+
+                          Indicates priority of the route.
+                          That is 0 or a positive number.
+                          Lower value = higher priority; 0 is the highest priority.
+                        type: number
                       state:
                         description: |-
                           :
