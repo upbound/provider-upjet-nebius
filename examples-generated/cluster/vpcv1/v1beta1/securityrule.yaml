@@ -1,0 +1,41 @@
+apiVersion: vpcv1.nebius.upbound.io/v1beta1
+kind: SecurityRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpcv1/v1beta1/securityrule
+  labels:
+    testing.upbound.io/example-name: allow_https
+  name: allow-https
+spec:
+  forProvider:
+    access: ALLOW
+    ingress:
+      destinationPorts:
+      - 443
+      sourceCidrs:
+      - 0.0.0.0/0
+    name: allow-https
+    parentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: web
+    priority: 100
+    protocol: TCP
+    type: STATEFUL
+
+---
+
+apiVersion: vpcv1.nebius.upbound.io/v1beta1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpcv1/v1beta1/securityrule
+  labels:
+    testing.upbound.io/example-name: web
+  name: web
+spec:
+  forProvider:
+    name: web-security-group
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    parentId: project-id

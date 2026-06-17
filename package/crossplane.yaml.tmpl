@@ -1,0 +1,32 @@
+apiVersion: meta.pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: {{ .Name }}
+{{ if ne .Service "monolith" }}
+  labels:
+    pkg.crossplane.io/provider-family: provider-family-{{ .ProviderName }}
+{{ end }}
+  annotations:
+    meta.crossplane.io/maintainer: Upbound <support@upbound.io>
+    meta.crossplane.io/description: |
+      Upbound's official Crossplane provider to manage Nebius Cloud
+      {{ .Service }} services in Kubernetes.
+    meta.crossplane.io/readme: |
+      Provider Nebius is a Crossplane provider for [Nebius Cloud](https://nebius.com/)
+      developed and supported by Upbound.
+      Available resources and their fields can be found in the [Upbound
+      Marketplace](https://marketplace.upbound.io/providers/upbound/provider-{{ .ProviderName }}).
+      If you encounter an issue please reach out on support@upbound.io email
+      address. This is a subpackage for the {{ .Service }} API group.
+spec:
+  capabilities:
+  - SafeStart
+{{ if ne .Service "monolith" }}
+  crossplane:
+    version: ">=v1.12.1-0"
+{{ end }}
+{{ if and (ne .Service "config") (ne .Service "monolith") }}
+  dependsOn:
+    - provider: {{ .XpkgRegOrg }}/provider-family-{{ .ProviderName }}
+      version: "{{ .DepConstraint }}"
+{{ end }}

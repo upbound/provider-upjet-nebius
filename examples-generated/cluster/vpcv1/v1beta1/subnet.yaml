@@ -1,0 +1,32 @@
+apiVersion: vpcv1.nebius.upbound.io/v1beta1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpcv1/v1beta1/subnet
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    ipv4PrivatePools:
+      useNetworkPools: true
+    name: default-subnet
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: default
+    parentId: project-id
+
+---
+
+apiVersion: vpcv1.nebius.upbound.io/v1beta1
+kind: Network
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpcv1/v1beta1/subnet
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    name: default-network
+    parentId: project-id

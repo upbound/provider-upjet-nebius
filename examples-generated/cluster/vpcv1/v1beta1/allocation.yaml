@@ -1,0 +1,17 @@
+apiVersion: vpcv1.nebius.upbound.io/v1beta1
+kind: Allocation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpcv1/v1beta1/allocation
+  labels:
+    testing.upbound.io/example-name: vm_private_ip
+  name: vm-private-ip
+spec:
+  forProvider:
+    ipv4Private:
+      cidr: /32
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: example
+    name: vm-private-ip
+    parentId: project-id
