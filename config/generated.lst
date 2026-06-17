@@ -7,6 +7,8 @@
 "nebius_iam_v1_service_account",
 "nebius_mk8s_v1_cluster",
 "nebius_mk8s_v1_node_group",
+"nebius_mysterybox_v1_secret",
+"nebius_mysterybox_v1_secret_version",
 "nebius_vpc_v1_allocation",
 "nebius_vpc_v1_network",
 "nebius_vpc_v1_pool",

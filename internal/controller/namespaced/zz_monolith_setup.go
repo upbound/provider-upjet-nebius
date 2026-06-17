@@ -17,6 +17,8 @@ import (
 	serviceaccount "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/serviceaccount"
 	cluster "github.com/upbound/provider-nebius/internal/controller/namespaced/mk8sv1/cluster"
 	nodegroup "github.com/upbound/provider-nebius/internal/controller/namespaced/mk8sv1/nodegroup"
+	secret "github.com/upbound/provider-nebius/internal/controller/namespaced/mysteryboxv1/secret"
+	secretversion "github.com/upbound/provider-nebius/internal/controller/namespaced/mysteryboxv1/secretversion"
 	providerconfig "github.com/upbound/provider-nebius/internal/controller/namespaced/providerconfig"
 	allocation "github.com/upbound/provider-nebius/internal/controller/namespaced/vpcv1/allocation"
 	network "github.com/upbound/provider-nebius/internal/controller/namespaced/vpcv1/network"
@@ -40,6 +42,8 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		serviceaccount.Setup,
 		cluster.Setup,
 		nodegroup.Setup,
+		secret.Setup,
+		secretversion.Setup,
 		providerconfig.Setup,
 		allocation.Setup,
 		network.Setup,
@@ -69,6 +73,8 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		serviceaccount.SetupGated,
 		cluster.SetupGated,
 		nodegroup.SetupGated,
+		secret.SetupGated,
+		secretversion.SetupGated,
 		providerconfig.SetupGated,
 		allocation.SetupGated,
 		network.SetupGated,

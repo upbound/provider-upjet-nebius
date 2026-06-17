@@ -23,10 +23,15 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"nebius_compute_v1_gpu_cluster": config.FrameworkResourceWithComputedIdentifier("id", "computegpucluster-e01000000000000000"),
 	"nebius_compute_v1_filesystem":  config.FrameworkResourceWithComputedIdentifier("id", "computefilesystem-e01000000000000000"),
 	"nebius_compute_v1_disk":        config.FrameworkResourceWithComputedIdentifier("id", "computedisk-e01000000000000000"),
-	"nebius_mk8s_v1_cluster":        config.FrameworkResourceWithComputedIdentifier("id", "mk8scluster-e0t000000000000000"),
-	"nebius_mk8s_v1_node_group":     config.FrameworkResourceWithComputedIdentifier("id", "mk8snodegroup-e0t000000000000000"),
-	"nebius_dns_v1_zone":            config.FrameworkResourceWithComputedIdentifier("id", "dnszone-e0t000000000000000"),
-	"nebius_dns_v1_record":          config.FrameworkResourceWithComputedIdentifier("id", "dnsrecord-e0t000000000000000"),
+	// mk8s_v1 resources can have any valid routing code prefix e.g. e0t in ComputedIdentifier independently of the project they're deployed in
+	"nebius_mk8s_v1_cluster":    config.FrameworkResourceWithComputedIdentifier("id", "mk8scluster-e0t000000000000000"),
+	"nebius_mk8s_v1_node_group": config.FrameworkResourceWithComputedIdentifier("id", "mk8snodegroup-e0t000000000000000"),
+	// dns_v1 resources can have any valid routing code prefix e.g. e0t in ComputedIdentifier independently of the project they're deployed in
+	"nebius_dns_v1_zone":   config.FrameworkResourceWithComputedIdentifier("id", "dnszone-e0t000000000000000"),
+	"nebius_dns_v1_record": config.FrameworkResourceWithComputedIdentifier("id", "dnsrecord-e0t000000000000000"),
+	// mysterybox_v1 resources need to have a valid project prefix in ComputedIdentifier e.g. e00, e01
+	"nebius_mysterybox_v1_secret":         config.FrameworkResourceWithComputedIdentifier("id", "mbsec-e00000000000000000"),
+	"nebius_mysterybox_v1_secret_version": config.FrameworkResourceWithComputedIdentifier("id", "mbsecver-e00000000000000000"),
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

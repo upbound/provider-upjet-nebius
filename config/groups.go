@@ -56,4 +56,7 @@ var GroupMap = map[string]GroupKindCalculator{
 	"nebius_iam_v1_service_account": ReplaceGroupWords("iamv1", 2),
 	"nebius_dns_v1_zone":            ReplaceGroupWords("dnsv1", 2),
 	"nebius_dns_v1_record":          ReplaceGroupWords("dnsv1", 2),
+
+	"nebius_mysterybox_v1_secret":         ReplaceGroupWords("mysteryboxv1", 2),
+	"nebius_mysterybox_v1_secret_version": ReplaceGroupWords("mysteryboxv1", 2),
 }
