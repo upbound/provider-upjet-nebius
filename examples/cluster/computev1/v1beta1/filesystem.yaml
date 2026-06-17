@@ -1,0 +1,14 @@
+apiVersion: computev1.nebius.upbound.io/v1beta1
+kind: Filesystem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: computev1/v1beta1/filesystem
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    name: computev1filesystem
+    parentId: ${data.nebius_project_id}
+    sizeGibibytes: 8
+    type: NETWORK_SSD

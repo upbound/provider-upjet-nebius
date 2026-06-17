@@ -40,12 +40,17 @@ func ReplaceGroupWords(group string, count int) GroupKindCalculator {
 // It's written with data from TF Provider documentation.
 // We want to remove version from occurying in Kind of the resource and instead end up in Group
 var GroupMap = map[string]GroupKindCalculator{
-	"nebius_vpc_v1_network":        ReplaceGroupWords("vpcv1", 2),
-	"nebius_vpc_v1_pool":           ReplaceGroupWords("vpcv1", 2),
-	"nebius_vpc_v1_subnet":         ReplaceGroupWords("vpcv1", 2),
-	"nebius_vpc_v1_route_table":    ReplaceGroupWords("vpcv1", 2),
-	"nebius_vpc_v1_allocation":     ReplaceGroupWords("vpcv1", 2),
-	"nebius_vpc_v1_route":          ReplaceGroupWords("vpcv1", 2),
-	"nebius_vpc_v1_security_group": ReplaceGroupWords("vpcv1", 2),
-	"nebius_vpc_v1_security_rule":  ReplaceGroupWords("vpcv1", 2),
+	"nebius_vpc_v1_network":         ReplaceGroupWords("vpcv1", 2),
+	"nebius_vpc_v1_pool":            ReplaceGroupWords("vpcv1", 2),
+	"nebius_vpc_v1_subnet":          ReplaceGroupWords("vpcv1", 2),
+	"nebius_vpc_v1_route_table":     ReplaceGroupWords("vpcv1", 2),
+	"nebius_vpc_v1_allocation":      ReplaceGroupWords("vpcv1", 2),
+	"nebius_vpc_v1_route":           ReplaceGroupWords("vpcv1", 2),
+	"nebius_vpc_v1_security_group":  ReplaceGroupWords("vpcv1", 2),
+	"nebius_vpc_v1_security_rule":   ReplaceGroupWords("vpcv1", 2),
+	"nebius_mk8s_v1_cluster":        ReplaceGroupWords("mk8sv1", 2),
+	"nebius_mk8s_v1_node_group":     ReplaceGroupWords("mk8sv1", 2),
+	"nebius_compute_v1_gpu_cluster": ReplaceGroupWords("computev1", 2),
+	"nebius_compute_v1_filesystem":  ReplaceGroupWords("computev1", 2),
+	"nebius_iam_v1_service_account": ReplaceGroupWords("iamv1", 2),
 }

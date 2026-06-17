@@ -10,16 +10,22 @@ package cluster
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
+	v1beta1 "github.com/upbound/provider-nebius/apis/cluster/computev1/v1beta1"
+	v1beta1iamv1 "github.com/upbound/provider-nebius/apis/cluster/iamv1/v1beta1"
+	v1beta1mk8sv1 "github.com/upbound/provider-nebius/apis/cluster/mk8sv1/v1beta1"
 	v1alpha1 "github.com/upbound/provider-nebius/apis/cluster/v1alpha1"
-	v1beta1 "github.com/upbound/provider-nebius/apis/cluster/v1beta1"
+	v1beta1cluster "github.com/upbound/provider-nebius/apis/cluster/v1beta1"
 	v1beta1vpcv1 "github.com/upbound/provider-nebius/apis/cluster/vpcv1/v1beta1"
 )
 
 func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
-		v1alpha1.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
+		v1beta1iamv1.SchemeBuilder.AddToScheme,
+		v1beta1mk8sv1.SchemeBuilder.AddToScheme,
+		v1alpha1.SchemeBuilder.AddToScheme,
+		v1beta1cluster.SchemeBuilder.AddToScheme,
 		v1beta1vpcv1.SchemeBuilder.AddToScheme,
 	)
 }

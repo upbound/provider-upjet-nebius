@@ -1,0 +1,2676 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: nodegroups.mk8sv1.nebius.upbound.io
+spec:
+  group: mk8sv1.nebius.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - nebius
+    kind: NodeGroup
+    listKind: NodeGroupList
+    plural: nodegroups
+    singular: nodegroup
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: NodeGroup is the Schema for the NodeGroups API. NodeGroup represents
+          Kubernetes node pool - set of worker machines having the same configuration.
+          A Node is a Nebius Compute Instance created in Cluster.metadata.parent_id
+          container, running kubelet that registers in Kubernetes API and a Node object
+          created.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: NodeGroupSpec defines the desired state of NodeGroup
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  autoRepair:
+                    description: (Attributes) Parameters for nodes auto repair. (see
+                      below for nested schema)
+                    properties:
+                      conditions:
+                        description: (Attributes List) Conditions that determine whether
+                          a node should be auto repaired. (see below for nested schema)
+                        items:
+                          properties:
+                            disabled:
+                              description: |-
+                                (Boolean) :
+                                :
+
+                                When true, disables the default auto-repair condition rules.
+
+                                *Cannot be set alongside timeout.*
+                              type: boolean
+                            status:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                :
+
+                                Node condition status.
+
+                                #### Supported values
+
+                                Possible values:
+
+                                - `CONDITION_STATUS_UNSPECIFIED`
+                                - `TRUE`
+                                - `FALSE`
+                                - `UNKNOWN`
+                              type: string
+                            timeout:
+                              description: |-
+                                (String) :
+                                :
+
+                                The duration after which the node is automatically repaired if the condition remains in the specified status.
+
+                                Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as `300ms`, `-1.5h` or `2h45m`. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`, `d`.
+
+                                *Cannot be set alongside disabled.*
+                              type: string
+                            type:
+                              description: |-
+                                (String) :
+                                Node condition type.
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  autoscaling:
+                    description: '(Attributes) :'
+                    properties:
+                      maxNodeCount:
+                        description: (Number)
+                        type: number
+                      minNodeCount:
+                        description: (Number)
+                        type: number
+                    type: object
+                  fixedNodeCount:
+                    description: |-
+                      (Number) :
+                      :
+
+                      Number of nodes in the group. Can be changed manually at any time.
+
+                      *Cannot be set alongside autoscaling.*
+                    type: number
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                  parentIdRef:
+                    description: Reference to a Cluster in mk8sv1 to populate parentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  parentIdSelector:
+                    description: Selector for a Cluster in mk8sv1 to populate parentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  strategy:
+                    description: '(Attributes) :'
+                    properties:
+                      drainTimeout:
+                        description: |-
+                          (String) :
+                          :
+
+                          Maximum amount of time that the service will spend attempting to gracefully drain a node
+                          (evicting its pods) before falling back to pod deletion.
+                          A value of 0 (or when field is omitted) means no timeout: the node can be drained for an unlimited time.
+                          Important consequence of that is if PodDisruptionBudget doesn't allow evicting a pod,
+                          then NodeGroup update with node re-creation will hang on that pod eviction.
+                          Note that this is different from `kubectl drain --timeout`, which gives up and returns an error.
+
+                          Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as `300ms`, `-1.5h` or `2h45m`. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`, `d`.
+                        type: string
+                      maxSurge:
+                        description: '(Attributes) :'
+                        properties:
+                          count:
+                            description: |-
+                              (Number) Cannot be set alongside percent.
+                              *Cannot be set alongside percent.*
+                            type: number
+                          percent:
+                            description: |-
+                              (Number) Cannot be set alongside count.
+                              *Cannot be set alongside count.*
+                            type: number
+                        type: object
+                      maxUnavailable:
+                        description: is also set to 0.
+                        properties:
+                          count:
+                            description: |-
+                              (Number) Cannot be set alongside percent.
+                              *Cannot be set alongside percent.*
+                            type: number
+                          percent:
+                            description: |-
+                              (Number) Cannot be set alongside count.
+                              *Cannot be set alongside count.*
+                            type: number
+                        type: object
+                    type: object
+                  template:
+                    description: '(Attributes) :'
+                    properties:
+                      bootDisk:
+                        description: (Attributes) Parameters of a Node Nebius Compute
+                          Instance boot disk. (see below for nested schema)
+                        properties:
+                          blockSizeBytes:
+                            description: (Number)
+                            type: number
+                          sizeBytes:
+                            description: |-
+                              (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
+                              *Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.*
+                            type: number
+                          sizeGibibytes:
+                            description: |-
+                              (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
+                              *Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.*
+                            type: number
+                          sizeKibibytes:
+                            description: |-
+                              (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
+                              *Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.*
+                            type: number
+                          sizeMebibytes:
+                            description: |-
+                              (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+                              *Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.*
+                            type: number
+                          type:
+                            description: |-
+                              (String) :
+                              :
+
+                              #### Supported values
+
+                              Possible values:
+
+                              - `UNSPECIFIED`
+                              - `NETWORK_SSD`
+                              - `NETWORK_HDD`
+                              - `NETWORK_SSD_IO_M3`
+                              - `NETWORK_SSD_NON_REPLICATED`
+                            type: string
+                        type: object
+                      cloudInitUserDataSecretRef:
+                        description: |-
+                          (String, Sensitive) :
+                          :
+
+                          cloud-init user-data
+                          Should contain at least one SSH key.
+                        properties:
+                          key:
+                            description: The key to select.
+                            type: string
+                          name:
+                            description: Name of the secret.
+                            type: string
+                          namespace:
+                            description: Namespace of the secret.
+                            type: string
+                        required:
+                        - key
+                        - name
+                        - namespace
+                        type: object
+                      filesystems:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            attachMode:
+                              description: |-
+                                (String) :
+                                :
+
+                                #### Supported values
+
+                                Possible values:
+
+                                - `UNSPECIFIED`
+                                - `READ_ONLY`
+                                - `READ_WRITE`
+                              type: string
+                            existingFilesystem:
+                              description: (Attributes) (see below for nested schema)
+                              properties:
+                                id:
+                                  description: (String) Identifier for the resource,
+                                    unique for its resource type.
+                                  type: string
+                                idRef:
+                                  description: Reference to a Filesystem in computev1
+                                    to populate id.
+                                  properties:
+                                    name:
+                                      description: Name of the referenced object.
+                                      type: string
+                                    policy:
+                                      description: Policies for referencing.
+                                      properties:
+                                        resolution:
+                                          default: Required
+                                          description: |-
+                                            Resolution specifies whether resolution of this reference is required.
+                                            The default is 'Required', which means the reconcile will fail if the
+                                            reference cannot be resolved. 'Optional' means this reference will be
+                                            a no-op if it cannot be resolved.
+                                          enum:
+                                          - Required
+                                          - Optional
+                                          type: string
+                                        resolve:
+                                          description: |-
+                                            Resolve specifies when this reference should be resolved. The default
+                                            is 'IfNotPresent', which will attempt to resolve the reference only when
+                                            the corresponding field is not present. Use 'Always' to resolve the
+                                            reference on every reconcile.
+                                          enum:
+                                          - Always
+                                          - IfNotPresent
+                                          type: string
+                                      type: object
+                                  required:
+                                  - name
+                                  type: object
+                                idSelector:
+                                  description: Selector for a Filesystem in computev1
+                                    to populate id.
+                                  properties:
+                                    matchControllerRef:
+                                      description: |-
+                                        MatchControllerRef ensures an object with the same controller reference
+                                        as the selecting object is selected.
+                                      type: boolean
+                                    matchLabels:
+                                      additionalProperties:
+                                        type: string
+                                      description: MatchLabels ensures an object with
+                                        matching labels is selected.
+                                      type: object
+                                    policy:
+                                      description: Policies for selection.
+                                      properties:
+                                        resolution:
+                                          default: Required
+                                          description: |-
+                                            Resolution specifies whether resolution of this reference is required.
+                                            The default is 'Required', which means the reconcile will fail if the
+                                            reference cannot be resolved. 'Optional' means this reference will be
+                                            a no-op if it cannot be resolved.
+                                          enum:
+                                          - Required
+                                          - Optional
+                                          type: string
+                                        resolve:
+                                          description: |-
+                                            Resolve specifies when this reference should be resolved. The default
+                                            is 'IfNotPresent', which will attempt to resolve the reference only when
+                                            the corresponding field is not present. Use 'Always' to resolve the
+                                            reference on every reconcile.
+                                          enum:
+                                          - Always
+                                          - IfNotPresent
+                                          type: string
+                                      type: object
+                                  type: object
+                              type: object
+                            mountTag:
+                              description: |-
+                                defined identifier, allowing to use it as a device in mount command.
+                                Specifies the user-defined identifier, allowing to use it as a device in mount command.
+                              type: string
+                          type: object
+                        type: array
+                      gpuCluster:
+                        description: (Attributes) Nebius Compute GPUCluster ID that
+                          will be attached to node. (see below for nested schema)
+                        properties:
+                          id:
+                            description: (String) Identifier for the resource, unique
+                              for its resource type.
+                            type: string
+                          idRef:
+                            description: Reference to a GpuCluster in computev1 to
+                              populate id.
+                            properties:
+                              name:
+                                description: Name of the referenced object.
+                                type: string
+                              policy:
+                                description: Policies for referencing.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            required:
+                            - name
+                            type: object
+                          idSelector:
+                            description: Selector for a GpuCluster in computev1 to
+                              populate id.
+                            properties:
+                              matchControllerRef:
+                                description: |-
+                                  MatchControllerRef ensures an object with the same controller reference
+                                  as the selecting object is selected.
+                                type: boolean
+                              matchLabels:
+                                additionalProperties:
+                                  type: string
+                                description: MatchLabels ensures an object with matching
+                                  labels is selected.
+                                type: object
+                              policy:
+                                description: Policies for selection.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            type: object
+                        type: object
+                      gpuSettings:
+                        description: '(Attributes) :'
+                        properties:
+                          driversPreset:
+                            description: |-
+                              : ""
+                              :
+
+                              Identifier of the predefined set of drivers included in the ComputeImage deployed on ComputeInstances that are part of the NodeGroup.
+                              Supported presets for different platform / Kubernetes version combinations:
+                              * `gpu-l40s-a`, `gpu-l40s-d`, `gpu-h100-sxm`, `gpu-h200-sxm`:
+                              * `version`: 1.30 → `"cuda12"` (CUDA 12.4)
+                              * `version`: 1.31 → `"cuda12"` (CUDA 12.4), `"cuda12.4"`, `"cuda12.8"`
+                              * `gpu-b200-sxm`:
+                              * `version`: 1.31 → `"cuda12"` (CUDA 12.8), `"cuda12.8"`
+                              * `gpu-b200-sxm-a`:
+                              * `version`: 1.31 → `"cuda12.8"`
+                            type: string
+                        type: object
+                      localDisks:
+                        description: '(Attributes) :'
+                        properties:
+                          config:
+                            description: '(Attributes) :'
+                            properties:
+                              kubeletEphemeral:
+                                description: |-
+                                  (Boolean) :
+                                  :
+
+                                  kubelet_ephemeral: combine all local disks into a single storage volume and use it as kubelet's local ephemeral storage on the node
+                                  See also https://kubernetes.io/docs/concepts/storage/ephemeral-storage/
+
+                                  The default when LocalDisksSpecConfig is not set.
+
+                                  *Cannot be set alongside none.*
+                                type: boolean
+                              none:
+                                description: |-
+                                  (Boolean) :
+                                  :
+
+                                  none: "do nothing" - local disks will be provisioned as on a regular compute instance.
+
+                                  *Cannot be set alongside kubelet_ephemeral.*
+                                type: boolean
+                            type: object
+                          passthroughGroup:
+                            description: '(Attributes) :'
+                            properties:
+                              requested:
+                                description: |-
+                                  (Boolean) :
+                                  :
+
+                                  Passthrough local disks from the underlying host.
+
+                                  Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
+                                  but the exact number depends on the preset.
+                                  Enabled only when this field is explicitly set.
+                                type: boolean
+                            type: object
+                        type: object
+                      maxPods:
+                        description: |-
+                          (Number) :
+                          :
+
+                          The maximum number of Pods per node for your cluster. If omitted, MK8S assigns the default value of 110. When you
+                          configure the maximum number of Pods per node for the cluster, MK8S uses this value to allocate a CIDR range for every node
+                          in group. The node CIDR prefix is calculated as `32 - ceil(log2(2 * max_pods))`, i.e. the smallest IPv4 subnet whose total address
+                          count is at least `2 * max_pods`. Not all IPs are usable for workload Pods because some of them are consumed by system Pods.
+                        type: number
+                      metadata:
+                        description: '(Attributes) :'
+                        properties:
+                          labels:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              (Map of String) :
+                              :
+
+                              Kubernetes Node labels.
+
+                              Keys and values must follow Kubernetes label syntax:
+                              https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+
+                              For now change will not be propagated to existing nodes, so will be applied only to Kubernetes Nodes created after the field change.
+                              That behavior may change later.
+                              So, for now you will need to manually set them to existing nodes, if that is needed.
+
+                              System labels containing "kubernetes.io" and "k8s.io" will be ignored.
+                              Field change will NOT trigger NodeGroup roll out.
+                            type: object
+                            x-kubernetes-map-type: granular
+                        type: object
+                      networkInterfaces:
+                        description: (Attributes List) (see below for nested schema)
+                        items:
+                          properties:
+                            publicIpAddress:
+                              description: '(Attributes) :'
+                              type: object
+                            subnetId:
+                              description: |-
+                                (String) :
+                                :
+
+                                Nebius VPC Subnet ID that will be attached to a node cloud instance network interface.
+                                By default Cluster control plane subnet_id used.
+                                Subnet should be located in the same network with control plane.
+                              type: string
+                            subnetIdRef:
+                              description: Reference to a Subnet in vpcv1 to populate
+                                subnetId.
+                              properties:
+                                name:
+                                  description: Name of the referenced object.
+                                  type: string
+                                policy:
+                                  description: Policies for referencing.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              required:
+                              - name
+                              type: object
+                            subnetIdSelector:
+                              description: Selector for a Subnet in vpcv1 to populate
+                                subnetId.
+                              properties:
+                                matchControllerRef:
+                                  description: |-
+                                    MatchControllerRef ensures an object with the same controller reference
+                                    as the selecting object is selected.
+                                  type: boolean
+                                matchLabels:
+                                  additionalProperties:
+                                    type: string
+                                  description: MatchLabels ensures an object with
+                                    matching labels is selected.
+                                  type: object
+                                policy:
+                                  description: Policies for selection.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              type: object
+                          type: object
+                        type: array
+                      os:
+                        description: |-
+                          (String) :
+                          :
+
+                          OS version that will be used to create the boot disk of Compute Instances in the NodeGroup.
+                          Supported platform / Kubernetes version / OS / driver presets combinations
+                          * `gpu-l40s-a`, `gpu-l40s-d`, `gpu-h100-sxm`, `gpu-h200-sxm`, `cpu-e1`, `cpu-e2`, `cpu-d3`:
+                          * `drivers_preset`: `""`
+                          * `version`: 1.30 → `"ubuntu22.04"`
+                          * `version`: 1.31 → `"ubuntu22.04"` (default), `"ubuntu24.04"`
+                          * `gpu-l40s-a`, `gpu-l40s-d`, `gpu-h100-sxm`, `gpu-h200-sxm`:
+                          * `drivers_preset`: `"cuda12"` (CUDA 12.4)
+                          * `version`: 1.30, 1.31 → `"ubuntu22.04"`
+                          * `drivers_preset`: `"cuda12.4"`
+                          * `version`: 1.31 → `"ubuntu22.04"`
+                          * `drivers_preset`: `"cuda12.8"`
+                          * `version`: 1.31 → `"ubuntu24.04"`
+                          * `gpu-b200-sxm`:
+                          * `drivers_preset`: `""`
+                          * `version`: 1.30, 1.31 → `"ubuntu24.04"`
+                          * `drivers_preset`: `"cuda12"` (CUDA 12.8)
+                          * `version`: 1.30, 1.31 → `"ubuntu24.04"`
+                          * `drivers_preset`: `"cuda12.8"`
+                          * `version`: 1.31 → `"ubuntu24.04"`
+                          * `gpu-b200-sxm-a`:
+                          * `drivers_preset`: `""`
+                          * `version`: 1.31 → `"ubuntu24.04"`
+                          * `drivers_preset`: `"cuda12.8"`
+                          * `version`: 1.31 → `"ubuntu24.04"`
+                        type: string
+                      preemptible:
+                        description: '(Attributes) :'
+                        type: object
+                      reservationPolicy:
+                        description: '(Attributes) :'
+                        properties:
+                          policy:
+                            description: |-
+                              (String) :
+                              :
+
+                              #### Supported values
+
+                              Possible values:
+
+                              - `AUTO`:
+                              1) Will try to launch instance in any reservation_ids if provided.
+                              2) Will try to launch instance in any of the available capacity block.
+                              3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
+
+                              - `FORBID`:
+                              The instance is launched only using on-demand (PAYG) capacity.
+                              No attempt is made to find or use a Capacity Block.
+                              It's an error to provide reservation_ids with policy = FORBID
+
+                              - `STRICT`:
+                              1) Will try to launch the instance in Capacity Blocks from reservation_ids if provided.
+                              2) If reservation_ids are not provided will try to launch instance in suitable & available Capacity Block.
+                              3) Fail otherwise.
+                            type: string
+                          reservationIds:
+                            description: |-
+                              (List of String) Capacity block groups, order matters
+                              Capacity block groups, order matters
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      resources:
+                        description: (Attributes) Resources that will have Nebius
+                          Compute Instance where Node kubelet will run. (see below
+                          for nested schema)
+                        properties:
+                          platform:
+                            description: (String)
+                            type: string
+                          preset:
+                            description: (String)
+                            type: string
+                        type: object
+                      serviceAccountId:
+                        description: |-
+                          (String) :
+                          :
+
+                          the Nebius service account whose credentials will be available on the nodes of the group.
+                          With these credentials, it is possible to make `nebius` CLI or public API requests from the nodes
+                          without the need for extra authentication.
+                          This service account is also used to make requests to container registry.
+
+                          `resource.serviceaccount.issueAccessToken` permission is required to use this field.
+                        type: string
+                      serviceAccountIdRef:
+                        description: Reference to a ServiceAccount in iamv1 to populate
+                          serviceAccountId.
+                        properties:
+                          name:
+                            description: Name of the referenced object.
+                            type: string
+                          policy:
+                            description: Policies for referencing.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        required:
+                        - name
+                        type: object
+                      serviceAccountIdSelector:
+                        description: Selector for a ServiceAccount in iamv1 to populate
+                          serviceAccountId.
+                        properties:
+                          matchControllerRef:
+                            description: |-
+                              MatchControllerRef ensures an object with the same controller reference
+                              as the selecting object is selected.
+                            type: boolean
+                          matchLabels:
+                            additionalProperties:
+                              type: string
+                            description: MatchLabels ensures an object with matching
+                              labels is selected.
+                            type: object
+                          policy:
+                            description: Policies for selection.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        type: object
+                      taints:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            effect:
+                              description: |-
+                                (String) :
+                                :
+
+                                #### Supported values
+
+                                Possible values:
+
+                                - `EFFECT_UNSPECIFIED`
+                                - `NO_EXECUTE`
+                                - `NO_SCHEDULE`
+                                - `PREFER_NO_SCHEDULE`
+                              type: string
+                            key:
+                              description: (String)
+                              type: string
+                            value:
+                              description: (String)
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  version:
+                    description: |-
+                      (String) :
+                      :
+
+                      Version is desired Kubernetes version of the cluster. For now only acceptable format is
+                      `<major>.<minor>` like "1.31". Option for patch version update will be added later.
+                      By default the cluster control plane `<major>.<minor>` version will be used.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  autoRepair:
+                    description: (Attributes) Parameters for nodes auto repair. (see
+                      below for nested schema)
+                    properties:
+                      conditions:
+                        description: (Attributes List) Conditions that determine whether
+                          a node should be auto repaired. (see below for nested schema)
+                        items:
+                          properties:
+                            disabled:
+                              description: |-
+                                (Boolean) :
+                                :
+
+                                When true, disables the default auto-repair condition rules.
+
+                                *Cannot be set alongside timeout.*
+                              type: boolean
+                            status:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                :
+
+                                Node condition status.
+
+                                #### Supported values
+
+                                Possible values:
+
+                                - `CONDITION_STATUS_UNSPECIFIED`
+                                - `TRUE`
+                                - `FALSE`
+                                - `UNKNOWN`
+                              type: string
+                            timeout:
+                              description: |-
+                                (String) :
+                                :
+
+                                The duration after which the node is automatically repaired if the condition remains in the specified status.
+
+                                Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as `300ms`, `-1.5h` or `2h45m`. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`, `d`.
+
+                                *Cannot be set alongside disabled.*
+                              type: string
+                            type:
+                              description: |-
+                                (String) :
+                                Node condition type.
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  autoscaling:
+                    description: '(Attributes) :'
+                    properties:
+                      maxNodeCount:
+                        description: (Number)
+                        type: number
+                      minNodeCount:
+                        description: (Number)
+                        type: number
+                    type: object
+                  fixedNodeCount:
+                    description: |-
+                      (Number) :
+                      :
+
+                      Number of nodes in the group. Can be changed manually at any time.
+
+                      *Cannot be set alongside autoscaling.*
+                    type: number
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                  parentIdRef:
+                    description: Reference to a Cluster in mk8sv1 to populate parentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  parentIdSelector:
+                    description: Selector for a Cluster in mk8sv1 to populate parentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  strategy:
+                    description: '(Attributes) :'
+                    properties:
+                      drainTimeout:
+                        description: |-
+                          (String) :
+                          :
+
+                          Maximum amount of time that the service will spend attempting to gracefully drain a node
+                          (evicting its pods) before falling back to pod deletion.
+                          A value of 0 (or when field is omitted) means no timeout: the node can be drained for an unlimited time.
+                          Important consequence of that is if PodDisruptionBudget doesn't allow evicting a pod,
+                          then NodeGroup update with node re-creation will hang on that pod eviction.
+                          Note that this is different from `kubectl drain --timeout`, which gives up and returns an error.
+
+                          Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as `300ms`, `-1.5h` or `2h45m`. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`, `d`.
+                        type: string
+                      maxSurge:
+                        description: '(Attributes) :'
+                        properties:
+                          count:
+                            description: |-
+                              (Number) Cannot be set alongside percent.
+                              *Cannot be set alongside percent.*
+                            type: number
+                          percent:
+                            description: |-
+                              (Number) Cannot be set alongside count.
+                              *Cannot be set alongside count.*
+                            type: number
+                        type: object
+                      maxUnavailable:
+                        description: is also set to 0.
+                        properties:
+                          count:
+                            description: |-
+                              (Number) Cannot be set alongside percent.
+                              *Cannot be set alongside percent.*
+                            type: number
+                          percent:
+                            description: |-
+                              (Number) Cannot be set alongside count.
+                              *Cannot be set alongside count.*
+                            type: number
+                        type: object
+                    type: object
+                  template:
+                    description: '(Attributes) :'
+                    properties:
+                      bootDisk:
+                        description: (Attributes) Parameters of a Node Nebius Compute
+                          Instance boot disk. (see below for nested schema)
+                        properties:
+                          blockSizeBytes:
+                            description: (Number)
+                            type: number
+                          sizeBytes:
+                            description: |-
+                              (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
+                              *Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.*
+                            type: number
+                          sizeGibibytes:
+                            description: |-
+                              (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
+                              *Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.*
+                            type: number
+                          sizeKibibytes:
+                            description: |-
+                              (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
+                              *Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.*
+                            type: number
+                          sizeMebibytes:
+                            description: |-
+                              (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+                              *Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.*
+                            type: number
+                          type:
+                            description: |-
+                              (String) :
+                              :
+
+                              #### Supported values
+
+                              Possible values:
+
+                              - `UNSPECIFIED`
+                              - `NETWORK_SSD`
+                              - `NETWORK_HDD`
+                              - `NETWORK_SSD_IO_M3`
+                              - `NETWORK_SSD_NON_REPLICATED`
+                            type: string
+                        type: object
+                      cloudInitUserDataSecretRef:
+                        description: |-
+                          (String, Sensitive) :
+                          :
+
+                          cloud-init user-data
+                          Should contain at least one SSH key.
+                        properties:
+                          key:
+                            description: The key to select.
+                            type: string
+                          name:
+                            description: Name of the secret.
+                            type: string
+                          namespace:
+                            description: Namespace of the secret.
+                            type: string
+                        required:
+                        - key
+                        - name
+                        - namespace
+                        type: object
+                      filesystems:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            attachMode:
+                              description: |-
+                                (String) :
+                                :
+
+                                #### Supported values
+
+                                Possible values:
+
+                                - `UNSPECIFIED`
+                                - `READ_ONLY`
+                                - `READ_WRITE`
+                              type: string
+                            existingFilesystem:
+                              description: (Attributes) (see below for nested schema)
+                              properties:
+                                id:
+                                  description: (String) Identifier for the resource,
+                                    unique for its resource type.
+                                  type: string
+                                idRef:
+                                  description: Reference to a Filesystem in computev1
+                                    to populate id.
+                                  properties:
+                                    name:
+                                      description: Name of the referenced object.
+                                      type: string
+                                    policy:
+                                      description: Policies for referencing.
+                                      properties:
+                                        resolution:
+                                          default: Required
+                                          description: |-
+                                            Resolution specifies whether resolution of this reference is required.
+                                            The default is 'Required', which means the reconcile will fail if the
+                                            reference cannot be resolved. 'Optional' means this reference will be
+                                            a no-op if it cannot be resolved.
+                                          enum:
+                                          - Required
+                                          - Optional
+                                          type: string
+                                        resolve:
+                                          description: |-
+                                            Resolve specifies when this reference should be resolved. The default
+                                            is 'IfNotPresent', which will attempt to resolve the reference only when
+                                            the corresponding field is not present. Use 'Always' to resolve the
+                                            reference on every reconcile.
+                                          enum:
+                                          - Always
+                                          - IfNotPresent
+                                          type: string
+                                      type: object
+                                  required:
+                                  - name
+                                  type: object
+                                idSelector:
+                                  description: Selector for a Filesystem in computev1
+                                    to populate id.
+                                  properties:
+                                    matchControllerRef:
+                                      description: |-
+                                        MatchControllerRef ensures an object with the same controller reference
+                                        as the selecting object is selected.
+                                      type: boolean
+                                    matchLabels:
+                                      additionalProperties:
+                                        type: string
+                                      description: MatchLabels ensures an object with
+                                        matching labels is selected.
+                                      type: object
+                                    policy:
+                                      description: Policies for selection.
+                                      properties:
+                                        resolution:
+                                          default: Required
+                                          description: |-
+                                            Resolution specifies whether resolution of this reference is required.
+                                            The default is 'Required', which means the reconcile will fail if the
+                                            reference cannot be resolved. 'Optional' means this reference will be
+                                            a no-op if it cannot be resolved.
+                                          enum:
+                                          - Required
+                                          - Optional
+                                          type: string
+                                        resolve:
+                                          description: |-
+                                            Resolve specifies when this reference should be resolved. The default
+                                            is 'IfNotPresent', which will attempt to resolve the reference only when
+                                            the corresponding field is not present. Use 'Always' to resolve the
+                                            reference on every reconcile.
+                                          enum:
+                                          - Always
+                                          - IfNotPresent
+                                          type: string
+                                      type: object
+                                  type: object
+                              type: object
+                            mountTag:
+                              description: |-
+                                defined identifier, allowing to use it as a device in mount command.
+                                Specifies the user-defined identifier, allowing to use it as a device in mount command.
+                              type: string
+                          type: object
+                        type: array
+                      gpuCluster:
+                        description: (Attributes) Nebius Compute GPUCluster ID that
+                          will be attached to node. (see below for nested schema)
+                        properties:
+                          id:
+                            description: (String) Identifier for the resource, unique
+                              for its resource type.
+                            type: string
+                          idRef:
+                            description: Reference to a GpuCluster in computev1 to
+                              populate id.
+                            properties:
+                              name:
+                                description: Name of the referenced object.
+                                type: string
+                              policy:
+                                description: Policies for referencing.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            required:
+                            - name
+                            type: object
+                          idSelector:
+                            description: Selector for a GpuCluster in computev1 to
+                              populate id.
+                            properties:
+                              matchControllerRef:
+                                description: |-
+                                  MatchControllerRef ensures an object with the same controller reference
+                                  as the selecting object is selected.
+                                type: boolean
+                              matchLabels:
+                                additionalProperties:
+                                  type: string
+                                description: MatchLabels ensures an object with matching
+                                  labels is selected.
+                                type: object
+                              policy:
+                                description: Policies for selection.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            type: object
+                        type: object
+                      gpuSettings:
+                        description: '(Attributes) :'
+                        properties:
+                          driversPreset:
+                            description: |-
+                              : ""
+                              :
+
+                              Identifier of the predefined set of drivers included in the ComputeImage deployed on ComputeInstances that are part of the NodeGroup.
+                              Supported presets for different platform / Kubernetes version combinations:
+                              * `gpu-l40s-a`, `gpu-l40s-d`, `gpu-h100-sxm`, `gpu-h200-sxm`:
+                              * `version`: 1.30 → `"cuda12"` (CUDA 12.4)
+                              * `version`: 1.31 → `"cuda12"` (CUDA 12.4), `"cuda12.4"`, `"cuda12.8"`
+                              * `gpu-b200-sxm`:
+                              * `version`: 1.31 → `"cuda12"` (CUDA 12.8), `"cuda12.8"`
+                              * `gpu-b200-sxm-a`:
+                              * `version`: 1.31 → `"cuda12.8"`
+                            type: string
+                        type: object
+                      localDisks:
+                        description: '(Attributes) :'
+                        properties:
+                          config:
+                            description: '(Attributes) :'
+                            properties:
+                              kubeletEphemeral:
+                                description: |-
+                                  (Boolean) :
+                                  :
+
+                                  kubelet_ephemeral: combine all local disks into a single storage volume and use it as kubelet's local ephemeral storage on the node
+                                  See also https://kubernetes.io/docs/concepts/storage/ephemeral-storage/
+
+                                  The default when LocalDisksSpecConfig is not set.
+
+                                  *Cannot be set alongside none.*
+                                type: boolean
+                              none:
+                                description: |-
+                                  (Boolean) :
+                                  :
+
+                                  none: "do nothing" - local disks will be provisioned as on a regular compute instance.
+
+                                  *Cannot be set alongside kubelet_ephemeral.*
+                                type: boolean
+                            type: object
+                          passthroughGroup:
+                            description: '(Attributes) :'
+                            properties:
+                              requested:
+                                description: |-
+                                  (Boolean) :
+                                  :
+
+                                  Passthrough local disks from the underlying host.
+
+                                  Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
+                                  but the exact number depends on the preset.
+                                  Enabled only when this field is explicitly set.
+                                type: boolean
+                            type: object
+                        type: object
+                      maxPods:
+                        description: |-
+                          (Number) :
+                          :
+
+                          The maximum number of Pods per node for your cluster. If omitted, MK8S assigns the default value of 110. When you
+                          configure the maximum number of Pods per node for the cluster, MK8S uses this value to allocate a CIDR range for every node
+                          in group. The node CIDR prefix is calculated as `32 - ceil(log2(2 * max_pods))`, i.e. the smallest IPv4 subnet whose total address
+                          count is at least `2 * max_pods`. Not all IPs are usable for workload Pods because some of them are consumed by system Pods.
+                        type: number
+                      metadata:
+                        description: '(Attributes) :'
+                        properties:
+                          labels:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              (Map of String) :
+                              :
+
+                              Kubernetes Node labels.
+
+                              Keys and values must follow Kubernetes label syntax:
+                              https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+
+                              For now change will not be propagated to existing nodes, so will be applied only to Kubernetes Nodes created after the field change.
+                              That behavior may change later.
+                              So, for now you will need to manually set them to existing nodes, if that is needed.
+
+                              System labels containing "kubernetes.io" and "k8s.io" will be ignored.
+                              Field change will NOT trigger NodeGroup roll out.
+                            type: object
+                            x-kubernetes-map-type: granular
+                        type: object
+                      networkInterfaces:
+                        description: (Attributes List) (see below for nested schema)
+                        items:
+                          properties:
+                            publicIpAddress:
+                              description: '(Attributes) :'
+                              type: object
+                            subnetId:
+                              description: |-
+                                (String) :
+                                :
+
+                                Nebius VPC Subnet ID that will be attached to a node cloud instance network interface.
+                                By default Cluster control plane subnet_id used.
+                                Subnet should be located in the same network with control plane.
+                              type: string
+                            subnetIdRef:
+                              description: Reference to a Subnet in vpcv1 to populate
+                                subnetId.
+                              properties:
+                                name:
+                                  description: Name of the referenced object.
+                                  type: string
+                                policy:
+                                  description: Policies for referencing.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              required:
+                              - name
+                              type: object
+                            subnetIdSelector:
+                              description: Selector for a Subnet in vpcv1 to populate
+                                subnetId.
+                              properties:
+                                matchControllerRef:
+                                  description: |-
+                                    MatchControllerRef ensures an object with the same controller reference
+                                    as the selecting object is selected.
+                                  type: boolean
+                                matchLabels:
+                                  additionalProperties:
+                                    type: string
+                                  description: MatchLabels ensures an object with
+                                    matching labels is selected.
+                                  type: object
+                                policy:
+                                  description: Policies for selection.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              type: object
+                          type: object
+                        type: array
+                      os:
+                        description: |-
+                          (String) :
+                          :
+
+                          OS version that will be used to create the boot disk of Compute Instances in the NodeGroup.
+                          Supported platform / Kubernetes version / OS / driver presets combinations
+                          * `gpu-l40s-a`, `gpu-l40s-d`, `gpu-h100-sxm`, `gpu-h200-sxm`, `cpu-e1`, `cpu-e2`, `cpu-d3`:
+                          * `drivers_preset`: `""`
+                          * `version`: 1.30 → `"ubuntu22.04"`
+                          * `version`: 1.31 → `"ubuntu22.04"` (default), `"ubuntu24.04"`
+                          * `gpu-l40s-a`, `gpu-l40s-d`, `gpu-h100-sxm`, `gpu-h200-sxm`:
+                          * `drivers_preset`: `"cuda12"` (CUDA 12.4)
+                          * `version`: 1.30, 1.31 → `"ubuntu22.04"`
+                          * `drivers_preset`: `"cuda12.4"`
+                          * `version`: 1.31 → `"ubuntu22.04"`
+                          * `drivers_preset`: `"cuda12.8"`
+                          * `version`: 1.31 → `"ubuntu24.04"`
+                          * `gpu-b200-sxm`:
+                          * `drivers_preset`: `""`
+                          * `version`: 1.30, 1.31 → `"ubuntu24.04"`
+                          * `drivers_preset`: `"cuda12"` (CUDA 12.8)
+                          * `version`: 1.30, 1.31 → `"ubuntu24.04"`
+                          * `drivers_preset`: `"cuda12.8"`
+                          * `version`: 1.31 → `"ubuntu24.04"`
+                          * `gpu-b200-sxm-a`:
+                          * `drivers_preset`: `""`
+                          * `version`: 1.31 → `"ubuntu24.04"`
+                          * `drivers_preset`: `"cuda12.8"`
+                          * `version`: 1.31 → `"ubuntu24.04"`
+                        type: string
+                      preemptible:
+                        description: '(Attributes) :'
+                        type: object
+                      reservationPolicy:
+                        description: '(Attributes) :'
+                        properties:
+                          policy:
+                            description: |-
+                              (String) :
+                              :
+
+                              #### Supported values
+
+                              Possible values:
+
+                              - `AUTO`:
+                              1) Will try to launch instance in any reservation_ids if provided.
+                              2) Will try to launch instance in any of the available capacity block.
+                              3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
+
+                              - `FORBID`:
+                              The instance is launched only using on-demand (PAYG) capacity.
+                              No attempt is made to find or use a Capacity Block.
+                              It's an error to provide reservation_ids with policy = FORBID
+
+                              - `STRICT`:
+                              1) Will try to launch the instance in Capacity Blocks from reservation_ids if provided.
+                              2) If reservation_ids are not provided will try to launch instance in suitable & available Capacity Block.
+                              3) Fail otherwise.
+                            type: string
+                          reservationIds:
+                            description: |-
+                              (List of String) Capacity block groups, order matters
+                              Capacity block groups, order matters
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      resources:
+                        description: (Attributes) Resources that will have Nebius
+                          Compute Instance where Node kubelet will run. (see below
+                          for nested schema)
+                        properties:
+                          platform:
+                            description: (String)
+                            type: string
+                          preset:
+                            description: (String)
+                            type: string
+                        type: object
+                      serviceAccountId:
+                        description: |-
+                          (String) :
+                          :
+
+                          the Nebius service account whose credentials will be available on the nodes of the group.
+                          With these credentials, it is possible to make `nebius` CLI or public API requests from the nodes
+                          without the need for extra authentication.
+                          This service account is also used to make requests to container registry.
+
+                          `resource.serviceaccount.issueAccessToken` permission is required to use this field.
+                        type: string
+                      serviceAccountIdRef:
+                        description: Reference to a ServiceAccount in iamv1 to populate
+                          serviceAccountId.
+                        properties:
+                          name:
+                            description: Name of the referenced object.
+                            type: string
+                          policy:
+                            description: Policies for referencing.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        required:
+                        - name
+                        type: object
+                      serviceAccountIdSelector:
+                        description: Selector for a ServiceAccount in iamv1 to populate
+                          serviceAccountId.
+                        properties:
+                          matchControllerRef:
+                            description: |-
+                              MatchControllerRef ensures an object with the same controller reference
+                              as the selecting object is selected.
+                            type: boolean
+                          matchLabels:
+                            additionalProperties:
+                              type: string
+                            description: MatchLabels ensures an object with matching
+                              labels is selected.
+                            type: object
+                          policy:
+                            description: Policies for selection.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        type: object
+                      taints:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            effect:
+                              description: |-
+                                (String) :
+                                :
+
+                                #### Supported values
+
+                                Possible values:
+
+                                - `EFFECT_UNSPECIFIED`
+                                - `NO_EXECUTE`
+                                - `NO_SCHEDULE`
+                                - `PREFER_NO_SCHEDULE`
+                              type: string
+                            key:
+                              description: (String)
+                              type: string
+                            value:
+                              description: (String)
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  version:
+                    description: |-
+                      (String) :
+                      :
+
+                      Version is desired Kubernetes version of the cluster. For now only acceptable format is
+                      `<major>.<minor>` like "1.31". Option for patch version update will be added later.
+                      By default the cluster control plane `<major>.<minor>` version will be used.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.template is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.template)
+                || (has(self.initProvider) && has(self.initProvider.template))'
+          status:
+            description: NodeGroupStatus defines the observed state of NodeGroup.
+            properties:
+              atProvider:
+                properties:
+                  autoRepair:
+                    description: (Attributes) Parameters for nodes auto repair. (see
+                      below for nested schema)
+                    properties:
+                      conditions:
+                        description: (Attributes List) Conditions that determine whether
+                          a node should be auto repaired. (see below for nested schema)
+                        items:
+                          properties:
+                            disabled:
+                              description: |-
+                                (Boolean) :
+                                :
+
+                                When true, disables the default auto-repair condition rules.
+
+                                *Cannot be set alongside timeout.*
+                              type: boolean
+                            status:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                :
+
+                                Node condition status.
+
+                                #### Supported values
+
+                                Possible values:
+
+                                - `CONDITION_STATUS_UNSPECIFIED`
+                                - `TRUE`
+                                - `FALSE`
+                                - `UNKNOWN`
+                              type: string
+                            timeout:
+                              description: |-
+                                (String) :
+                                :
+
+                                The duration after which the node is automatically repaired if the condition remains in the specified status.
+
+                                Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as `300ms`, `-1.5h` or `2h45m`. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`, `d`.
+
+                                *Cannot be set alongside disabled.*
+                              type: string
+                            type:
+                              description: |-
+                                (String) :
+                                Node condition type.
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  autoscaling:
+                    description: '(Attributes) :'
+                    properties:
+                      maxNodeCount:
+                        description: (Number)
+                        type: number
+                      minNodeCount:
+                        description: (Number)
+                        type: number
+                    type: object
+                  createdAt:
+                    description: |-
+                      (String) :
+                      :
+
+                      Timestamp indicating when the resource was created.
+
+                      A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                    type: string
+                  fixedNodeCount:
+                    description: |-
+                      (Number) :
+                      :
+
+                      Number of nodes in the group. Can be changed manually at any time.
+
+                      *Cannot be set alongside autoscaling.*
+                    type: number
+                  id:
+                    description: (String) Identifier for the resource, unique for
+                      its resource type.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                  resourceVersion:
+                    description: |-
+                      (Number) :
+                      :
+
+                      Version of the resource for safe concurrent modifications and consistent reads.
+                      Positive and monotonically increases on each resource spec change (but *not* on each change of the
+                      resource's container(s) or status).
+                      Service allows zero value or current.
+                    type: number
+                  status:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      events:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            firstOccurredAt:
+                              description: |-
+                                (String) :
+                                :
+
+                                # Time of the first occurrence of a recurrent event
+
+                                A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                              type: string
+                            lastOccurrence:
+                              description: '(Attributes) :'
+                              properties:
+                                code:
+                                  description: |-
+                                    (String) Event code (unique within the API service), in UpperCamelCase, e.g. "DiskAttached"
+                                    Event code (unique within the API service), in UpperCamelCase, e.g. `"DiskAttached"`
+                                  type: string
+                                level:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    # Severity level for the event
+
+                                    #### Supported values
+
+                                    Possible values:
+
+                                    - `UNSPECIFIED` - Unspecified event severity level
+                                    - `DEBUG` - A debug event providing detailed insight. Such events are used to debug problems with specific resource(s) and process(es)
+                                    - `INFO` - A normal event or state change. Informs what is happening with the API resource. Does not require user attention or interaction
+                                    - `WARN`:
+                                    Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
+                                    but requires no immediate action (yet)
+
+                                    - `ERROR` - Error event. Indicates a serious problem with the API resource and/or the corresponding processes. Requires immediate user action
+                                  type: string
+                                message:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    A human-readable message describing what has happened
+                                    (and suggested actions for the user, if this is a `WARN` or `ERROR` level event)
+                                  type: string
+                                occurredAt:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    # Time at which the event has occurred
+
+                                    A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                                  type: string
+                              type: object
+                            occurrenceCount:
+                              description: |-
+                                (Number) The number of times this event has occurred between first_occurred_at and last_occurrence.occurred_at. Must be > 0
+                                The number of times this event has occurred between `first_occurred_at` and `last_occurrence.occurred_at`. Must be > 0
+                              type: number
+                          type: object
+                        type: array
+                      nodeCount:
+                        description: |-
+                          (Number) :
+                          :
+
+                          Total number of nodes that are currently in the node group.
+                          Both ready and not ready nodes are counted.
+                        type: number
+                      outdatedNodeCount:
+                        description: |-
+                          (Number) :
+                          :
+
+                          Total number of nodes that has outdated node configuration.
+                          These nodes will be replaced by new nodes with up-to-date configuration.
+                        type: number
+                      readyNodeCount:
+                        description: |-
+                          (Number) :
+                          :
+
+                          Total number of nodes that successfully joined the cluster and are ready to serve workloads.
+                          Both outdated and up-to-date nodes are counted.
+                        type: number
+                      reconciling:
+                        description: |-
+                          (Boolean) Show that there are changes are in flight.
+                          Show that there are changes are in flight.
+                        type: boolean
+                      state:
+                        description: |-
+                          (String) :
+                          :
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `STATE_UNSPECIFIED`
+                          - `PROVISIONING`
+                          - `RUNNING`
+                          - `DELETING`
+                        type: string
+                      strategy:
+                        description: '(Attributes) :'
+                        properties:
+                          drainTimeout:
+                            description: |-
+                              (String) :
+                              :
+
+                              Maximum amount of time that the service will spend attempting to gracefully drain a node
+                              (evicting its pods) before falling back to pod deletion.
+                              A value of 0 (or when field is omitted) means no timeout: the node can be drained for an unlimited time.
+                              Important consequence of that is if PodDisruptionBudget doesn't allow evicting a pod,
+                              then NodeGroup update with node re-creation will hang on that pod eviction.
+                              Note that this is different from `kubectl drain --timeout`, which gives up and returns an error.
+
+                              Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as `300ms`, `-1.5h` or `2h45m`. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`, `d`.
+                            type: string
+                          maxSurge:
+                            description: '(Attributes) :'
+                            properties:
+                              count:
+                                description: |-
+                                  (Number) Cannot be set alongside percent.
+                                  *Cannot be set alongside percent.*
+                                type: number
+                              percent:
+                                description: |-
+                                  (Number) Cannot be set alongside count.
+                                  *Cannot be set alongside count.*
+                                type: number
+                            type: object
+                          maxUnavailable:
+                            description: is also set to 0.
+                            properties:
+                              count:
+                                description: |-
+                                  (Number) Cannot be set alongside percent.
+                                  *Cannot be set alongside percent.*
+                                type: number
+                              percent:
+                                description: |-
+                                  (Number) Cannot be set alongside count.
+                                  *Cannot be set alongside count.*
+                                type: number
+                            type: object
+                        type: object
+                      targetNodeCount:
+                        description: |-
+                          (Number) :
+                          :
+
+                          Desired total number of nodes that should be in the node group.
+                          It is either `NodeGroupSpec.fixed_node_count` or arbitrary number between
+                          `NodeGroupAutoscalingSpec.min_node_count` and `NodeGroupAutoscalingSpec.max_node_count` decided by autoscaler.
+                        type: number
+                      version:
+                        description: |-
+                          (String) :
+                          :
+
+                          Actual version of NodeGroup. Have format `<major>.<minor>.<patch>-nebius-node.<infra_version>` like "1.30.0-nebius-node.10".
+                          Where `<major>.<minor>.<patch>` is Kubernetes version and `<infra_version>` is version of Node infrastructure and configuration,
+                          which update may include bug fixes, security updates and new features depending on worker node configuration.
+                        type: string
+                    type: object
+                  strategy:
+                    description: '(Attributes) :'
+                    properties:
+                      drainTimeout:
+                        description: |-
+                          (String) :
+                          :
+
+                          Maximum amount of time that the service will spend attempting to gracefully drain a node
+                          (evicting its pods) before falling back to pod deletion.
+                          A value of 0 (or when field is omitted) means no timeout: the node can be drained for an unlimited time.
+                          Important consequence of that is if PodDisruptionBudget doesn't allow evicting a pod,
+                          then NodeGroup update with node re-creation will hang on that pod eviction.
+                          Note that this is different from `kubectl drain --timeout`, which gives up and returns an error.
+
+                          Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as `300ms`, `-1.5h` or `2h45m`. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`, `d`.
+                        type: string
+                      maxSurge:
+                        description: '(Attributes) :'
+                        properties:
+                          count:
+                            description: |-
+                              (Number) Cannot be set alongside percent.
+                              *Cannot be set alongside percent.*
+                            type: number
+                          percent:
+                            description: |-
+                              (Number) Cannot be set alongside count.
+                              *Cannot be set alongside count.*
+                            type: number
+                        type: object
+                      maxUnavailable:
+                        description: is also set to 0.
+                        properties:
+                          count:
+                            description: |-
+                              (Number) Cannot be set alongside percent.
+                              *Cannot be set alongside percent.*
+                            type: number
+                          percent:
+                            description: |-
+                              (Number) Cannot be set alongside count.
+                              *Cannot be set alongside count.*
+                            type: number
+                        type: object
+                    type: object
+                  template:
+                    description: '(Attributes) :'
+                    properties:
+                      bootDisk:
+                        description: (Attributes) Parameters of a Node Nebius Compute
+                          Instance boot disk. (see below for nested schema)
+                        properties:
+                          blockSizeBytes:
+                            description: (Number)
+                            type: number
+                          sizeBytes:
+                            description: |-
+                              (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
+                              *Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.*
+                            type: number
+                          sizeGibibytes:
+                            description: |-
+                              (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
+                              *Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.*
+                            type: number
+                          sizeKibibytes:
+                            description: |-
+                              (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
+                              *Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.*
+                            type: number
+                          sizeMebibytes:
+                            description: |-
+                              (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+                              *Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.*
+                            type: number
+                          type:
+                            description: |-
+                              (String) :
+                              :
+
+                              #### Supported values
+
+                              Possible values:
+
+                              - `UNSPECIFIED`
+                              - `NETWORK_SSD`
+                              - `NETWORK_HDD`
+                              - `NETWORK_SSD_IO_M3`
+                              - `NETWORK_SSD_NON_REPLICATED`
+                            type: string
+                        type: object
+                      filesystems:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            attachMode:
+                              description: |-
+                                (String) :
+                                :
+
+                                #### Supported values
+
+                                Possible values:
+
+                                - `UNSPECIFIED`
+                                - `READ_ONLY`
+                                - `READ_WRITE`
+                              type: string
+                            existingFilesystem:
+                              description: (Attributes) (see below for nested schema)
+                              properties:
+                                id:
+                                  description: (String) Identifier for the resource,
+                                    unique for its resource type.
+                                  type: string
+                              type: object
+                            mountTag:
+                              description: |-
+                                defined identifier, allowing to use it as a device in mount command.
+                                Specifies the user-defined identifier, allowing to use it as a device in mount command.
+                              type: string
+                          type: object
+                        type: array
+                      gpuCluster:
+                        description: (Attributes) Nebius Compute GPUCluster ID that
+                          will be attached to node. (see below for nested schema)
+                        properties:
+                          id:
+                            description: (String) Identifier for the resource, unique
+                              for its resource type.
+                            type: string
+                        type: object
+                      gpuSettings:
+                        description: '(Attributes) :'
+                        properties:
+                          driversPreset:
+                            description: |-
+                              : ""
+                              :
+
+                              Identifier of the predefined set of drivers included in the ComputeImage deployed on ComputeInstances that are part of the NodeGroup.
+                              Supported presets for different platform / Kubernetes version combinations:
+                              * `gpu-l40s-a`, `gpu-l40s-d`, `gpu-h100-sxm`, `gpu-h200-sxm`:
+                              * `version`: 1.30 → `"cuda12"` (CUDA 12.4)
+                              * `version`: 1.31 → `"cuda12"` (CUDA 12.4), `"cuda12.4"`, `"cuda12.8"`
+                              * `gpu-b200-sxm`:
+                              * `version`: 1.31 → `"cuda12"` (CUDA 12.8), `"cuda12.8"`
+                              * `gpu-b200-sxm-a`:
+                              * `version`: 1.31 → `"cuda12.8"`
+                            type: string
+                        type: object
+                      localDisks:
+                        description: '(Attributes) :'
+                        properties:
+                          config:
+                            description: '(Attributes) :'
+                            properties:
+                              kubeletEphemeral:
+                                description: |-
+                                  (Boolean) :
+                                  :
+
+                                  kubelet_ephemeral: combine all local disks into a single storage volume and use it as kubelet's local ephemeral storage on the node
+                                  See also https://kubernetes.io/docs/concepts/storage/ephemeral-storage/
+
+                                  The default when LocalDisksSpecConfig is not set.
+
+                                  *Cannot be set alongside none.*
+                                type: boolean
+                              none:
+                                description: |-
+                                  (Boolean) :
+                                  :
+
+                                  none: "do nothing" - local disks will be provisioned as on a regular compute instance.
+
+                                  *Cannot be set alongside kubelet_ephemeral.*
+                                type: boolean
+                            type: object
+                          passthroughGroup:
+                            description: '(Attributes) :'
+                            properties:
+                              requested:
+                                description: |-
+                                  (Boolean) :
+                                  :
+
+                                  Passthrough local disks from the underlying host.
+
+                                  Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
+                                  but the exact number depends on the preset.
+                                  Enabled only when this field is explicitly set.
+                                type: boolean
+                            type: object
+                        type: object
+                      maxPods:
+                        description: |-
+                          (Number) :
+                          :
+
+                          The maximum number of Pods per node for your cluster. If omitted, MK8S assigns the default value of 110. When you
+                          configure the maximum number of Pods per node for the cluster, MK8S uses this value to allocate a CIDR range for every node
+                          in group. The node CIDR prefix is calculated as `32 - ceil(log2(2 * max_pods))`, i.e. the smallest IPv4 subnet whose total address
+                          count is at least `2 * max_pods`. Not all IPs are usable for workload Pods because some of them are consumed by system Pods.
+                        type: number
+                      metadata:
+                        description: '(Attributes) :'
+                        properties:
+                          labels:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              (Map of String) :
+                              :
+
+                              Kubernetes Node labels.
+
+                              Keys and values must follow Kubernetes label syntax:
+                              https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+
+                              For now change will not be propagated to existing nodes, so will be applied only to Kubernetes Nodes created after the field change.
+                              That behavior may change later.
+                              So, for now you will need to manually set them to existing nodes, if that is needed.
+
+                              System labels containing "kubernetes.io" and "k8s.io" will be ignored.
+                              Field change will NOT trigger NodeGroup roll out.
+                            type: object
+                            x-kubernetes-map-type: granular
+                        type: object
+                      networkInterfaces:
+                        description: (Attributes List) (see below for nested schema)
+                        items:
+                          properties:
+                            publicIpAddress:
+                              description: '(Attributes) :'
+                              type: object
+                            subnetId:
+                              description: |-
+                                (String) :
+                                :
+
+                                Nebius VPC Subnet ID that will be attached to a node cloud instance network interface.
+                                By default Cluster control plane subnet_id used.
+                                Subnet should be located in the same network with control plane.
+                              type: string
+                          type: object
+                        type: array
+                      os:
+                        description: |-
+                          (String) :
+                          :
+
+                          OS version that will be used to create the boot disk of Compute Instances in the NodeGroup.
+                          Supported platform / Kubernetes version / OS / driver presets combinations
+                          * `gpu-l40s-a`, `gpu-l40s-d`, `gpu-h100-sxm`, `gpu-h200-sxm`, `cpu-e1`, `cpu-e2`, `cpu-d3`:
+                          * `drivers_preset`: `""`
+                          * `version`: 1.30 → `"ubuntu22.04"`
+                          * `version`: 1.31 → `"ubuntu22.04"` (default), `"ubuntu24.04"`
+                          * `gpu-l40s-a`, `gpu-l40s-d`, `gpu-h100-sxm`, `gpu-h200-sxm`:
+                          * `drivers_preset`: `"cuda12"` (CUDA 12.4)
+                          * `version`: 1.30, 1.31 → `"ubuntu22.04"`
+                          * `drivers_preset`: `"cuda12.4"`
+                          * `version`: 1.31 → `"ubuntu22.04"`
+                          * `drivers_preset`: `"cuda12.8"`
+                          * `version`: 1.31 → `"ubuntu24.04"`
+                          * `gpu-b200-sxm`:
+                          * `drivers_preset`: `""`
+                          * `version`: 1.30, 1.31 → `"ubuntu24.04"`
+                          * `drivers_preset`: `"cuda12"` (CUDA 12.8)
+                          * `version`: 1.30, 1.31 → `"ubuntu24.04"`
+                          * `drivers_preset`: `"cuda12.8"`
+                          * `version`: 1.31 → `"ubuntu24.04"`
+                          * `gpu-b200-sxm-a`:
+                          * `drivers_preset`: `""`
+                          * `version`: 1.31 → `"ubuntu24.04"`
+                          * `drivers_preset`: `"cuda12.8"`
+                          * `version`: 1.31 → `"ubuntu24.04"`
+                        type: string
+                      preemptible:
+                        description: '(Attributes) :'
+                        type: object
+                      reservationPolicy:
+                        description: '(Attributes) :'
+                        properties:
+                          policy:
+                            description: |-
+                              (String) :
+                              :
+
+                              #### Supported values
+
+                              Possible values:
+
+                              - `AUTO`:
+                              1) Will try to launch instance in any reservation_ids if provided.
+                              2) Will try to launch instance in any of the available capacity block.
+                              3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
+
+                              - `FORBID`:
+                              The instance is launched only using on-demand (PAYG) capacity.
+                              No attempt is made to find or use a Capacity Block.
+                              It's an error to provide reservation_ids with policy = FORBID
+
+                              - `STRICT`:
+                              1) Will try to launch the instance in Capacity Blocks from reservation_ids if provided.
+                              2) If reservation_ids are not provided will try to launch instance in suitable & available Capacity Block.
+                              3) Fail otherwise.
+                            type: string
+                          reservationIds:
+                            description: |-
+                              (List of String) Capacity block groups, order matters
+                              Capacity block groups, order matters
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      resources:
+                        description: (Attributes) Resources that will have Nebius
+                          Compute Instance where Node kubelet will run. (see below
+                          for nested schema)
+                        properties:
+                          platform:
+                            description: (String)
+                            type: string
+                          preset:
+                            description: (String)
+                            type: string
+                        type: object
+                      serviceAccountId:
+                        description: |-
+                          (String) :
+                          :
+
+                          the Nebius service account whose credentials will be available on the nodes of the group.
+                          With these credentials, it is possible to make `nebius` CLI or public API requests from the nodes
+                          without the need for extra authentication.
+                          This service account is also used to make requests to container registry.
+
+                          `resource.serviceaccount.issueAccessToken` permission is required to use this field.
+                        type: string
+                      taints:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            effect:
+                              description: |-
+                                (String) :
+                                :
+
+                                #### Supported values
+
+                                Possible values:
+
+                                - `EFFECT_UNSPECIFIED`
+                                - `NO_EXECUTE`
+                                - `NO_SCHEDULE`
+                                - `PREFER_NO_SCHEDULE`
+                              type: string
+                            key:
+                              description: (String)
+                              type: string
+                            value:
+                              description: (String)
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  updatedAt:
+                    description: |-
+                      (String) :
+                      :
+
+                      Timestamp indicating when the resource was last updated.
+
+                      A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                    type: string
+                  version:
+                    description: |-
+                      (String) :
+                      :
+
+                      Version is desired Kubernetes version of the cluster. For now only acceptable format is
+                      `<major>.<minor>` like "1.31". Option for patch version update will be added later.
+                      By default the cluster control plane `<major>.<minor>` version will be used.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
