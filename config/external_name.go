@@ -48,6 +48,13 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// Transfer IDs use the "u00" routing code followed by a UUID weak ID, e.g.
 	// storagetransfer-u00ee51697f-d12d-4831-8e4a-6c793142da94.
 	"nebius_storage_v1_transfer": config.FrameworkResourceWithComputedIdentifier("id", "storagetransfer-u0000000000-0000-0000-0000-000000000000"),
+	// quotas_v1 / registry_v1 / kms_v1 type prefixes and the u00 routing code are taken from
+	// real resource IDs observed in the test project (e.g. registry-u00fjr764yng9b6w19,
+	// kmssymkey-u00wr5je7pmjae87ep, kmsasymkey-u00yqjhwefn8vwye1r) via the Nebius CLI.
+	"nebius_quotas_v1_quota_allowance": config.FrameworkResourceWithComputedIdentifier("id", "quotaallowance-u00000000000000000"),
+	"nebius_registry_v1_registry":      config.FrameworkResourceWithComputedIdentifier("id", "registry-u00000000000000000"),
+	"nebius_kms_v1_asymmetric_key":     config.FrameworkResourceWithComputedIdentifier("id", "kmsasymkey-u00000000000000000"),
+	"nebius_kms_v1_symmetric_key":      config.FrameworkResourceWithComputedIdentifier("id", "kmssymkey-u00000000000000000"),
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

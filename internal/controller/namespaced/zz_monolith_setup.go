@@ -25,11 +25,15 @@ import (
 	serviceaccount "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/serviceaccount"
 	accesskey "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv2/accesskey"
 	project "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv2/project"
+	asymmetrickey "github.com/upbound/provider-nebius/internal/controller/namespaced/kmsv1/asymmetrickey"
+	symmetrickey "github.com/upbound/provider-nebius/internal/controller/namespaced/kmsv1/symmetrickey"
 	cluster "github.com/upbound/provider-nebius/internal/controller/namespaced/mk8sv1/cluster"
 	nodegroup "github.com/upbound/provider-nebius/internal/controller/namespaced/mk8sv1/nodegroup"
 	secret "github.com/upbound/provider-nebius/internal/controller/namespaced/mysteryboxv1/secret"
 	secretversion "github.com/upbound/provider-nebius/internal/controller/namespaced/mysteryboxv1/secretversion"
 	providerconfig "github.com/upbound/provider-nebius/internal/controller/namespaced/providerconfig"
+	quotaallowance "github.com/upbound/provider-nebius/internal/controller/namespaced/quotasv1/quotaallowance"
+	registry "github.com/upbound/provider-nebius/internal/controller/namespaced/registryv1/registry"
 	bucket "github.com/upbound/provider-nebius/internal/controller/namespaced/storagev1/bucket"
 	transfer "github.com/upbound/provider-nebius/internal/controller/namespaced/storagev1/transfer"
 	allocation "github.com/upbound/provider-nebius/internal/controller/namespaced/vpcv1/allocation"
@@ -62,11 +66,15 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		serviceaccount.Setup,
 		accesskey.Setup,
 		project.Setup,
+		asymmetrickey.Setup,
+		symmetrickey.Setup,
 		cluster.Setup,
 		nodegroup.Setup,
 		secret.Setup,
 		secretversion.Setup,
 		providerconfig.Setup,
+		quotaallowance.Setup,
+		registry.Setup,
 		bucket.Setup,
 		transfer.Setup,
 		allocation.Setup,
@@ -105,11 +113,15 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		serviceaccount.SetupGated,
 		accesskey.SetupGated,
 		project.SetupGated,
+		asymmetrickey.SetupGated,
+		symmetrickey.SetupGated,
 		cluster.SetupGated,
 		nodegroup.SetupGated,
 		secret.SetupGated,
 		secretversion.SetupGated,
 		providerconfig.SetupGated,
+		quotaallowance.SetupGated,
+		registry.SetupGated,
 		bucket.SetupGated,
 		transfer.SetupGated,
 		allocation.SetupGated,

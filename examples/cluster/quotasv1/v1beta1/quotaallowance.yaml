@@ -1,0 +1,14 @@
+apiVersion: quotasv1.nebius.upbound.io/v1beta1
+kind: QuotaAllowance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: quotasv1/v1beta1/quotaallowance
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    parentId: ${data.nebius_project_id}
+    name: storage.bucket.count
+    region: us-central1
+    limit: 20

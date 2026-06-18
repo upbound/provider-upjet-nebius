@@ -1,0 +1,13 @@
+apiVersion: kmsv1.nebius.upbound.io/v1beta1
+kind: AsymmetricKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kmsv1/v1beta1/asymmetrickey
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    parentId: ${data.nebius_project_id}
+    name: kmsv1asymmetrickey
+    algorithm: ECDSA_NIST_P256_SHA_256

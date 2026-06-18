@@ -1,0 +1,14 @@
+apiVersion: quotasv1.nebius.m.upbound.io/v1beta1
+kind: QuotaAllowance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: quotasv1/v1beta1/quotaallowance
+  labels:
+    testing.upbound.io/example-name: bucket_count
+  name: bucket-count
+  namespace: upbound-system
+spec:
+  forProvider:
+    limit: 20
+    name: storage.bucket.count
+    parentId: project-id

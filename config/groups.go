@@ -70,4 +70,8 @@ var GroupMap = map[string]GroupKindCalculator{
 	"nebius_mysterybox_v1_secret_version":  ReplaceGroupWords("mysteryboxv1", 2),
 	"nebius_storage_v1_bucket":             ReplaceGroupWords("storagev1", 2),
 	"nebius_storage_v1_transfer":           ReplaceGroupWords("storagev1", 2),
+	"nebius_quotas_v1_quota_allowance":     ReplaceGroupWords("quotasv1", 2),
+	"nebius_registry_v1_registry":          ReplaceGroupWords("registryv1", 2),
+	"nebius_kms_v1_asymmetric_key":         ReplaceGroupWords("kmsv1", 2),
+	"nebius_kms_v1_symmetric_key":          ReplaceGroupWords("kmsv1", 2),
 }
