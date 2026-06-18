@@ -15,11 +15,14 @@ import (
 	record "github.com/upbound/provider-nebius/internal/controller/namespaced/dnsv1/record"
 	zone "github.com/upbound/provider-nebius/internal/controller/namespaced/dnsv1/zone"
 	serviceaccount "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/serviceaccount"
+	accesskey "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv2/accesskey"
 	cluster "github.com/upbound/provider-nebius/internal/controller/namespaced/mk8sv1/cluster"
 	nodegroup "github.com/upbound/provider-nebius/internal/controller/namespaced/mk8sv1/nodegroup"
 	secret "github.com/upbound/provider-nebius/internal/controller/namespaced/mysteryboxv1/secret"
 	secretversion "github.com/upbound/provider-nebius/internal/controller/namespaced/mysteryboxv1/secretversion"
 	providerconfig "github.com/upbound/provider-nebius/internal/controller/namespaced/providerconfig"
+	bucket "github.com/upbound/provider-nebius/internal/controller/namespaced/storagev1/bucket"
+	transfer "github.com/upbound/provider-nebius/internal/controller/namespaced/storagev1/transfer"
 	allocation "github.com/upbound/provider-nebius/internal/controller/namespaced/vpcv1/allocation"
 	network "github.com/upbound/provider-nebius/internal/controller/namespaced/vpcv1/network"
 	pool "github.com/upbound/provider-nebius/internal/controller/namespaced/vpcv1/pool"
@@ -40,11 +43,14 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		record.Setup,
 		zone.Setup,
 		serviceaccount.Setup,
+		accesskey.Setup,
 		cluster.Setup,
 		nodegroup.Setup,
 		secret.Setup,
 		secretversion.Setup,
 		providerconfig.Setup,
+		bucket.Setup,
+		transfer.Setup,
 		allocation.Setup,
 		network.Setup,
 		pool.Setup,
@@ -71,11 +77,14 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		record.SetupGated,
 		zone.SetupGated,
 		serviceaccount.SetupGated,
+		accesskey.SetupGated,
 		cluster.SetupGated,
 		nodegroup.SetupGated,
 		secret.SetupGated,
 		secretversion.SetupGated,
 		providerconfig.SetupGated,
+		bucket.SetupGated,
+		transfer.SetupGated,
 		allocation.SetupGated,
 		network.SetupGated,
 		pool.SetupGated,

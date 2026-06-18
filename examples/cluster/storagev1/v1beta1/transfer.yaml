@@ -1,0 +1,84 @@
+apiVersion: storagev1.nebius.upbound.io/v1beta1
+kind: Transfer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storagev1/v1beta1/transfer
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    name: copy-between-buckets
+    parentId: ${data.nebius_project_id}
+    overwriteStrategy: IF_NEWER
+    afterOneIteration: {}
+    source:
+      nebius:
+        bucketName: storagev1transfersource
+        region: eu-north1
+        accessKey:
+          accessKeyIdSecretRef:
+            name: storage-transfer-keys
+            namespace: upbound-system
+            key: source-access-key-id
+          secretAccessKeySecretRef:
+            name: storage-transfer-keys
+            namespace: upbound-system
+            key: source-secret-access-key
+    destination:
+      nebius:
+        bucketName: storagev1transferdestination
+        region: eu-north1
+        accessKey:
+          accessKeyIdSecretRef:
+            name: storage-transfer-keys
+            namespace: upbound-system
+            key: destination-access-key-id
+          secretAccessKeySecretRef:
+            name: storage-transfer-keys
+            namespace: upbound-system
+            key: destination-secret-access-key
+
+---
+
+apiVersion: storagev1.nebius.upbound.io/v1beta1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storagev1/v1beta1/transfer
+  labels:
+    testing.upbound.io/example-name: default
+  name: source
+spec:
+  forProvider:
+    name: storagev1transfersource
+    parentId: ${data.nebius_project_id}
+
+---
+
+apiVersion: storagev1.nebius.upbound.io/v1beta1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storagev1/v1beta1/transfer
+  labels:
+    testing.upbound.io/example-name: default
+  name: destination
+spec:
+  forProvider:
+    name: storagev1transferdestination
+    parentId: ${data.nebius_project_id}
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: storage-transfer-keys
+  namespace: upbound-system
+type: Opaque
+stringData:
+  source-access-key-id: example-source-access-key-id
+  source-secret-access-key: example-source-secret-access-key
+  destination-access-key-id: example-destination-access-key-id
+  destination-secret-access-key: example-destination-secret-access-key
