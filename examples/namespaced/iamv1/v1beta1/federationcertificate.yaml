@@ -17,7 +17,6 @@ spec:
     # data is a PEM-encoded X.509 certificate (sensitive), supplied via a Secret.
     dataSecretRef:
       name: iamv1federationcertificate-data
-      namespace: upbound-system
       key: certificate
 
 ---

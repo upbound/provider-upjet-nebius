@@ -19,7 +19,6 @@ spec:
     # data is a PEM-encoded public key (sensitive), supplied via a Secret.
     dataSecretRef:
       name: iamv1authpublickey-data
-      namespace: upbound-system
       key: public-key
 
 ---
