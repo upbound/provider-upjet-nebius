@@ -14,7 +14,7 @@ func Configure(p *config.Provider) {
 		// parent_id of a group membership represents the Group it belongs to.
 		r.References["parent_id"] = config.Reference{
 			TerraformName: "nebius_iam_v1_group",
-			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)`,
+			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)`, //nolint: goconst // Upjet extractor name
 		}
 		// member_id can be a service account (managed here) or a tenant user
 		// account; the reference lets a service account be selected, a literal

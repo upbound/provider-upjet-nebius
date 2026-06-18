@@ -5,6 +5,7 @@
 package cluster
 
 import (
+	"github.com/upbound/provider-nebius/config/cluster/computev1"
 	"github.com/upbound/provider-nebius/config/cluster/dnsv1"
 	"github.com/upbound/provider-nebius/config/cluster/iamv1"
 	"github.com/upbound/provider-nebius/config/cluster/iamv2"
@@ -16,6 +17,7 @@ import (
 
 func init() {
 	ProviderConfiguration.AddConfig(vpcv1.Configure)
+	ProviderConfiguration.AddConfig(computev1.Configure)
 	ProviderConfiguration.AddConfig(mk8sv1.Configure)
 	ProviderConfiguration.AddConfig(dnsv1.Configure)
 	ProviderConfiguration.AddConfig(mysteryboxv1.Configure)

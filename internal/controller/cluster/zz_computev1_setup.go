@@ -12,6 +12,7 @@ import (
 	disk "github.com/upbound/provider-nebius/internal/controller/cluster/computev1/disk"
 	filesystem "github.com/upbound/provider-nebius/internal/controller/cluster/computev1/filesystem"
 	gpucluster "github.com/upbound/provider-nebius/internal/controller/cluster/computev1/gpucluster"
+	instance "github.com/upbound/provider-nebius/internal/controller/cluster/computev1/instance"
 )
 
 // Setup_computev1 creates all controllers with the supplied logger and adds them to
@@ -21,6 +22,7 @@ func Setup_computev1(mgr ctrl.Manager, o controller.Options) error {
 		disk.Setup,
 		filesystem.Setup,
 		gpucluster.Setup,
+		instance.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err
@@ -36,6 +38,7 @@ func SetupGated_computev1(mgr ctrl.Manager, o controller.Options) error {
 		disk.SetupGated,
 		filesystem.SetupGated,
 		gpucluster.SetupGated,
+		instance.SetupGated,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err

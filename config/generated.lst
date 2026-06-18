@@ -2,6 +2,7 @@
 "nebius_compute_v1_disk",
 "nebius_compute_v1_filesystem",
 "nebius_compute_v1_gpu_cluster",
+"nebius_compute_v1_instance",
 "nebius_dns_v1_record",
 "nebius_dns_v1_zone",
 "nebius_iam_v1_access_permit",

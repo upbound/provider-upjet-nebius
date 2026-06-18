@@ -34,6 +34,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"nebius_compute_v1_gpu_cluster": config.FrameworkResourceWithComputedIdentifier("id", "computegpucluster-e01000000000000000"),
 	"nebius_compute_v1_filesystem":  config.FrameworkResourceWithComputedIdentifier("id", "computefilesystem-e01000000000000000"),
 	"nebius_compute_v1_disk":        config.FrameworkResourceWithComputedIdentifier("id", "computedisk-e01000000000000000"),
+	// computeinstance is grep-confirmed in the gosdk.
+	"nebius_compute_v1_instance": config.FrameworkResourceWithComputedIdentifier("id", "computeinstance-e01000000000000000"),
 	// mk8s_v1 resources can have any valid routing code prefix e.g. e0t in ComputedIdentifier independently of the project they're deployed in
 	"nebius_mk8s_v1_cluster":    config.FrameworkResourceWithComputedIdentifier("id", "mk8scluster-e0t000000000000000"),
 	"nebius_mk8s_v1_node_group": config.FrameworkResourceWithComputedIdentifier("id", "mk8snodegroup-e0t000000000000000"),
