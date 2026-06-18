@@ -1,0 +1,15 @@
+apiVersion: iamv2.nebius.m.upbound.io/v1beta1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iamv2/v1beta1/project
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: iamv2project
+    parentId: ${data.nebius_tenant_id}
+    # region must be one available to the tenant.
+    region: us-central1

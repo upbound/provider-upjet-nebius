@@ -1,0 +1,20 @@
+apiVersion: mk8sv1.nebius.upbound.io/v1beta1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mk8sv1/v1beta1/cluster
+  labels:
+    testing.upbound.io/example-name: cluster
+  name: cluster
+spec:
+  forProvider:
+    controlPlane:
+      endpoints:
+        publicEndpoint: {}
+      etcdClusterSize: 1
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: example
+      version: "1.31"
+    name: example-cluster
+    parentId: project-id

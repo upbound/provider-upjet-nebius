@@ -51,11 +51,10 @@ jobs:
         run: |
           make crddiff
 
-      # Commented out during initial release as it will fail when trying to open a schema from main branch which does not contain a bootstrapped provider
-      # - name: Report native schema version changes
-      #   if: ${{ inputs.upjet-based-provider }}
-      #   run: |
-      #     make schema-version-diff
+      - name: Report native schema version changes
+        if: ${{ inputs.upjet-based-provider }}
+        run: |
+          make schema-version-diff
 
 
   lint:

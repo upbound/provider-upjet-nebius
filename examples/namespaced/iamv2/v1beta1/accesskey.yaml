@@ -1,0 +1,40 @@
+apiVersion: iamv2.nebius.m.upbound.io/v1beta1
+kind: AccessKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iamv2/v1beta1/accesskey
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: iamv2accesskey
+    parentId: ${data.nebius_project_id}
+    # INLINE returns the secret in the API response so it is captured below as a
+    # connection detail (key "secret"); MYSTERY_BOX delivers it out-of-band and
+    # would leave the connection secret empty.
+    secretDeliveryMode: INLINE
+    account:
+      serviceAccount:
+        idSelector:
+          matchLabels:
+            testing.upbound.io/example-name: default
+  writeConnectionSecretToRef:
+    name: storage-access-key-conn
+
+---
+
+apiVersion: iamv1.nebius.m.upbound.io/v1beta1
+kind: ServiceAccount
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iamv2/v1beta1/accesskey
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: iamv2accesskey
+    parentId: ${data.nebius_project_id}

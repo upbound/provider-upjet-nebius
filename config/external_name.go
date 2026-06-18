@@ -9,6 +9,7 @@ import (
 var ExternalNameConfigs = map[string]config.ExternalName{
 	// The placeholder is a valid Nebius ID (NID) of the form <type>-<routingCode><weakID>.
 	// The 3-char segment after the type prefix is the routing code; e0t is the default SDK routing code.
+	// vpc_v1 resources can have any valid routing code prefix e.g. e0t in ComputedIdentifier independently of the project they're deployed in
 	"nebius_vpc_v1_network":        config.FrameworkResourceWithComputedIdentifier("id", "vpcnetwork-e0t000000000000000"),
 	"nebius_vpc_v1_pool":           config.FrameworkResourceWithComputedIdentifier("id", "vpcpool-e0t000000000000000"),
 	"nebius_vpc_v1_subnet":         config.FrameworkResourceWithComputedIdentifier("id", "vpcsubnet-e0t000000000000000"),
@@ -17,6 +18,45 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"nebius_vpc_v1_route":          config.FrameworkResourceWithComputedIdentifier("id", "vpcroute-e0t000000000000000"),
 	"nebius_vpc_v1_security_group": config.FrameworkResourceWithComputedIdentifier("id", "vpcsecuritygroup-e0t000000000000000"),
 	"nebius_vpc_v1_security_rule":  config.FrameworkResourceWithComputedIdentifier("id", "vpcsecurityrule-e0t000000000000000"),
+	// iam_v(1|2) resources can have any valid routing code prefix e.g. e0t in ComputedIdentifier independently of the project they're deployed in
+	"nebius_iam_v1_service_account":        config.FrameworkResourceWithComputedIdentifier("id", "serviceaccount-e0t000000000000000"),
+	"nebius_iam_v1_group":                  config.FrameworkResourceWithComputedIdentifier("id", "group-e0t000000000000000"),
+	"nebius_iam_v1_group_membership":       config.FrameworkResourceWithComputedIdentifier("id", "groupmembership-e0t000000000000000"),
+	"nebius_iam_v2_access_key":             config.FrameworkResourceWithComputedIdentifier("id", "accesskey-e0t000000000000000"),
+	"nebius_iam_v1_access_permit":          config.FrameworkResourceWithComputedIdentifier("id", "accesspermit-e0t000000000000000"),
+	"nebius_iam_v1_auth_public_key":        config.FrameworkResourceWithComputedIdentifier("id", "publickey-e0t000000000000000"),
+	"nebius_iam_v1_federated_credentials":  config.FrameworkResourceWithComputedIdentifier("id", "federatedcredentials-e0t000000000000000"),
+	"nebius_iam_v1_federation":             config.FrameworkResourceWithComputedIdentifier("id", "federation-e0t000000000000000"),
+	"nebius_iam_v1_federation_certificate": config.FrameworkResourceWithComputedIdentifier("id", "federationcertificate-e0t000000000000000"),
+	"nebius_iam_v1_invitation":             config.FrameworkResourceWithComputedIdentifier("id", "invitation-e0t000000000000000"),
+	"nebius_iam_v2_project":                config.FrameworkResourceWithComputedIdentifier("id", "project-e0t000000000000000"),
+	// compute_v1 resources need to have a valid project prefix in ComputedIdentifier e.g. e00, e01
+	"nebius_compute_v1_gpu_cluster": config.FrameworkResourceWithComputedIdentifier("id", "computegpucluster-e01000000000000000"),
+	"nebius_compute_v1_filesystem":  config.FrameworkResourceWithComputedIdentifier("id", "computefilesystem-e01000000000000000"),
+	"nebius_compute_v1_disk":        config.FrameworkResourceWithComputedIdentifier("id", "computedisk-e01000000000000000"),
+	// computeinstance is grep-confirmed in the gosdk.
+	"nebius_compute_v1_instance": config.FrameworkResourceWithComputedIdentifier("id", "computeinstance-e01000000000000000"),
+	// mk8s_v1 resources can have any valid routing code prefix e.g. e0t in ComputedIdentifier independently of the project they're deployed in
+	"nebius_mk8s_v1_cluster":    config.FrameworkResourceWithComputedIdentifier("id", "mk8scluster-e0t000000000000000"),
+	"nebius_mk8s_v1_node_group": config.FrameworkResourceWithComputedIdentifier("id", "mk8snodegroup-e0t000000000000000"),
+	// dns_v1 resources can have any valid routing code prefix e.g. e0t in ComputedIdentifier independently of the project they're deployed in
+	"nebius_dns_v1_zone":   config.FrameworkResourceWithComputedIdentifier("id", "dnszone-e0t000000000000000"),
+	"nebius_dns_v1_record": config.FrameworkResourceWithComputedIdentifier("id", "dnsrecord-e0t000000000000000"),
+	// mysterybox_v1 resources need to have a valid project prefix in ComputedIdentifier e.g. e00, e01
+	"nebius_mysterybox_v1_secret":         config.FrameworkResourceWithComputedIdentifier("id", "mbsec-e00000000000000000"),
+	"nebius_mysterybox_v1_secret_version": config.FrameworkResourceWithComputedIdentifier("id", "mbsecver-e00000000000000000"),
+	// storage_v1 resources need to have a valid project prefix in ComputedIdentifier e.g. e00, e01
+	"nebius_storage_v1_bucket": config.FrameworkResourceWithComputedIdentifier("id", "storagebucket-e00000000000000000"),
+	// Transfer IDs use the "u00" routing code followed by a UUID weak ID, e.g.
+	// storagetransfer-u00ee51697f-d12d-4831-8e4a-6c793142da94.
+	"nebius_storage_v1_transfer": config.FrameworkResourceWithComputedIdentifier("id", "storagetransfer-u0000000000-0000-0000-0000-000000000000"),
+	// quotas_v1 / registry_v1 / kms_v1 type prefixes and the u00 routing code are taken from
+	// real resource IDs observed in the test project (e.g. registry-u00fjr764yng9b6w19,
+	// kmssymkey-u00wr5je7pmjae87ep, kmsasymkey-u00yqjhwefn8vwye1r) via the Nebius CLI.
+	"nebius_quotas_v1_quota_allowance": config.FrameworkResourceWithComputedIdentifier("id", "quotaallowance-u00000000000000000"),
+	"nebius_registry_v1_registry":      config.FrameworkResourceWithComputedIdentifier("id", "registry-u00000000000000000"),
+	"nebius_kms_v1_asymmetric_key":     config.FrameworkResourceWithComputedIdentifier("id", "kmsasymkey-u00000000000000000"),
+	"nebius_kms_v1_symmetric_key":      config.FrameworkResourceWithComputedIdentifier("id", "kmssymkey-u00000000000000000"),
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

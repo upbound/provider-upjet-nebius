@@ -1,0 +1,457 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: filesystems.computev1.nebius.m.upbound.io
+spec:
+  group: computev1.nebius.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - nebius
+    kind: Filesystem
+    listKind: FilesystemList
+    plural: filesystems
+    singular: filesystem
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: Filesystem is the Schema for the Filesystems API. <no value>
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: FilesystemSpec defines the desired state of Filesystem
+            properties:
+              forProvider:
+                properties:
+                  blockSizeBytes:
+                    description: |-
+                      :
+
+                      Block size in bytes.
+                      The block size must be a power of two between 4096 bytes (4 KiB) and 131072 bytes (128 KiB).
+                      The default value is 4096 bytes (4 KiB).
+                    type: number
+                  forbidDeletion:
+                    description: Prevents deletion whilst set
+                    type: boolean
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  metadata:
+                    type: object
+                  name:
+                    description: Human readable name for the resource.
+                    type: string
+                  parentId:
+                    description: Identifier of the parent resource to which the resource
+                      belongs.
+                    type: string
+                  sizeBytes:
+                    description: '*Cannot be set alongside size_kibibytes, size_mebibytes
+                      or size_gibibytes.*'
+                    type: number
+                  sizeGibibytes:
+                    description: '*Cannot be set alongside size_bytes, size_kibibytes
+                      or size_mebibytes.*'
+                    type: number
+                  sizeKibibytes:
+                    description: '*Cannot be set alongside size_bytes, size_mebibytes
+                      or size_gibibytes.*'
+                    type: number
+                  sizeMebibytes:
+                    description: '*Cannot be set alongside size_bytes, size_kibibytes
+                      or size_gibibytes.*'
+                    type: number
+                  type:
+                    description: |-
+                      :
+
+                      The Shared Filesystem type determines its limits and performance characteristics.
+                      For details, see https://docs.nebius.com/compute/storage/types#filesystems-types
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `UNSPECIFIED`
+                      - `NETWORK_SSD` - the list of available types will be clarified later, it is not final version
+                      - `NETWORK_HDD`
+                      - `WEKA`
+                      - `VAST`
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  blockSizeBytes:
+                    description: |-
+                      :
+
+                      Block size in bytes.
+                      The block size must be a power of two between 4096 bytes (4 KiB) and 131072 bytes (128 KiB).
+                      The default value is 4096 bytes (4 KiB).
+                    type: number
+                  forbidDeletion:
+                    description: Prevents deletion whilst set
+                    type: boolean
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  metadata:
+                    type: object
+                  name:
+                    description: Human readable name for the resource.
+                    type: string
+                  parentId:
+                    description: Identifier of the parent resource to which the resource
+                      belongs.
+                    type: string
+                  sizeBytes:
+                    description: '*Cannot be set alongside size_kibibytes, size_mebibytes
+                      or size_gibibytes.*'
+                    type: number
+                  sizeGibibytes:
+                    description: '*Cannot be set alongside size_bytes, size_kibibytes
+                      or size_mebibytes.*'
+                    type: number
+                  sizeKibibytes:
+                    description: '*Cannot be set alongside size_bytes, size_mebibytes
+                      or size_gibibytes.*'
+                    type: number
+                  sizeMebibytes:
+                    description: '*Cannot be set alongside size_bytes, size_kibibytes
+                      or size_gibibytes.*'
+                    type: number
+                  type:
+                    description: |-
+                      :
+
+                      The Shared Filesystem type determines its limits and performance characteristics.
+                      For details, see https://docs.nebius.com/compute/storage/types#filesystems-types
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `UNSPECIFIED`
+                      - `NETWORK_SSD` - the list of available types will be clarified later, it is not final version
+                      - `NETWORK_HDD`
+                      - `WEKA`
+                      - `VAST`
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.parentId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.parentId)
+                || (has(self.initProvider) && has(self.initProvider.parentId))'
+            - message: spec.forProvider.type is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
+                || (has(self.initProvider) && has(self.initProvider.type))'
+          status:
+            description: FilesystemStatus defines the observed state of Filesystem.
+            properties:
+              atProvider:
+                properties:
+                  blockSizeBytes:
+                    description: |-
+                      :
+
+                      Block size in bytes.
+                      The block size must be a power of two between 4096 bytes (4 KiB) and 131072 bytes (128 KiB).
+                      The default value is 4096 bytes (4 KiB).
+                    type: number
+                  createdAt:
+                    description: |-
+                      :
+
+                      Timestamp indicating when the resource was created.
+
+                      A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                    type: string
+                  forbidDeletion:
+                    description: Prevents deletion whilst set
+                    type: boolean
+                  id:
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  metadata:
+                    type: object
+                  name:
+                    description: Human readable name for the resource.
+                    type: string
+                  parentId:
+                    description: Identifier of the parent resource to which the resource
+                      belongs.
+                    type: string
+                  resourceVersion:
+                    description: |-
+                      :
+
+                      Version of the resource for safe concurrent modifications and consistent reads.
+                      Positive and monotonically increases on each resource spec change (but *not* on each change of the
+                      resource's container(s) or status).
+                      Service allows zero value or current.
+                    type: number
+                  sizeBytes:
+                    description: '*Cannot be set alongside size_kibibytes, size_mebibytes
+                      or size_gibibytes.*'
+                    type: number
+                  sizeGibibytes:
+                    description: '*Cannot be set alongside size_bytes, size_kibibytes
+                      or size_mebibytes.*'
+                    type: number
+                  sizeKibibytes:
+                    description: '*Cannot be set alongside size_bytes, size_mebibytes
+                      or size_gibibytes.*'
+                    type: number
+                  sizeMebibytes:
+                    description: '*Cannot be set alongside size_bytes, size_kibibytes
+                      or size_gibibytes.*'
+                    type: number
+                  status:
+                    properties:
+                      blockSizeBytes:
+                        type: number
+                      readOnlyAttachments:
+                        items:
+                          type: string
+                        type: array
+                      readWriteAttachments:
+                        items:
+                          type: string
+                        type: array
+                      reconciling:
+                        description: Indicates whether there is an ongoing operation
+                        type: boolean
+                      sizeBytes:
+                        type: number
+                      state:
+                        description: |-
+                          :
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `UNSPECIFIED`
+                          - `CREATING`
+                          - `READY`
+                          - `UPDATING`
+                          - `DELETING`
+                          - `ERROR`
+                        type: string
+                      stateDescription:
+                        type: string
+                    type: object
+                  type:
+                    description: |-
+                      :
+
+                      The Shared Filesystem type determines its limits and performance characteristics.
+                      For details, see https://docs.nebius.com/compute/storage/types#filesystems-types
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `UNSPECIFIED`
+                      - `NETWORK_SSD` - the list of available types will be clarified later, it is not final version
+                      - `NETWORK_HDD`
+                      - `WEKA`
+                      - `VAST`
+                    type: string
+                  updatedAt:
+                    description: |-
+                      :
+
+                      Timestamp indicating when the resource was last updated.
+
+                      A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

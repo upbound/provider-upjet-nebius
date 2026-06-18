@@ -1,0 +1,135 @@
+apiVersion: storagev1.nebius.m.upbound.io/v1beta1
+kind: Transfer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storagev1/v1beta1/transfer
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: storagev1transfer
+    parentId: ${data.nebius_project_id}
+    overwriteStrategy: IF_NEWER
+    afterOneIteration: {}
+    source:
+      nebius:
+        bucketNameRef:
+          name: source
+        region: us-central1
+        # Credentials come from the AccessKey connection secret below. The secret
+        # access key lands under the prefixed key "attribute.status.secret"; the
+        # access key id is added as "access_key_id".
+        accessKey:
+          accessKeyIdSecretRef:
+            name: storage-transfer-keys
+            key: access_key_id
+          secretAccessKeySecretRef:
+            name: storage-transfer-keys
+            key: attribute.status.secret
+    destination:
+      nebius:
+        bucketNameRef:
+          name: destination
+        region: us-central1
+        accessKey:
+          accessKeyIdSecretRef:
+            name: storage-transfer-keys
+            key: access_key_id
+          secretAccessKeySecretRef:
+            name: storage-transfer-keys
+            key: attribute.status.secret
+
+---
+
+apiVersion: storagev1.nebius.m.upbound.io/v1beta1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storagev1/v1beta1/transfer
+  labels:
+    testing.upbound.io/example-name: default
+  name: source
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: storagev1transfersource
+    parentId: ${data.nebius_project_id}
+
+---
+
+apiVersion: storagev1.nebius.m.upbound.io/v1beta1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storagev1/v1beta1/transfer
+  labels:
+    testing.upbound.io/example-name: default
+  name: destination
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: storagev1transferdestination
+    parentId: ${data.nebius_project_id}
+
+---
+
+apiVersion: iamv1.nebius.m.upbound.io/v1beta1
+kind: ServiceAccount
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storagev1/v1beta1/transfer
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: storagev1transfer
+    parentId: ${data.nebius_project_id}
+
+---
+
+apiVersion: iamv2.nebius.m.upbound.io/v1beta1
+kind: AccessKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storagev1/v1beta1/transfer
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: storagev1transfer
+    parentId: ${data.nebius_project_id}
+    # INLINE returns the secret so it is written to the connection secret below.
+    secretDeliveryMode: INLINE
+    account:
+      serviceAccount:
+        idSelector:
+          matchLabels:
+            testing.upbound.io/example-name: default
+  writeConnectionSecretToRef:
+    name: storage-transfer-keys
+
+---
+
+apiVersion: iamv1.nebius.m.upbound.io/v1beta1
+kind: GroupMembership
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storagev1/v1beta1/transfer
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    # Grant the service account access to the buckets by adding it to the
+    # existing default editor group (passed as a datasource).
+    parentId: ${data.nebius_default_editor_group_id}
+    memberIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: default

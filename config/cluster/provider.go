@@ -5,9 +5,23 @@
 package cluster
 
 import (
+	"github.com/upbound/provider-nebius/config/cluster/computev1"
+	"github.com/upbound/provider-nebius/config/cluster/dnsv1"
+	"github.com/upbound/provider-nebius/config/cluster/iamv1"
+	"github.com/upbound/provider-nebius/config/cluster/iamv2"
+	"github.com/upbound/provider-nebius/config/cluster/mk8sv1"
+	"github.com/upbound/provider-nebius/config/cluster/mysteryboxv1"
+	"github.com/upbound/provider-nebius/config/cluster/storagev1"
 	"github.com/upbound/provider-nebius/config/cluster/vpcv1"
 )
 
 func init() {
 	ProviderConfiguration.AddConfig(vpcv1.Configure)
+	ProviderConfiguration.AddConfig(computev1.Configure)
+	ProviderConfiguration.AddConfig(mk8sv1.Configure)
+	ProviderConfiguration.AddConfig(dnsv1.Configure)
+	ProviderConfiguration.AddConfig(mysteryboxv1.Configure)
+	ProviderConfiguration.AddConfig(iamv1.Configure)
+	ProviderConfiguration.AddConfig(iamv2.Configure)
+	ProviderConfiguration.AddConfig(storagev1.Configure)
 }

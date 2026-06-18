@@ -1,0 +1,817 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: clusters.mk8sv1.nebius.m.upbound.io
+spec:
+  group: mk8sv1.nebius.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - nebius
+    kind: Cluster
+    listKind: ClusterList
+    plural: clusters
+    singular: cluster
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: Cluster is the Schema for the Clusters API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ClusterSpec defines the desired state of Cluster
+            properties:
+              forProvider:
+                properties:
+                  controlPlane:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      auditLogs:
+                        description: '(Attributes) :'
+                        type: object
+                      endpoints:
+                        description: (Attributes) Specification of endpoints of cluster
+                          control plane. (see below for nested schema)
+                        properties:
+                          publicEndpoint:
+                            description: (Attributes) Public endpoint specification.
+                              When set, a public endpoint is created. (see below for
+                              nested schema)
+                            properties:
+                              allowedCidrs:
+                                description: |-
+                                  (List of String) :
+                                  :
+
+                                  List of CIDR blocks from which access to public endpoint is allowed.
+                                  If field is not set, or list is empty, it means that access is not restricted at all.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                        type: object
+                      etcdClusterSize:
+                        description: |-
+                          (Number) :
+                          :
+
+                          Number of instances in etcd cluster.
+                          3 by default.
+                          Control plane with `etcd_cluster_size: 3` called "Highly Available" ("HA"), because it's Kubernetes API
+                          will be available despite a failure of one control plane instance.
+                        type: number
+                      karpenter:
+                        description: '(Attributes) :'
+                        type: object
+                      subnetId:
+                        description: |-
+                          (String) :
+                          :
+
+                          Nebius VPC Subnet ID where control plane instances will be located.
+                          Also will be default NodeGroup subnet.
+                        type: string
+                      subnetIdRef:
+                        description: Reference to a Subnet in vpcv1 to populate subnetId.
+                        properties:
+                          name:
+                            description: Name of the referenced object.
+                            type: string
+                          namespace:
+                            description: Namespace of the referenced object
+                            type: string
+                          policy:
+                            description: Policies for referencing.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        required:
+                        - name
+                        type: object
+                      subnetIdSelector:
+                        description: Selector for a Subnet in vpcv1 to populate subnetId.
+                        properties:
+                          matchControllerRef:
+                            description: |-
+                              MatchControllerRef ensures an object with the same controller reference
+                              as the selecting object is selected.
+                            type: boolean
+                          matchLabels:
+                            additionalProperties:
+                              type: string
+                            description: MatchLabels ensures an object with matching
+                              labels is selected.
+                            type: object
+                          namespace:
+                            description: Namespace for the selector
+                            type: string
+                          policy:
+                            description: Policies for selection.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        type: object
+                      version:
+                        description: |-
+                          (String) :
+                          :
+
+                          Desired Kubernetes version of the cluster. For now only acceptable format is
+                          `<major>.<minor>` like "1.31". Option for patch version update will be added later.
+                        type: string
+                    type: object
+                  kubeNetwork:
+                    description: (Attributes) Defines kubernetes network configuration,
+                      like IP allocation. (see below for nested schema)
+                    properties:
+                      serviceCidrs:
+                        description: |-
+                          (List of String) :
+                          :
+
+                          CIDR blocks for Service ClusterIP allocation.
+                          For now, only one value is supported.
+                          Must be a valid CIDR block or prefix length.
+                          In case of prefix length, certain CIDR is auto allocated.
+                          Specified CIDR blocks will be reserved in Cluster.spec.control_plane.subnet_id to prevent address duplication.
+                          Allowed prefix length is from "/12" to "/28".
+                          Empty value treated as ["/16"].
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  controlPlane:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      auditLogs:
+                        description: '(Attributes) :'
+                        type: object
+                      endpoints:
+                        description: (Attributes) Specification of endpoints of cluster
+                          control plane. (see below for nested schema)
+                        properties:
+                          publicEndpoint:
+                            description: (Attributes) Public endpoint specification.
+                              When set, a public endpoint is created. (see below for
+                              nested schema)
+                            properties:
+                              allowedCidrs:
+                                description: |-
+                                  (List of String) :
+                                  :
+
+                                  List of CIDR blocks from which access to public endpoint is allowed.
+                                  If field is not set, or list is empty, it means that access is not restricted at all.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                        type: object
+                      etcdClusterSize:
+                        description: |-
+                          (Number) :
+                          :
+
+                          Number of instances in etcd cluster.
+                          3 by default.
+                          Control plane with `etcd_cluster_size: 3` called "Highly Available" ("HA"), because it's Kubernetes API
+                          will be available despite a failure of one control plane instance.
+                        type: number
+                      karpenter:
+                        description: '(Attributes) :'
+                        type: object
+                      subnetId:
+                        description: |-
+                          (String) :
+                          :
+
+                          Nebius VPC Subnet ID where control plane instances will be located.
+                          Also will be default NodeGroup subnet.
+                        type: string
+                      subnetIdRef:
+                        description: Reference to a Subnet in vpcv1 to populate subnetId.
+                        properties:
+                          name:
+                            description: Name of the referenced object.
+                            type: string
+                          namespace:
+                            description: Namespace of the referenced object
+                            type: string
+                          policy:
+                            description: Policies for referencing.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        required:
+                        - name
+                        type: object
+                      subnetIdSelector:
+                        description: Selector for a Subnet in vpcv1 to populate subnetId.
+                        properties:
+                          matchControllerRef:
+                            description: |-
+                              MatchControllerRef ensures an object with the same controller reference
+                              as the selecting object is selected.
+                            type: boolean
+                          matchLabels:
+                            additionalProperties:
+                              type: string
+                            description: MatchLabels ensures an object with matching
+                              labels is selected.
+                            type: object
+                          namespace:
+                            description: Namespace for the selector
+                            type: string
+                          policy:
+                            description: Policies for selection.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        type: object
+                      version:
+                        description: |-
+                          (String) :
+                          :
+
+                          Desired Kubernetes version of the cluster. For now only acceptable format is
+                          `<major>.<minor>` like "1.31". Option for patch version update will be added later.
+                        type: string
+                    type: object
+                  kubeNetwork:
+                    description: (Attributes) Defines kubernetes network configuration,
+                      like IP allocation. (see below for nested schema)
+                    properties:
+                      serviceCidrs:
+                        description: |-
+                          (List of String) :
+                          :
+
+                          CIDR blocks for Service ClusterIP allocation.
+                          For now, only one value is supported.
+                          Must be a valid CIDR block or prefix length.
+                          In case of prefix length, certain CIDR is auto allocated.
+                          Specified CIDR blocks will be reserved in Cluster.spec.control_plane.subnet_id to prevent address duplication.
+                          Allowed prefix length is from "/12" to "/28".
+                          Empty value treated as ["/16"].
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.controlPlane is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.controlPlane)
+                || (has(self.initProvider) && has(self.initProvider.controlPlane))'
+            - message: spec.forProvider.parentId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.parentId)
+                || (has(self.initProvider) && has(self.initProvider.parentId))'
+          status:
+            description: ClusterStatus defines the observed state of Cluster.
+            properties:
+              atProvider:
+                properties:
+                  controlPlane:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      auditLogs:
+                        description: '(Attributes) :'
+                        type: object
+                      endpoints:
+                        description: (Attributes) Specification of endpoints of cluster
+                          control plane. (see below for nested schema)
+                        properties:
+                          publicEndpoint:
+                            description: (Attributes) Public endpoint specification.
+                              When set, a public endpoint is created. (see below for
+                              nested schema)
+                            properties:
+                              allowedCidrs:
+                                description: |-
+                                  (List of String) :
+                                  :
+
+                                  List of CIDR blocks from which access to public endpoint is allowed.
+                                  If field is not set, or list is empty, it means that access is not restricted at all.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                        type: object
+                      etcdClusterSize:
+                        description: |-
+                          (Number) :
+                          :
+
+                          Number of instances in etcd cluster.
+                          3 by default.
+                          Control plane with `etcd_cluster_size: 3` called "Highly Available" ("HA"), because it's Kubernetes API
+                          will be available despite a failure of one control plane instance.
+                        type: number
+                      karpenter:
+                        description: '(Attributes) :'
+                        type: object
+                      subnetId:
+                        description: |-
+                          (String) :
+                          :
+
+                          Nebius VPC Subnet ID where control plane instances will be located.
+                          Also will be default NodeGroup subnet.
+                        type: string
+                      version:
+                        description: |-
+                          (String) :
+                          :
+
+                          Desired Kubernetes version of the cluster. For now only acceptable format is
+                          `<major>.<minor>` like "1.31". Option for patch version update will be added later.
+                        type: string
+                    type: object
+                  createdAt:
+                    description: |-
+                      (String) :
+                      :
+
+                      Timestamp indicating when the resource was created.
+
+                      A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                    type: string
+                  id:
+                    description: (String) Identifier for the resource, unique for
+                      its resource type.
+                    type: string
+                  kubeNetwork:
+                    description: (Attributes) Defines kubernetes network configuration,
+                      like IP allocation. (see below for nested schema)
+                    properties:
+                      serviceCidrs:
+                        description: |-
+                          (List of String) :
+                          :
+
+                          CIDR blocks for Service ClusterIP allocation.
+                          For now, only one value is supported.
+                          Must be a valid CIDR block or prefix length.
+                          In case of prefix length, certain CIDR is auto allocated.
+                          Specified CIDR blocks will be reserved in Cluster.spec.control_plane.subnet_id to prevent address duplication.
+                          Allowed prefix length is from "/12" to "/28".
+                          Empty value treated as ["/16"].
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                  resourceVersion:
+                    description: |-
+                      (Number) :
+                      :
+
+                      Version of the resource for safe concurrent modifications and consistent reads.
+                      Positive and monotonically increases on each resource spec change (but *not* on each change of the
+                      resource's container(s) or status).
+                      Service allows zero value or current.
+                    type: number
+                  status:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      controlPlane:
+                        description: (Attributes) (see below for nested schema)
+                        properties:
+                          auth:
+                            description: (Attributes) (see below for nested schema)
+                            type: object
+                          endpoints:
+                            description: (Attributes) Specification of endpoints of
+                              cluster control plane. (see below for nested schema)
+                            type: object
+                          etcdClusterSize:
+                            description: |-
+                              (Number) :
+                              Number of instances in etcd cluster.
+                            type: number
+                          version:
+                            description: |-
+                              (String) :
+                              :
+
+                              Actual Kubernetes and configuration version.
+                              Version has format `<major>.<minor>.<patch>-nebius-cp.<infra_version>` like
+                              "1.30.0-nebius-cp.3", where `<major>.<minor>.<patch>` is Kubernetes version and `<infra_version>` is version of control plane
+                              infrastructure and configuration, updating of which may include bug fixes, security updates and new features of components running on
+                              control plane, like CCM or Cluster Autoscaler.
+                            type: string
+                        type: object
+                      events:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            firstOccurredAt:
+                              description: |-
+                                (String) :
+                                :
+
+                                # Time of the first occurrence of a recurrent event
+
+                                A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                              type: string
+                            lastOccurrence:
+                              description: '(Attributes) :'
+                              properties:
+                                code:
+                                  description: |-
+                                    (String) Event code (unique within the API service), in UpperCamelCase, e.g. "DiskAttached"
+                                    Event code (unique within the API service), in UpperCamelCase, e.g. `"DiskAttached"`
+                                  type: string
+                                level:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    # Severity level for the event
+
+                                    #### Supported values
+
+                                    Possible values:
+
+                                    - `UNSPECIFIED` - Unspecified event severity level
+                                    - `DEBUG` - A debug event providing detailed insight. Such events are used to debug problems with specific resource(s) and process(es)
+                                    - `INFO` - A normal event or state change. Informs what is happening with the API resource. Does not require user attention or interaction
+                                    - `WARN`:
+                                    Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
+                                    but requires no immediate action (yet)
+
+                                    - `ERROR` - Error event. Indicates a serious problem with the API resource and/or the corresponding processes. Requires immediate user action
+                                  type: string
+                                message:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    A human-readable message describing what has happened
+                                    (and suggested actions for the user, if this is a `WARN` or `ERROR` level event)
+                                  type: string
+                                occurredAt:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    # Time at which the event has occurred
+
+                                    A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                                  type: string
+                              type: object
+                            occurrenceCount:
+                              description: |-
+                                (Number) The number of times this event has occurred between first_occurred_at and last_occurrence.occurred_at. Must be > 0
+                                The number of times this event has occurred between `first_occurred_at` and `last_occurrence.occurred_at`. Must be > 0
+                              type: number
+                          type: object
+                        type: array
+                      reconciling:
+                        description: |-
+                          (Boolean) Show that changes are in flight
+                          Show that changes are in flight
+                        type: boolean
+                      state:
+                        description: |-
+                          (String) :
+                          :
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `STATE_UNSPECIFIED`
+                          - `PROVISIONING`
+                          - `RUNNING`
+                          - `DELETING`
+                        type: string
+                    type: object
+                  updatedAt:
+                    description: |-
+                      (String) :
+                      :
+
+                      Timestamp indicating when the resource was last updated.
+
+                      A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -503,6 +503,21 @@ type NetworkInterfaceObservation struct {
 	// (String) Human readable name for the resource.
 	// Network interface name
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (String) :
+	// :
+	//
+	// Type of allocation attachment on the network interface.
+	//
+	// #### Supported values
+	//
+	// Possible values:
+	//
+	// - `TYPE_UNSPECIFIED`
+	// - `PRIMARY` - Allocation is attached as the interface private IPv4 address.
+	// - `ALIAS` - Allocation is attached as an IP alias.
+	// - `PUBLIC` - Allocation is attached as the interface public IPv4 address.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type NetworkInterfaceParameters struct {

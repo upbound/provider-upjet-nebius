@@ -1,0 +1,47 @@
+apiVersion: storagev1.nebius.upbound.io/v1beta1
+kind: Transfer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storagev1/v1beta1/transfer
+  labels:
+    testing.upbound.io/example-name: copy
+  name: copy
+spec:
+  forProvider:
+    afterOneIteration: {}
+    destination:
+      nebius:
+        accessKey:
+          accessKeyIdSecretRef:
+            key: example-key
+            name: example-secret
+            namespace: upbound-system
+        bucketNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: example
+        region: eu-north1
+    name: copy-between-buckets
+    overwriteStrategy: IF_NEWER
+    parentId: project-id
+    sensitive:
+      destination:
+        nebius:
+          access_key:
+            secret_access_key: ${var.transfer_secret_access_key}
+      source:
+        nebius:
+          access_key:
+            secret_access_key: ${var.transfer_secret_access_key}
+      version: "1"
+    source:
+      nebius:
+        accessKey:
+          accessKeyIdSecretRef:
+            key: example-key
+            name: example-secret
+            namespace: upbound-system
+        bucketNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: example
+        region: eu-north1
+    touchUnmanaged: false
