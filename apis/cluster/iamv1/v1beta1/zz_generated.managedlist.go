@@ -8,6 +8,51 @@ package v1beta1
 
 import resource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 
+// GetItems of this AccessPermitList.
+func (l *AccessPermitList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this AuthPublicKeyList.
+func (l *AuthPublicKeyList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this FederatedCredentialsList.
+func (l *FederatedCredentialsList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this FederationCertificateList.
+func (l *FederationCertificateList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this FederationList.
+func (l *FederationList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this GroupList.
 func (l *GroupList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
@@ -19,6 +64,15 @@ func (l *GroupList) GetItems() []resource.Managed {
 
 // GetItems of this GroupMembershipList.
 func (l *GroupMembershipList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this InvitationList.
+func (l *InvitationList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

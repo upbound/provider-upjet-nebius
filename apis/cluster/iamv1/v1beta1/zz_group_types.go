@@ -21,13 +21,22 @@ type GroupInitParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	Metadata *MetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
+	Metadata *GroupMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// Human readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
 	ParentID *string `json:"parentId,omitempty" tf:"parent_id,omitempty"`
+}
+
+type GroupMetadataInitParameters struct {
+}
+
+type GroupMetadataObservation struct {
+}
+
+type GroupMetadataParameters struct {
 }
 
 type GroupObservation struct {
@@ -47,7 +56,7 @@ type GroupObservation struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
+	Metadata *GroupMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// Human readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -63,7 +72,7 @@ type GroupObservation struct {
 	// Service allows zero value or current.
 	ResourceVersion *float64 `json:"resourceVersion,omitempty" tf:"resource_version,omitempty"`
 
-	Status *StatusObservation `json:"status,omitempty" tf:"status,omitempty"`
+	Status *GroupStatusObservation `json:"status,omitempty" tf:"status,omitempty"`
 
 	// :
 	//
@@ -83,7 +92,7 @@ type GroupParameters struct {
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
+	Metadata *GroupMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// Human readable name for the resource.
 	// +kubebuilder:validation:Optional
@@ -94,19 +103,10 @@ type GroupParameters struct {
 	ParentID *string `json:"parentId,omitempty" tf:"parent_id,omitempty"`
 }
 
-type MetadataInitParameters struct {
+type GroupStatusInitParameters struct {
 }
 
-type MetadataObservation struct {
-}
-
-type MetadataParameters struct {
-}
-
-type StatusInitParameters struct {
-}
-
-type StatusObservation struct {
+type GroupStatusObservation struct {
 	MembersCount *float64 `json:"membersCount,omitempty" tf:"members_count,omitempty"`
 
 	ServiceAccountsCount *float64 `json:"serviceAccountsCount,omitempty" tf:"service_accounts_count,omitempty"`
@@ -124,7 +124,7 @@ type StatusObservation struct {
 	TenantUserAccountsCount *float64 `json:"tenantUserAccountsCount,omitempty" tf:"tenant_user_accounts_count,omitempty"`
 }
 
-type StatusParameters struct {
+type GroupStatusParameters struct {
 }
 
 // GroupSpec defines the desired state of Group

@@ -13,7 +13,7 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 )
 
-type ServiceAccountInitParameters struct {
+type ServiceAccountInitParameters_2 struct {
 
 	// (String)
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -46,7 +46,7 @@ type ServiceAccountMetadataObservation struct {
 type ServiceAccountMetadataParameters struct {
 }
 
-type ServiceAccountObservation struct {
+type ServiceAccountObservation_2 struct {
 
 	// (String) :
 	// :
@@ -101,7 +101,7 @@ type ServiceAccountObservation struct {
 	UpdatedAt *string `json:"updatedAt,omitempty" tf:"updated_at,omitempty"`
 }
 
-type ServiceAccountParameters struct {
+type ServiceAccountParameters_2 struct {
 
 	// (String)
 	// +kubebuilder:validation:Optional
@@ -145,7 +145,7 @@ type ServiceAccountStatusParameters_2 struct {
 // ServiceAccountSpec defines the desired state of ServiceAccount
 type ServiceAccountSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ServiceAccountParameters `json:"forProvider"`
+	ForProvider     ServiceAccountParameters_2 `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -156,13 +156,13 @@ type ServiceAccountSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider ServiceAccountInitParameters `json:"initProvider,omitempty"`
+	InitProvider ServiceAccountInitParameters_2 `json:"initProvider,omitempty"`
 }
 
 // ServiceAccountStatus defines the observed state of ServiceAccount.
 type ServiceAccountStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ServiceAccountObservation `json:"atProvider,omitempty"`
+	AtProvider        ServiceAccountObservation_2 `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

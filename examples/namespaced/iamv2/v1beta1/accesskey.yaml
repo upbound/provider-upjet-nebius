@@ -9,7 +9,7 @@ metadata:
   namespace: upbound-system
 spec:
   forProvider:
-    name: storage-access-key
+    name: iamv2accesskey
     parentId: ${data.nebius_project_id}
     # INLINE returns the secret in the API response so it is captured below as a
     # connection detail (key "secret"); MYSTERY_BOX delivers it out-of-band and
@@ -36,5 +36,5 @@ metadata:
   namespace: upbound-system
 spec:
   forProvider:
-    name: storage-sa
+    name: iamv2accesskey
     parentId: ${data.nebius_project_id}

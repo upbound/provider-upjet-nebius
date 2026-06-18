@@ -14,10 +14,17 @@ import (
 	gpucluster "github.com/upbound/provider-nebius/internal/controller/namespaced/computev1/gpucluster"
 	record "github.com/upbound/provider-nebius/internal/controller/namespaced/dnsv1/record"
 	zone "github.com/upbound/provider-nebius/internal/controller/namespaced/dnsv1/zone"
+	accesspermit "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/accesspermit"
+	authpublickey "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/authpublickey"
+	federatedcredentials "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/federatedcredentials"
+	federation "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/federation"
+	federationcertificate "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/federationcertificate"
 	group "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/group"
 	groupmembership "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/groupmembership"
+	invitation "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/invitation"
 	serviceaccount "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/serviceaccount"
 	accesskey "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv2/accesskey"
+	project "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv2/project"
 	cluster "github.com/upbound/provider-nebius/internal/controller/namespaced/mk8sv1/cluster"
 	nodegroup "github.com/upbound/provider-nebius/internal/controller/namespaced/mk8sv1/nodegroup"
 	secret "github.com/upbound/provider-nebius/internal/controller/namespaced/mysteryboxv1/secret"
@@ -44,10 +51,17 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		gpucluster.Setup,
 		record.Setup,
 		zone.Setup,
+		accesspermit.Setup,
+		authpublickey.Setup,
+		federatedcredentials.Setup,
+		federation.Setup,
+		federationcertificate.Setup,
 		group.Setup,
 		groupmembership.Setup,
+		invitation.Setup,
 		serviceaccount.Setup,
 		accesskey.Setup,
+		project.Setup,
 		cluster.Setup,
 		nodegroup.Setup,
 		secret.Setup,
@@ -80,10 +94,17 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		gpucluster.SetupGated,
 		record.SetupGated,
 		zone.SetupGated,
+		accesspermit.SetupGated,
+		authpublickey.SetupGated,
+		federatedcredentials.SetupGated,
+		federation.SetupGated,
+		federationcertificate.SetupGated,
 		group.SetupGated,
 		groupmembership.SetupGated,
+		invitation.SetupGated,
 		serviceaccount.SetupGated,
 		accesskey.SetupGated,
+		project.SetupGated,
 		cluster.SetupGated,
 		nodegroup.SetupGated,
 		secret.SetupGated,

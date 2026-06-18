@@ -1,0 +1,73 @@
+apiVersion: iamv1.nebius.m.upbound.io/v1beta1
+kind: FederationCertificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iamv1/v1beta1/federationcertificate
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: iamv1federationcertificate
+    # parent_id of a federation certificate represents the Federation it belongs to.
+    parentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: default
+    # data is a PEM-encoded X.509 certificate (sensitive), supplied via a Secret.
+    dataSecretRef:
+      name: iamv1federationcertificate-data
+      namespace: upbound-system
+      key: certificate
+
+---
+
+apiVersion: iamv1.nebius.m.upbound.io/v1beta1
+kind: Federation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iamv1/v1beta1/federationcertificate
+    upjet.upbound.io/manual-intervention: "The Federation needs to state transition from ACTIVE to INACTIVE which does not work in 0.6.16 version of the provider (status.state is always ACTIVE)"
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: iamv1federationcertificate
+    active: false
+    parentId: ${data.nebius_tenant_id}
+    samlSettings:
+      idpIssuer: https://idp.example.com/saml/metadata
+      ssoUrl: https://idp.example.com/saml/sso
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: iamv1federationcertificate-data
+  namespace: upbound-system
+type: Opaque
+stringData:
+  # Replace with your federation's PEM-encoded X.509 certificate for real use.
+  certificate: |
+    -----BEGIN CERTIFICATE-----
+    MIIDGzCCAgOgAwIBAgIUYnrMMJFWP0DuZL9MNg8tqxEi4EkwDQYJKoZIhvcNAQEL
+    BQAwHTEbMBkGA1UEAwwSZXhhbXBsZS1mZWRlcmF0aW9uMB4XDTI2MDYxODA5MDkz
+    M1oXDTM2MDYxNTA5MDkzM1owHTEbMBkGA1UEAwwSZXhhbXBsZS1mZWRlcmF0aW9u
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA68qn+eRGeCfAlMnMY2XU
+    wkeHmNjRsoxq2FEv1Hlu8DdnK0YjgM7r8Ps9cP7M++gacxMGysMXrsGzq1CXJZqj
+    Sw+mhp2LqNPGtN7ySjuD1YjC0gTRhKOt2YODiTPSF09tX3yWRYKWoS/Q0CkMQISZ
+    2tjhkP3LC0LZGcNJTMD/J1KuhyoY0hBecUp1ShNMHszKeLfqDJCjxEzrAm3jU3jm
+    tNF0ps1H6h0ZA0qjKg085CggkNdtr5C41WGWXMYyUdjpnLyjRCGYeuS0+CTz2oVm
+    x9RcSkHSTnHPL4C2i2aW5SQn/KijWWcNOzcpAa57VaJB4t9T3gezoYOCk8QWBxjp
+    oQIDAQABo1MwUTAdBgNVHQ4EFgQU34dBPbBRlwuM817rWdo/WmLcLJ0wHwYDVR0j
+    BBgwFoAU34dBPbBRlwuM817rWdo/WmLcLJ0wDwYDVR0TAQH/BAUwAwEB/zANBgkq
+    hkiG9w0BAQsFAAOCAQEAKveDUqxSAws0FNKULY0rA/z4ek+/zERibc/B5k26rKMt
+    bqAiXtK+6Nq6rNFg1QeRTQZfflZo8DwQ9v4T7BGrOufGBM9uma6SUgT1SIY7hBZP
+    8nslwvatIrMoldxJhfubIryG24IZ9DDyBT7ehBlZ5QI9SBaYrk4xxPgJwRKPx7U0
+    cwkLrZxc6Nmh5DyfSwcmT64ywyoQJm3xq4ZW+WTajugNy+jUCkQbIsz4NBQ6rW4J
+    oo1GEf9UTQSShP8h7zRIQJd8UIcOemDlSsIOZsXPJm4BfBQpuPWBOeJxQ648UcXS
+    euCWTveglDfcnVKB88szvYBL3UrxEvesXOwRGVIccA==
+    -----END CERTIFICATE-----

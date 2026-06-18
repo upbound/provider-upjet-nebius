@@ -1,0 +1,19 @@
+apiVersion: iamv1.nebius.m.upbound.io/v1beta1
+kind: Federation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iamv1/v1beta1/federation
+    upjet.upbound.io/manual-intervention: "The Federation needs to state transition from ACTIVE to INACTIVE which does not work in 0.6.16 version of the provider (status.state is always ACTIVE)"
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: iamv1federation
+    active: false
+    parentId: ${data.nebius_tenant_id}
+    userAccountAutoCreation: false
+    samlSettings:
+      idpIssuer: https://idp.example.com/saml/metadata
+      ssoUrl: https://idp.example.com/saml/sso
