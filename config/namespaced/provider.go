@@ -6,6 +6,7 @@ package namespaced
 
 import (
 	"github.com/upbound/provider-nebius/config/namespaced/dnsv1"
+	"github.com/upbound/provider-nebius/config/namespaced/iamv1"
 	"github.com/upbound/provider-nebius/config/namespaced/iamv2"
 	"github.com/upbound/provider-nebius/config/namespaced/mk8sv1"
 	"github.com/upbound/provider-nebius/config/namespaced/mysteryboxv1"
@@ -18,6 +19,7 @@ func init() {
 	ProviderConfiguration.AddConfig(mk8sv1.Configure)
 	ProviderConfiguration.AddConfig(dnsv1.Configure)
 	ProviderConfiguration.AddConfig(mysteryboxv1.Configure)
+	ProviderConfiguration.AddConfig(iamv1.Configure)
 	ProviderConfiguration.AddConfig(iamv2.Configure)
 	ProviderConfiguration.AddConfig(storagev1.Configure)
 }

@@ -9,6 +9,8 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/controller"
 
+	group "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/group"
+	groupmembership "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/groupmembership"
 	serviceaccount "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/serviceaccount"
 )
 
@@ -16,6 +18,8 @@ import (
 // the supplied manager.
 func Setup_iamv1(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		group.Setup,
+		groupmembership.Setup,
 		serviceaccount.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
@@ -29,6 +33,8 @@ func Setup_iamv1(mgr ctrl.Manager, o controller.Options) error {
 // the supplied manager gated.
 func SetupGated_iamv1(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		group.SetupGated,
+		groupmembership.SetupGated,
 		serviceaccount.SetupGated,
 	} {
 		if err := setup(mgr, o); err != nil {

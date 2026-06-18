@@ -14,6 +14,8 @@ import (
 	gpucluster "github.com/upbound/provider-nebius/internal/controller/namespaced/computev1/gpucluster"
 	record "github.com/upbound/provider-nebius/internal/controller/namespaced/dnsv1/record"
 	zone "github.com/upbound/provider-nebius/internal/controller/namespaced/dnsv1/zone"
+	group "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/group"
+	groupmembership "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/groupmembership"
 	serviceaccount "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv1/serviceaccount"
 	accesskey "github.com/upbound/provider-nebius/internal/controller/namespaced/iamv2/accesskey"
 	cluster "github.com/upbound/provider-nebius/internal/controller/namespaced/mk8sv1/cluster"
@@ -42,6 +44,8 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		gpucluster.Setup,
 		record.Setup,
 		zone.Setup,
+		group.Setup,
+		groupmembership.Setup,
 		serviceaccount.Setup,
 		accesskey.Setup,
 		cluster.Setup,
@@ -76,6 +80,8 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		gpucluster.SetupGated,
 		record.SetupGated,
 		zone.SetupGated,
+		group.SetupGated,
+		groupmembership.SetupGated,
 		serviceaccount.SetupGated,
 		accesskey.SetupGated,
 		cluster.SetupGated,

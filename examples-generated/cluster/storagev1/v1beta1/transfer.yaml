@@ -16,7 +16,9 @@ spec:
             key: example-key
             name: example-secret
             namespace: upbound-system
-        bucketName: destination-bucket
+        bucketNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: example
         region: eu-north1
     name: copy-between-buckets
     overwriteStrategy: IF_NEWER
@@ -38,6 +40,8 @@ spec:
             key: example-key
             name: example-secret
             namespace: upbound-system
-        bucketName: source-bucket
+        bucketNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: example
         region: eu-north1
     touchUnmanaged: false

@@ -12,6 +12,17 @@ import (
 // Configure configures the storagev1 group
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("nebius_storage_v1_transfer", func(r *config.Resource) {
+		// source.nebius.bucket_name and destination.nebius.bucket_name reference
+		// Buckets managed by this provider, resolved by the bucket name.
+		r.References["source.nebius.bucket_name"] = config.Reference{
+			TerraformName: "nebius_storage_v1_bucket",
+			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",true)`,
+		}
+		r.References["destination.nebius.bucket_name"] = config.Reference{
+			TerraformName: "nebius_storage_v1_bucket",
+			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",true)`,
+		}
+
 		// access_key_id is not marked as "sensitive" in the Terraform schema output.
 		// It pairs with the (already sensitive) secret_access_key, so configure it
 		// explicitly to be a secret reference in every access_key block.

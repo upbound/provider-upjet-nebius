@@ -2570,6 +2570,16 @@ func (in *NebiusInitParameters) DeepCopyInto(out *NebiusInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.BucketNameRef != nil {
+		in, out := &in.BucketNameRef, &out.BucketNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.BucketNameSelector != nil {
+		in, out := &in.BucketNameSelector, &out.BucketNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -2629,6 +2639,16 @@ func (in *NebiusParameters) DeepCopyInto(out *NebiusParameters) {
 		in, out := &in.BucketName, &out.BucketName
 		*out = new(string)
 		**out = **in
+	}
+	if in.BucketNameRef != nil {
+		in, out := &in.BucketNameRef, &out.BucketNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.BucketNameSelector != nil {
+		in, out := &in.BucketNameSelector, &out.BucketNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
@@ -3293,6 +3313,16 @@ func (in *SourceNebiusInitParameters) DeepCopyInto(out *SourceNebiusInitParamete
 		*out = new(string)
 		**out = **in
 	}
+	if in.BucketNameRef != nil {
+		in, out := &in.BucketNameRef, &out.BucketNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.BucketNameSelector != nil {
+		in, out := &in.BucketNameSelector, &out.BucketNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
@@ -3362,6 +3392,16 @@ func (in *SourceNebiusParameters) DeepCopyInto(out *SourceNebiusParameters) {
 		in, out := &in.BucketName, &out.BucketName
 		*out = new(string)
 		**out = **in
+	}
+	if in.BucketNameRef != nil {
+		in, out := &in.BucketNameRef, &out.BucketNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.BucketNameSelector != nil {
+		in, out := &in.BucketNameSelector, &out.BucketNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region

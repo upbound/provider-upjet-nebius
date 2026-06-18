@@ -13,42 +13,25 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 )
 
-type ServiceAccountInitParameters struct {
+type GroupInitParameters struct {
 
-	// (String)
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// (Map of String) :
 	// :
 	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Attributes) :
-	Metadata *ServiceAccountMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
+	Metadata *MetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
 	// Human readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Identifier of the parent resource to which the resource belongs.
 	// Identifier of the parent resource to which the resource belongs.
 	ParentID *string `json:"parentId,omitempty" tf:"parent_id,omitempty"`
 }
 
-type ServiceAccountMetadataInitParameters struct {
-}
+type GroupObservation struct {
 
-type ServiceAccountMetadataObservation struct {
-}
-
-type ServiceAccountMetadataParameters struct {
-}
-
-type ServiceAccountObservation struct {
-
-	// (String) :
 	// :
 	//
 	// Timestamp indicating when the resource was created.
@@ -56,31 +39,22 @@ type ServiceAccountObservation struct {
 	// A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String)
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// (String) Identifier for the resource, unique for its resource type.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) :
 	// :
 	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Attributes) :
-	Metadata *ServiceAccountMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
+	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
 	// Human readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Identifier of the parent resource to which the resource belongs.
 	// Identifier of the parent resource to which the resource belongs.
 	ParentID *string `json:"parentId,omitempty" tf:"parent_id,omitempty"`
 
-	// (Number) :
 	// :
 	//
 	// Version of the resource for safe concurrent modifications and consistent reads.
@@ -89,10 +63,8 @@ type ServiceAccountObservation struct {
 	// Service allows zero value or current.
 	ResourceVersion *float64 `json:"resourceVersion,omitempty" tf:"resource_version,omitempty"`
 
-	// (Attributes) (see below for nested schema)
-	Status *ServiceAccountStatusObservation_2 `json:"status,omitempty" tf:"status,omitempty"`
+	Status *StatusObservation `json:"status,omitempty" tf:"status,omitempty"`
 
-	// (String) :
 	// :
 	//
 	// Timestamp indicating when the resource was last updated.
@@ -101,13 +73,8 @@ type ServiceAccountObservation struct {
 	UpdatedAt *string `json:"updatedAt,omitempty" tf:"updated_at,omitempty"`
 }
 
-type ServiceAccountParameters struct {
+type GroupParameters struct {
 
-	// (String)
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// (Map of String) :
 	// :
 	//
 	// Labels associated with the resource.
@@ -115,37 +82,55 @@ type ServiceAccountParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Attributes) :
 	// +kubebuilder:validation:Optional
-	Metadata *ServiceAccountMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
+	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
 	// Human readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Identifier of the parent resource to which the resource belongs.
 	// Identifier of the parent resource to which the resource belongs.
 	// +kubebuilder:validation:Optional
 	ParentID *string `json:"parentId,omitempty" tf:"parent_id,omitempty"`
 }
 
-type ServiceAccountStatusInitParameters_2 struct {
+type MetadataInitParameters struct {
 }
 
-type ServiceAccountStatusObservation_2 struct {
-
-	// (Boolean)
-	Active *bool `json:"active,omitempty" tf:"active,omitempty"`
+type MetadataObservation struct {
 }
 
-type ServiceAccountStatusParameters_2 struct {
+type MetadataParameters struct {
 }
 
-// ServiceAccountSpec defines the desired state of ServiceAccount
-type ServiceAccountSpec struct {
+type StatusInitParameters struct {
+}
+
+type StatusObservation struct {
+	MembersCount *float64 `json:"membersCount,omitempty" tf:"members_count,omitempty"`
+
+	ServiceAccountsCount *float64 `json:"serviceAccountsCount,omitempty" tf:"service_accounts_count,omitempty"`
+
+	// :
+	//
+	// #### Supported values
+	//
+	// Possible values:
+	//
+	// - `UNSPECIFIED`
+	// - `ACTIVE`
+	State *string `json:"state,omitempty" tf:"state,omitempty"`
+
+	TenantUserAccountsCount *float64 `json:"tenantUserAccountsCount,omitempty" tf:"tenant_user_accounts_count,omitempty"`
+}
+
+type StatusParameters struct {
+}
+
+// GroupSpec defines the desired state of Group
+type GroupSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ServiceAccountParameters `json:"forProvider"`
+	ForProvider     GroupParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -156,50 +141,50 @@ type ServiceAccountSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider ServiceAccountInitParameters `json:"initProvider,omitempty"`
+	InitProvider GroupInitParameters `json:"initProvider,omitempty"`
 }
 
-// ServiceAccountStatus defines the observed state of ServiceAccount.
-type ServiceAccountStatus struct {
+// GroupStatus defines the observed state of Group.
+type GroupStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ServiceAccountObservation `json:"atProvider,omitempty"`
+	AtProvider        GroupObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// ServiceAccount is the Schema for the ServiceAccounts API.
+// Group is the Schema for the Groups API. <no value>
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,nebius}
-type ServiceAccount struct {
+type Group struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.parentId) || (has(self.initProvider) && has(self.initProvider.parentId))",message="spec.forProvider.parentId is a required parameter"
-	Spec   ServiceAccountSpec   `json:"spec"`
-	Status ServiceAccountStatus `json:"status,omitempty"`
+	Spec   GroupSpec   `json:"spec"`
+	Status GroupStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// ServiceAccountList contains a list of ServiceAccounts
-type ServiceAccountList struct {
+// GroupList contains a list of Groups
+type GroupList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []ServiceAccount `json:"items"`
+	Items           []Group `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	ServiceAccount_Kind             = "ServiceAccount"
-	ServiceAccount_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: ServiceAccount_Kind}.String()
-	ServiceAccount_KindAPIVersion   = ServiceAccount_Kind + "." + CRDGroupVersion.String()
-	ServiceAccount_GroupVersionKind = CRDGroupVersion.WithKind(ServiceAccount_Kind)
+	Group_Kind             = "Group"
+	Group_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: Group_Kind}.String()
+	Group_KindAPIVersion   = Group_Kind + "." + CRDGroupVersion.String()
+	Group_GroupVersionKind = CRDGroupVersion.WithKind(Group_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&ServiceAccount{}, &ServiceAccountList{})
+	SchemeBuilder.Register(&Group{}, &GroupList{})
 }

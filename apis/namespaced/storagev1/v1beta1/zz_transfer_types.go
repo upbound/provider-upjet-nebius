@@ -449,7 +449,17 @@ type NebiusInitParameters struct {
 
 	// (String) Name of the destination bucket.
 	// Name of the destination bucket.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-nebius/apis/namespaced/storagev1/v1beta1.Bucket
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",true)
 	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
+
+	// Reference to a Bucket in storagev1 to populate bucketName.
+	// +kubebuilder:validation:Optional
+	BucketNameRef *v1.NamespacedReference `json:"bucketNameRef,omitempty" tf:"-"`
+
+	// Selector for a Bucket in storagev1 to populate bucketName.
+	// +kubebuilder:validation:Optional
+	BucketNameSelector *v1.NamespacedSelector `json:"bucketNameSelector,omitempty" tf:"-"`
 
 	// (String) Nebius region where the destination bucket is located.
 	// Nebius region where the destination bucket is located.
@@ -478,8 +488,18 @@ type NebiusParameters struct {
 
 	// (String) Name of the destination bucket.
 	// Name of the destination bucket.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-nebius/apis/namespaced/storagev1/v1beta1.Bucket
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",true)
 	// +kubebuilder:validation:Optional
-	BucketName *string `json:"bucketName" tf:"bucket_name,omitempty"`
+	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
+
+	// Reference to a Bucket in storagev1 to populate bucketName.
+	// +kubebuilder:validation:Optional
+	BucketNameRef *v1.NamespacedReference `json:"bucketNameRef,omitempty" tf:"-"`
+
+	// Selector for a Bucket in storagev1 to populate bucketName.
+	// +kubebuilder:validation:Optional
+	BucketNameSelector *v1.NamespacedSelector `json:"bucketNameSelector,omitempty" tf:"-"`
 
 	// (String) Nebius region where the destination bucket is located.
 	// Nebius region where the destination bucket is located.
@@ -635,7 +655,17 @@ type SourceNebiusInitParameters struct {
 
 	// (String) Name of the destination bucket.
 	// Name of the source bucket.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-nebius/apis/namespaced/storagev1/v1beta1.Bucket
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",true)
 	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
+
+	// Reference to a Bucket in storagev1 to populate bucketName.
+	// +kubebuilder:validation:Optional
+	BucketNameRef *v1.NamespacedReference `json:"bucketNameRef,omitempty" tf:"-"`
+
+	// Selector for a Bucket in storagev1 to populate bucketName.
+	// +kubebuilder:validation:Optional
+	BucketNameSelector *v1.NamespacedSelector `json:"bucketNameSelector,omitempty" tf:"-"`
 
 	// (String) Nebius region where the destination bucket is located.
 	// Nebius region where the source bucket is located.
@@ -671,8 +701,18 @@ type SourceNebiusParameters struct {
 
 	// (String) Name of the destination bucket.
 	// Name of the source bucket.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-nebius/apis/namespaced/storagev1/v1beta1.Bucket
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("name",true)
 	// +kubebuilder:validation:Optional
-	BucketName *string `json:"bucketName" tf:"bucket_name,omitempty"`
+	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
+
+	// Reference to a Bucket in storagev1 to populate bucketName.
+	// +kubebuilder:validation:Optional
+	BucketNameRef *v1.NamespacedReference `json:"bucketNameRef,omitempty" tf:"-"`
+
+	// Selector for a Bucket in storagev1 to populate bucketName.
+	// +kubebuilder:validation:Optional
+	BucketNameSelector *v1.NamespacedSelector `json:"bucketNameSelector,omitempty" tf:"-"`
 
 	// (String) Nebius region where the destination bucket is located.
 	// Nebius region where the source bucket is located.

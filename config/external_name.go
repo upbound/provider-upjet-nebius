@@ -19,8 +19,10 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"nebius_vpc_v1_security_group": config.FrameworkResourceWithComputedIdentifier("id", "vpcsecuritygroup-e0t000000000000000"),
 	"nebius_vpc_v1_security_rule":  config.FrameworkResourceWithComputedIdentifier("id", "vpcsecurityrule-e0t000000000000000"),
 	// iam_v(1|2) resources can have any valid routing code prefix e.g. e0t in ComputedIdentifier independently of the project they're deployed in
-	"nebius_iam_v1_service_account": config.FrameworkResourceWithComputedIdentifier("id", "serviceaccount-e0t000000000000000"),
-	"nebius_iam_v2_access_key":      config.FrameworkResourceWithComputedIdentifier("id", "accesskey-e0t000000000000000"),
+	"nebius_iam_v1_service_account":  config.FrameworkResourceWithComputedIdentifier("id", "serviceaccount-e0t000000000000000"),
+	"nebius_iam_v1_group":            config.FrameworkResourceWithComputedIdentifier("id", "group-e0t000000000000000"),
+	"nebius_iam_v1_group_membership": config.FrameworkResourceWithComputedIdentifier("id", "groupmembership-e0t000000000000000"),
+	"nebius_iam_v2_access_key":       config.FrameworkResourceWithComputedIdentifier("id", "accesskey-e0t000000000000000"),
 	// compute_v1 resources need to have a valid project prefix in ComputedIdentifier e.g. e00, e01
 	"nebius_compute_v1_gpu_cluster": config.FrameworkResourceWithComputedIdentifier("id", "computegpucluster-e01000000000000000"),
 	"nebius_compute_v1_filesystem":  config.FrameworkResourceWithComputedIdentifier("id", "computefilesystem-e01000000000000000"),
@@ -35,8 +37,10 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"nebius_mysterybox_v1_secret":         config.FrameworkResourceWithComputedIdentifier("id", "mbsec-e00000000000000000"),
 	"nebius_mysterybox_v1_secret_version": config.FrameworkResourceWithComputedIdentifier("id", "mbsecver-e00000000000000000"),
 	// storage_v1 resources need to have a valid project prefix in ComputedIdentifier e.g. e00, e01
-	"nebius_storage_v1_bucket":   config.FrameworkResourceWithComputedIdentifier("id", "storagebucket-e00000000000000000"),
-	"nebius_storage_v1_transfer": config.FrameworkResourceWithComputedIdentifier("id", "storagetransfer-e00000000000000000"),
+	"nebius_storage_v1_bucket": config.FrameworkResourceWithComputedIdentifier("id", "storagebucket-e00000000000000000"),
+	// Transfer IDs use the "u00" routing code followed by a UUID weak ID, e.g.
+	// storagetransfer-u00ee51697f-d12d-4831-8e4a-6c793142da94.
+	"nebius_storage_v1_transfer": config.FrameworkResourceWithComputedIdentifier("id", "storagetransfer-u0000000000-0000-0000-0000-000000000000"),
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

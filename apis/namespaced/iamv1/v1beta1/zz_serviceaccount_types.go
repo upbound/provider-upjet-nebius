@@ -14,15 +14,6 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
-type MetadataInitParameters struct {
-}
-
-type MetadataObservation struct {
-}
-
-type MetadataParameters struct {
-}
-
 type ServiceAccountInitParameters struct {
 
 	// (String)
@@ -36,7 +27,7 @@ type ServiceAccountInitParameters struct {
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// (Attributes) :
-	Metadata *MetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
+	Metadata *ServiceAccountMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// (String) Human readable name for the resource.
 	// Human readable name for the resource.
@@ -45,6 +36,15 @@ type ServiceAccountInitParameters struct {
 	// (String) Identifier of the parent resource to which the resource belongs.
 	// Identifier of the parent resource to which the resource belongs.
 	ParentID *string `json:"parentId,omitempty" tf:"parent_id,omitempty"`
+}
+
+type ServiceAccountMetadataInitParameters struct {
+}
+
+type ServiceAccountMetadataObservation struct {
+}
+
+type ServiceAccountMetadataParameters struct {
 }
 
 type ServiceAccountObservation struct {
@@ -71,7 +71,7 @@ type ServiceAccountObservation struct {
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// (Attributes) :
-	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
+	Metadata *ServiceAccountMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// (String) Human readable name for the resource.
 	// Human readable name for the resource.
@@ -91,7 +91,7 @@ type ServiceAccountObservation struct {
 	ResourceVersion *float64 `json:"resourceVersion,omitempty" tf:"resource_version,omitempty"`
 
 	// (Attributes) (see below for nested schema)
-	Status *StatusObservation `json:"status,omitempty" tf:"status,omitempty"`
+	Status *ServiceAccountStatusObservation_2 `json:"status,omitempty" tf:"status,omitempty"`
 
 	// (String) :
 	// :
@@ -118,7 +118,7 @@ type ServiceAccountParameters struct {
 
 	// (Attributes) :
 	// +kubebuilder:validation:Optional
-	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
+	Metadata *ServiceAccountMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// (String) Human readable name for the resource.
 	// Human readable name for the resource.
@@ -131,16 +131,16 @@ type ServiceAccountParameters struct {
 	ParentID *string `json:"parentId,omitempty" tf:"parent_id,omitempty"`
 }
 
-type StatusInitParameters struct {
+type ServiceAccountStatusInitParameters_2 struct {
 }
 
-type StatusObservation struct {
+type ServiceAccountStatusObservation_2 struct {
 
 	// (Boolean)
 	Active *bool `json:"active,omitempty" tf:"active,omitempty"`
 }
 
-type StatusParameters struct {
+type ServiceAccountStatusParameters_2 struct {
 }
 
 // ServiceAccountSpec defines the desired state of ServiceAccount
