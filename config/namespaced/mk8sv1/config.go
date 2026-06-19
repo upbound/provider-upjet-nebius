@@ -6,7 +6,8 @@ package mk8sv1
 
 import (
 	"github.com/crossplane/upjet/v2/pkg/config"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	"github.com/upbound/provider-nebius/config/common"
 )
 
 // Configure configures the mk8s group
@@ -18,18 +19,13 @@ func Configure(p *config.Provider) {
 		}
 		// Note(jonasz-lasut): Following fields are not marked as "sensitive" in Terraform cli schema output.
 		// We need to configure them explicitly to store in connectionDetails secret.
-		r.TerraformResource.Schema["status"].Elem.(*schema.Resource).
-			Schema["control_plane"].Elem.(*schema.Resource).
-			Schema["auth"].Elem.(*schema.Resource).
-			Schema["cluster_ca_certificate"].Sensitive = true
-		r.TerraformResource.Schema["status"].Elem.(*schema.Resource).
-			Schema["control_plane"].Elem.(*schema.Resource).
-			Schema["endpoints"].Elem.(*schema.Resource).
-			Schema["public_endpoint"].Sensitive = true
-		r.TerraformResource.Schema["status"].Elem.(*schema.Resource).
-			Schema["control_plane"].Elem.(*schema.Resource).
-			Schema["endpoints"].Elem.(*schema.Resource).
-			Schema["private_endpoint"].Sensitive = true
+		config.GetSchema(r.TerraformResource, "status.control_plane.auth.cluster_ca_certificate").Sensitive = true
+		config.GetSchema(r.TerraformResource, "status.control_plane.endpoints.public_endpoint").Sensitive = true
+		config.GetSchema(r.TerraformResource, "status.control_plane.endpoints.private_endpoint").Sensitive = true
+
+		// Assemble the sensitive endpoint + CA values into a standard kubeconfig
+		// so the cluster can be consumed directly by provider-kubernetes.
+		r.Sensitive.AdditionalConnectionDetailsFn = common.MK8SClusterBuildKubeconfig
 	})
 
 	p.AddResourceConfigurator("nebius_mk8s_v1_node_group", func(r *config.Resource) {
