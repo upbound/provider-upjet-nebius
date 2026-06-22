@@ -123,10 +123,11 @@ spec:
                 required:
                 - type
                 type: object
-              parentID:
+              projectID:
                 description: |-
-                  ParentID is the Nebius project/folder ID to use as the provider-wide
-                  parent. Individual resources may override this. Optional.
+                  ProjectID is the Nebius project ID used as the default parent for
+                  project-parented resources. Individual resources may override it via
+                  spec.forProvider.parentId. Optional.
                 type: string
               reconciliationPolicy:
                 description: |-

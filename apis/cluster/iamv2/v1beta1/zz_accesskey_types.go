@@ -374,9 +374,8 @@ type AccessKeyStatus struct {
 type AccessKey struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.parentId) || (has(self.initProvider) && has(self.initProvider.parentId))",message="spec.forProvider.parentId is a required parameter"
-	Spec   AccessKeySpec   `json:"spec"`
-	Status AccessKeyStatus `json:"status,omitempty"`
+	Spec              AccessKeySpec   `json:"spec"`
+	Status            AccessKeyStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

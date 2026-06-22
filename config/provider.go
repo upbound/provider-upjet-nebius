@@ -13,6 +13,7 @@ import (
 	nebiusimpl "github.com/nebius/terraform-provider-nebius/provider/impl"
 
 	"github.com/upbound/provider-nebius/config/cluster"
+	"github.com/upbound/provider-nebius/config/common"
 	"github.com/upbound/provider-nebius/config/templates"
 	"github.com/upbound/provider-nebius/hack"
 )
@@ -54,6 +55,12 @@ func GetProvider(_ context.Context) (*ujconfig.Provider, error) {
 	// add custom config functions
 	for _, configure := range cluster.ProviderConfiguration {
 		configure(pc)
+	}
+
+	// Default parent_id from ProviderConfig.spec.projectID for project-parented
+	// resources. Must run before ConfigureResources so the configurators apply.
+	for _, name := range common.ProjectParentedResources {
+		pc.AddResourceConfigurator(name, common.ConfigureProjectParent)
 	}
 
 	pc.ConfigureResources()

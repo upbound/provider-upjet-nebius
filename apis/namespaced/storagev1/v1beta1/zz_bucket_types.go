@@ -1568,9 +1568,8 @@ type BucketStatus struct {
 type Bucket struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.parentId) || (has(self.initProvider) && has(self.initProvider.parentId))",message="spec.forProvider.parentId is a required parameter"
-	Spec   BucketSpec   `json:"spec"`
-	Status BucketStatus `json:"status,omitempty"`
+	Spec              BucketSpec   `json:"spec"`
+	Status            BucketStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

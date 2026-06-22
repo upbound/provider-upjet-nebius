@@ -51,7 +51,7 @@ func TerraformSetupBuilder(fwProvider fwprovider.Provider) terraform.SetupFn {
 			return terraform.Setup{}, errors.New("spec.identity is required but not set")
 		}
 
-		cfg, err := buildConfiguration(creds, pcSpec.Identity.Type, pcSpec.ParentID)
+		cfg, err := buildConfiguration(creds, pcSpec.Identity.Type, pcSpec.ProjectID)
 		if err != nil {
 			return terraform.Setup{}, errors.Wrap(err, "cannot build provider configuration")
 		}
