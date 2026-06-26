@@ -9,10 +9,11 @@ import (
 	"testing"
 
 	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/test"
 	"github.com/google/go-cmp/cmp"
-	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	clustervpcv1 "github.com/upbound/provider-nebius/apis/cluster/vpcv1/v1beta1"
@@ -30,7 +31,7 @@ func TestParentIDInitializer(t *testing.T) {
 	type want struct {
 		parentID  *string // resulting spec.forProvider.parentId
 		getCalled bool
-		updated   bool
+		patched   bool
 		err       bool
 	}
 
@@ -40,7 +41,7 @@ func TestParentIDInitializer(t *testing.T) {
 	}{
 		"DefaultsFromProviderConfigWhenEmpty": {
 			args: args{pcProjectID: new("project-e00example")},
-			want: want{parentID: new("project-e00example"), getCalled: true, updated: true},
+			want: want{parentID: new("project-e00example"), getCalled: true, patched: true},
 		},
 		"ForProviderSetIsNoOp": {
 			args: args{forProvider: new("project-explicit"), pcProjectID: new("project-e00example")},
@@ -90,10 +91,7 @@ func TestParentIDInitializer(t *testing.T) {
 					u.Object = content
 					return nil
 				},
-				MockUpdate: func(_ context.Context, _ client.Object, _ ...client.UpdateOption) error {
-					got.updated = true
-					return nil
-				},
+				MockApply: test.NewMockApplyFn(nil, func(_ runtime.ApplyConfiguration) error { got.patched = true; return nil }),
 			}
 
 			err := (&parentIDInitializer{kube: mc}).Initialize(ctx, n)

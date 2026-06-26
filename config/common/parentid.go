@@ -6,7 +6,6 @@ package common
 
 import (
 	"context"
-	"encoding/json"
 
 	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
@@ -140,17 +139,15 @@ func (i *parentIDInitializer) Initialize(ctx context.Context, mg xpresource.Mana
 		return errors.Errorf("parentId is not set on %q and the referenced ProviderConfig has no spec.projectID", mg.GetName())
 	}
 
-	if err := paved.SetString(forProviderParentIDPath, projectID); err != nil {
+	patch := &unstructured.Unstructured{}
+	patch.SetGroupVersionKind(mg.GetObjectKind().GroupVersionKind())
+	patch.SetName(mg.GetName())
+	patch.SetNamespace(mg.GetNamespace())
+
+	if err := unstructured.SetNestedField(patch.Object, projectID, "spec", "forProvider", "parentId"); err != nil {
 		return err
 	}
-	pavedByte, err := paved.MarshalJSON()
-	if err != nil {
-		return err
-	}
-	if err := json.Unmarshal(pavedByte, mg); err != nil {
-		return err
-	}
-	return i.kube.Update(ctx, mg)
+	return i.kube.Apply(ctx, client.ApplyConfigurationFromUnstructured(patch), client.FieldOwner("provider"), client.ForceOwnership)
 }
 
 // providerConfigProjectID reads spec.projectID from the ProviderConfig
