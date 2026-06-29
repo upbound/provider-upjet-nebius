@@ -54,9 +54,9 @@ internal/
 
 cmd/
   generator/main.go           Codegen entrypoint (run by `make generate`)
-  provider/<subpkg>/zz_main.go  Provider binary entrypoints (monolith is the default SUBPACKAGE)
+  provider/main.go            Hand-written monolithic provider binary entrypoint
 
-hack/                         main.go.tmpl (provider main template) + embed.go (MainTemplate)
+hack/                         boilerplate.go.txt (license header injected into generated code)
 package/crds/                 Generated CRD YAML (one file per resource per scope)
 examples/                     Hand-curated examples (the source of truth shipped to users / used by uptest)
 examples-generated/           Codegen output from provider-metadata.yaml examples (copy into examples/, then edit)

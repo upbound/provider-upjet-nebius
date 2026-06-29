@@ -1,0 +1,20 @@
+apiVersion: meta.pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-nebius
+  annotations:
+    meta.crossplane.io/maintainer: Upbound <support@upbound.io>
+    meta.crossplane.io/source: github.com/upbound/provider-upjet-nebius
+    meta.crossplane.io/license: Apache-2.0
+    meta.crossplane.io/description: |
+      Upbound's official Crossplane provider to manage Nebius Cloud services in Kubernetes.
+    meta.crossplane.io/readme: |
+      Provider Nebius is a Crossplane provider for [Nebius Cloud](https://nebius.com/)
+      developed and supported by Upbound.
+      Available resources and their fields can be found in the [Upbound
+      Marketplace](https://marketplace.upbound.io/providers/upbound/provider-nebius).
+      If you encounter an issue please reach out on support@upbound.io email
+      address.
+spec:
+  capabilities:
+  - SafeStart
