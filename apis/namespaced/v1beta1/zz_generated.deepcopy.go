@@ -141,8 +141,8 @@ func (in *ProviderConfigSpec) DeepCopyInto(out *ProviderConfigSpec) {
 		(*in).DeepCopyInto(*out)
 	}
 	in.Credentials.DeepCopyInto(&out.Credentials)
-	if in.ParentID != nil {
-		in, out := &in.ParentID, &out.ParentID
+	if in.ProjectID != nil {
+		in, out := &in.ProjectID, &out.ProjectID
 		*out = new(string)
 		**out = **in
 	}

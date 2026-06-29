@@ -18,10 +18,11 @@ type ProviderConfigSpec struct {
 	// Credentials required to authenticate to this provider.
 	Credentials ProviderCredentials `json:"credentials"`
 
-	// ParentID is the Nebius project/folder ID to use as the provider-wide
-	// parent. Individual resources may override this. Optional.
+	// ProjectID is the Nebius project ID used as the default parent for
+	// project-parented resources. Individual resources may override it via
+	// spec.forProvider.parentId. Optional.
 	// +kubebuilder:validation:Optional
-	ParentID *string `json:"parentID,omitempty"`
+	ProjectID *string `json:"projectID,omitempty"`
 
 	// Identity specifies the authentication identity configuration.
 	// +kubebuilder:validation:Required

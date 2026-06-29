@@ -274,10 +274,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.algorithm)
                 || (has(self.initProvider) && has(self.initProvider.algorithm))'
-            - message: spec.forProvider.parentId is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.parentId)
-                || (has(self.initProvider) && has(self.initProvider.parentId))'
           status:
             description: SymmetricKeyStatus defines the observed state of SymmetricKey.
             properties:

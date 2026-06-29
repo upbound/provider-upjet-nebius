@@ -236,7 +236,6 @@ type AsymmetricKey struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.algorithm) || (has(self.initProvider) && has(self.initProvider.algorithm))",message="spec.forProvider.algorithm is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.parentId) || (has(self.initProvider) && has(self.initProvider.parentId))",message="spec.forProvider.parentId is a required parameter"
 	Spec   AsymmetricKeySpec   `json:"spec"`
 	Status AsymmetricKeyStatus `json:"status,omitempty"`
 }
