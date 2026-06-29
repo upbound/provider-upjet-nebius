@@ -38,12 +38,12 @@ config/                       Upjet provider configuration (hand-written) — th
   cluster/
     provider.go               init(): registers each group's Configure into ProviderConfiguration
     configuration.go          Configurator registry type + global ProviderConfiguration var
-    vpcv1/config.go           Per-group AddResourceConfigurator calls: cross-resource references live here
-  namespaced/                 Mirror of cluster/ for the namespaced provider (vpcv1/config.go is duplicated)
+    vpc/config.go             Per-group AddResourceConfigurator calls: cross-resource references live here
+  namespaced/                 Mirror of cluster/ for the namespaced provider (vpc/config.go is duplicated)
 
 apis/                         Generated Go API types (zz_*.go). Subtree: {cluster,namespaced}/<group>/<version>/
-  cluster/vpcv1/v1beta1/      zz_<resource>_types.go, zz_<resource>_terraformed.go, zz_generated.*.go
-  namespaced/vpcv1/v1beta1/   (mirror)
+  cluster/vpc/v1beta1/        zz_<resource>_types.go, zz_<resource>_terraformed.go, zz_generated.*.go
+  namespaced/vpc/v1beta1/     (mirror)
 
 internal/
   controller/{cluster,namespaced}/<group>/<resource>/   Generated controllers (one dir per resource)
@@ -98,10 +98,10 @@ Adding a TF resource requires touching, in order:
    `ReplaceGroupWords("<group>", <count>)`. `ReplaceGroupWords(group, count)`
    strips the `nebius_` prefix, drops the first `count` words to form the group,
    and camel-cases the remainder into the Kind. For `nebius_vpc_v1_*` resources
-   use `ReplaceGroupWords("vpcv1", 2)` → group `vpcv1`, e.g.
+   use `ReplaceGroupWords("vpc", 2)` → group `vpc`, e.g.
    `nebius_vpc_v1_security_group` → Kind `SecurityGroup`.
 
-3. **`config/cluster/vpcv1/config.go` AND `config/namespaced/vpcv1/config.go`**
+3. **`config/cluster/vpc/config.go` AND `config/namespaced/vpc/config.go`**
    (keep them identical) — add an `AddResourceConfigurator` block **only if the
    resource has ID references to other resources**. Each reference:
    ```go

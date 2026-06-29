@@ -1,0 +1,49 @@
+apiVersion: iam.nebius.m.upbound.io/v1beta1
+kind: GroupMembership
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1beta1/groupmembership
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    parentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: default
+    memberIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: default
+
+---
+
+apiVersion: iam.nebius.m.upbound.io/v1beta1
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1beta1/groupmembership
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: iamv1groupmembership
+    parentId: ${data.nebius_tenant_id}
+
+---
+
+apiVersion: iam.nebius.m.upbound.io/v1beta1
+kind: ServiceAccount
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1beta1/groupmembership
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: iamv1groupmembership
+    parentId: ${data.nebius_project_id}

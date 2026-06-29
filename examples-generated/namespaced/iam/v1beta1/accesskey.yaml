@@ -1,0 +1,35 @@
+apiVersion: iam.nebius.m.upbound.io/v1beta1
+kind: AccessKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1beta1/accesskey
+  labels:
+    testing.upbound.io/example-name: storage
+  name: storage
+  namespace: upbound-system
+spec:
+  forProvider:
+    account:
+      serviceAccount:
+        idSelector:
+          matchLabels:
+            testing.upbound.io/example-name: storage
+    name: storage-access-key
+    parentId: project-id
+    secretDeliveryMode: MYSTERY_BOX
+
+---
+
+apiVersion: iam.nebius.m.upbound.io/v1beta1
+kind: ServiceAccount
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1beta1/accesskey
+  labels:
+    testing.upbound.io/example-name: storage
+  name: storage
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: storage-sa
+    parentId: project-id

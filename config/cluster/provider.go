@@ -5,23 +5,21 @@
 package cluster
 
 import (
-	"github.com/upbound/provider-nebius/config/cluster/computev1"
-	"github.com/upbound/provider-nebius/config/cluster/dnsv1"
-	"github.com/upbound/provider-nebius/config/cluster/iamv1"
-	"github.com/upbound/provider-nebius/config/cluster/iamv2"
-	"github.com/upbound/provider-nebius/config/cluster/mk8sv1"
-	"github.com/upbound/provider-nebius/config/cluster/mysteryboxv1"
-	"github.com/upbound/provider-nebius/config/cluster/storagev1"
-	"github.com/upbound/provider-nebius/config/cluster/vpcv1"
+	"github.com/upbound/provider-nebius/config/cluster/compute"
+	"github.com/upbound/provider-nebius/config/cluster/dns"
+	"github.com/upbound/provider-nebius/config/cluster/iam"
+	"github.com/upbound/provider-nebius/config/cluster/mk8s"
+	"github.com/upbound/provider-nebius/config/cluster/mysterybox"
+	"github.com/upbound/provider-nebius/config/cluster/storage"
+	"github.com/upbound/provider-nebius/config/cluster/vpc"
 )
 
 func init() {
-	ProviderConfiguration.AddConfig(vpcv1.Configure)
-	ProviderConfiguration.AddConfig(computev1.Configure)
-	ProviderConfiguration.AddConfig(mk8sv1.Configure)
-	ProviderConfiguration.AddConfig(dnsv1.Configure)
-	ProviderConfiguration.AddConfig(mysteryboxv1.Configure)
-	ProviderConfiguration.AddConfig(iamv1.Configure)
-	ProviderConfiguration.AddConfig(iamv2.Configure)
-	ProviderConfiguration.AddConfig(storagev1.Configure)
+	ProviderConfiguration.AddConfig(vpc.Configure)
+	ProviderConfiguration.AddConfig(compute.Configure)
+	ProviderConfiguration.AddConfig(mk8s.Configure)
+	ProviderConfiguration.AddConfig(dns.Configure)
+	ProviderConfiguration.AddConfig(mysterybox.Configure)
+	ProviderConfiguration.AddConfig(iam.Configure)
+	ProviderConfiguration.AddConfig(storage.Configure)
 }

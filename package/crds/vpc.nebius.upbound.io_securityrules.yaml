@@ -1,0 +1,1296 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: securityrules.vpc.nebius.upbound.io
+spec:
+  group: vpc.nebius.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - nebius
+    kind: SecurityRule
+    listKind: SecurityRuleList
+    plural: securityrules
+    singular: securityrule
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: SecurityRule is the Schema for the SecurityRules API. SecurityRules
+          define rules for controlling network traffic within a network. These rules
+          specify when traffic is ALLOWED or DENIED based on direction, protocol,
+          match source, and ports.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: SecurityRuleSpec defines the desired state of SecurityRule
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  access:
+                    description: |-
+                      (String) :
+                      :
+
+                      Access action for the rule.
+                      Required. Determines whether matching traffic is allowed or denied.
+
+                      #### Supported values
+
+                      Access specifies action on matching traffic: ALLOW or DENY.
+                      Possible values:
+
+                      - `ACCESS_UNSPECIFIED`
+                      - `ALLOW`
+                      - `DENY`
+                    type: string
+                  egress:
+                    description: '(Attributes) :'
+                    properties:
+                      destinationCidrs:
+                        description: |-
+                          (List of String) :
+                          :
+
+                          CIDR blocks as the destination.
+                          Optional. Empty list means any address.
+                          Must be a valid IPv4.
+                          Maximum of 8 CIDRs can be specified.
+                        items:
+                          type: string
+                        type: array
+                      destinationPorts:
+                        description: |-
+                          (List of Number) :
+                          :
+
+                          List of ports to which the rule applies.
+                          Optional. Empty list means any port.
+                          Valid range: 1–65535.
+                          Maximum of 8 ports can be specified.
+                        items:
+                          type: number
+                        type: array
+                      destinationSecurityGroupId:
+                        description: |-
+                          (String) ID of the referenced Security Group as the destination.
+                          ID of the referenced Security Group as the destination.
+                        type: string
+                      destinationSecurityGroupIdRef:
+                        description: Reference to a SecurityGroup in vpc to populate
+                          destinationSecurityGroupId.
+                        properties:
+                          name:
+                            description: Name of the referenced object.
+                            type: string
+                          policy:
+                            description: Policies for referencing.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        required:
+                        - name
+                        type: object
+                      destinationSecurityGroupIdSelector:
+                        description: Selector for a SecurityGroup in vpc to populate
+                          destinationSecurityGroupId.
+                        properties:
+                          matchControllerRef:
+                            description: |-
+                              MatchControllerRef ensures an object with the same controller reference
+                              as the selecting object is selected.
+                            type: boolean
+                          matchLabels:
+                            additionalProperties:
+                              type: string
+                            description: MatchLabels ensures an object with matching
+                              labels is selected.
+                            type: object
+                          policy:
+                            description: Policies for selection.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        type: object
+                    type: object
+                  ingress:
+                    description: '(Attributes) :'
+                    properties:
+                      destinationPorts:
+                        description: |-
+                          (List of Number) :
+                          :
+
+                          List of destination ports to which the rule applies.
+                          Optional. Empty list means any port.
+                          Valid range: 1–65535.
+                          Maximum of 8 ports can be specified.
+                        items:
+                          type: number
+                        type: array
+                      sourceCidrs:
+                        description: |-
+                          (List of String) :
+                          :
+
+                          CIDR blocks as the source.
+                          Optional. Empty list means any address.
+                          Must be a valid IPv4
+                          Maximum of 8 CIDRs can be specified.
+                        items:
+                          type: string
+                        type: array
+                      sourceSecurityGroupId:
+                        description: |-
+                          (String) ID of the referenced Security Group as the source.
+                          ID of the referenced Security Group as the source.
+                        type: string
+                      sourceSecurityGroupIdRef:
+                        description: Reference to a SecurityGroup in vpc to populate
+                          sourceSecurityGroupId.
+                        properties:
+                          name:
+                            description: Name of the referenced object.
+                            type: string
+                          policy:
+                            description: Policies for referencing.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        required:
+                        - name
+                        type: object
+                      sourceSecurityGroupIdSelector:
+                        description: Selector for a SecurityGroup in vpc to populate
+                          sourceSecurityGroupId.
+                        properties:
+                          matchControllerRef:
+                            description: |-
+                              MatchControllerRef ensures an object with the same controller reference
+                              as the selecting object is selected.
+                            type: boolean
+                          matchLabels:
+                            additionalProperties:
+                              type: string
+                            description: MatchLabels ensures an object with matching
+                              labels is selected.
+                            type: object
+                          policy:
+                            description: Policies for selection.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        type: object
+                    type: object
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                  parentIdRef:
+                    description: Reference to a SecurityGroup in vpc to populate parentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  parentIdSelector:
+                    description: Selector for a SecurityGroup in vpc to populate parentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  priority:
+                    description: |-
+                      (Number) :
+                      :
+
+                      Priority of the rule. Valid range: 0-1000.
+                      Optional. If not specified or set to 0, defaults to 500.
+                      Rules are evaluated in priority order (lower numbers first) using a first-match algorithm:
+                      only the first matching rule takes effect (ALLOW or DENY), and subsequent rules are skipped.
+
+                      When multiple rules share the same priority, DENY rules are evaluated before ALLOW rules.
+                      The final evaluation order is reflected in 'effective_priority' (see SecurityRuleStatus).
+                    type: number
+                  protocol:
+                    description: |-
+                      (String) :
+                      :
+
+                      Protocol used in the rule.
+                      Supported values: ANY, TCP, UDP, ICMP.
+
+                      #### Supported values
+
+                      Protocol specifies traffic protocol.
+                      Possible values:
+
+                      - `PROTOCOL_UNSPECIFIED`
+                      - `ANY`
+                      - `TCP`
+                      - `UDP`
+                      - `ICMP`
+                    type: string
+                  type:
+                    description: |-
+                      (String) :
+                      :
+
+                      Type of the rule (STATEFUL or STATELESS)
+                      Default value is STATEFUL
+
+                      #### Supported values
+
+                      RuleType specifies whether the security rule is stateful or stateless.
+                      Possible values:
+
+                      - `RULE_TYPE_UNSPECIFIED`
+                      - `STATEFUL`
+                      - `STATELESS`
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  access:
+                    description: |-
+                      (String) :
+                      :
+
+                      Access action for the rule.
+                      Required. Determines whether matching traffic is allowed or denied.
+
+                      #### Supported values
+
+                      Access specifies action on matching traffic: ALLOW or DENY.
+                      Possible values:
+
+                      - `ACCESS_UNSPECIFIED`
+                      - `ALLOW`
+                      - `DENY`
+                    type: string
+                  egress:
+                    description: '(Attributes) :'
+                    properties:
+                      destinationCidrs:
+                        description: |-
+                          (List of String) :
+                          :
+
+                          CIDR blocks as the destination.
+                          Optional. Empty list means any address.
+                          Must be a valid IPv4.
+                          Maximum of 8 CIDRs can be specified.
+                        items:
+                          type: string
+                        type: array
+                      destinationPorts:
+                        description: |-
+                          (List of Number) :
+                          :
+
+                          List of ports to which the rule applies.
+                          Optional. Empty list means any port.
+                          Valid range: 1–65535.
+                          Maximum of 8 ports can be specified.
+                        items:
+                          type: number
+                        type: array
+                      destinationSecurityGroupId:
+                        description: |-
+                          (String) ID of the referenced Security Group as the destination.
+                          ID of the referenced Security Group as the destination.
+                        type: string
+                      destinationSecurityGroupIdRef:
+                        description: Reference to a SecurityGroup in vpc to populate
+                          destinationSecurityGroupId.
+                        properties:
+                          name:
+                            description: Name of the referenced object.
+                            type: string
+                          policy:
+                            description: Policies for referencing.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        required:
+                        - name
+                        type: object
+                      destinationSecurityGroupIdSelector:
+                        description: Selector for a SecurityGroup in vpc to populate
+                          destinationSecurityGroupId.
+                        properties:
+                          matchControllerRef:
+                            description: |-
+                              MatchControllerRef ensures an object with the same controller reference
+                              as the selecting object is selected.
+                            type: boolean
+                          matchLabels:
+                            additionalProperties:
+                              type: string
+                            description: MatchLabels ensures an object with matching
+                              labels is selected.
+                            type: object
+                          policy:
+                            description: Policies for selection.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        type: object
+                    type: object
+                  ingress:
+                    description: '(Attributes) :'
+                    properties:
+                      destinationPorts:
+                        description: |-
+                          (List of Number) :
+                          :
+
+                          List of destination ports to which the rule applies.
+                          Optional. Empty list means any port.
+                          Valid range: 1–65535.
+                          Maximum of 8 ports can be specified.
+                        items:
+                          type: number
+                        type: array
+                      sourceCidrs:
+                        description: |-
+                          (List of String) :
+                          :
+
+                          CIDR blocks as the source.
+                          Optional. Empty list means any address.
+                          Must be a valid IPv4
+                          Maximum of 8 CIDRs can be specified.
+                        items:
+                          type: string
+                        type: array
+                      sourceSecurityGroupId:
+                        description: |-
+                          (String) ID of the referenced Security Group as the source.
+                          ID of the referenced Security Group as the source.
+                        type: string
+                      sourceSecurityGroupIdRef:
+                        description: Reference to a SecurityGroup in vpc to populate
+                          sourceSecurityGroupId.
+                        properties:
+                          name:
+                            description: Name of the referenced object.
+                            type: string
+                          policy:
+                            description: Policies for referencing.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        required:
+                        - name
+                        type: object
+                      sourceSecurityGroupIdSelector:
+                        description: Selector for a SecurityGroup in vpc to populate
+                          sourceSecurityGroupId.
+                        properties:
+                          matchControllerRef:
+                            description: |-
+                              MatchControllerRef ensures an object with the same controller reference
+                              as the selecting object is selected.
+                            type: boolean
+                          matchLabels:
+                            additionalProperties:
+                              type: string
+                            description: MatchLabels ensures an object with matching
+                              labels is selected.
+                            type: object
+                          policy:
+                            description: Policies for selection.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        type: object
+                    type: object
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                  parentIdRef:
+                    description: Reference to a SecurityGroup in vpc to populate parentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  parentIdSelector:
+                    description: Selector for a SecurityGroup in vpc to populate parentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  priority:
+                    description: |-
+                      (Number) :
+                      :
+
+                      Priority of the rule. Valid range: 0-1000.
+                      Optional. If not specified or set to 0, defaults to 500.
+                      Rules are evaluated in priority order (lower numbers first) using a first-match algorithm:
+                      only the first matching rule takes effect (ALLOW or DENY), and subsequent rules are skipped.
+
+                      When multiple rules share the same priority, DENY rules are evaluated before ALLOW rules.
+                      The final evaluation order is reflected in 'effective_priority' (see SecurityRuleStatus).
+                    type: number
+                  protocol:
+                    description: |-
+                      (String) :
+                      :
+
+                      Protocol used in the rule.
+                      Supported values: ANY, TCP, UDP, ICMP.
+
+                      #### Supported values
+
+                      Protocol specifies traffic protocol.
+                      Possible values:
+
+                      - `PROTOCOL_UNSPECIFIED`
+                      - `ANY`
+                      - `TCP`
+                      - `UDP`
+                      - `ICMP`
+                    type: string
+                  type:
+                    description: |-
+                      (String) :
+                      :
+
+                      Type of the rule (STATEFUL or STATELESS)
+                      Default value is STATEFUL
+
+                      #### Supported values
+
+                      RuleType specifies whether the security rule is stateful or stateless.
+                      Possible values:
+
+                      - `RULE_TYPE_UNSPECIFIED`
+                      - `STATEFUL`
+                      - `STATELESS`
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.access is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.access)
+                || (has(self.initProvider) && has(self.initProvider.access))'
+            - message: spec.forProvider.protocol is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.protocol)
+                || (has(self.initProvider) && has(self.initProvider.protocol))'
+          status:
+            description: SecurityRuleStatus defines the observed state of SecurityRule.
+            properties:
+              atProvider:
+                properties:
+                  access:
+                    description: |-
+                      (String) :
+                      :
+
+                      Access action for the rule.
+                      Required. Determines whether matching traffic is allowed or denied.
+
+                      #### Supported values
+
+                      Access specifies action on matching traffic: ALLOW or DENY.
+                      Possible values:
+
+                      - `ACCESS_UNSPECIFIED`
+                      - `ALLOW`
+                      - `DENY`
+                    type: string
+                  createdAt:
+                    description: |-
+                      (String) :
+                      :
+
+                      Timestamp indicating when the resource was created.
+
+                      A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                    type: string
+                  egress:
+                    description: '(Attributes) :'
+                    properties:
+                      destinationCidrs:
+                        description: |-
+                          (List of String) :
+                          :
+
+                          CIDR blocks as the destination.
+                          Optional. Empty list means any address.
+                          Must be a valid IPv4.
+                          Maximum of 8 CIDRs can be specified.
+                        items:
+                          type: string
+                        type: array
+                      destinationPorts:
+                        description: |-
+                          (List of Number) :
+                          :
+
+                          List of ports to which the rule applies.
+                          Optional. Empty list means any port.
+                          Valid range: 1–65535.
+                          Maximum of 8 ports can be specified.
+                        items:
+                          type: number
+                        type: array
+                      destinationSecurityGroupId:
+                        description: |-
+                          (String) ID of the referenced Security Group as the destination.
+                          ID of the referenced Security Group as the destination.
+                        type: string
+                    type: object
+                  id:
+                    description: (String) Identifier for the resource, unique for
+                      its resource type.
+                    type: string
+                  ingress:
+                    description: '(Attributes) :'
+                    properties:
+                      destinationPorts:
+                        description: |-
+                          (List of Number) :
+                          :
+
+                          List of destination ports to which the rule applies.
+                          Optional. Empty list means any port.
+                          Valid range: 1–65535.
+                          Maximum of 8 ports can be specified.
+                        items:
+                          type: number
+                        type: array
+                      sourceCidrs:
+                        description: |-
+                          (List of String) :
+                          :
+
+                          CIDR blocks as the source.
+                          Optional. Empty list means any address.
+                          Must be a valid IPv4
+                          Maximum of 8 CIDRs can be specified.
+                        items:
+                          type: string
+                        type: array
+                      sourceSecurityGroupId:
+                        description: |-
+                          (String) ID of the referenced Security Group as the source.
+                          ID of the referenced Security Group as the source.
+                        type: string
+                    type: object
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                  priority:
+                    description: |-
+                      (Number) :
+                      :
+
+                      Priority of the rule. Valid range: 0-1000.
+                      Optional. If not specified or set to 0, defaults to 500.
+                      Rules are evaluated in priority order (lower numbers first) using a first-match algorithm:
+                      only the first matching rule takes effect (ALLOW or DENY), and subsequent rules are skipped.
+
+                      When multiple rules share the same priority, DENY rules are evaluated before ALLOW rules.
+                      The final evaluation order is reflected in 'effective_priority' (see SecurityRuleStatus).
+                    type: number
+                  protocol:
+                    description: |-
+                      (String) :
+                      :
+
+                      Protocol used in the rule.
+                      Supported values: ANY, TCP, UDP, ICMP.
+
+                      #### Supported values
+
+                      Protocol specifies traffic protocol.
+                      Possible values:
+
+                      - `PROTOCOL_UNSPECIFIED`
+                      - `ANY`
+                      - `TCP`
+                      - `UDP`
+                      - `ICMP`
+                    type: string
+                  resourceVersion:
+                    description: |-
+                      (Number) :
+                      :
+
+                      Version of the resource for safe concurrent modifications and consistent reads.
+                      Positive and monotonically increases on each resource spec change (but *not* on each change of the
+                      resource's container(s) or status).
+                      Service allows zero value or current.
+                    type: number
+                  status:
+                    description: (Attributes) Current status of the security rule.
+                      (see below for nested schema)
+                    properties:
+                      destination:
+                        description: (Attributes) Destination of the traffic that
+                          matched the rule. (see below for nested schema)
+                        properties:
+                          cidrs:
+                            description: |-
+                              (List of String) List of CIDR blocks.
+                              List of CIDR blocks.
+                            items:
+                              type: string
+                            type: array
+                          ports:
+                            description: |-
+                              (List of Number) List of ports.
+                              List of ports.
+                            items:
+                              type: number
+                            type: array
+                          securityGroupId:
+                            description: |-
+                              (String) ID of the Security Group.
+                              ID of the Security Group.
+                            type: string
+                        type: object
+                      direction:
+                        description: |-
+                          (String) :
+                          :
+
+                          Direction of traffic affected by the rule.
+
+                          #### Supported values
+
+                          Direction specifies whether traffic is INGRESS (incoming) or EGRESS (outgoing).
+                          Possible values:
+
+                          - `DIRECTION_UNSPECIFIED`
+                          - `INGRESS`
+                          - `EGRESS`
+                        type: string
+                      effectivePriority:
+                        description: |-
+                          (Number) :
+                          :
+
+                          Effective priority used for rule evaluation order, calculated by the system.
+                          This value is computed from the user-specified 'priority' (SecurityRuleSpec).
+                          Rules are evaluated in ascending order of effective_priority using a first-match algorithm.
+                        type: number
+                      source:
+                        description: (Attributes) Source of the traffic that matched
+                          the rule. (see below for nested schema)
+                        properties:
+                          cidrs:
+                            description: |-
+                              (List of String) List of CIDR blocks.
+                              List of CIDR blocks.
+                            items:
+                              type: string
+                            type: array
+                          ports:
+                            description: |-
+                              (List of Number) List of ports.
+                              List of ports.
+                            items:
+                              type: number
+                            type: array
+                          securityGroupId:
+                            description: |-
+                              (String) ID of the Security Group.
+                              ID of the Security Group.
+                            type: string
+                        type: object
+                      state:
+                        description: |-
+                          (String) :
+                          :
+
+                          #### Supported values
+
+                          State describes lifecycle phases of a security rule.
+                          Possible values:
+
+                          - `STATE_UNSPECIFIED`
+                          - `CREATING`
+                          - `READY`
+                          - `DELETING`
+                        type: string
+                    type: object
+                  type:
+                    description: |-
+                      (String) :
+                      :
+
+                      Type of the rule (STATEFUL or STATELESS)
+                      Default value is STATEFUL
+
+                      #### Supported values
+
+                      RuleType specifies whether the security rule is stateful or stateless.
+                      Possible values:
+
+                      - `RULE_TYPE_UNSPECIFIED`
+                      - `STATEFUL`
+                      - `STATELESS`
+                    type: string
+                  updatedAt:
+                    description: |-
+                      (String) :
+                      :
+
+                      Timestamp indicating when the resource was last updated.
+
+                      A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

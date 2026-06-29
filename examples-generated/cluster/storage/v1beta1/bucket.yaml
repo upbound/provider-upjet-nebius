@@ -1,0 +1,14 @@
+apiVersion: storage.nebius.upbound.io/v1beta1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storage/v1beta1/bucket
+  labels:
+    testing.upbound.io/example-name: state
+  name: state
+spec:
+  forProvider:
+    defaultStorageClass: STANDARD
+    name: terraform-state-bucket
+    parentId: project-id
+    versioningPolicy: ENABLED

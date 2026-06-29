@@ -1,0 +1,15 @@
+apiVersion: storage.nebius.m.upbound.io/v1beta1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storage/v1beta1/bucket
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: storagev1bucket
+    parentId: ${data.nebius_project_id}
+    defaultStorageClass: STANDARD
+    versioningPolicy: ENABLED

@@ -1,0 +1,58 @@
+apiVersion: mk8s.nebius.m.upbound.io/v1beta1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mk8s/v1beta1/cluster
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    controlPlane:
+      endpoints:
+        publicEndpoint: {}
+      etcdClusterSize: 1
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: default
+      version: "1.34"
+    name: mk8sv1cluster
+    parentId: ${data.nebius_project_id}
+
+---
+
+apiVersion: vpc.nebius.m.upbound.io/v1beta1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mk8s/v1beta1/cluster
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    ipv4PrivatePools:
+      useNetworkPools: true
+    name: mk8sv1cluster
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: default
+    parentId: ${data.nebius_project_id}
+
+---
+
+apiVersion: vpc.nebius.m.upbound.io/v1beta1
+kind: Network
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mk8s/v1beta1/cluster
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: mk8sv1cluster
+    parentId: ${data.nebius_project_id}

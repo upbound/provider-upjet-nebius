@@ -10,37 +10,35 @@ package cluster
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1beta1 "github.com/upbound/provider-nebius/apis/cluster/computev1/v1beta1"
-	v1beta1dnsv1 "github.com/upbound/provider-nebius/apis/cluster/dnsv1/v1beta1"
-	v1beta1iamv1 "github.com/upbound/provider-nebius/apis/cluster/iamv1/v1beta1"
-	v1beta1iamv2 "github.com/upbound/provider-nebius/apis/cluster/iamv2/v1beta1"
-	v1beta1kmsv1 "github.com/upbound/provider-nebius/apis/cluster/kmsv1/v1beta1"
-	v1beta1mk8sv1 "github.com/upbound/provider-nebius/apis/cluster/mk8sv1/v1beta1"
-	v1beta1mysteryboxv1 "github.com/upbound/provider-nebius/apis/cluster/mysteryboxv1/v1beta1"
-	v1beta1quotasv1 "github.com/upbound/provider-nebius/apis/cluster/quotasv1/v1beta1"
-	v1beta1registryv1 "github.com/upbound/provider-nebius/apis/cluster/registryv1/v1beta1"
-	v1beta1storagev1 "github.com/upbound/provider-nebius/apis/cluster/storagev1/v1beta1"
+	v1beta1 "github.com/upbound/provider-nebius/apis/cluster/compute/v1beta1"
+	v1beta1dns "github.com/upbound/provider-nebius/apis/cluster/dns/v1beta1"
+	v1beta1iam "github.com/upbound/provider-nebius/apis/cluster/iam/v1beta1"
+	v1beta1kms "github.com/upbound/provider-nebius/apis/cluster/kms/v1beta1"
+	v1beta1mk8s "github.com/upbound/provider-nebius/apis/cluster/mk8s/v1beta1"
+	v1beta1mysterybox "github.com/upbound/provider-nebius/apis/cluster/mysterybox/v1beta1"
+	v1beta1quotas "github.com/upbound/provider-nebius/apis/cluster/quotas/v1beta1"
+	v1beta1registry "github.com/upbound/provider-nebius/apis/cluster/registry/v1beta1"
+	v1beta1storage "github.com/upbound/provider-nebius/apis/cluster/storage/v1beta1"
 	v1alpha1 "github.com/upbound/provider-nebius/apis/cluster/v1alpha1"
 	v1beta1cluster "github.com/upbound/provider-nebius/apis/cluster/v1beta1"
-	v1beta1vpcv1 "github.com/upbound/provider-nebius/apis/cluster/vpcv1/v1beta1"
+	v1beta1vpc "github.com/upbound/provider-nebius/apis/cluster/vpc/v1beta1"
 )
 
 func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1beta1.SchemeBuilder.AddToScheme,
-		v1beta1dnsv1.SchemeBuilder.AddToScheme,
-		v1beta1iamv1.SchemeBuilder.AddToScheme,
-		v1beta1iamv2.SchemeBuilder.AddToScheme,
-		v1beta1kmsv1.SchemeBuilder.AddToScheme,
-		v1beta1mk8sv1.SchemeBuilder.AddToScheme,
-		v1beta1mysteryboxv1.SchemeBuilder.AddToScheme,
-		v1beta1quotasv1.SchemeBuilder.AddToScheme,
-		v1beta1registryv1.SchemeBuilder.AddToScheme,
-		v1beta1storagev1.SchemeBuilder.AddToScheme,
+		v1beta1dns.SchemeBuilder.AddToScheme,
+		v1beta1iam.SchemeBuilder.AddToScheme,
+		v1beta1kms.SchemeBuilder.AddToScheme,
+		v1beta1mk8s.SchemeBuilder.AddToScheme,
+		v1beta1mysterybox.SchemeBuilder.AddToScheme,
+		v1beta1quotas.SchemeBuilder.AddToScheme,
+		v1beta1registry.SchemeBuilder.AddToScheme,
+		v1beta1storage.SchemeBuilder.AddToScheme,
 		v1alpha1.SchemeBuilder.AddToScheme,
 		v1beta1cluster.SchemeBuilder.AddToScheme,
-		v1beta1vpcv1.SchemeBuilder.AddToScheme,
+		v1beta1vpc.SchemeBuilder.AddToScheme,
 	)
 }
 

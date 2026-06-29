@@ -1,0 +1,26 @@
+apiVersion: iam.nebius.m.upbound.io/v1beta1
+kind: Invitation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1beta1/invitation
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    parentId: ${data.nebius_tenant_id}
+    emailSecretRef:
+      name: iamv1invitation-email
+      key: email
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: iamv1invitation-email
+  namespace: upbound-system
+type: Opaque
+stringData:
+  email: user@example.com

@@ -1,0 +1,85 @@
+apiVersion: mk8s.nebius.upbound.io/v1beta1
+kind: NodeGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mk8s/v1beta1/nodegroup
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    fixedNodeCount: 1
+    name: mk8sv1nodegroup
+    parentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: default
+    template:
+      bootDisk:
+        sizeGibibytes: 64
+        type: NETWORK_SSD
+      networkInterfaces:
+        - subnetIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: default
+      resources:
+        platform: cpu-d3
+        preset: 4vcpu-16gb
+    version: "1.34"
+
+---
+
+apiVersion: mk8s.nebius.upbound.io/v1beta1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mk8s/v1beta1/nodegroup
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    controlPlane:
+      endpoints:
+        publicEndpoint: {}
+      etcdClusterSize: 1
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: default
+      version: "1.34"
+    name: mk8sv1nodegroup
+    parentId: ${data.nebius_project_id}
+
+---
+
+apiVersion: vpc.nebius.upbound.io/v1beta1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mk8s/v1beta1/nodegroup
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    ipv4PrivatePools:
+      useNetworkPools: true
+    name: mk8sv1nodegroup
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: default
+    parentId: ${data.nebius_project_id}
+
+---
+
+apiVersion: vpc.nebius.upbound.io/v1beta1
+kind: Network
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mk8s/v1beta1/nodegroup
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    name: mk8sv1nodegroup
+    parentId: ${data.nebius_project_id}

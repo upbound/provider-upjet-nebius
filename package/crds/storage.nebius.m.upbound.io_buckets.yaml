@@ -1,0 +1,1725 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: buckets.storage.nebius.m.upbound.io
+spec:
+  group: storage.nebius.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - nebius
+    kind: Bucket
+    listKind: BucketList
+    plural: buckets
+    singular: bucket
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: Bucket is the Schema for the Buckets API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: BucketSpec defines the desired state of Bucket
+            properties:
+              forProvider:
+                properties:
+                  bucketPolicy:
+                    description: '(Attributes) :'
+                    properties:
+                      rules:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            anonymous:
+                              description: '(Attributes) :'
+                              type: object
+                            groupId:
+                              description: |-
+                                (String) :
+                                :
+
+                                Group ID to grant access to.
+
+                                *Cannot be set alongside anonymous.*
+                              type: string
+                            paths:
+                              description: |-
+                                (List of String) :
+                                :
+
+                                A list of paths each of which is either a full object key or a prefix ending with a
+                                single "*" wildcard character. A rule is only applied to objects matching any of paths.
+                                If there is a path equal to "*", a rule applies to a whole bucket.
+                              items:
+                                type: string
+                              type: array
+                            roles:
+                              description: |-
+                                (List of String) A set of roles which a subject will have. All storage.* roles are supported.
+                                A set of roles which a subject will have. All `storage.*` roles are supported.
+                              items:
+                                type: string
+                              type: array
+                          type: object
+                        type: array
+                    type: object
+                  cors:
+                    description: '(Attributes) :'
+                    properties:
+                      rules:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            allowedHeaders:
+                              description: |-
+                                Control-Request-Headers header
+                                Headers that are allowed in a preflight request through the Access-Control-Request-Headers header
+                              items:
+                                type: string
+                              type: array
+                            allowedMethods:
+                              description: |-
+                                (List of String) HTTP methods CORS is allowed for: GET, PUT, POST, DELETE, HEAD.
+                                HTTP methods CORS is allowed for: GET, PUT, POST, DELETE, HEAD.
+                              items:
+                                type: string
+                              type: array
+                            allowedOrigins:
+                              description: |-
+                                domain requests from. Single wildcard * is allowed.
+                                The origins that you want to allow cross-domain requests from. Single wildcard * is allowed.
+                              items:
+                                type: string
+                              type: array
+                            exposeHeaders:
+                              description: |-
+                                (List of String) Headers in the response that you want customers to be able to access from their applications.
+                                Headers in the response that you want customers to be able to access from their applications.
+                              items:
+                                type: string
+                              type: array
+                            id:
+                              description: |-
+                                (String) Identifier for the resource, unique for its resource type.
+                                Optional rule identifier.
+                              type: string
+                            maxAgeSeconds:
+                              description: |-
+                                (Number) Time in seconds that your browser can cache the response for a preflight request as identified by the resource.
+                                Time in seconds that your browser can cache the response for a preflight request as identified by the resource.
+                              type: number
+                          type: object
+                        type: array
+                    type: object
+                  defaultStorageClass:
+                    description: |-
+                      (String) :
+                      :
+
+                      Storage class to use by default for uploads to the bucket. It may be overridden by `x-amz-storage-class` header.
+                      If not set - STANDARD is used as a default storage class.
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `STORAGE_CLASS_UNSPECIFIED`
+                      - `STANDARD`
+                      - `ENHANCED_THROUGHPUT`
+                      - `INTELLIGENT`
+                      - `FILESYSTEM` - Special storage class only for filesystem buckets.
+                    type: string
+                  forceStorageClass:
+                    description: |-
+                      amz-storage-class header.
+                      Flag to force usage of default_storage_class, ignoring `x-amz-storage-class` header.
+                    type: boolean
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  lifecycleConfiguration:
+                    description: '(Attributes) :'
+                    properties:
+                      lastAccessFilter:
+                        description: '(Attributes) :'
+                        properties:
+                          conditions:
+                            description: '(Attributes List) :'
+                            items:
+                              properties:
+                                methods:
+                                  description: |-
+                                    (List of String) :
+                                    :
+
+                                    The s3 methods to match.
+                                    An empty list matches all methods
+
+                                    #### Supported values
+
+                                    Possible values:
+
+                                    - `METHOD_UNSPECIFIED`
+                                    - `GET_OBJECT`
+                                    - `HEAD_OBJECT`
+                                    - `GET_OBJECT_TAGGING`
+                                    - `COPY_OBJECT`:
+                                    Copy object method reads the source object.
+                                    We account for those operations as source object accesses when calculating `days_since_last_access` for source object.
+
+                                    - `UPLOAD_PART_COPY`:
+                                    Upload part copy method reads the source object.
+                                    We account for those operations as source object accesses when calculating `days_since_last_access` for source object.
+                                  items:
+                                    type: string
+                                  type: array
+                                type:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    #### Supported values
+
+                                    Possible values:
+
+                                    - `TYPE_UNSPECIFIED`
+                                    - `INCLUDE`:
+                                    If an include type condition is the first condition that the request match, the request will be included in
+                                    `days_since_last_access` calculation.
+
+                                    - `EXCLUDE`:
+                                    If an exclude type condition is the first condition that the request match, the request will be ignored in `days_since_last_access`
+                                    calculation.
+                                  type: string
+                                userAgents:
+                                  description: |-
+                                    (List of String) :
+                                    :
+
+                                    User agents to match. Condition is satisfied if the request's user agent contains any of these substrings.
+                                    An empty list matches all user agents.
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                            type: array
+                        type: object
+                      rules:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            abortIncompleteMultipartUpload:
+                              description: '(Attributes) :'
+                              properties:
+                                daysAfterInitiation:
+                                  description: |-
+                                    (Number) :
+                                    :
+
+                                    Specifies the days since the initiation of an incomplete multipart upload that
+                                    the system will wait before permanently removing all parts of the upload.
+                                  type: number
+                              type: object
+                            expiration:
+                              description: '(Attributes) :'
+                              properties:
+                                date:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Indicates at what date the object will be deleted. The time is always midnight UTC.
+
+                                    A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+
+                                    *Cannot be set alongside days.*
+                                  type: string
+                                days:
+                                  description: |-
+                                    (Number) :
+                                    :
+
+                                    Indicates the lifetime, in days, of the objects that are subject to the rule.
+                                    The value must be a non-zero positive integer.
+
+                                    *Cannot be set alongside date.*
+                                  type: number
+                                expiredObjectDeleteMarker:
+                                  description: |-
+                                    (Boolean) :
+                                    :
+
+                                    Indicates whether the system will remove a "delete marker" with no noncurrent versions.
+                                    If set to true, the "delete marker" will be permanently removed.
+                                    If set to false the policy takes no action.
+                                    This cannot be specified with Days or Date in a LifecycleExpiration Policy.
+                                  type: boolean
+                              type: object
+                            filter:
+                              description: '(Attributes) :'
+                              properties:
+                                objectSizeGreaterThanBytes:
+                                  description: |-
+                                    (Number) Minimum object size to which the rule applies.
+                                    Minimum object size to which the rule applies.
+                                  type: number
+                                objectSizeLessThanBytes:
+                                  description: |-
+                                    (Number) Maximum object size to which the rule applies.
+                                    Maximum object size to which the rule applies.
+                                  type: number
+                                prefix:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Prefix identifying one or more objects to which the rule applies.
+                                    If prefix is empty, the rule applies to all objects in the bucket.
+                                  type: string
+                                tags:
+                                  description: '(Attributes List) :'
+                                  items:
+                                    properties:
+                                      key:
+                                        description: (String)
+                                        type: string
+                                      value:
+                                        description: (String)
+                                        type: string
+                                    type: object
+                                  type: array
+                              type: object
+                            id:
+                              description: |-
+                                (String) Identifier for the resource, unique for its resource type.
+                                :
+
+                                Unique identifier for the rule per configuration.
+                                The value cannot be longer than 255 characters.
+                              type: string
+                            noncurrentVersionExpiration:
+                              description: '(Attributes) :'
+                              properties:
+                                newerNoncurrentVersions:
+                                  description: |-
+                                    (Number) Specifies how many noncurrent versions the system will retain.
+                                    Specifies how many noncurrent versions the system will retain.
+                                  type: number
+                                noncurrentDays:
+                                  description: |-
+                                    (Number) Specifies the number of days an object is noncurrent before the system will expire it.
+                                    Specifies the number of days an object is noncurrent before the system will expire it.
+                                  type: number
+                              type: object
+                            noncurrentVersionTransition:
+                              description: '(Attributes) :'
+                              properties:
+                                newerNoncurrentVersions:
+                                  description: |-
+                                    (Number) Specifies how many noncurrent versions the system will retain.
+                                    Specifies how many noncurrent versions the system will retain without transition.
+                                  type: number
+                                noncurrentDays:
+                                  description: |-
+                                    (Number) Specifies the number of days an object is noncurrent before the system will expire it.
+                                    Specifies the number of days an object is noncurrent before the system will transit it.
+                                  type: number
+                                storageClass:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Target storage class to transit to.
+
+                                    #### Supported values
+
+                                    Possible values:
+
+                                    - `STORAGE_CLASS_UNSPECIFIED`
+                                    - `STANDARD`
+                                    - `ENHANCED_THROUGHPUT`
+                                    - `INTELLIGENT`
+                                    - `FILESYSTEM` - Special storage class only for filesystem buckets.
+                                  type: string
+                              type: object
+                            status:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                :
+
+                                #### Supported values
+
+                                Possible values:
+
+                                - `STATUS_UNSPECIFIED`
+                                - `ENABLED`
+                                - `DISABLED`
+                              type: string
+                            transition:
+                              description: '(Attributes) :'
+                              properties:
+                                date:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Indicates at what date the object will be transited. The time is always midnight UTC.
+
+                                    A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+
+                                    *Cannot be set alongside days or days_since_last_access.*
+                                  type: string
+                                days:
+                                  description: |-
+                                    (Number) :
+                                    :
+
+                                    Amount of days since object was uploaded before it's transited to a new storage class.
+                                    The value must be a non-zero positive integer.
+
+                                    *Cannot be set alongside date or days_since_last_access.*
+                                  type: number
+                                daysSinceLastAccess:
+                                  description: |-
+                                    calculations for all transition rules.
+                                    :
+
+                                    The number of days since the object was last accessed before it is transitioned.
+
+                                    *Cannot be set alongside date or days.*
+                                  type: number
+                                storageClass:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Target storage class to transit to.
+
+                                    #### Supported values
+
+                                    Possible values:
+
+                                    - `STORAGE_CLASS_UNSPECIFIED`
+                                    - `STANDARD`
+                                    - `ENHANCED_THROUGHPUT`
+                                    - `INTELLIGENT`
+                                    - `FILESYSTEM` - Special storage class only for filesystem buckets.
+                                  type: string
+                              type: object
+                          type: object
+                        type: array
+                    type: object
+                  maxSizeBytes:
+                    description: |-
+                      (Number) :
+                      :
+
+                      Maximum bucket size.
+                      Zero means unlimited.
+                      Actual limit can be lower if customer doesn't have enough quota.
+                      Real bucket size can go a little higher if customer writes too fast.
+                    type: number
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  objectAuditLogging:
+                    description: |-
+                      (String) :
+                      :
+
+                      Object audit logging specifies which requests must be logged - none, all or mutational only.
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `OBJECT_AUDIT_LOGGING_UNSPECIFIED`
+                      - `NONE` - Logging is disabled.
+                      - `MUTATE_ONLY` - Logging enabled only for mutating requests.
+                      - `ALL` - Logging enabled for all requests.
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                  versioningPolicy:
+                    description: |-
+                      (String) :
+                      :
+
+                      Supports transitions:
+                      * disabled -\> enabled
+                      * disabled -\> suspended
+                      * enabled \<-\> suspended
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `VERSIONING_POLICY_UNSPECIFIED`
+                      - `DISABLED`
+                      - `ENABLED`
+                      - `SUSPENDED`
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  bucketPolicy:
+                    description: '(Attributes) :'
+                    properties:
+                      rules:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            anonymous:
+                              description: '(Attributes) :'
+                              type: object
+                            groupId:
+                              description: |-
+                                (String) :
+                                :
+
+                                Group ID to grant access to.
+
+                                *Cannot be set alongside anonymous.*
+                              type: string
+                            paths:
+                              description: |-
+                                (List of String) :
+                                :
+
+                                A list of paths each of which is either a full object key or a prefix ending with a
+                                single "*" wildcard character. A rule is only applied to objects matching any of paths.
+                                If there is a path equal to "*", a rule applies to a whole bucket.
+                              items:
+                                type: string
+                              type: array
+                            roles:
+                              description: |-
+                                (List of String) A set of roles which a subject will have. All storage.* roles are supported.
+                                A set of roles which a subject will have. All `storage.*` roles are supported.
+                              items:
+                                type: string
+                              type: array
+                          type: object
+                        type: array
+                    type: object
+                  cors:
+                    description: '(Attributes) :'
+                    properties:
+                      rules:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            allowedHeaders:
+                              description: |-
+                                Control-Request-Headers header
+                                Headers that are allowed in a preflight request through the Access-Control-Request-Headers header
+                              items:
+                                type: string
+                              type: array
+                            allowedMethods:
+                              description: |-
+                                (List of String) HTTP methods CORS is allowed for: GET, PUT, POST, DELETE, HEAD.
+                                HTTP methods CORS is allowed for: GET, PUT, POST, DELETE, HEAD.
+                              items:
+                                type: string
+                              type: array
+                            allowedOrigins:
+                              description: |-
+                                domain requests from. Single wildcard * is allowed.
+                                The origins that you want to allow cross-domain requests from. Single wildcard * is allowed.
+                              items:
+                                type: string
+                              type: array
+                            exposeHeaders:
+                              description: |-
+                                (List of String) Headers in the response that you want customers to be able to access from their applications.
+                                Headers in the response that you want customers to be able to access from their applications.
+                              items:
+                                type: string
+                              type: array
+                            id:
+                              description: |-
+                                (String) Identifier for the resource, unique for its resource type.
+                                Optional rule identifier.
+                              type: string
+                            maxAgeSeconds:
+                              description: |-
+                                (Number) Time in seconds that your browser can cache the response for a preflight request as identified by the resource.
+                                Time in seconds that your browser can cache the response for a preflight request as identified by the resource.
+                              type: number
+                          type: object
+                        type: array
+                    type: object
+                  defaultStorageClass:
+                    description: |-
+                      (String) :
+                      :
+
+                      Storage class to use by default for uploads to the bucket. It may be overridden by `x-amz-storage-class` header.
+                      If not set - STANDARD is used as a default storage class.
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `STORAGE_CLASS_UNSPECIFIED`
+                      - `STANDARD`
+                      - `ENHANCED_THROUGHPUT`
+                      - `INTELLIGENT`
+                      - `FILESYSTEM` - Special storage class only for filesystem buckets.
+                    type: string
+                  forceStorageClass:
+                    description: |-
+                      amz-storage-class header.
+                      Flag to force usage of default_storage_class, ignoring `x-amz-storage-class` header.
+                    type: boolean
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  lifecycleConfiguration:
+                    description: '(Attributes) :'
+                    properties:
+                      lastAccessFilter:
+                        description: '(Attributes) :'
+                        properties:
+                          conditions:
+                            description: '(Attributes List) :'
+                            items:
+                              properties:
+                                methods:
+                                  description: |-
+                                    (List of String) :
+                                    :
+
+                                    The s3 methods to match.
+                                    An empty list matches all methods
+
+                                    #### Supported values
+
+                                    Possible values:
+
+                                    - `METHOD_UNSPECIFIED`
+                                    - `GET_OBJECT`
+                                    - `HEAD_OBJECT`
+                                    - `GET_OBJECT_TAGGING`
+                                    - `COPY_OBJECT`:
+                                    Copy object method reads the source object.
+                                    We account for those operations as source object accesses when calculating `days_since_last_access` for source object.
+
+                                    - `UPLOAD_PART_COPY`:
+                                    Upload part copy method reads the source object.
+                                    We account for those operations as source object accesses when calculating `days_since_last_access` for source object.
+                                  items:
+                                    type: string
+                                  type: array
+                                type:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    #### Supported values
+
+                                    Possible values:
+
+                                    - `TYPE_UNSPECIFIED`
+                                    - `INCLUDE`:
+                                    If an include type condition is the first condition that the request match, the request will be included in
+                                    `days_since_last_access` calculation.
+
+                                    - `EXCLUDE`:
+                                    If an exclude type condition is the first condition that the request match, the request will be ignored in `days_since_last_access`
+                                    calculation.
+                                  type: string
+                                userAgents:
+                                  description: |-
+                                    (List of String) :
+                                    :
+
+                                    User agents to match. Condition is satisfied if the request's user agent contains any of these substrings.
+                                    An empty list matches all user agents.
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                            type: array
+                        type: object
+                      rules:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            abortIncompleteMultipartUpload:
+                              description: '(Attributes) :'
+                              properties:
+                                daysAfterInitiation:
+                                  description: |-
+                                    (Number) :
+                                    :
+
+                                    Specifies the days since the initiation of an incomplete multipart upload that
+                                    the system will wait before permanently removing all parts of the upload.
+                                  type: number
+                              type: object
+                            expiration:
+                              description: '(Attributes) :'
+                              properties:
+                                date:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Indicates at what date the object will be deleted. The time is always midnight UTC.
+
+                                    A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+
+                                    *Cannot be set alongside days.*
+                                  type: string
+                                days:
+                                  description: |-
+                                    (Number) :
+                                    :
+
+                                    Indicates the lifetime, in days, of the objects that are subject to the rule.
+                                    The value must be a non-zero positive integer.
+
+                                    *Cannot be set alongside date.*
+                                  type: number
+                                expiredObjectDeleteMarker:
+                                  description: |-
+                                    (Boolean) :
+                                    :
+
+                                    Indicates whether the system will remove a "delete marker" with no noncurrent versions.
+                                    If set to true, the "delete marker" will be permanently removed.
+                                    If set to false the policy takes no action.
+                                    This cannot be specified with Days or Date in a LifecycleExpiration Policy.
+                                  type: boolean
+                              type: object
+                            filter:
+                              description: '(Attributes) :'
+                              properties:
+                                objectSizeGreaterThanBytes:
+                                  description: |-
+                                    (Number) Minimum object size to which the rule applies.
+                                    Minimum object size to which the rule applies.
+                                  type: number
+                                objectSizeLessThanBytes:
+                                  description: |-
+                                    (Number) Maximum object size to which the rule applies.
+                                    Maximum object size to which the rule applies.
+                                  type: number
+                                prefix:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Prefix identifying one or more objects to which the rule applies.
+                                    If prefix is empty, the rule applies to all objects in the bucket.
+                                  type: string
+                                tags:
+                                  description: '(Attributes List) :'
+                                  items:
+                                    properties:
+                                      key:
+                                        description: (String)
+                                        type: string
+                                      value:
+                                        description: (String)
+                                        type: string
+                                    type: object
+                                  type: array
+                              type: object
+                            id:
+                              description: |-
+                                (String) Identifier for the resource, unique for its resource type.
+                                :
+
+                                Unique identifier for the rule per configuration.
+                                The value cannot be longer than 255 characters.
+                              type: string
+                            noncurrentVersionExpiration:
+                              description: '(Attributes) :'
+                              properties:
+                                newerNoncurrentVersions:
+                                  description: |-
+                                    (Number) Specifies how many noncurrent versions the system will retain.
+                                    Specifies how many noncurrent versions the system will retain.
+                                  type: number
+                                noncurrentDays:
+                                  description: |-
+                                    (Number) Specifies the number of days an object is noncurrent before the system will expire it.
+                                    Specifies the number of days an object is noncurrent before the system will expire it.
+                                  type: number
+                              type: object
+                            noncurrentVersionTransition:
+                              description: '(Attributes) :'
+                              properties:
+                                newerNoncurrentVersions:
+                                  description: |-
+                                    (Number) Specifies how many noncurrent versions the system will retain.
+                                    Specifies how many noncurrent versions the system will retain without transition.
+                                  type: number
+                                noncurrentDays:
+                                  description: |-
+                                    (Number) Specifies the number of days an object is noncurrent before the system will expire it.
+                                    Specifies the number of days an object is noncurrent before the system will transit it.
+                                  type: number
+                                storageClass:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Target storage class to transit to.
+
+                                    #### Supported values
+
+                                    Possible values:
+
+                                    - `STORAGE_CLASS_UNSPECIFIED`
+                                    - `STANDARD`
+                                    - `ENHANCED_THROUGHPUT`
+                                    - `INTELLIGENT`
+                                    - `FILESYSTEM` - Special storage class only for filesystem buckets.
+                                  type: string
+                              type: object
+                            status:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                :
+
+                                #### Supported values
+
+                                Possible values:
+
+                                - `STATUS_UNSPECIFIED`
+                                - `ENABLED`
+                                - `DISABLED`
+                              type: string
+                            transition:
+                              description: '(Attributes) :'
+                              properties:
+                                date:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Indicates at what date the object will be transited. The time is always midnight UTC.
+
+                                    A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+
+                                    *Cannot be set alongside days or days_since_last_access.*
+                                  type: string
+                                days:
+                                  description: |-
+                                    (Number) :
+                                    :
+
+                                    Amount of days since object was uploaded before it's transited to a new storage class.
+                                    The value must be a non-zero positive integer.
+
+                                    *Cannot be set alongside date or days_since_last_access.*
+                                  type: number
+                                daysSinceLastAccess:
+                                  description: |-
+                                    calculations for all transition rules.
+                                    :
+
+                                    The number of days since the object was last accessed before it is transitioned.
+
+                                    *Cannot be set alongside date or days.*
+                                  type: number
+                                storageClass:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Target storage class to transit to.
+
+                                    #### Supported values
+
+                                    Possible values:
+
+                                    - `STORAGE_CLASS_UNSPECIFIED`
+                                    - `STANDARD`
+                                    - `ENHANCED_THROUGHPUT`
+                                    - `INTELLIGENT`
+                                    - `FILESYSTEM` - Special storage class only for filesystem buckets.
+                                  type: string
+                              type: object
+                          type: object
+                        type: array
+                    type: object
+                  maxSizeBytes:
+                    description: |-
+                      (Number) :
+                      :
+
+                      Maximum bucket size.
+                      Zero means unlimited.
+                      Actual limit can be lower if customer doesn't have enough quota.
+                      Real bucket size can go a little higher if customer writes too fast.
+                    type: number
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  objectAuditLogging:
+                    description: |-
+                      (String) :
+                      :
+
+                      Object audit logging specifies which requests must be logged - none, all or mutational only.
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `OBJECT_AUDIT_LOGGING_UNSPECIFIED`
+                      - `NONE` - Logging is disabled.
+                      - `MUTATE_ONLY` - Logging enabled only for mutating requests.
+                      - `ALL` - Logging enabled for all requests.
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                  versioningPolicy:
+                    description: |-
+                      (String) :
+                      :
+
+                      Supports transitions:
+                      * disabled -\> enabled
+                      * disabled -\> suspended
+                      * enabled \<-\> suspended
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `VERSIONING_POLICY_UNSPECIFIED`
+                      - `DISABLED`
+                      - `ENABLED`
+                      - `SUSPENDED`
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: BucketStatus defines the observed state of Bucket.
+            properties:
+              atProvider:
+                properties:
+                  bucketPolicy:
+                    description: '(Attributes) :'
+                    properties:
+                      rules:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            anonymous:
+                              description: '(Attributes) :'
+                              type: object
+                            groupId:
+                              description: |-
+                                (String) :
+                                :
+
+                                Group ID to grant access to.
+
+                                *Cannot be set alongside anonymous.*
+                              type: string
+                            paths:
+                              description: |-
+                                (List of String) :
+                                :
+
+                                A list of paths each of which is either a full object key or a prefix ending with a
+                                single "*" wildcard character. A rule is only applied to objects matching any of paths.
+                                If there is a path equal to "*", a rule applies to a whole bucket.
+                              items:
+                                type: string
+                              type: array
+                            roles:
+                              description: |-
+                                (List of String) A set of roles which a subject will have. All storage.* roles are supported.
+                                A set of roles which a subject will have. All `storage.*` roles are supported.
+                              items:
+                                type: string
+                              type: array
+                          type: object
+                        type: array
+                    type: object
+                  cors:
+                    description: '(Attributes) :'
+                    properties:
+                      rules:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            allowedHeaders:
+                              description: |-
+                                Control-Request-Headers header
+                                Headers that are allowed in a preflight request through the Access-Control-Request-Headers header
+                              items:
+                                type: string
+                              type: array
+                            allowedMethods:
+                              description: |-
+                                (List of String) HTTP methods CORS is allowed for: GET, PUT, POST, DELETE, HEAD.
+                                HTTP methods CORS is allowed for: GET, PUT, POST, DELETE, HEAD.
+                              items:
+                                type: string
+                              type: array
+                            allowedOrigins:
+                              description: |-
+                                domain requests from. Single wildcard * is allowed.
+                                The origins that you want to allow cross-domain requests from. Single wildcard * is allowed.
+                              items:
+                                type: string
+                              type: array
+                            exposeHeaders:
+                              description: |-
+                                (List of String) Headers in the response that you want customers to be able to access from their applications.
+                                Headers in the response that you want customers to be able to access from their applications.
+                              items:
+                                type: string
+                              type: array
+                            id:
+                              description: |-
+                                (String) Identifier for the resource, unique for its resource type.
+                                Optional rule identifier.
+                              type: string
+                            maxAgeSeconds:
+                              description: |-
+                                (Number) Time in seconds that your browser can cache the response for a preflight request as identified by the resource.
+                                Time in seconds that your browser can cache the response for a preflight request as identified by the resource.
+                              type: number
+                          type: object
+                        type: array
+                    type: object
+                  createdAt:
+                    description: |-
+                      (String) :
+                      :
+
+                      Timestamp indicating when the resource was created.
+
+                      A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                    type: string
+                  defaultStorageClass:
+                    description: |-
+                      (String) :
+                      :
+
+                      Storage class to use by default for uploads to the bucket. It may be overridden by `x-amz-storage-class` header.
+                      If not set - STANDARD is used as a default storage class.
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `STORAGE_CLASS_UNSPECIFIED`
+                      - `STANDARD`
+                      - `ENHANCED_THROUGHPUT`
+                      - `INTELLIGENT`
+                      - `FILESYSTEM` - Special storage class only for filesystem buckets.
+                    type: string
+                  forceStorageClass:
+                    description: |-
+                      amz-storage-class header.
+                      Flag to force usage of default_storage_class, ignoring `x-amz-storage-class` header.
+                    type: boolean
+                  id:
+                    description: (String) Identifier for the resource, unique for
+                      its resource type.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  lifecycleConfiguration:
+                    description: '(Attributes) :'
+                    properties:
+                      lastAccessFilter:
+                        description: '(Attributes) :'
+                        properties:
+                          conditions:
+                            description: '(Attributes List) :'
+                            items:
+                              properties:
+                                methods:
+                                  description: |-
+                                    (List of String) :
+                                    :
+
+                                    The s3 methods to match.
+                                    An empty list matches all methods
+
+                                    #### Supported values
+
+                                    Possible values:
+
+                                    - `METHOD_UNSPECIFIED`
+                                    - `GET_OBJECT`
+                                    - `HEAD_OBJECT`
+                                    - `GET_OBJECT_TAGGING`
+                                    - `COPY_OBJECT`:
+                                    Copy object method reads the source object.
+                                    We account for those operations as source object accesses when calculating `days_since_last_access` for source object.
+
+                                    - `UPLOAD_PART_COPY`:
+                                    Upload part copy method reads the source object.
+                                    We account for those operations as source object accesses when calculating `days_since_last_access` for source object.
+                                  items:
+                                    type: string
+                                  type: array
+                                type:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    #### Supported values
+
+                                    Possible values:
+
+                                    - `TYPE_UNSPECIFIED`
+                                    - `INCLUDE`:
+                                    If an include type condition is the first condition that the request match, the request will be included in
+                                    `days_since_last_access` calculation.
+
+                                    - `EXCLUDE`:
+                                    If an exclude type condition is the first condition that the request match, the request will be ignored in `days_since_last_access`
+                                    calculation.
+                                  type: string
+                                userAgents:
+                                  description: |-
+                                    (List of String) :
+                                    :
+
+                                    User agents to match. Condition is satisfied if the request's user agent contains any of these substrings.
+                                    An empty list matches all user agents.
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                            type: array
+                        type: object
+                      rules:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            abortIncompleteMultipartUpload:
+                              description: '(Attributes) :'
+                              properties:
+                                daysAfterInitiation:
+                                  description: |-
+                                    (Number) :
+                                    :
+
+                                    Specifies the days since the initiation of an incomplete multipart upload that
+                                    the system will wait before permanently removing all parts of the upload.
+                                  type: number
+                              type: object
+                            expiration:
+                              description: '(Attributes) :'
+                              properties:
+                                date:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Indicates at what date the object will be deleted. The time is always midnight UTC.
+
+                                    A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+
+                                    *Cannot be set alongside days.*
+                                  type: string
+                                days:
+                                  description: |-
+                                    (Number) :
+                                    :
+
+                                    Indicates the lifetime, in days, of the objects that are subject to the rule.
+                                    The value must be a non-zero positive integer.
+
+                                    *Cannot be set alongside date.*
+                                  type: number
+                                expiredObjectDeleteMarker:
+                                  description: |-
+                                    (Boolean) :
+                                    :
+
+                                    Indicates whether the system will remove a "delete marker" with no noncurrent versions.
+                                    If set to true, the "delete marker" will be permanently removed.
+                                    If set to false the policy takes no action.
+                                    This cannot be specified with Days or Date in a LifecycleExpiration Policy.
+                                  type: boolean
+                              type: object
+                            filter:
+                              description: '(Attributes) :'
+                              properties:
+                                objectSizeGreaterThanBytes:
+                                  description: |-
+                                    (Number) Minimum object size to which the rule applies.
+                                    Minimum object size to which the rule applies.
+                                  type: number
+                                objectSizeLessThanBytes:
+                                  description: |-
+                                    (Number) Maximum object size to which the rule applies.
+                                    Maximum object size to which the rule applies.
+                                  type: number
+                                prefix:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Prefix identifying one or more objects to which the rule applies.
+                                    If prefix is empty, the rule applies to all objects in the bucket.
+                                  type: string
+                                tags:
+                                  description: '(Attributes List) :'
+                                  items:
+                                    properties:
+                                      key:
+                                        description: (String)
+                                        type: string
+                                      value:
+                                        description: (String)
+                                        type: string
+                                    type: object
+                                  type: array
+                              type: object
+                            id:
+                              description: |-
+                                (String) Identifier for the resource, unique for its resource type.
+                                :
+
+                                Unique identifier for the rule per configuration.
+                                The value cannot be longer than 255 characters.
+                              type: string
+                            noncurrentVersionExpiration:
+                              description: '(Attributes) :'
+                              properties:
+                                newerNoncurrentVersions:
+                                  description: |-
+                                    (Number) Specifies how many noncurrent versions the system will retain.
+                                    Specifies how many noncurrent versions the system will retain.
+                                  type: number
+                                noncurrentDays:
+                                  description: |-
+                                    (Number) Specifies the number of days an object is noncurrent before the system will expire it.
+                                    Specifies the number of days an object is noncurrent before the system will expire it.
+                                  type: number
+                              type: object
+                            noncurrentVersionTransition:
+                              description: '(Attributes) :'
+                              properties:
+                                newerNoncurrentVersions:
+                                  description: |-
+                                    (Number) Specifies how many noncurrent versions the system will retain.
+                                    Specifies how many noncurrent versions the system will retain without transition.
+                                  type: number
+                                noncurrentDays:
+                                  description: |-
+                                    (Number) Specifies the number of days an object is noncurrent before the system will expire it.
+                                    Specifies the number of days an object is noncurrent before the system will transit it.
+                                  type: number
+                                storageClass:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Target storage class to transit to.
+
+                                    #### Supported values
+
+                                    Possible values:
+
+                                    - `STORAGE_CLASS_UNSPECIFIED`
+                                    - `STANDARD`
+                                    - `ENHANCED_THROUGHPUT`
+                                    - `INTELLIGENT`
+                                    - `FILESYSTEM` - Special storage class only for filesystem buckets.
+                                  type: string
+                              type: object
+                            status:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                :
+
+                                #### Supported values
+
+                                Possible values:
+
+                                - `STATUS_UNSPECIFIED`
+                                - `ENABLED`
+                                - `DISABLED`
+                              type: string
+                            transition:
+                              description: '(Attributes) :'
+                              properties:
+                                date:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Indicates at what date the object will be transited. The time is always midnight UTC.
+
+                                    A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+
+                                    *Cannot be set alongside days or days_since_last_access.*
+                                  type: string
+                                days:
+                                  description: |-
+                                    (Number) :
+                                    :
+
+                                    Amount of days since object was uploaded before it's transited to a new storage class.
+                                    The value must be a non-zero positive integer.
+
+                                    *Cannot be set alongside date or days_since_last_access.*
+                                  type: number
+                                daysSinceLastAccess:
+                                  description: |-
+                                    calculations for all transition rules.
+                                    :
+
+                                    The number of days since the object was last accessed before it is transitioned.
+
+                                    *Cannot be set alongside date or days.*
+                                  type: number
+                                storageClass:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    Target storage class to transit to.
+
+                                    #### Supported values
+
+                                    Possible values:
+
+                                    - `STORAGE_CLASS_UNSPECIFIED`
+                                    - `STANDARD`
+                                    - `ENHANCED_THROUGHPUT`
+                                    - `INTELLIGENT`
+                                    - `FILESYSTEM` - Special storage class only for filesystem buckets.
+                                  type: string
+                              type: object
+                          type: object
+                        type: array
+                    type: object
+                  maxSizeBytes:
+                    description: |-
+                      (Number) :
+                      :
+
+                      Maximum bucket size.
+                      Zero means unlimited.
+                      Actual limit can be lower if customer doesn't have enough quota.
+                      Real bucket size can go a little higher if customer writes too fast.
+                    type: number
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  objectAuditLogging:
+                    description: |-
+                      (String) :
+                      :
+
+                      Object audit logging specifies which requests must be logged - none, all or mutational only.
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `OBJECT_AUDIT_LOGGING_UNSPECIFIED`
+                      - `NONE` - Logging is disabled.
+                      - `MUTATE_ONLY` - Logging enabled only for mutating requests.
+                      - `ALL` - Logging enabled for all requests.
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                  resourceVersion:
+                    description: |-
+                      (Number) :
+                      :
+
+                      Version of the resource for safe concurrent modifications and consistent reads.
+                      Positive and monotonically increases on each resource spec change (but *not* on each change of the
+                      resource's container(s) or status).
+                      Service allows zero value or current.
+                    type: number
+                  status:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      anonymousAccessEnabled:
+                        description: |-
+                          (Boolean) :
+                          :
+
+                          Indicator flag showing whether the bucket has any BucketPolicy rule
+                          that grants anonymous access to any object, prefix, or the entire bucket.
+                        type: boolean
+                      counters:
+                        description: (Attributes List) (see below for nested schema)
+                        items:
+                          properties:
+                            counters:
+                              description: (Attributes List) (see below for nested
+                                schema)
+                              properties:
+                                inflightPartsQuantity:
+                                  description: (Number)
+                                  type: number
+                                inflightPartsSize:
+                                  description: (Number)
+                                  type: number
+                                multipartObjectsQuantity:
+                                  description: (Number)
+                                  type: number
+                                multipartObjectsSize:
+                                  description: (Number)
+                                  type: number
+                                multipartUploadsQuantity:
+                                  description: (Number)
+                                  type: number
+                                simpleObjectsQuantity:
+                                  description: (Number)
+                                  type: number
+                                simpleObjectsSize:
+                                  description: (Number)
+                                  type: number
+                              type: object
+                            nonCurrentCounters:
+                              description: '(Attributes) :'
+                              properties:
+                                multipartObjectsQuantity:
+                                  description: (Number)
+                                  type: number
+                                multipartObjectsSize:
+                                  description: (Number)
+                                  type: number
+                                simpleObjectsQuantity:
+                                  description: (Number)
+                                  type: number
+                                simpleObjectsSize:
+                                  description: (Number)
+                                  type: number
+                              type: object
+                            storageClass:
+                              description: |-
+                                (String) :
+                                :
+
+                                #### Supported values
+
+                                Possible values:
+
+                                - `STORAGE_CLASS_UNSPECIFIED`
+                                - `STANDARD`
+                                - `ENHANCED_THROUGHPUT`
+                                - `INTELLIGENT`
+                                - `FILESYSTEM` - Special storage class only for filesystem buckets.
+                              type: string
+                          type: object
+                        type: array
+                      deletedAt:
+                        description: |-
+                          (String) :
+                          :
+
+                          The time when the bucket was deleted (or scheduled for deletion).
+                          It resets to null if the bucket is undeleted.
+
+                          A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                        type: string
+                      domainName:
+                        description: |-
+                          (String) :
+                          :
+
+                          The domain of the endpoint where the bucket can be accessed. It omits the scheme (HTTPS) and the port (443)
+                          and contains only the FQDN address.
+                        type: string
+                      purgeAt:
+                        description: |-
+                          (String) :
+                          :
+
+                          The time when the bucket will be automatically purged in case it was soft-deleted.
+
+                          A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                        type: string
+                      region:
+                        description: |-
+                          west1".
+                          The name of the region where the bucket is located for use with S3 clients, i.e. "eu-west1".
+                        type: string
+                      state:
+                        description: |-
+                          (String) :
+                          :
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `STATE_UNSPECIFIED`
+                          - `CREATING` - Bucket is under creation and cannot be used yet.
+                          - `ACTIVE` - Bucket is active and ready for usage.
+                          - `UPDATING`:
+                          Bucket is being updated.
+                          It can be used, but some settings are being modified and you can observe their inconsistency.
+
+                          - `SCHEDULED_FOR_DELETION`:
+                          Bucket is scheduled for deletion.
+                          It cannot be used in s3 api anymore.
+                        type: string
+                      suspensionState:
+                        description: |-
+                          (String) :
+                          :
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `SUSPENSION_STATE_UNSPECIFIED`
+                          - `NOT_SUSPENDED`
+                          - `SUSPENDED`
+                        type: string
+                    type: object
+                  updatedAt:
+                    description: |-
+                      (String) :
+                      :
+
+                      Timestamp indicating when the resource was last updated.
+
+                      A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                    type: string
+                  versioningPolicy:
+                    description: |-
+                      (String) :
+                      :
+
+                      Supports transitions:
+                      * disabled -\> enabled
+                      * disabled -\> suspended
+                      * enabled \<-\> suspended
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `VERSIONING_POLICY_UNSPECIFIED`
+                      - `DISABLED`
+                      - `ENABLED`
+                      - `SUSPENDED`
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

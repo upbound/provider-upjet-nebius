@@ -1,0 +1,16 @@
+apiVersion: vpc.nebius.m.upbound.io/v1beta1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1beta1/securitygroup
+  labels:
+    testing.upbound.io/example-name: web
+  name: web
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: web-security-group
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    parentId: project-id
