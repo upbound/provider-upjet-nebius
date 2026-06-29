@@ -1,0 +1,17 @@
+apiVersion: compute.nebius.m.upbound.io/v1beta1
+kind: Disk
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1beta1/disk
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: computev1disk
+    parentId: ${data.nebius_project_id}
+    sizeGibibytes: 16
+    sourceImageFamily:
+      imageFamily: ubuntu24.04-driverless
+    type: NETWORK_SSD

@@ -1,0 +1,56 @@
+apiVersion: dns.nebius.m.upbound.io/v1beta1
+kind: Record
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1beta1/record
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: dnsv1record
+    parentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: default
+    relativeName: www
+    type: A
+    data: 192.0.2.1
+    ttl: 600
+
+---
+
+apiVersion: dns.nebius.m.upbound.io/v1beta1
+kind: Zone
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1beta1/record
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    domainName: dnsv1record.uptest.
+    name: dnsv1record
+    parentId: ${data.nebius_project_id}
+    vpc:
+      primaryNetworkIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: default
+
+---
+
+apiVersion: vpc.nebius.m.upbound.io/v1beta1
+kind: Network
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1beta1/record
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: dnsv1record
+    parentId: ${data.nebius_project_id}

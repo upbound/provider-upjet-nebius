@@ -1,0 +1,14 @@
+apiVersion: iam.nebius.m.upbound.io/v1beta1
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1beta1/group
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: iamv1group
+    # IAM groups are tenant scoped, so parentId is the tenant id.
+    parentId: ${data.nebius_tenant_id}

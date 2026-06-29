@@ -16,7 +16,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	clustervpcv1 "github.com/upbound/provider-nebius/apis/cluster/vpcv1/v1beta1"
+	clustervpc "github.com/upbound/provider-nebius/apis/cluster/vpc/v1beta1"
 )
 
 func TestParentIDInitializer(t *testing.T) {
@@ -65,7 +65,7 @@ func TestParentIDInitializer(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			// A cluster-scoped (LegacyManaged) Network routes through the cluster
 			// ProviderConfig path in providerConfigProjectID.
-			n := &clustervpcv1.Network{}
+			n := &clustervpc.Network{}
 			n.SetName("example")
 			n.SetProviderConfigReference(&xpv1.Reference{Name: "default"})
 			n.Spec.ForProvider.ParentID = tc.args.forProvider

@@ -9,42 +9,42 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/controller"
 
-	disk "github.com/upbound/provider-nebius/internal/controller/cluster/computev1/disk"
-	filesystem "github.com/upbound/provider-nebius/internal/controller/cluster/computev1/filesystem"
-	gpucluster "github.com/upbound/provider-nebius/internal/controller/cluster/computev1/gpucluster"
-	instance "github.com/upbound/provider-nebius/internal/controller/cluster/computev1/instance"
-	record "github.com/upbound/provider-nebius/internal/controller/cluster/dnsv1/record"
-	zone "github.com/upbound/provider-nebius/internal/controller/cluster/dnsv1/zone"
-	accesspermit "github.com/upbound/provider-nebius/internal/controller/cluster/iamv1/accesspermit"
-	authpublickey "github.com/upbound/provider-nebius/internal/controller/cluster/iamv1/authpublickey"
-	federatedcredentials "github.com/upbound/provider-nebius/internal/controller/cluster/iamv1/federatedcredentials"
-	federation "github.com/upbound/provider-nebius/internal/controller/cluster/iamv1/federation"
-	federationcertificate "github.com/upbound/provider-nebius/internal/controller/cluster/iamv1/federationcertificate"
-	group "github.com/upbound/provider-nebius/internal/controller/cluster/iamv1/group"
-	groupmembership "github.com/upbound/provider-nebius/internal/controller/cluster/iamv1/groupmembership"
-	invitation "github.com/upbound/provider-nebius/internal/controller/cluster/iamv1/invitation"
-	serviceaccount "github.com/upbound/provider-nebius/internal/controller/cluster/iamv1/serviceaccount"
-	accesskey "github.com/upbound/provider-nebius/internal/controller/cluster/iamv2/accesskey"
-	project "github.com/upbound/provider-nebius/internal/controller/cluster/iamv2/project"
-	asymmetrickey "github.com/upbound/provider-nebius/internal/controller/cluster/kmsv1/asymmetrickey"
-	symmetrickey "github.com/upbound/provider-nebius/internal/controller/cluster/kmsv1/symmetrickey"
-	cluster "github.com/upbound/provider-nebius/internal/controller/cluster/mk8sv1/cluster"
-	nodegroup "github.com/upbound/provider-nebius/internal/controller/cluster/mk8sv1/nodegroup"
-	secret "github.com/upbound/provider-nebius/internal/controller/cluster/mysteryboxv1/secret"
-	secretversion "github.com/upbound/provider-nebius/internal/controller/cluster/mysteryboxv1/secretversion"
+	disk "github.com/upbound/provider-nebius/internal/controller/cluster/compute/disk"
+	filesystem "github.com/upbound/provider-nebius/internal/controller/cluster/compute/filesystem"
+	gpucluster "github.com/upbound/provider-nebius/internal/controller/cluster/compute/gpucluster"
+	instance "github.com/upbound/provider-nebius/internal/controller/cluster/compute/instance"
+	record "github.com/upbound/provider-nebius/internal/controller/cluster/dns/record"
+	zone "github.com/upbound/provider-nebius/internal/controller/cluster/dns/zone"
+	accesskey "github.com/upbound/provider-nebius/internal/controller/cluster/iam/accesskey"
+	accesspermit "github.com/upbound/provider-nebius/internal/controller/cluster/iam/accesspermit"
+	authpublickey "github.com/upbound/provider-nebius/internal/controller/cluster/iam/authpublickey"
+	federatedcredentials "github.com/upbound/provider-nebius/internal/controller/cluster/iam/federatedcredentials"
+	federation "github.com/upbound/provider-nebius/internal/controller/cluster/iam/federation"
+	federationcertificate "github.com/upbound/provider-nebius/internal/controller/cluster/iam/federationcertificate"
+	group "github.com/upbound/provider-nebius/internal/controller/cluster/iam/group"
+	groupmembership "github.com/upbound/provider-nebius/internal/controller/cluster/iam/groupmembership"
+	invitation "github.com/upbound/provider-nebius/internal/controller/cluster/iam/invitation"
+	project "github.com/upbound/provider-nebius/internal/controller/cluster/iam/project"
+	serviceaccount "github.com/upbound/provider-nebius/internal/controller/cluster/iam/serviceaccount"
+	asymmetrickey "github.com/upbound/provider-nebius/internal/controller/cluster/kms/asymmetrickey"
+	symmetrickey "github.com/upbound/provider-nebius/internal/controller/cluster/kms/symmetrickey"
+	cluster "github.com/upbound/provider-nebius/internal/controller/cluster/mk8s/cluster"
+	nodegroup "github.com/upbound/provider-nebius/internal/controller/cluster/mk8s/nodegroup"
+	secret "github.com/upbound/provider-nebius/internal/controller/cluster/mysterybox/secret"
+	secretversion "github.com/upbound/provider-nebius/internal/controller/cluster/mysterybox/secretversion"
 	providerconfig "github.com/upbound/provider-nebius/internal/controller/cluster/providerconfig"
-	quotaallowance "github.com/upbound/provider-nebius/internal/controller/cluster/quotasv1/quotaallowance"
-	registry "github.com/upbound/provider-nebius/internal/controller/cluster/registryv1/registry"
-	bucket "github.com/upbound/provider-nebius/internal/controller/cluster/storagev1/bucket"
-	transfer "github.com/upbound/provider-nebius/internal/controller/cluster/storagev1/transfer"
-	allocation "github.com/upbound/provider-nebius/internal/controller/cluster/vpcv1/allocation"
-	network "github.com/upbound/provider-nebius/internal/controller/cluster/vpcv1/network"
-	pool "github.com/upbound/provider-nebius/internal/controller/cluster/vpcv1/pool"
-	route "github.com/upbound/provider-nebius/internal/controller/cluster/vpcv1/route"
-	routetable "github.com/upbound/provider-nebius/internal/controller/cluster/vpcv1/routetable"
-	securitygroup "github.com/upbound/provider-nebius/internal/controller/cluster/vpcv1/securitygroup"
-	securityrule "github.com/upbound/provider-nebius/internal/controller/cluster/vpcv1/securityrule"
-	subnet "github.com/upbound/provider-nebius/internal/controller/cluster/vpcv1/subnet"
+	quotaallowance "github.com/upbound/provider-nebius/internal/controller/cluster/quotas/quotaallowance"
+	registry "github.com/upbound/provider-nebius/internal/controller/cluster/registry/registry"
+	bucket "github.com/upbound/provider-nebius/internal/controller/cluster/storage/bucket"
+	transfer "github.com/upbound/provider-nebius/internal/controller/cluster/storage/transfer"
+	allocation "github.com/upbound/provider-nebius/internal/controller/cluster/vpc/allocation"
+	network "github.com/upbound/provider-nebius/internal/controller/cluster/vpc/network"
+	pool "github.com/upbound/provider-nebius/internal/controller/cluster/vpc/pool"
+	route "github.com/upbound/provider-nebius/internal/controller/cluster/vpc/route"
+	routetable "github.com/upbound/provider-nebius/internal/controller/cluster/vpc/routetable"
+	securitygroup "github.com/upbound/provider-nebius/internal/controller/cluster/vpc/securitygroup"
+	securityrule "github.com/upbound/provider-nebius/internal/controller/cluster/vpc/securityrule"
+	subnet "github.com/upbound/provider-nebius/internal/controller/cluster/vpc/subnet"
 )
 
 // Setup_monolith creates all controllers with the supplied logger and adds them to
@@ -57,6 +57,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		instance.Setup,
 		record.Setup,
 		zone.Setup,
+		accesskey.Setup,
 		accesspermit.Setup,
 		authpublickey.Setup,
 		federatedcredentials.Setup,
@@ -65,9 +66,8 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		group.Setup,
 		groupmembership.Setup,
 		invitation.Setup,
-		serviceaccount.Setup,
-		accesskey.Setup,
 		project.Setup,
+		serviceaccount.Setup,
 		asymmetrickey.Setup,
 		symmetrickey.Setup,
 		cluster.Setup,
@@ -105,6 +105,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		instance.SetupGated,
 		record.SetupGated,
 		zone.SetupGated,
+		accesskey.SetupGated,
 		accesspermit.SetupGated,
 		authpublickey.SetupGated,
 		federatedcredentials.SetupGated,
@@ -113,9 +114,8 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		group.SetupGated,
 		groupmembership.SetupGated,
 		invitation.SetupGated,
-		serviceaccount.SetupGated,
-		accesskey.SetupGated,
 		project.SetupGated,
+		serviceaccount.SetupGated,
 		asymmetrickey.SetupGated,
 		symmetrickey.SetupGated,
 		cluster.SetupGated,

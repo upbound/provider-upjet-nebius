@@ -1,0 +1,32 @@
+apiVersion: dns.nebius.upbound.io/v1beta1
+kind: Zone
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1beta1/zone
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    domainName: dnsv1zone.uptest.
+    name: dnsv1zone
+    parentId: ${data.nebius_project_id}
+    vpc:
+      primaryNetworkIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: default
+
+---
+
+apiVersion: vpc.nebius.upbound.io/v1beta1
+kind: Network
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1beta1/zone
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    name: dnsv1zone
+    parentId: ${data.nebius_project_id}

@@ -5,23 +5,21 @@
 package namespaced
 
 import (
-	"github.com/upbound/provider-nebius/config/namespaced/computev1"
-	"github.com/upbound/provider-nebius/config/namespaced/dnsv1"
-	"github.com/upbound/provider-nebius/config/namespaced/iamv1"
-	"github.com/upbound/provider-nebius/config/namespaced/iamv2"
-	"github.com/upbound/provider-nebius/config/namespaced/mk8sv1"
-	"github.com/upbound/provider-nebius/config/namespaced/mysteryboxv1"
-	"github.com/upbound/provider-nebius/config/namespaced/storagev1"
-	"github.com/upbound/provider-nebius/config/namespaced/vpcv1"
+	"github.com/upbound/provider-nebius/config/namespaced/compute"
+	"github.com/upbound/provider-nebius/config/namespaced/dns"
+	"github.com/upbound/provider-nebius/config/namespaced/iam"
+	"github.com/upbound/provider-nebius/config/namespaced/mk8s"
+	"github.com/upbound/provider-nebius/config/namespaced/mysterybox"
+	"github.com/upbound/provider-nebius/config/namespaced/storage"
+	"github.com/upbound/provider-nebius/config/namespaced/vpc"
 )
 
 func init() {
-	ProviderConfiguration.AddConfig(vpcv1.Configure)
-	ProviderConfiguration.AddConfig(computev1.Configure)
-	ProviderConfiguration.AddConfig(mk8sv1.Configure)
-	ProviderConfiguration.AddConfig(dnsv1.Configure)
-	ProviderConfiguration.AddConfig(mysteryboxv1.Configure)
-	ProviderConfiguration.AddConfig(iamv1.Configure)
-	ProviderConfiguration.AddConfig(iamv2.Configure)
-	ProviderConfiguration.AddConfig(storagev1.Configure)
+	ProviderConfiguration.AddConfig(vpc.Configure)
+	ProviderConfiguration.AddConfig(compute.Configure)
+	ProviderConfiguration.AddConfig(mk8s.Configure)
+	ProviderConfiguration.AddConfig(dns.Configure)
+	ProviderConfiguration.AddConfig(mysterybox.Configure)
+	ProviderConfiguration.AddConfig(iam.Configure)
+	ProviderConfiguration.AddConfig(storage.Configure)
 }

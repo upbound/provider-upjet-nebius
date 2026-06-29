@@ -1,0 +1,18 @@
+apiVersion: vpc.nebius.m.upbound.io/v1beta1
+kind: Pool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1beta1/pool
+  labels:
+    testing.upbound.io/example-name: private
+  name: private
+  namespace: upbound-system
+spec:
+  forProvider:
+    cidrs:
+    - cidr: 10.10.0.0/16
+      maxMaskLength: 32
+    name: private-ipv4-pool
+    parentId: project-id
+    version: IPV4
+    visibility: PRIVATE

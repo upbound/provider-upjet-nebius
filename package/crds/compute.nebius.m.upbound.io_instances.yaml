@@ -1,0 +1,3291 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: instances.compute.nebius.m.upbound.io
+spec:
+  group: compute.nebius.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - nebius
+    kind: Instance
+    listKind: InstanceList
+    plural: instances
+    singular: instance
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: Instance is the Schema for the Instances API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: InstanceSpec defines the desired state of Instance
+            properties:
+              forProvider:
+                properties:
+                  bootDisk:
+                    description: (Attributes) Specified boot disk attached to the
+                      instance. (see below for nested schema)
+                    properties:
+                      attachMode:
+                        description: |-
+                          (String) :
+                          :
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `UNSPECIFIED`
+                          - `READ_ONLY`
+                          - `READ_WRITE`
+                        type: string
+                      deviceId:
+                        description: |-
+                          defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                          Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                        type: string
+                      existingDisk:
+                        description: '(Attributes) :'
+                        properties:
+                          id:
+                            description: (String) Identifier for the resource, unique
+                              for its resource type.
+                            type: string
+                          idRef:
+                            description: Reference to a Disk in compute to populate
+                              id.
+                            properties:
+                              name:
+                                description: Name of the referenced object.
+                                type: string
+                              namespace:
+                                description: Namespace of the referenced object
+                                type: string
+                              policy:
+                                description: Policies for referencing.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            required:
+                            - name
+                            type: object
+                          idSelector:
+                            description: Selector for a Disk in compute to populate
+                              id.
+                            properties:
+                              matchControllerRef:
+                                description: |-
+                                  MatchControllerRef ensures an object with the same controller reference
+                                  as the selecting object is selected.
+                                type: boolean
+                              matchLabels:
+                                additionalProperties:
+                                  type: string
+                                description: MatchLabels ensures an object with matching
+                                  labels is selected.
+                                type: object
+                              namespace:
+                                description: Namespace for the selector
+                                type: string
+                              policy:
+                                description: Policies for selection.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            type: object
+                        type: object
+                      managedDisk:
+                        description: '(Attributes) :'
+                        properties:
+                          labels:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              (Map of String) :
+                              :
+
+                              Labels associated with disk resource.
+                            type: object
+                            x-kubernetes-map-type: granular
+                          name:
+                            description: |-
+                              (String) Human readable name for the resource.
+                              :
+
+                              Name of a dependent disk.
+                              Use it to convert an ExistingDisk to a dependent disk.
+                              Changing the name will replace the disk and cause data loss.
+                            type: string
+                          spec:
+                            description: (Attributes) Specification of a dependent
+                              disk to be created. (see below for nested schema)
+                            properties:
+                              blockSizeBytes:
+                                description: |-
+                                  (Number) :
+                                  :
+
+                                  Block size in bytes.
+                                  The block size must be a power of two between 4096 bytes (4 KiB) and 131072 bytes (128 KiB).
+                                  The default value is 4096 bytes (4 KiB).
+                                type: number
+                              diskEncryption:
+                                description: (Attributes) Defines how data on the
+                                  disk is encrypted. By default, no encryption is
+                                  applied. (see below for nested schema)
+                                properties:
+                                  type:
+                                    description: |-
+                                      (String) :
+                                      :
+
+                                      #### Supported values
+
+                                      Possible values:
+
+                                      - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
+                                      - `DISK_ENCRYPTION_MANAGED`:
+                                      Enables encryption using the platform's default root key from KMS.
+                                      Available for disks with NETWORK_SSD_NON_REPLICATED and NETWORK_SSD_IO_M3 types only.
+                                    type: string
+                                type: object
+                              forbidDeletion:
+                                description: |-
+                                  (Boolean) Prevents deletion whilst set
+                                  Prevents deletion whilst set
+                                type: boolean
+                              sizeBytes:
+                                description: |-
+                                  (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
+                                  *Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.*
+                                type: number
+                              sizeGibibytes:
+                                description: |-
+                                  (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
+                                  *Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.*
+                                type: number
+                              sizeKibibytes:
+                                description: |-
+                                  (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
+                                  *Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.*
+                                type: number
+                              sizeMebibytes:
+                                description: |-
+                                  (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+                                  *Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.*
+                                type: number
+                              sourceImageFamily:
+                                description: (Attributes) Cannot be set alongside
+                                  source_image_id. (see below for nested schema)
+                                properties:
+                                  imageFamily:
+                                    description: (String)
+                                    type: string
+                                  parentId:
+                                    description: (String) Identifier of the parent
+                                      resource to which the resource belongs.
+                                    type: string
+                                type: object
+                              sourceImageId:
+                                description: |-
+                                  (String) Cannot be set alongside source_image_family.
+                                  *Cannot be set alongside source_image_family.*
+                                type: string
+                              type:
+                                description: |-
+                                  (String) :
+                                  :
+
+                                  The type of disk defines the performance and reliability characteristics of the block device.
+                                  For details, see https://docs.nebius.com/compute/storage/types#disks-types
+
+                                  #### Supported values
+
+                                  the list of available types will be clarified later, it is not final version
+                                  Possible values:
+
+                                  - `UNSPECIFIED`
+                                  - `NETWORK_SSD`
+                                  - `NETWORK_HDD`
+                                  - `NETWORK_SSD_NON_REPLICATED`
+                                  - `NETWORK_SSD_IO_M3`
+                                type: string
+                            type: object
+                        type: object
+                    type: object
+                  cloudInitUserDataSecretRef:
+                    description: |-
+                      (String, Sensitive) :
+                      :
+
+                      Data in cloud-init format for customizing instance initialization.
+                      For details, see https://docs.nebius.com/compute/virtual-machines/manage#user-data
+                    properties:
+                      key:
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
+                  filesystems:
+                    description: (Attributes List) List of Shared Filesystems attached
+                      to the instance. (see below for nested schema)
+                    items:
+                      properties:
+                        attachMode:
+                          description: |-
+                            (String) :
+                            :
+
+                            #### Supported values
+
+                            Possible values:
+
+                            - `UNSPECIFIED`
+                            - `READ_ONLY`
+                            - `READ_WRITE`
+                          type: string
+                        existingFilesystem:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: (String) Identifier for the resource, unique
+                                for its resource type.
+                              type: string
+                            idRef:
+                              description: Reference to a Filesystem in compute to
+                                populate id.
+                              properties:
+                                name:
+                                  description: Name of the referenced object.
+                                  type: string
+                                namespace:
+                                  description: Namespace of the referenced object
+                                  type: string
+                                policy:
+                                  description: Policies for referencing.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              required:
+                              - name
+                              type: object
+                            idSelector:
+                              description: Selector for a Filesystem in compute to
+                                populate id.
+                              properties:
+                                matchControllerRef:
+                                  description: |-
+                                    MatchControllerRef ensures an object with the same controller reference
+                                    as the selecting object is selected.
+                                  type: boolean
+                                matchLabels:
+                                  additionalProperties:
+                                    type: string
+                                  description: MatchLabels ensures an object with
+                                    matching labels is selected.
+                                  type: object
+                                namespace:
+                                  description: Namespace for the selector
+                                  type: string
+                                policy:
+                                  description: Policies for selection.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              type: object
+                          type: object
+                        mountTag:
+                          description: |-
+                            defined identifier, allowing to use it as a device in mount command.
+                            Specifies the user-defined identifier, allowing to use it as a device in mount command.
+                          type: string
+                      type: object
+                    type: array
+                  gpuCluster:
+                    description: '(Attributes) :'
+                    properties:
+                      id:
+                        description: |-
+                          (String) Identifier for the resource, unique for its resource type.
+                          :
+
+                          If you want to interconnect several instances in a GPU cluster via NVIDIA InfiniBand,
+                          set the ID of an existing GPU cluster.
+                          You can only add the VM to the cluster when creating the VM.
+                          For details, see https://docs.nebius.com/compute/clusters/gpu
+                        type: string
+                      idRef:
+                        description: Reference to a GpuCluster in compute to populate
+                          id.
+                        properties:
+                          name:
+                            description: Name of the referenced object.
+                            type: string
+                          namespace:
+                            description: Namespace of the referenced object
+                            type: string
+                          policy:
+                            description: Policies for referencing.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        required:
+                        - name
+                        type: object
+                      idSelector:
+                        description: Selector for a GpuCluster in compute to populate
+                          id.
+                        properties:
+                          matchControllerRef:
+                            description: |-
+                              MatchControllerRef ensures an object with the same controller reference
+                              as the selecting object is selected.
+                            type: boolean
+                          matchLabels:
+                            additionalProperties:
+                              type: string
+                            description: MatchLabels ensures an object with matching
+                              labels is selected.
+                            type: object
+                          namespace:
+                            description: Namespace for the selector
+                            type: string
+                          policy:
+                            description: Policies for selection.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        type: object
+                    type: object
+                  hostname:
+                    description: |-
+                      (String) :
+                      :
+
+                      Instance's hostname. Used to generate default DNS record in format `<hostname>.<network_id>.compute.internal.`
+                      or `<instance_id>.<network_id>.compute.internal.` if hostname is not specified.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  localDisks:
+                    description: '(Attributes) :'
+                    properties:
+                      passthroughGroup:
+                        description: '(Attributes) :'
+                        properties:
+                          requested:
+                            description: |-
+                              (Boolean) :
+                              :
+
+                              Passthrough local disks from the underlying host.
+
+                              Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
+                              but the exact number depends on the preset.
+                              Enabled only when this field is explicitly set.
+                            type: boolean
+                        type: object
+                    type: object
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  networkInterfaces:
+                    description: '(Attributes List) :'
+                    items:
+                      properties:
+                        aliases:
+                          description: (Attributes List) Assign ranges of IP addresses
+                            as aliases (see below for nested schema)
+                          items:
+                            properties:
+                              allocationId:
+                                description: |-
+                                  (String) Allocation identifier if it was created before.
+                                  ID of allocation
+                                type: string
+                            type: object
+                          type: array
+                        ipAddress:
+                          description: '(Attributes) :'
+                          properties:
+                            allocationId:
+                              description: |-
+                                (String) Allocation identifier if it was created before.
+                                Allocation identifier if it was created before.
+                              type: string
+                          type: object
+                        name:
+                          description: |-
+                            (String) Human readable name for the resource.
+                            :
+
+                            Interface name
+                            Value of this field configures the name of the network interface inside VM's OS.
+                            Longer values will persist in the specification but will be truncated to 15 symbols before being passed to VM configuration.
+                          type: string
+                        publicIpAddress:
+                          description: '(Attributes) :'
+                          properties:
+                            allocationId:
+                              description: |-
+                                (String) Allocation identifier if it was created before.
+                                Allocation identifier if it was created before.
+                              type: string
+                            static:
+                              description: |-
+                                (Boolean) :
+                                :
+
+                                If false - Allocation will be created/deleted during NetworkInterface.Allocate/NetworkInterface.Deallocate
+                                If true  - Allocation will be created/deleted during NetworkInterface.Create/NetworkInterface.Delete
+                                False by default
+                              type: boolean
+                          type: object
+                        securityGroups:
+                          description: '(Attributes List) :'
+                          items:
+                            properties:
+                              id:
+                                description: |-
+                                  (String) Identifier for the resource, unique for its resource type.
+                                  Security group identifier
+                                type: string
+                              idRef:
+                                description: Reference to a SecurityGroup in vpc to
+                                  populate id.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the referenced object
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              idSelector:
+                                description: Selector for a SecurityGroup in vpc to
+                                  populate id.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  namespace:
+                                    description: Namespace for the selector
+                                    type: string
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                        subnetId:
+                          description: |-
+                            (String) Subnet ID
+                            Subnet ID
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in vpc to populate subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in vpc to populate subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  nvlInstanceGroupId:
+                    description: |-
+                      (String) NVLink Instance Group ID associated with the VM
+                      NVLink Instance Group ID associated with the VM
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                  preemptible:
+                    description: '(Attributes) :'
+                    properties:
+                      onPreemption:
+                        description: |-
+                          (String) :
+                          :
+
+                          Specifies what happens when the VM is preempted. The only supported value is STOP:
+                          Compute stops the VM without deleting or restarting it.
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `UNSPECIFIED`
+                          - `STOP`
+                        type: string
+                      priority:
+                        description: (Number, Deprecated)
+                        type: number
+                    type: object
+                  recoveryPolicy:
+                    description: |-
+                      (String) :
+                      :
+
+                      Recovery policy defines how the instance will be treated in case of a failure.
+                      Common source of failure is a host failure, but it can be any other failure.
+                      Instance undergoing a guest shutdown (poweroff, etc.) will be subject to recovery policy, meaning that it could
+                      be restarted and billed accordingly. Stop instance via API or UI to stop it to avoid recovering.
+                      - If set to RECOVER, instance will be restarted, if possible. It could be restarted on the same host or on another host.
+                      - If set to FAIL, instance will be stopped and not restarted.
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `RECOVER`
+                      - `FAIL`
+                    type: string
+                  reservationPolicy:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      policy:
+                        description: |-
+                          (String) :
+                          :
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `AUTO`:
+                          1) Will try to launch instance in any reservation_ids if provided.
+                          2) Will try to launch instance in any of the available capacity block.
+                          3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
+
+                          - `FORBID`:
+                          The instance is launched only using on-demand (PAYG) capacity.
+                          No attempt is made to find or use a Capacity Block.
+                          It's an error to provide reservation_ids with policy = FORBID
+
+                          - `STRICT`:
+                          1) Will try to launch the instance in Capacity Blocks from reservation_ids if provided.
+                          2) If reservation_ids are not provided will try to launch instance in suitable & available Capacity Block.
+                          3) Fail otherwise.
+                        type: string
+                      reservationIds:
+                        description: |-
+                          (List of String) Capacity block groups, order matters
+                          Capacity block groups, order matters
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  resources:
+                    description: '(Attributes) :'
+                    properties:
+                      platform:
+                        description: (String)
+                        type: string
+                      preset:
+                        description: (String)
+                        type: string
+                    type: object
+                  secondaryDisks:
+                    description: (Attributes List) List of additional data disks attached
+                      to the instance beyond the boot disk. (see below for nested
+                      schema)
+                    items:
+                      properties:
+                        attachMode:
+                          description: |-
+                            (String) :
+                            :
+
+                            #### Supported values
+
+                            Possible values:
+
+                            - `UNSPECIFIED`
+                            - `READ_ONLY`
+                            - `READ_WRITE`
+                          type: string
+                        deviceId:
+                          description: |-
+                            defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                            Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                          type: string
+                        existingDisk:
+                          description: '(Attributes) :'
+                          properties:
+                            id:
+                              description: (String) Identifier for the resource, unique
+                                for its resource type.
+                              type: string
+                            idRef:
+                              description: Reference to a Disk in compute to populate
+                                id.
+                              properties:
+                                name:
+                                  description: Name of the referenced object.
+                                  type: string
+                                namespace:
+                                  description: Namespace of the referenced object
+                                  type: string
+                                policy:
+                                  description: Policies for referencing.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              required:
+                              - name
+                              type: object
+                            idSelector:
+                              description: Selector for a Disk in compute to populate
+                                id.
+                              properties:
+                                matchControllerRef:
+                                  description: |-
+                                    MatchControllerRef ensures an object with the same controller reference
+                                    as the selecting object is selected.
+                                  type: boolean
+                                matchLabels:
+                                  additionalProperties:
+                                    type: string
+                                  description: MatchLabels ensures an object with
+                                    matching labels is selected.
+                                  type: object
+                                namespace:
+                                  description: Namespace for the selector
+                                  type: string
+                                policy:
+                                  description: Policies for selection.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              type: object
+                          type: object
+                        managedDisk:
+                          description: '(Attributes) :'
+                          properties:
+                            labels:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                (Map of String) :
+                                :
+
+                                Labels associated with disk resource.
+                              type: object
+                              x-kubernetes-map-type: granular
+                            name:
+                              description: |-
+                                (String) Human readable name for the resource.
+                                :
+
+                                Name of a dependent disk.
+                                Use it to convert an ExistingDisk to a dependent disk.
+                                Changing the name will replace the disk and cause data loss.
+                              type: string
+                            spec:
+                              description: (Attributes) Specification of a dependent
+                                disk to be created. (see below for nested schema)
+                              properties:
+                                blockSizeBytes:
+                                  description: |-
+                                    (Number) :
+                                    :
+
+                                    Block size in bytes.
+                                    The block size must be a power of two between 4096 bytes (4 KiB) and 131072 bytes (128 KiB).
+                                    The default value is 4096 bytes (4 KiB).
+                                  type: number
+                                diskEncryption:
+                                  description: (Attributes) Defines how data on the
+                                    disk is encrypted. By default, no encryption is
+                                    applied. (see below for nested schema)
+                                  properties:
+                                    type:
+                                      description: |-
+                                        (String) :
+                                        :
+
+                                        #### Supported values
+
+                                        Possible values:
+
+                                        - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
+                                        - `DISK_ENCRYPTION_MANAGED`:
+                                        Enables encryption using the platform's default root key from KMS.
+                                        Available for disks with NETWORK_SSD_NON_REPLICATED and NETWORK_SSD_IO_M3 types only.
+                                      type: string
+                                  type: object
+                                forbidDeletion:
+                                  description: |-
+                                    (Boolean) Prevents deletion whilst set
+                                    Prevents deletion whilst set
+                                  type: boolean
+                                sizeBytes:
+                                  description: |-
+                                    (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
+                                    *Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.*
+                                  type: number
+                                sizeGibibytes:
+                                  description: |-
+                                    (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
+                                    *Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.*
+                                  type: number
+                                sizeKibibytes:
+                                  description: |-
+                                    (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
+                                    *Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.*
+                                  type: number
+                                sizeMebibytes:
+                                  description: |-
+                                    (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+                                    *Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.*
+                                  type: number
+                                sourceImageFamily:
+                                  description: (Attributes) Cannot be set alongside
+                                    source_image_id. (see below for nested schema)
+                                  properties:
+                                    imageFamily:
+                                      description: (String)
+                                      type: string
+                                    parentId:
+                                      description: (String) Identifier of the parent
+                                        resource to which the resource belongs.
+                                      type: string
+                                  type: object
+                                sourceImageId:
+                                  description: |-
+                                    (String) Cannot be set alongside source_image_family.
+                                    *Cannot be set alongside source_image_family.*
+                                  type: string
+                                type:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    The type of disk defines the performance and reliability characteristics of the block device.
+                                    For details, see https://docs.nebius.com/compute/storage/types#disks-types
+
+                                    #### Supported values
+
+                                    the list of available types will be clarified later, it is not final version
+                                    Possible values:
+
+                                    - `UNSPECIFIED`
+                                    - `NETWORK_SSD`
+                                    - `NETWORK_HDD`
+                                    - `NETWORK_SSD_NON_REPLICATED`
+                                    - `NETWORK_SSD_IO_M3`
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  serviceAccountId:
+                    description: |-
+                      (String) :
+                      :
+
+                      Unique identifier of the service account associated with this instance.
+                      For details, see https://docs.nebius.com/iam/service-accounts/manage
+                    type: string
+                  serviceAccountIdRef:
+                    description: Reference to a ServiceAccount in iam to populate
+                      serviceAccountId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  serviceAccountIdSelector:
+                    description: Selector for a ServiceAccount in iam to populate
+                      serviceAccountId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  stopped:
+                    description: |-
+                      (Boolean) Indicates whether the instance should be stopped.
+                      Indicates whether the instance should be stopped.
+                    type: boolean
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  bootDisk:
+                    description: (Attributes) Specified boot disk attached to the
+                      instance. (see below for nested schema)
+                    properties:
+                      attachMode:
+                        description: |-
+                          (String) :
+                          :
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `UNSPECIFIED`
+                          - `READ_ONLY`
+                          - `READ_WRITE`
+                        type: string
+                      deviceId:
+                        description: |-
+                          defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                          Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                        type: string
+                      existingDisk:
+                        description: '(Attributes) :'
+                        properties:
+                          id:
+                            description: (String) Identifier for the resource, unique
+                              for its resource type.
+                            type: string
+                          idRef:
+                            description: Reference to a Disk in compute to populate
+                              id.
+                            properties:
+                              name:
+                                description: Name of the referenced object.
+                                type: string
+                              namespace:
+                                description: Namespace of the referenced object
+                                type: string
+                              policy:
+                                description: Policies for referencing.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            required:
+                            - name
+                            type: object
+                          idSelector:
+                            description: Selector for a Disk in compute to populate
+                              id.
+                            properties:
+                              matchControllerRef:
+                                description: |-
+                                  MatchControllerRef ensures an object with the same controller reference
+                                  as the selecting object is selected.
+                                type: boolean
+                              matchLabels:
+                                additionalProperties:
+                                  type: string
+                                description: MatchLabels ensures an object with matching
+                                  labels is selected.
+                                type: object
+                              namespace:
+                                description: Namespace for the selector
+                                type: string
+                              policy:
+                                description: Policies for selection.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            type: object
+                        type: object
+                      managedDisk:
+                        description: '(Attributes) :'
+                        properties:
+                          labels:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              (Map of String) :
+                              :
+
+                              Labels associated with disk resource.
+                            type: object
+                            x-kubernetes-map-type: granular
+                          name:
+                            description: |-
+                              (String) Human readable name for the resource.
+                              :
+
+                              Name of a dependent disk.
+                              Use it to convert an ExistingDisk to a dependent disk.
+                              Changing the name will replace the disk and cause data loss.
+                            type: string
+                          spec:
+                            description: (Attributes) Specification of a dependent
+                              disk to be created. (see below for nested schema)
+                            properties:
+                              blockSizeBytes:
+                                description: |-
+                                  (Number) :
+                                  :
+
+                                  Block size in bytes.
+                                  The block size must be a power of two between 4096 bytes (4 KiB) and 131072 bytes (128 KiB).
+                                  The default value is 4096 bytes (4 KiB).
+                                type: number
+                              diskEncryption:
+                                description: (Attributes) Defines how data on the
+                                  disk is encrypted. By default, no encryption is
+                                  applied. (see below for nested schema)
+                                properties:
+                                  type:
+                                    description: |-
+                                      (String) :
+                                      :
+
+                                      #### Supported values
+
+                                      Possible values:
+
+                                      - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
+                                      - `DISK_ENCRYPTION_MANAGED`:
+                                      Enables encryption using the platform's default root key from KMS.
+                                      Available for disks with NETWORK_SSD_NON_REPLICATED and NETWORK_SSD_IO_M3 types only.
+                                    type: string
+                                type: object
+                              forbidDeletion:
+                                description: |-
+                                  (Boolean) Prevents deletion whilst set
+                                  Prevents deletion whilst set
+                                type: boolean
+                              sizeBytes:
+                                description: |-
+                                  (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
+                                  *Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.*
+                                type: number
+                              sizeGibibytes:
+                                description: |-
+                                  (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
+                                  *Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.*
+                                type: number
+                              sizeKibibytes:
+                                description: |-
+                                  (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
+                                  *Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.*
+                                type: number
+                              sizeMebibytes:
+                                description: |-
+                                  (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+                                  *Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.*
+                                type: number
+                              sourceImageFamily:
+                                description: (Attributes) Cannot be set alongside
+                                  source_image_id. (see below for nested schema)
+                                properties:
+                                  imageFamily:
+                                    description: (String)
+                                    type: string
+                                  parentId:
+                                    description: (String) Identifier of the parent
+                                      resource to which the resource belongs.
+                                    type: string
+                                type: object
+                              sourceImageId:
+                                description: |-
+                                  (String) Cannot be set alongside source_image_family.
+                                  *Cannot be set alongside source_image_family.*
+                                type: string
+                              type:
+                                description: |-
+                                  (String) :
+                                  :
+
+                                  The type of disk defines the performance and reliability characteristics of the block device.
+                                  For details, see https://docs.nebius.com/compute/storage/types#disks-types
+
+                                  #### Supported values
+
+                                  the list of available types will be clarified later, it is not final version
+                                  Possible values:
+
+                                  - `UNSPECIFIED`
+                                  - `NETWORK_SSD`
+                                  - `NETWORK_HDD`
+                                  - `NETWORK_SSD_NON_REPLICATED`
+                                  - `NETWORK_SSD_IO_M3`
+                                type: string
+                            type: object
+                        type: object
+                    type: object
+                  cloudInitUserDataSecretRef:
+                    description: |-
+                      (String, Sensitive) :
+                      :
+
+                      Data in cloud-init format for customizing instance initialization.
+                      For details, see https://docs.nebius.com/compute/virtual-machines/manage#user-data
+                    properties:
+                      key:
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
+                  filesystems:
+                    description: (Attributes List) List of Shared Filesystems attached
+                      to the instance. (see below for nested schema)
+                    items:
+                      properties:
+                        attachMode:
+                          description: |-
+                            (String) :
+                            :
+
+                            #### Supported values
+
+                            Possible values:
+
+                            - `UNSPECIFIED`
+                            - `READ_ONLY`
+                            - `READ_WRITE`
+                          type: string
+                        existingFilesystem:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: (String) Identifier for the resource, unique
+                                for its resource type.
+                              type: string
+                            idRef:
+                              description: Reference to a Filesystem in compute to
+                                populate id.
+                              properties:
+                                name:
+                                  description: Name of the referenced object.
+                                  type: string
+                                namespace:
+                                  description: Namespace of the referenced object
+                                  type: string
+                                policy:
+                                  description: Policies for referencing.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              required:
+                              - name
+                              type: object
+                            idSelector:
+                              description: Selector for a Filesystem in compute to
+                                populate id.
+                              properties:
+                                matchControllerRef:
+                                  description: |-
+                                    MatchControllerRef ensures an object with the same controller reference
+                                    as the selecting object is selected.
+                                  type: boolean
+                                matchLabels:
+                                  additionalProperties:
+                                    type: string
+                                  description: MatchLabels ensures an object with
+                                    matching labels is selected.
+                                  type: object
+                                namespace:
+                                  description: Namespace for the selector
+                                  type: string
+                                policy:
+                                  description: Policies for selection.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              type: object
+                          type: object
+                        mountTag:
+                          description: |-
+                            defined identifier, allowing to use it as a device in mount command.
+                            Specifies the user-defined identifier, allowing to use it as a device in mount command.
+                          type: string
+                      type: object
+                    type: array
+                  gpuCluster:
+                    description: '(Attributes) :'
+                    properties:
+                      id:
+                        description: |-
+                          (String) Identifier for the resource, unique for its resource type.
+                          :
+
+                          If you want to interconnect several instances in a GPU cluster via NVIDIA InfiniBand,
+                          set the ID of an existing GPU cluster.
+                          You can only add the VM to the cluster when creating the VM.
+                          For details, see https://docs.nebius.com/compute/clusters/gpu
+                        type: string
+                      idRef:
+                        description: Reference to a GpuCluster in compute to populate
+                          id.
+                        properties:
+                          name:
+                            description: Name of the referenced object.
+                            type: string
+                          namespace:
+                            description: Namespace of the referenced object
+                            type: string
+                          policy:
+                            description: Policies for referencing.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        required:
+                        - name
+                        type: object
+                      idSelector:
+                        description: Selector for a GpuCluster in compute to populate
+                          id.
+                        properties:
+                          matchControllerRef:
+                            description: |-
+                              MatchControllerRef ensures an object with the same controller reference
+                              as the selecting object is selected.
+                            type: boolean
+                          matchLabels:
+                            additionalProperties:
+                              type: string
+                            description: MatchLabels ensures an object with matching
+                              labels is selected.
+                            type: object
+                          namespace:
+                            description: Namespace for the selector
+                            type: string
+                          policy:
+                            description: Policies for selection.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        type: object
+                    type: object
+                  hostname:
+                    description: |-
+                      (String) :
+                      :
+
+                      Instance's hostname. Used to generate default DNS record in format `<hostname>.<network_id>.compute.internal.`
+                      or `<instance_id>.<network_id>.compute.internal.` if hostname is not specified.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  localDisks:
+                    description: '(Attributes) :'
+                    properties:
+                      passthroughGroup:
+                        description: '(Attributes) :'
+                        properties:
+                          requested:
+                            description: |-
+                              (Boolean) :
+                              :
+
+                              Passthrough local disks from the underlying host.
+
+                              Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
+                              but the exact number depends on the preset.
+                              Enabled only when this field is explicitly set.
+                            type: boolean
+                        type: object
+                    type: object
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  networkInterfaces:
+                    description: '(Attributes List) :'
+                    items:
+                      properties:
+                        aliases:
+                          description: (Attributes List) Assign ranges of IP addresses
+                            as aliases (see below for nested schema)
+                          items:
+                            properties:
+                              allocationId:
+                                description: |-
+                                  (String) Allocation identifier if it was created before.
+                                  ID of allocation
+                                type: string
+                            type: object
+                          type: array
+                        ipAddress:
+                          description: '(Attributes) :'
+                          properties:
+                            allocationId:
+                              description: |-
+                                (String) Allocation identifier if it was created before.
+                                Allocation identifier if it was created before.
+                              type: string
+                          type: object
+                        name:
+                          description: |-
+                            (String) Human readable name for the resource.
+                            :
+
+                            Interface name
+                            Value of this field configures the name of the network interface inside VM's OS.
+                            Longer values will persist in the specification but will be truncated to 15 symbols before being passed to VM configuration.
+                          type: string
+                        publicIpAddress:
+                          description: '(Attributes) :'
+                          properties:
+                            allocationId:
+                              description: |-
+                                (String) Allocation identifier if it was created before.
+                                Allocation identifier if it was created before.
+                              type: string
+                            static:
+                              description: |-
+                                (Boolean) :
+                                :
+
+                                If false - Allocation will be created/deleted during NetworkInterface.Allocate/NetworkInterface.Deallocate
+                                If true  - Allocation will be created/deleted during NetworkInterface.Create/NetworkInterface.Delete
+                                False by default
+                              type: boolean
+                          type: object
+                        securityGroups:
+                          description: '(Attributes List) :'
+                          items:
+                            properties:
+                              id:
+                                description: |-
+                                  (String) Identifier for the resource, unique for its resource type.
+                                  Security group identifier
+                                type: string
+                              idRef:
+                                description: Reference to a SecurityGroup in vpc to
+                                  populate id.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the referenced object
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              idSelector:
+                                description: Selector for a SecurityGroup in vpc to
+                                  populate id.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  namespace:
+                                    description: Namespace for the selector
+                                    type: string
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                        subnetId:
+                          description: |-
+                            (String) Subnet ID
+                            Subnet ID
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in vpc to populate subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in vpc to populate subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  nvlInstanceGroupId:
+                    description: |-
+                      (String) NVLink Instance Group ID associated with the VM
+                      NVLink Instance Group ID associated with the VM
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                  preemptible:
+                    description: '(Attributes) :'
+                    properties:
+                      onPreemption:
+                        description: |-
+                          (String) :
+                          :
+
+                          Specifies what happens when the VM is preempted. The only supported value is STOP:
+                          Compute stops the VM without deleting or restarting it.
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `UNSPECIFIED`
+                          - `STOP`
+                        type: string
+                      priority:
+                        description: (Number, Deprecated)
+                        type: number
+                    type: object
+                  recoveryPolicy:
+                    description: |-
+                      (String) :
+                      :
+
+                      Recovery policy defines how the instance will be treated in case of a failure.
+                      Common source of failure is a host failure, but it can be any other failure.
+                      Instance undergoing a guest shutdown (poweroff, etc.) will be subject to recovery policy, meaning that it could
+                      be restarted and billed accordingly. Stop instance via API or UI to stop it to avoid recovering.
+                      - If set to RECOVER, instance will be restarted, if possible. It could be restarted on the same host or on another host.
+                      - If set to FAIL, instance will be stopped and not restarted.
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `RECOVER`
+                      - `FAIL`
+                    type: string
+                  reservationPolicy:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      policy:
+                        description: |-
+                          (String) :
+                          :
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `AUTO`:
+                          1) Will try to launch instance in any reservation_ids if provided.
+                          2) Will try to launch instance in any of the available capacity block.
+                          3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
+
+                          - `FORBID`:
+                          The instance is launched only using on-demand (PAYG) capacity.
+                          No attempt is made to find or use a Capacity Block.
+                          It's an error to provide reservation_ids with policy = FORBID
+
+                          - `STRICT`:
+                          1) Will try to launch the instance in Capacity Blocks from reservation_ids if provided.
+                          2) If reservation_ids are not provided will try to launch instance in suitable & available Capacity Block.
+                          3) Fail otherwise.
+                        type: string
+                      reservationIds:
+                        description: |-
+                          (List of String) Capacity block groups, order matters
+                          Capacity block groups, order matters
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  resources:
+                    description: '(Attributes) :'
+                    properties:
+                      platform:
+                        description: (String)
+                        type: string
+                      preset:
+                        description: (String)
+                        type: string
+                    type: object
+                  secondaryDisks:
+                    description: (Attributes List) List of additional data disks attached
+                      to the instance beyond the boot disk. (see below for nested
+                      schema)
+                    items:
+                      properties:
+                        attachMode:
+                          description: |-
+                            (String) :
+                            :
+
+                            #### Supported values
+
+                            Possible values:
+
+                            - `UNSPECIFIED`
+                            - `READ_ONLY`
+                            - `READ_WRITE`
+                          type: string
+                        deviceId:
+                          description: |-
+                            defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                            Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                          type: string
+                        existingDisk:
+                          description: '(Attributes) :'
+                          properties:
+                            id:
+                              description: (String) Identifier for the resource, unique
+                                for its resource type.
+                              type: string
+                            idRef:
+                              description: Reference to a Disk in compute to populate
+                                id.
+                              properties:
+                                name:
+                                  description: Name of the referenced object.
+                                  type: string
+                                namespace:
+                                  description: Namespace of the referenced object
+                                  type: string
+                                policy:
+                                  description: Policies for referencing.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              required:
+                              - name
+                              type: object
+                            idSelector:
+                              description: Selector for a Disk in compute to populate
+                                id.
+                              properties:
+                                matchControllerRef:
+                                  description: |-
+                                    MatchControllerRef ensures an object with the same controller reference
+                                    as the selecting object is selected.
+                                  type: boolean
+                                matchLabels:
+                                  additionalProperties:
+                                    type: string
+                                  description: MatchLabels ensures an object with
+                                    matching labels is selected.
+                                  type: object
+                                namespace:
+                                  description: Namespace for the selector
+                                  type: string
+                                policy:
+                                  description: Policies for selection.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              type: object
+                          type: object
+                        managedDisk:
+                          description: '(Attributes) :'
+                          properties:
+                            labels:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                (Map of String) :
+                                :
+
+                                Labels associated with disk resource.
+                              type: object
+                              x-kubernetes-map-type: granular
+                            name:
+                              description: |-
+                                (String) Human readable name for the resource.
+                                :
+
+                                Name of a dependent disk.
+                                Use it to convert an ExistingDisk to a dependent disk.
+                                Changing the name will replace the disk and cause data loss.
+                              type: string
+                            spec:
+                              description: (Attributes) Specification of a dependent
+                                disk to be created. (see below for nested schema)
+                              properties:
+                                blockSizeBytes:
+                                  description: |-
+                                    (Number) :
+                                    :
+
+                                    Block size in bytes.
+                                    The block size must be a power of two between 4096 bytes (4 KiB) and 131072 bytes (128 KiB).
+                                    The default value is 4096 bytes (4 KiB).
+                                  type: number
+                                diskEncryption:
+                                  description: (Attributes) Defines how data on the
+                                    disk is encrypted. By default, no encryption is
+                                    applied. (see below for nested schema)
+                                  properties:
+                                    type:
+                                      description: |-
+                                        (String) :
+                                        :
+
+                                        #### Supported values
+
+                                        Possible values:
+
+                                        - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
+                                        - `DISK_ENCRYPTION_MANAGED`:
+                                        Enables encryption using the platform's default root key from KMS.
+                                        Available for disks with NETWORK_SSD_NON_REPLICATED and NETWORK_SSD_IO_M3 types only.
+                                      type: string
+                                  type: object
+                                forbidDeletion:
+                                  description: |-
+                                    (Boolean) Prevents deletion whilst set
+                                    Prevents deletion whilst set
+                                  type: boolean
+                                sizeBytes:
+                                  description: |-
+                                    (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
+                                    *Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.*
+                                  type: number
+                                sizeGibibytes:
+                                  description: |-
+                                    (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
+                                    *Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.*
+                                  type: number
+                                sizeKibibytes:
+                                  description: |-
+                                    (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
+                                    *Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.*
+                                  type: number
+                                sizeMebibytes:
+                                  description: |-
+                                    (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+                                    *Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.*
+                                  type: number
+                                sourceImageFamily:
+                                  description: (Attributes) Cannot be set alongside
+                                    source_image_id. (see below for nested schema)
+                                  properties:
+                                    imageFamily:
+                                      description: (String)
+                                      type: string
+                                    parentId:
+                                      description: (String) Identifier of the parent
+                                        resource to which the resource belongs.
+                                      type: string
+                                  type: object
+                                sourceImageId:
+                                  description: |-
+                                    (String) Cannot be set alongside source_image_family.
+                                    *Cannot be set alongside source_image_family.*
+                                  type: string
+                                type:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    The type of disk defines the performance and reliability characteristics of the block device.
+                                    For details, see https://docs.nebius.com/compute/storage/types#disks-types
+
+                                    #### Supported values
+
+                                    the list of available types will be clarified later, it is not final version
+                                    Possible values:
+
+                                    - `UNSPECIFIED`
+                                    - `NETWORK_SSD`
+                                    - `NETWORK_HDD`
+                                    - `NETWORK_SSD_NON_REPLICATED`
+                                    - `NETWORK_SSD_IO_M3`
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  serviceAccountId:
+                    description: |-
+                      (String) :
+                      :
+
+                      Unique identifier of the service account associated with this instance.
+                      For details, see https://docs.nebius.com/iam/service-accounts/manage
+                    type: string
+                  serviceAccountIdRef:
+                    description: Reference to a ServiceAccount in iam to populate
+                      serviceAccountId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  serviceAccountIdSelector:
+                    description: Selector for a ServiceAccount in iam to populate
+                      serviceAccountId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  stopped:
+                    description: |-
+                      (Boolean) Indicates whether the instance should be stopped.
+                      Indicates whether the instance should be stopped.
+                    type: boolean
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.networkInterfaces is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.networkInterfaces)
+                || (has(self.initProvider) && has(self.initProvider.networkInterfaces))'
+            - message: spec.forProvider.resources is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.resources)
+                || (has(self.initProvider) && has(self.initProvider.resources))'
+          status:
+            description: InstanceStatus defines the observed state of Instance.
+            properties:
+              atProvider:
+                properties:
+                  bootDisk:
+                    description: (Attributes) Specified boot disk attached to the
+                      instance. (see below for nested schema)
+                    properties:
+                      attachMode:
+                        description: |-
+                          (String) :
+                          :
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `UNSPECIFIED`
+                          - `READ_ONLY`
+                          - `READ_WRITE`
+                        type: string
+                      deviceId:
+                        description: |-
+                          defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                          Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                        type: string
+                      existingDisk:
+                        description: '(Attributes) :'
+                        properties:
+                          id:
+                            description: (String) Identifier for the resource, unique
+                              for its resource type.
+                            type: string
+                        type: object
+                      managedDisk:
+                        description: '(Attributes) :'
+                        properties:
+                          labels:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              (Map of String) :
+                              :
+
+                              Labels associated with disk resource.
+                            type: object
+                            x-kubernetes-map-type: granular
+                          name:
+                            description: |-
+                              (String) Human readable name for the resource.
+                              :
+
+                              Name of a dependent disk.
+                              Use it to convert an ExistingDisk to a dependent disk.
+                              Changing the name will replace the disk and cause data loss.
+                            type: string
+                          spec:
+                            description: (Attributes) Specification of a dependent
+                              disk to be created. (see below for nested schema)
+                            properties:
+                              blockSizeBytes:
+                                description: |-
+                                  (Number) :
+                                  :
+
+                                  Block size in bytes.
+                                  The block size must be a power of two between 4096 bytes (4 KiB) and 131072 bytes (128 KiB).
+                                  The default value is 4096 bytes (4 KiB).
+                                type: number
+                              diskEncryption:
+                                description: (Attributes) Defines how data on the
+                                  disk is encrypted. By default, no encryption is
+                                  applied. (see below for nested schema)
+                                properties:
+                                  type:
+                                    description: |-
+                                      (String) :
+                                      :
+
+                                      #### Supported values
+
+                                      Possible values:
+
+                                      - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
+                                      - `DISK_ENCRYPTION_MANAGED`:
+                                      Enables encryption using the platform's default root key from KMS.
+                                      Available for disks with NETWORK_SSD_NON_REPLICATED and NETWORK_SSD_IO_M3 types only.
+                                    type: string
+                                type: object
+                              forbidDeletion:
+                                description: |-
+                                  (Boolean) Prevents deletion whilst set
+                                  Prevents deletion whilst set
+                                type: boolean
+                              sizeBytes:
+                                description: |-
+                                  (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
+                                  *Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.*
+                                type: number
+                              sizeGibibytes:
+                                description: |-
+                                  (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
+                                  *Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.*
+                                type: number
+                              sizeKibibytes:
+                                description: |-
+                                  (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
+                                  *Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.*
+                                type: number
+                              sizeMebibytes:
+                                description: |-
+                                  (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+                                  *Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.*
+                                type: number
+                              sourceImageFamily:
+                                description: (Attributes) Cannot be set alongside
+                                  source_image_id. (see below for nested schema)
+                                properties:
+                                  imageFamily:
+                                    description: (String)
+                                    type: string
+                                  parentId:
+                                    description: (String) Identifier of the parent
+                                      resource to which the resource belongs.
+                                    type: string
+                                type: object
+                              sourceImageId:
+                                description: |-
+                                  (String) Cannot be set alongside source_image_family.
+                                  *Cannot be set alongside source_image_family.*
+                                type: string
+                              type:
+                                description: |-
+                                  (String) :
+                                  :
+
+                                  The type of disk defines the performance and reliability characteristics of the block device.
+                                  For details, see https://docs.nebius.com/compute/storage/types#disks-types
+
+                                  #### Supported values
+
+                                  the list of available types will be clarified later, it is not final version
+                                  Possible values:
+
+                                  - `UNSPECIFIED`
+                                  - `NETWORK_SSD`
+                                  - `NETWORK_HDD`
+                                  - `NETWORK_SSD_NON_REPLICATED`
+                                  - `NETWORK_SSD_IO_M3`
+                                type: string
+                            type: object
+                        type: object
+                    type: object
+                  createdAt:
+                    description: |-
+                      (String) :
+                      :
+
+                      Timestamp indicating when the resource was created.
+
+                      A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                    type: string
+                  filesystems:
+                    description: (Attributes List) List of Shared Filesystems attached
+                      to the instance. (see below for nested schema)
+                    items:
+                      properties:
+                        attachMode:
+                          description: |-
+                            (String) :
+                            :
+
+                            #### Supported values
+
+                            Possible values:
+
+                            - `UNSPECIFIED`
+                            - `READ_ONLY`
+                            - `READ_WRITE`
+                          type: string
+                        existingFilesystem:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: (String) Identifier for the resource, unique
+                                for its resource type.
+                              type: string
+                          type: object
+                        mountTag:
+                          description: |-
+                            defined identifier, allowing to use it as a device in mount command.
+                            Specifies the user-defined identifier, allowing to use it as a device in mount command.
+                          type: string
+                      type: object
+                    type: array
+                  gpuCluster:
+                    description: '(Attributes) :'
+                    properties:
+                      id:
+                        description: |-
+                          (String) Identifier for the resource, unique for its resource type.
+                          :
+
+                          If you want to interconnect several instances in a GPU cluster via NVIDIA InfiniBand,
+                          set the ID of an existing GPU cluster.
+                          You can only add the VM to the cluster when creating the VM.
+                          For details, see https://docs.nebius.com/compute/clusters/gpu
+                        type: string
+                    type: object
+                  hostname:
+                    description: |-
+                      (String) :
+                      :
+
+                      Instance's hostname. Used to generate default DNS record in format `<hostname>.<network_id>.compute.internal.`
+                      or `<instance_id>.<network_id>.compute.internal.` if hostname is not specified.
+                    type: string
+                  id:
+                    description: (String) Identifier for the resource, unique for
+                      its resource type.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) :
+                      :
+
+                      Labels associated with the resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  localDisks:
+                    description: '(Attributes) :'
+                    properties:
+                      passthroughGroup:
+                        description: '(Attributes) :'
+                        properties:
+                          requested:
+                            description: |-
+                              (Boolean) :
+                              :
+
+                              Passthrough local disks from the underlying host.
+
+                              Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
+                              but the exact number depends on the preset.
+                              Enabled only when this field is explicitly set.
+                            type: boolean
+                        type: object
+                    type: object
+                  metadata:
+                    description: '(Attributes) :'
+                    type: object
+                  name:
+                    description: |-
+                      (String) Human readable name for the resource.
+                      Human readable name for the resource.
+                    type: string
+                  networkInterfaces:
+                    description: '(Attributes List) :'
+                    items:
+                      properties:
+                        aliases:
+                          description: (Attributes List) Assign ranges of IP addresses
+                            as aliases (see below for nested schema)
+                          items:
+                            properties:
+                              allocationId:
+                                description: |-
+                                  (String) Allocation identifier if it was created before.
+                                  ID of allocation
+                                type: string
+                            type: object
+                          type: array
+                        ipAddress:
+                          description: '(Attributes) :'
+                          properties:
+                            allocationId:
+                              description: |-
+                                (String) Allocation identifier if it was created before.
+                                Allocation identifier if it was created before.
+                              type: string
+                          type: object
+                        name:
+                          description: |-
+                            (String) Human readable name for the resource.
+                            :
+
+                            Interface name
+                            Value of this field configures the name of the network interface inside VM's OS.
+                            Longer values will persist in the specification but will be truncated to 15 symbols before being passed to VM configuration.
+                          type: string
+                        publicIpAddress:
+                          description: '(Attributes) :'
+                          properties:
+                            allocationId:
+                              description: |-
+                                (String) Allocation identifier if it was created before.
+                                Allocation identifier if it was created before.
+                              type: string
+                            static:
+                              description: |-
+                                (Boolean) :
+                                :
+
+                                If false - Allocation will be created/deleted during NetworkInterface.Allocate/NetworkInterface.Deallocate
+                                If true  - Allocation will be created/deleted during NetworkInterface.Create/NetworkInterface.Delete
+                                False by default
+                              type: boolean
+                          type: object
+                        securityGroups:
+                          description: '(Attributes List) :'
+                          items:
+                            properties:
+                              id:
+                                description: |-
+                                  (String) Identifier for the resource, unique for its resource type.
+                                  Security group identifier
+                                type: string
+                            type: object
+                          type: array
+                        subnetId:
+                          description: |-
+                            (String) Subnet ID
+                            Subnet ID
+                          type: string
+                      type: object
+                    type: array
+                  nvlInstanceGroupId:
+                    description: |-
+                      (String) NVLink Instance Group ID associated with the VM
+                      NVLink Instance Group ID associated with the VM
+                    type: string
+                  parentId:
+                    description: |-
+                      (String) Identifier of the parent resource to which the resource belongs.
+                      Identifier of the parent resource to which the resource belongs.
+                    type: string
+                  preemptible:
+                    description: '(Attributes) :'
+                    properties:
+                      onPreemption:
+                        description: |-
+                          (String) :
+                          :
+
+                          Specifies what happens when the VM is preempted. The only supported value is STOP:
+                          Compute stops the VM without deleting or restarting it.
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `UNSPECIFIED`
+                          - `STOP`
+                        type: string
+                      priority:
+                        description: (Number, Deprecated)
+                        type: number
+                    type: object
+                  recoveryPolicy:
+                    description: |-
+                      (String) :
+                      :
+
+                      Recovery policy defines how the instance will be treated in case of a failure.
+                      Common source of failure is a host failure, but it can be any other failure.
+                      Instance undergoing a guest shutdown (poweroff, etc.) will be subject to recovery policy, meaning that it could
+                      be restarted and billed accordingly. Stop instance via API or UI to stop it to avoid recovering.
+                      - If set to RECOVER, instance will be restarted, if possible. It could be restarted on the same host or on another host.
+                      - If set to FAIL, instance will be stopped and not restarted.
+
+                      #### Supported values
+
+                      Possible values:
+
+                      - `RECOVER`
+                      - `FAIL`
+                    type: string
+                  reservationPolicy:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      policy:
+                        description: |-
+                          (String) :
+                          :
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `AUTO`:
+                          1) Will try to launch instance in any reservation_ids if provided.
+                          2) Will try to launch instance in any of the available capacity block.
+                          3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
+
+                          - `FORBID`:
+                          The instance is launched only using on-demand (PAYG) capacity.
+                          No attempt is made to find or use a Capacity Block.
+                          It's an error to provide reservation_ids with policy = FORBID
+
+                          - `STRICT`:
+                          1) Will try to launch the instance in Capacity Blocks from reservation_ids if provided.
+                          2) If reservation_ids are not provided will try to launch instance in suitable & available Capacity Block.
+                          3) Fail otherwise.
+                        type: string
+                      reservationIds:
+                        description: |-
+                          (List of String) Capacity block groups, order matters
+                          Capacity block groups, order matters
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  resourceVersion:
+                    description: |-
+                      (Number) :
+                      :
+
+                      Version of the resource for safe concurrent modifications and consistent reads.
+                      Positive and monotonically increases on each resource spec change (but *not* on each change of the
+                      resource's container(s) or status).
+                      Service allows zero value or current.
+                    type: number
+                  resources:
+                    description: '(Attributes) :'
+                    properties:
+                      platform:
+                        description: (String)
+                        type: string
+                      preset:
+                        description: (String)
+                        type: string
+                    type: object
+                  secondaryDisks:
+                    description: (Attributes List) List of additional data disks attached
+                      to the instance beyond the boot disk. (see below for nested
+                      schema)
+                    items:
+                      properties:
+                        attachMode:
+                          description: |-
+                            (String) :
+                            :
+
+                            #### Supported values
+
+                            Possible values:
+
+                            - `UNSPECIFIED`
+                            - `READ_ONLY`
+                            - `READ_WRITE`
+                          type: string
+                        deviceId:
+                          description: |-
+                            defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                            Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                          type: string
+                        existingDisk:
+                          description: '(Attributes) :'
+                          properties:
+                            id:
+                              description: (String) Identifier for the resource, unique
+                                for its resource type.
+                              type: string
+                          type: object
+                        managedDisk:
+                          description: '(Attributes) :'
+                          properties:
+                            labels:
+                              additionalProperties:
+                                type: string
+                              description: |-
+                                (Map of String) :
+                                :
+
+                                Labels associated with disk resource.
+                              type: object
+                              x-kubernetes-map-type: granular
+                            name:
+                              description: |-
+                                (String) Human readable name for the resource.
+                                :
+
+                                Name of a dependent disk.
+                                Use it to convert an ExistingDisk to a dependent disk.
+                                Changing the name will replace the disk and cause data loss.
+                              type: string
+                            spec:
+                              description: (Attributes) Specification of a dependent
+                                disk to be created. (see below for nested schema)
+                              properties:
+                                blockSizeBytes:
+                                  description: |-
+                                    (Number) :
+                                    :
+
+                                    Block size in bytes.
+                                    The block size must be a power of two between 4096 bytes (4 KiB) and 131072 bytes (128 KiB).
+                                    The default value is 4096 bytes (4 KiB).
+                                  type: number
+                                diskEncryption:
+                                  description: (Attributes) Defines how data on the
+                                    disk is encrypted. By default, no encryption is
+                                    applied. (see below for nested schema)
+                                  properties:
+                                    type:
+                                      description: |-
+                                        (String) :
+                                        :
+
+                                        #### Supported values
+
+                                        Possible values:
+
+                                        - `DISK_ENCRYPTION_UNSPECIFIED` - No encryption is applied unless explicitly specified.
+                                        - `DISK_ENCRYPTION_MANAGED`:
+                                        Enables encryption using the platform's default root key from KMS.
+                                        Available for disks with NETWORK_SSD_NON_REPLICATED and NETWORK_SSD_IO_M3 types only.
+                                      type: string
+                                  type: object
+                                forbidDeletion:
+                                  description: |-
+                                    (Boolean) Prevents deletion whilst set
+                                    Prevents deletion whilst set
+                                  type: boolean
+                                sizeBytes:
+                                  description: |-
+                                    (Number) Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.
+                                    *Cannot be set alongside size_kibibytes, size_mebibytes or size_gibibytes.*
+                                  type: number
+                                sizeGibibytes:
+                                  description: |-
+                                    (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
+                                    *Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.*
+                                  type: number
+                                sizeKibibytes:
+                                  description: |-
+                                    (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
+                                    *Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.*
+                                  type: number
+                                sizeMebibytes:
+                                  description: |-
+                                    (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+                                    *Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.*
+                                  type: number
+                                sourceImageFamily:
+                                  description: (Attributes) Cannot be set alongside
+                                    source_image_id. (see below for nested schema)
+                                  properties:
+                                    imageFamily:
+                                      description: (String)
+                                      type: string
+                                    parentId:
+                                      description: (String) Identifier of the parent
+                                        resource to which the resource belongs.
+                                      type: string
+                                  type: object
+                                sourceImageId:
+                                  description: |-
+                                    (String) Cannot be set alongside source_image_family.
+                                    *Cannot be set alongside source_image_family.*
+                                  type: string
+                                type:
+                                  description: |-
+                                    (String) :
+                                    :
+
+                                    The type of disk defines the performance and reliability characteristics of the block device.
+                                    For details, see https://docs.nebius.com/compute/storage/types#disks-types
+
+                                    #### Supported values
+
+                                    the list of available types will be clarified later, it is not final version
+                                    Possible values:
+
+                                    - `UNSPECIFIED`
+                                    - `NETWORK_SSD`
+                                    - `NETWORK_HDD`
+                                    - `NETWORK_SSD_NON_REPLICATED`
+                                    - `NETWORK_SSD_IO_M3`
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  serviceAccountId:
+                    description: |-
+                      (String) :
+                      :
+
+                      Unique identifier of the service account associated with this instance.
+                      For details, see https://docs.nebius.com/iam/service-accounts/manage
+                    type: string
+                  status:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      diskAttachments:
+                        description: .
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) Identifier for the resource, unique for its resource type.
+                                :
+
+                                Disk ID.
+                                - For ExistingDisk, this is the referenced disk ID.
+                                - For ManagedDisk, may be empty while the attachment intent is still pending.
+                              type: string
+                            isManaged:
+                              description: |-
+                                (Boolean) :
+                                :
+
+                                Indicates whether this attachment is managed by the instance lifecycle.
+                                If true, the disk is expected to be deleted when the instance is deleted.
+                                If false, the disk is preserved and only detached on instance deletion.
+                              type: boolean
+                            name:
+                              description: |-
+                                (String) Human readable name for the resource.
+                                :
+
+                                Disk name used to match this status entry with the desired attachment
+                                from the instance specification.
+
+                                Consistency:
+                                - For ManagedDisk, this value is derived from the instance spec (ManagedDisk.name).
+                                - For ExistingDisk, this value is derived from the disk resource name and may lag behind
+                                in case of renaming. It is updated asynchronously and is eventually consistent.
+                              type: string
+                          type: object
+                        type: array
+                      infinibandTopologyPath:
+                        description: (Attributes) (see below for nested schema)
+                        properties:
+                          path:
+                            description: (List of String)
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      maintenanceEventId:
+                        description: (String)
+                        type: string
+                      networkInterfaces:
+                        description: '(Attributes List) :'
+                        items:
+                          properties:
+                            aliases:
+                              description: (Attributes List) Assign ranges of IP addresses
+                                as aliases (see below for nested schema)
+                              properties:
+                                cidrs:
+                                  description: (List of String)
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                            fqdn:
+                              description: |-
+                                (String) FQDN of the interface
+                                FQDN of the interface
+                              type: string
+                            index:
+                              description: |-
+                                (Number) The index of the network interface
+                                The index of the network interface
+                              type: number
+                            ipAddress:
+                              description: '(Attributes) :'
+                              properties:
+                                address:
+                                  description: |-
+                                    (String) Effective private IPv4 address assigned to the interface.
+                                    Effective private IPv4 address assigned to the interface.
+                                  type: string
+                                allocationId:
+                                  description: |-
+                                    (String) Allocation identifier if it was created before.
+                                    Allocation identifier.
+                                  type: string
+                              type: object
+                            macAddress:
+                              description: |-
+                                (String) MAC address
+                                MAC address
+                              type: string
+                            name:
+                              description: |-
+                                (String) Human readable name for the resource.
+                                :
+
+                                Name for interface.
+                                Unique within instance's network interfaces
+                              type: string
+                            publicIpAddress:
+                              description: '(Attributes) :'
+                              properties:
+                                address:
+                                  description: |-
+                                    (String) Effective private IPv4 address assigned to the interface.
+                                    Effective public IPv4 address assigned to the interface.
+                                  type: string
+                                allocationId:
+                                  description: |-
+                                    (String) Allocation identifier if it was created before.
+                                    Allocation identifier.
+                                  type: string
+                                static:
+                                  description: |-
+                                    (Boolean) :
+                                    :
+
+                                    If false - Allocation will be created/deleted during NetworkInterface.Allocate/NetworkInterface.Deallocate
+                                    If true  - Allocation will be created/deleted during NetworkInterface.Create/NetworkInterface.Delete
+                                    False by default
+                                  type: boolean
+                              type: object
+                          type: object
+                        type: array
+                      reconciling:
+                        description: |-
+                          (Boolean) Indicates whether there is an ongoing operation
+                          Indicates whether there is an ongoing operation
+                        type: boolean
+                      reservationId:
+                        description: (String)
+                        type: string
+                      state:
+                        description: |-
+                          (String) :
+                          :
+
+                          #### Supported values
+
+                          Possible values:
+
+                          - `UNSPECIFIED`
+                          - `CREATING`
+                          - `UPDATING`
+                          - `STARTING`
+                          - `RUNNING`
+                          - `STOPPING`
+                          - `STOPPED`
+                          - `DELETING`
+                          - `ERROR`
+                        type: string
+                    type: object
+                  stopped:
+                    description: |-
+                      (Boolean) Indicates whether the instance should be stopped.
+                      Indicates whether the instance should be stopped.
+                    type: boolean
+                  updatedAt:
+                    description: |-
+                      (String) :
+                      :
+
+                      Timestamp indicating when the resource was last updated.
+
+                      A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

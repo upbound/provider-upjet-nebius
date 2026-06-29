@@ -1,0 +1,13 @@
+apiVersion: vpc.nebius.m.upbound.io/v1beta1
+kind: Network
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1beta1/network
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: vpv1network
+    parentId: ${data.nebius_project_id}

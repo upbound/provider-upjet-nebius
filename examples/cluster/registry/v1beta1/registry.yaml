@@ -1,0 +1,13 @@
+apiVersion: registry.nebius.upbound.io/v1beta1
+kind: Registry
+metadata:
+  annotations:
+    meta.upbound.io/example-id: registry/v1beta1/registry
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    parentId: ${data.nebius_project_id}
+    name: registryv1registry
+    description: Container images for the application

@@ -1,0 +1,14 @@
+apiVersion: compute.nebius.m.upbound.io/v1beta1
+kind: GpuCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1beta1/gpucluster
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    infinibandFabric: us-central1-a # test project is located in us-central1
+    name: computev1gpucluster
+    parentId: ${data.nebius_project_id}

@@ -1,0 +1,63 @@
+apiVersion: iam.nebius.upbound.io/v1beta1
+kind: AuthPublicKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1beta1/authpublickey
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    name: iamv1authpublickey
+    parentId: ${data.nebius_project_id}
+    account:
+      serviceAccount:
+        idSelector:
+          matchLabels:
+            testing.upbound.io/example-name: default
+    # data is a PEM-encoded public key (sensitive), supplied via a Secret.
+    dataSecretRef:
+      name: iamv1authpublickey-data
+      namespace: upbound-system
+      key: public-key
+
+---
+
+apiVersion: iam.nebius.upbound.io/v1beta1
+kind: ServiceAccount
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iam/v1beta1/authpublickey
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    name: iamv1authpublickey
+    parentId: ${data.nebius_project_id}
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: iamv1authpublickey-data
+  namespace: upbound-system
+type: Opaque
+stringData:
+  # Replace with your own PEM-encoded public key for real use.
+  public-key: |
+    -----BEGIN PUBLIC KEY-----
+    MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAlHMnCEa9eGD0L+33JIaD
+    nJUxcOqmzR5SGo9cGJOEoQrjv5UcMXSgdJf9yOMFJxGJLVB+OlZ830WkfdgEM4Vl
+    zdXWMgIYHvT+yPrlXwtgJ+sy9arOYyxNAapgMxNjH9nDdMK2V5ZwF3nMa10BJkMt
+    NCGY6epXtaT0Mg/I5RWdRCcXVzyHOgRIFtUxJvCvyR7CMwU5dRtnJUCjrohAALRe
+    yQ7beuVTgR8rDh7LXfP6KkYbuPXxygq9Zba9+eKil4BFdJ5w67PsomXX6pnZKhnp
+    IX3htjDAA30AtZy11prh/zMaf+10j6JZxi2eod9rPg27YWu1BugMCeMVbyhXNQhW
+    LZzfyFutwb9ZC7KalCenRWwnNfx1BvP4F5sZMDjAnrhHej1SkFegXI9QjNnTFe/f
+    Xmr0GviKd/2lYsjZst1CLaPfKrYHd4j657KvHwlkNuEMZprDe8Wht+uL7b4LmY4M
+    QDlwCEcjx5edSJQeipoSB3wi+9pxsOzDJpskLk+oVVnrohzFMbibkKo5wxxRucu6
+    p/GzNBYB3kshkXh6M9RFXm2a7qnn3MMTThf9EoGeNnjL5uRe7hyqr/RdDm1r8g7t
+    i7HBLrYcGNB8TrDgo5PHKAIzgKfeWKD1SdKupAvETMz4IJ6pDEFZjvPUsNp2f8Jm
+    fLPcT9KRb3sMLD1OY9A6WwsCAwEAAQ==
+    -----END PUBLIC KEY-----

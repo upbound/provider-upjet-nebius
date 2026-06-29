@@ -1,0 +1,30 @@
+apiVersion: vpc.nebius.upbound.io/v1beta1
+kind: SecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1beta1/securitygroup
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    name: vpcv1securitygroup
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: default
+    parentId: ${data.nebius_project_id}
+
+---
+
+apiVersion: vpc.nebius.upbound.io/v1beta1
+kind: Network
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1beta1/securitygroup
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    name: vpcv1securitygroup
+    parentId: ${data.nebius_project_id}
