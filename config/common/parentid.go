@@ -14,6 +14,7 @@ import (
 	xpresource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	"github.com/crossplane/upjet/v2/pkg/config"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/util/sets"
@@ -137,6 +138,16 @@ func (i *parentIDInitializer) Initialize(ctx context.Context, mg xpresource.Mana
 	}
 	if projectID == "" {
 		return errors.Errorf("parentId is not set on %q and the referenced ProviderConfig has no spec.projectID", mg.GetName())
+	}
+
+	// Pin the resolved value onto the in-memory resource so the current
+	// reconcile pass observes and creates with it, then persist it via
+	// server-side apply so it survives subsequent reconciles.
+	if err := paved.SetString(forProviderParentIDPath, projectID); err != nil {
+		return err
+	}
+	if err := runtime.DefaultUnstructuredConverter.FromUnstructured(paved.UnstructuredContent(), mg); err != nil {
+		return errors.Wrap(err, "cannot write defaulted parentId back to the resource")
 	}
 
 	patch := &unstructured.Unstructured{}
