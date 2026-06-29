@@ -10,7 +10,11 @@ import (
 	internalconfig "github.com/upbound/provider-nebius/internal/config"
 )
 
-// A ProviderConfigSpec defines the desired state of a ProviderConfig.
+// A ProviderConfigSpec defines the desired state of a cluster-scoped
+// ClusterProviderConfig. Its credential secret references carry an explicit
+// namespace, because a cluster-scoped config can reference secrets in any
+// namespace. The namespaced ProviderConfig uses NamespacedProviderConfigSpec
+// instead, which omits the namespace.
 type ProviderConfigSpec struct {
 	// +optional
 	// +kubebuilder:validation:XValidation:rule="!has(self.exponentialFailureRateLimiter) || !has(self.exponentialFailureRateLimiter.baseDelay) || has(self.exponentialFailureRateLimiter.maxDelay) || duration(self.exponentialFailureRateLimiter.baseDelay) <= duration('60s')",message="when maxDelay is omitted it defaults to 60s; baseDelay must be <= 60s"
@@ -30,13 +34,63 @@ type ProviderConfigSpec struct {
 	Identity *internalconfig.Identity `json:"identity"`
 }
 
-// ProviderCredentials required to authenticate.
+// ProviderCredentials required to authenticate. The secret reference carries an
+// explicit namespace, as used by the cluster-scoped ClusterProviderConfig.
 type ProviderCredentials struct {
 	// Source of the provider credentials.
 	// +kubebuilder:validation:Enum=None;Secret;InjectedIdentity;Environment;Filesystem
 	Source xpv1.CredentialsSource `json:"source"`
 
 	xpv1.CommonCredentialSelectors `json:",inline"`
+}
+
+// A NamespacedProviderConfigSpec defines the desired state of a namespaced
+// ProviderConfig. It mirrors ProviderConfigSpec but its credential secret
+// references omit the namespace: they implicitly resolve to the namespace of
+// the referencing managed resource.
+type NamespacedProviderConfigSpec struct {
+	// +optional
+	// +kubebuilder:validation:XValidation:rule="!has(self.exponentialFailureRateLimiter) || !has(self.exponentialFailureRateLimiter.baseDelay) || has(self.exponentialFailureRateLimiter.maxDelay) || duration(self.exponentialFailureRateLimiter.baseDelay) <= duration('60s')",message="when maxDelay is omitted it defaults to 60s; baseDelay must be <= 60s"
+	ReconciliationPolicy *v1alpha1.ReconciliationPolicy `json:"reconciliationPolicy,omitempty"`
+
+	// Credentials required to authenticate to this provider.
+	Credentials NamespacedProviderCredentials `json:"credentials"`
+
+	// ProjectID is the Nebius project ID used as the default parent for
+	// project-parented resources. Individual resources may override it via
+	// spec.forProvider.parentId. Optional.
+	// +kubebuilder:validation:Optional
+	ProjectID *string `json:"projectID,omitempty"`
+
+	// Identity specifies the authentication identity configuration.
+	// +kubebuilder:validation:Required
+	Identity *internalconfig.Identity `json:"identity"`
+}
+
+// NamespacedProviderCredentials required to authenticate. The secret reference
+// omits the namespace and resolves to the namespace of the referencing managed
+// resource. It mirrors xpv1.CommonCredentialSelectors but uses a
+// LocalSecretKeySelector for the secret reference.
+type NamespacedProviderCredentials struct {
+	// Source of the provider credentials.
+	// +kubebuilder:validation:Enum=None;Secret;InjectedIdentity;Environment;Filesystem
+	Source xpv1.CredentialsSource `json:"source"`
+
+	// Fs is a reference to a filesystem location that contains credentials that
+	// must be used to connect to the provider.
+	// +optional
+	Fs *xpv1.FsSelector `json:"fs,omitempty"`
+
+	// Env is a reference to an environment variable that contains credentials
+	// that must be used to connect to the provider.
+	// +optional
+	Env *xpv1.EnvSelector `json:"env,omitempty"`
+
+	// A SecretRef is a reference to a secret key in the same namespace as the
+	// referencing managed resource that contains the credentials that must be
+	// used to connect to the provider.
+	// +optional
+	SecretRef *xpv1.LocalSecretKeySelector `json:"secretRef,omitempty"`
 }
 
 // A ProviderConfigStatus reflects the observed state of a ProviderConfig.
@@ -56,8 +110,8 @@ type ProviderConfig struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ProviderConfigSpec   `json:"spec"`
-	Status ProviderConfigStatus `json:"status,omitempty"`
+	Spec   NamespacedProviderConfigSpec `json:"spec"`
+	Status ProviderConfigStatus         `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

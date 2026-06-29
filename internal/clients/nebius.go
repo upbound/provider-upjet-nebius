@@ -6,6 +6,7 @@ import (
 
 	fwprovider "github.com/hashicorp/terraform-plugin-framework/provider"
 
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	"k8s.io/apimachinery/pkg/types"
@@ -138,6 +139,29 @@ func buildConfiguration(creds map[string]string, identityType internalconfig.Ide
 	return cfg, nil
 }
 
+// resolveNamespacedSpec converts a namespaced ProviderConfig spec into the
+// internal, fully-resolved ProviderConfigSpec. The namespaced spec omits the
+// secret namespace, so it is resolved to the namespace of the referencing
+// managed resource here.
+func resolveNamespacedSpec(spec namespacedv1beta1.NamespacedProviderConfigSpec, namespace string) namespacedv1beta1.ProviderConfigSpec {
+	resolved := namespacedv1beta1.ProviderConfigSpec{
+		ReconciliationPolicy: spec.ReconciliationPolicy,
+		ProjectID:            spec.ProjectID,
+		Identity:             spec.Identity,
+		Credentials: namespacedv1beta1.ProviderCredentials{
+			Source: spec.Credentials.Source,
+			CommonCredentialSelectors: xpv1.CommonCredentialSelectors{
+				Fs:  spec.Credentials.Fs,
+				Env: spec.Credentials.Env,
+			},
+		},
+	}
+	if spec.Credentials.SecretRef != nil {
+		resolved.Credentials.SecretRef = spec.Credentials.SecretRef.ToSecretKeySelector(namespace)
+	}
+	return resolved
+}
+
 func resolveModern(ctx context.Context, crClient client.Client, mg resource.ModernManaged) (*namespacedv1beta1.ProviderConfigSpec, error) {
 	configRef := mg.GetProviderConfigReference()
 	if configRef == nil {
@@ -163,10 +187,7 @@ func resolveModern(ctx context.Context, crClient client.Client, mg resource.Mode
 	pcu := &namespacedv1beta1.ProviderConfigUsage{}
 	switch pc := pcObj.(type) {
 	case *namespacedv1beta1.ProviderConfig:
-		pcSpec = pc.Spec
-		if pcSpec.Credentials.SecretRef != nil {
-			pcSpec.Credentials.SecretRef.Namespace = mg.GetNamespace()
-		}
+		pcSpec = resolveNamespacedSpec(pc.Spec, mg.GetNamespace())
 	case *namespacedv1beta1.ClusterProviderConfig:
 		pcSpec = pc.Spec
 	default:
