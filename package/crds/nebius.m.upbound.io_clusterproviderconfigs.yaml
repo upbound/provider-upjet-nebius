@@ -49,7 +49,12 @@ spec:
           metadata:
             type: object
           spec:
-            description: A ProviderConfigSpec defines the desired state of a ProviderConfig.
+            description: |-
+              A ProviderConfigSpec defines the desired state of a cluster-scoped
+              ClusterProviderConfig. Its credential secret references carry an explicit
+              namespace, because a cluster-scoped config can reference secrets in any
+              namespace. The namespaced ProviderConfig uses NamespacedProviderConfigSpec
+              instead, which omits the namespace.
             properties:
               credentials:
                 description: Credentials required to authenticate to this provider.

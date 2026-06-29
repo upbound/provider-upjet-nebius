@@ -49,7 +49,11 @@ spec:
           metadata:
             type: object
           spec:
-            description: A ProviderConfigSpec defines the desired state of a ProviderConfig.
+            description: |-
+              A NamespacedProviderConfigSpec defines the desired state of a namespaced
+              ProviderConfig. It mirrors ProviderConfigSpec but its credential secret
+              references omit the namespace: they implicitly resolve to the namespace of
+              the referencing managed resource.
             properties:
               credentials:
                 description: Credentials required to authenticate to this provider.
@@ -78,22 +82,18 @@ spec:
                     type: object
                   secretRef:
                     description: |-
-                      A SecretRef is a reference to a secret key that contains the credentials
-                      that must be used to connect to the provider.
+                      A SecretRef is a reference to a secret key in the same namespace as the
+                      referencing managed resource that contains the credentials that must be
+                      used to connect to the provider.
                     properties:
                       key:
-                        description: The key to select.
                         type: string
                       name:
                         description: Name of the secret.
                         type: string
-                      namespace:
-                        description: Namespace of the secret.
-                        type: string
                     required:
                     - key
                     - name
-                    - namespace
                     type: object
                   source:
                     description: Source of the provider credentials.

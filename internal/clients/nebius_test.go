@@ -4,8 +4,99 @@ import (
 	"strings"
 	"testing"
 
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	"github.com/google/go-cmp/cmp"
+
+	namespacedv1beta1 "github.com/upbound/provider-nebius/apis/namespaced/v1beta1"
 	internalconfig "github.com/upbound/provider-nebius/internal/config"
 )
+
+func TestResolveNamespacedSpec(t *testing.T) {
+	type args struct {
+		spec      namespacedv1beta1.NamespacedProviderConfigSpec
+		namespace string
+	}
+
+	cases := map[string]struct {
+		args args
+		want namespacedv1beta1.ProviderConfigSpec
+	}{
+		"SecretRefResolvesToReferencerNamespace": {
+			args: args{
+				namespace: "team-a",
+				spec: namespacedv1beta1.NamespacedProviderConfigSpec{
+					Credentials: namespacedv1beta1.NamespacedProviderCredentials{
+						Source: xpv1.CredentialsSourceSecret,
+						SecretRef: &xpv1.LocalSecretKeySelector{
+							LocalSecretReference: xpv1.LocalSecretReference{Name: "creds"},
+							Key:                  "credentials",
+						},
+					},
+				},
+			},
+			want: namespacedv1beta1.ProviderConfigSpec{
+				Credentials: namespacedv1beta1.ProviderCredentials{
+					Source: xpv1.CredentialsSourceSecret,
+					CommonCredentialSelectors: xpv1.CommonCredentialSelectors{
+						SecretRef: &xpv1.SecretKeySelector{
+							SecretReference: xpv1.SecretReference{Name: "creds", Namespace: "team-a"},
+							Key:             "credentials",
+						},
+					},
+				},
+			},
+		},
+		"NilSecretRefStaysNil": {
+			args: args{
+				namespace: "team-a",
+				spec: namespacedv1beta1.NamespacedProviderConfigSpec{
+					Credentials: namespacedv1beta1.NamespacedProviderCredentials{
+						Source: xpv1.CredentialsSourceInjectedIdentity,
+					},
+				},
+			},
+			want: namespacedv1beta1.ProviderConfigSpec{
+				Credentials: namespacedv1beta1.ProviderCredentials{
+					Source: xpv1.CredentialsSourceInjectedIdentity,
+				},
+			},
+		},
+		"FsEnvAndScalarFieldsPassThrough": {
+			args: args{
+				namespace: "team-a",
+				spec: namespacedv1beta1.NamespacedProviderConfigSpec{
+					ProjectID: new("project-e00example"),
+					Identity:  &internalconfig.Identity{Type: internalconfig.IdentityTypeToken},
+					Credentials: namespacedv1beta1.NamespacedProviderCredentials{
+						Source: xpv1.CredentialsSourceFilesystem,
+						Fs:     &xpv1.FsSelector{Path: "/creds"},
+						Env:    &xpv1.EnvSelector{Name: "NEBIUS_CREDS"},
+					},
+				},
+			},
+			want: namespacedv1beta1.ProviderConfigSpec{
+				ProjectID: new("project-e00example"),
+				Identity:  &internalconfig.Identity{Type: internalconfig.IdentityTypeToken},
+				Credentials: namespacedv1beta1.ProviderCredentials{
+					Source: xpv1.CredentialsSourceFilesystem,
+					CommonCredentialSelectors: xpv1.CommonCredentialSelectors{
+						Fs:  &xpv1.FsSelector{Path: "/creds"},
+						Env: &xpv1.EnvSelector{Name: "NEBIUS_CREDS"},
+					},
+				},
+			},
+		},
+	}
+
+	for name, tc := range cases {
+		t.Run(name, func(t *testing.T) {
+			got := resolveNamespacedSpec(tc.args.spec, tc.args.namespace)
+			if diff := cmp.Diff(tc.want, got); diff != "" {
+				t.Errorf("resolveNamespacedSpec() mismatch (-want +got):\n%s", diff)
+			}
+		})
+	}
+}
 
 func TestBuildConfiguration(t *testing.T) {
 	str := func(s string) *string { return &s }
