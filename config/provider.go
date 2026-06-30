@@ -15,7 +15,6 @@ import (
 	"github.com/upbound/provider-nebius/config/cluster"
 	"github.com/upbound/provider-nebius/config/common"
 	"github.com/upbound/provider-nebius/config/templates"
-	"github.com/upbound/provider-nebius/hack"
 )
 
 const (
@@ -46,7 +45,6 @@ func GetProvider(_ context.Context) (*ujconfig.Provider, error) {
 		ujconfig.WithControllerTemplate(templates.ControllerTemplate),
 		ujconfig.WithTerraformPluginFrameworkIncludeList(ExternalNameConfigured()),
 		ujconfig.WithFeaturesPackage("internal/features"),
-		ujconfig.WithMainTemplate(hack.MainTemplate),
 		ujconfig.WithTerraformPluginFrameworkProvider(fwProvider),
 		ujconfig.WithSchemaTraversers(&ujconfig.SingletonListEmbedder{}),
 		ujconfig.WithDefaultResourceOptions(defaultResourceOptions...),

@@ -46,13 +46,10 @@ GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
 GO_REQUIRED_VERSION ?= 1.26
 GOLANGCILINT_VERSION ?= 2.12.1
-# SUBPACKAGES ?= $(shell find cmd/provider -type d -maxdepth 1 -mindepth 1 | cut -d/ -f3)
-SUBPACKAGES ?= monolith
-GO_STATIC_PACKAGES ?= $(GO_PROJECT)/cmd/generator ${SUBPACKAGES:%=$(GO_PROJECT)/cmd/provider/%}
+GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
 GO_SUBDIRS += cmd internal apis generate config
 
-export SUBPACKAGES := $(SUBPACKAGES)
 -include build/makelib/golang.mk
 
 # ====================================================================================
@@ -83,11 +80,16 @@ XPKG_REG_ORGS ?= xpkg.upbound.io/upbound
 # NOTE(hasheddan): skip promoting on xpkg.upbound.io as channel tags are
 # inferred.
 XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/upbound
+XPKGS = $(PROJECT_NAME)
 
 export XPKG_REG_ORGS := $(XPKG_REG_ORGS)
 export XPKG_REG_ORGS_NO_PROMOTE := $(XPKG_REG_ORGS_NO_PROMOTE)
 
 -include build/makelib/xpkg.mk
+
+# NOTE(hasheddan): we force image building to happen prior to xpkg build so that
+# we ensure image is present in daemon.
+xpkg.build.$(PROJECT_NAME): do.build.images
 
 # ====================================================================================
 # Fallthrough
@@ -188,7 +190,7 @@ submodules:
 run: go.build
 	@$(INFO) Running Crossplane locally out-of-cluster . . .
 	@# To see other arguments that can be provided, run the command with --help instead
-	UPBOUND_CONTEXT="local" $(GO_OUT_DIR)/monolith --debug
+	UPBOUND_CONTEXT="local" $(GO_OUT_DIR)/provider --debug
 
 # ====================================================================================
 # End to End Testing
@@ -205,62 +207,18 @@ uptest: $(UPTEST) $(KUBECTL) $(CHAINSAW) $(CROSSPLANE_CLI)
 	@KUBECTL=$(KUBECTL) CHAINSAW=$(CHAINSAW) CROSSPLANE_CLI=$(CROSSPLANE_CLI) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
 	@$(OK) running automated tests
 
-build-provider.%:
-	@$(MAKE) build SUBPACKAGES="$$(tr ',' ' ' <<< $*)" LOAD_PACKAGES=true
+build-provider-nebius: do.build.images
 
 XPKG_SKIP_DEP_RESOLUTION := true
 
-local-deploy.%: controlplane.up
-	# uptest workaround for the behavior change at Crossplane 1.15 default registry
-	# XP RBAC manager has a check for packages from the same provider family
-	# that they come from the same org and assign RBACs for all providers.
-	# This got broken for locally deployed dev packages through crossplane/build submodule,
-	# therefore cannot get necessary RBACs.
-    # TODO: Remove this when https://github.com/crossplane/build/issues/38 is resolved
-    # this workaround is only valid for uptest on Crossplane 1.x
-    # Crossplane v2 needs the above issue to be resolved
-	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) patch deployment crossplane-rbac-manager -p '{"spec":{"template":{"spec":{"containers":[{"name":"crossplane","env":[{"name":"REGISTRY","value":"index.docker.io"}]}]}}}}'
-	@for api in $$(tr ',' ' ' <<< $*); do \
-		$(MAKE) local.xpkg.deploy.provider.$(PROJECT_NAME)-$${api}; \
-		$(INFO) running locally built $(PROJECT_NAME)-$${api}; \
-		$(KUBECTL) wait provider.pkg $(PROJECT_NAME)-$${api} --for condition=Healthy --timeout 5m; \
-		$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m; \
-		$(OK) running locally built $(PROJECT_NAME)-$${api}; \
-	done || $(FAIL)
+local-deploy: build controlplane.up $(YQ)
+	$(MAKE) local.xpkg.deploy.provider.$(PROJECT_NAME) DRC_FILE="./examples/deploymentruntimeconfig.yaml" && \
+	$(INFO) running locally built provider && \
+	$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m && \
+	$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m && \
+	$(OK) running locally built provider
 
-local-deploy: build-provider.monolith local-deploy.monolith
-
-# This target requires the following environment variables to be set:
-# - UPTEST_CLOUD_CREDENTIALS, cloud credentials for the provider being tested
-# - UPTEST_EXAMPLE_LIST, a comma-separated list of examples to test
-# - UPTEST_DATASOURCE_PATH, see https://github.com/crossplane/uptest#injecting-dynamic-values-and-datasource
-family-e2e:
-	@$(INFO) Removing everything under $(XPKG_OUTPUT_DIR) and $(OUTPUT_DIR)/cache...
-	@rm -fR $(XPKG_OUTPUT_DIR)
-	@rm -fR $(OUTPUT_DIR)/cache
-	@(INSTALL_APIS=""; \
-	for m in $$(tr ',' ' ' <<< $${UPTEST_EXAMPLE_LIST}); do \
-		$(INFO) Processing the example manifest "$${m}"; \
-		for api in $$(sed -nE 's/^apiVersion: *(.+)/\1/p' "$${m}" | cut -d. -f1); do \
-		    if [[ $${api} == "v1" ]]; then \
-		        $(INFO) v1 is not a valid provider. Skipping...; \
-		        continue; \
-		    fi; \
-			if [[ $${INSTALL_APIS} =~ " $${api} " ]]; then \
-				$(INFO) Resource provider $(PROJECT_NAME)-$${api} is already installed. Skipping...; \
-				continue; \
-			fi; \
-			$(INFO) Installing the family resource $(PROJECT_NAME)-$${api} for the test file: $${m}; \
-			INSTALL_APIS="$${INSTALL_APIS} $${api} "; \
-		done; \
-	done; \
-	INSTALL_APIS="config,$$(tr ' ' ',' <<< $${INSTALL_APIS})"; \
-	INSTALL_APIS="$$(tr -s ',' <<< "$${INSTALL_APIS}")"; \
-	$(INFO) Building and deploying resource providers for the short API groups: $${INSTALL_APIS}; \
-	$(MAKE) build-provider.$${INSTALL_APIS} local-deploy.$${INSTALL_APIS}) || $(FAIL)
-	$(MAKE) uptest
-
-e2e: family-e2e
+e2e: local-deploy uptest
 
 crddiff:
 	@$(INFO) Checking breaking CRD schema changes

@@ -9,4 +9,6 @@ ENV USER_ID=65532
 USER ${USER_ID}
 EXPOSE 8080
 
+ADD "bin/${TARGETOS}_${TARGETARCH}/provider" /usr/local/bin/provider
+
 ENTRYPOINT ["provider"]

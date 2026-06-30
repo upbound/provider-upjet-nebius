@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2026 The Crossplane Authors <https://crossplane.io>
 //
-// SPDX-License-Identifier: CC0-1.0
+// SPDX-License-Identifier: Apache-2.0
 
 package main
 
@@ -19,6 +19,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
+	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
+	"sigs.k8s.io/controller-runtime/pkg/webhook"
 
 	xpcontroller "github.com/crossplane/crossplane-runtime/v2/pkg/controller"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
@@ -38,6 +40,13 @@ import (
 	"github.com/upbound/provider-nebius/internal/features"
 )
 
+const (
+	webhookTLSCertDirEnvVar = "WEBHOOK_TLS_CERT_DIR"
+	tlsServerCertDirEnvVar  = "TLS_SERVER_CERTS_DIR"
+	certsDirEnvVar          = "CERTS_DIR"
+	tlsServerCertDir        = "/tls/server"
+)
+
 func main() {
 	var (
 		app              = kingpin.New(filepath.Base(os.Args[0]), "Terraform based Crossplane provider for Nebius").DefaultEnvars()
@@ -47,7 +56,19 @@ func main() {
 		leaderElection   = app.Flag("leader-election", "Use leader election for the controller manager.").Short('l').Default("false").OverrideDefaultFromEnvar("LEADER_ELECTION").Bool()
 		maxReconcileRate = app.Flag("max-reconcile-rate", "The global maximum rate per second at which resources may be checked for drift from the desired state.").Default("10").Int()
 
+		webhookPort            = app.Flag("webhook-port", "The port the webhook listens on").Default("9443").Envar("WEBHOOK_PORT").Int()
+		metricsBindAddress     = app.Flag("metrics-bind-address", "The address the metrics server listens on").Default(":8080").Envar("METRICS_BIND_ADDRESS").String()
+		healthProbeBindAddress = app.Flag("health-probe-bind-addr", "The address the health/readiness probe server listens on").Default(":8081").Envar("HEALTH_PROBE_BIND_ADDRESS").String()
+
 		enableManagementPolicies = app.Flag("enable-management-policies", "Enable support for Management Policies.").Default("true").Envar("ENABLE_MANAGEMENT_POLICIES").Bool()
+
+		certsDirSet = false
+		// we record whether the command-line option "--certs-dir" was supplied
+		// in the registered PreAction for the flag.
+		certsDir = app.Flag("certs-dir", "The directory that contains the server key and certificate.").Default(tlsServerCertDir).Envar(certsDirEnvVar).PreAction(func(_ *kingpin.ParseContext) error {
+			certsDirSet = true
+			return nil
+		}).String()
 	)
 
 	kingpin.MustParse(app.Parse(os.Args[1:]))
@@ -69,17 +90,47 @@ func main() {
 	cfg, err := ctrl.GetConfig()
 	kingpin.FatalIfError(err, "Cannot get API server rest config")
 
+	// Get the TLS certs directory from the environment variables set by
+	// Crossplane if they're available. In older XP versions we used
+	// WEBHOOK_TLS_CERT_DIR, in newer versions we use TLS_SERVER_CERTS_DIR. If an
+	// explicit certs dir is not supplied via the command-line options, then these
+	// environment variables are used instead.
+	if !certsDirSet {
+		xpCertsDir := os.Getenv(certsDirEnvVar)
+		if xpCertsDir == "" {
+			xpCertsDir = os.Getenv(tlsServerCertDirEnvVar)
+		}
+		if xpCertsDir == "" {
+			xpCertsDir = os.Getenv(webhookTLSCertDirEnvVar)
+		}
+		if xpCertsDir != "" {
+			*certsDir = xpCertsDir
+		}
+	}
+
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
 		LeaderElection:   *leaderElection,
-		LeaderElectionID: "crossplane-leader-election-provider-nebius-compute",
+		LeaderElectionID: "crossplane-leader-election-provider-nebius",
 		Cache: cache.Options{
 			SyncPeriod: syncInterval,
 		},
+		Metrics: metricsserver.Options{
+			BindAddress: *metricsBindAddress,
+		},
+		WebhookServer: webhook.NewServer(
+			webhook.Options{
+				CertDir: *certsDir,
+				Port:    *webhookPort,
+			}),
+		HealthProbeBindAddress:     *healthProbeBindAddress,
 		LeaderElectionResourceLock: resourcelock.LeasesResourceLock,
 		LeaseDuration:              func() *time.Duration { d := 60 * time.Second; return &d }(),
 		RenewDeadline:              func() *time.Duration { d := 50 * time.Second; return &d }(),
 	})
 	kingpin.FatalIfError(err, "Cannot create controller manager")
+	if len(*certsDir) > 0 {
+		kingpin.FatalIfError(mgr.AddReadyzCheck("webhook", mgr.GetWebhookServer().StartedChecker()), "Cannot add webhook server readyz checker to controller manager")
+	}
 	kingpin.FatalIfError(clusterapis.AddToScheme(mgr.GetScheme()), "Cannot add cluster-scoped Nebius APIs to scheme")
 	kingpin.FatalIfError(namespacedapis.AddToScheme(mgr.GetScheme()), "Cannot add namespaced Nebius APIs to scheme")
 	kingpin.FatalIfError(apiextensionsv1.AddToScheme(mgr.GetScheme()), "Cannot register k8s apiextensions APIs to scheme")
@@ -131,12 +182,12 @@ func main() {
 		clusterOpts.Gate = crdGate
 		namespacedOpts.Gate = crdGate
 		kingpin.FatalIfError(customresourcesgate.Setup(mgr, namespacedOpts.Options), "Cannot setup CRD gate")
-		kingpin.FatalIfError(clustercontroller.SetupGated_compute(mgr, clusterOpts), "Cannot setup cluster-scoped Nebius controllers")
-		kingpin.FatalIfError(namespacedcontroller.SetupGated_compute(mgr, namespacedOpts), "Cannot setup namespaced Nebius controllers")
+		kingpin.FatalIfError(clustercontroller.SetupGated(mgr, clusterOpts), "Cannot setup cluster-scoped Nebius controllers")
+		kingpin.FatalIfError(namespacedcontroller.SetupGated(mgr, namespacedOpts), "Cannot setup namespaced Nebius controllers")
 	} else {
 		log.Info("Provider has missing RBAC permissions for watching CRDs, controller SafeStart capability will be disabled")
-		kingpin.FatalIfError(clustercontroller.Setup_compute(mgr, clusterOpts), "Cannot setup cluster-scoped Nebius controllers")
-		kingpin.FatalIfError(namespacedcontroller.Setup_compute(mgr, namespacedOpts), "Cannot setup namespaced Nebius controllers")
+		kingpin.FatalIfError(clustercontroller.Setup(mgr, clusterOpts), "Cannot setup cluster-scoped Nebius controllers")
+		kingpin.FatalIfError(namespacedcontroller.Setup(mgr, namespacedOpts), "Cannot setup namespaced Nebius controllers")
 	}
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }

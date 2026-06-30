@@ -13,7 +13,6 @@ import (
 	"github.com/upbound/provider-nebius/config/common"
 	"github.com/upbound/provider-nebius/config/namespaced"
 	"github.com/upbound/provider-nebius/config/templates"
-	"github.com/upbound/provider-nebius/hack"
 )
 
 // GetProviderNamespaced returns the namespaced provider configuration
@@ -31,7 +30,6 @@ func GetProviderNamespaced(_ context.Context) (*ujconfig.Provider, error) {
 		ujconfig.WithControllerTemplate(templates.ControllerTemplate),
 		ujconfig.WithTerraformPluginFrameworkIncludeList(ExternalNameConfigured()),
 		ujconfig.WithFeaturesPackage("internal/features"),
-		ujconfig.WithMainTemplate(hack.MainTemplate),
 		ujconfig.WithTerraformPluginFrameworkProvider(fwProvider),
 		ujconfig.WithSchemaTraversers(&ujconfig.SingletonListEmbedder{}),
 		ujconfig.WithDefaultResourceOptions(defaultResourceOptions...),

@@ -47,9 +47,9 @@ import (
 	subnet "github.com/upbound/provider-nebius/internal/controller/namespaced/vpc/subnet"
 )
 
-// Setup_monolith creates all controllers with the supplied logger and adds them to
+// Setup creates all controllers with the supplied logger and adds them to
 // the supplied manager.
-func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
+func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		disk.Setup,
 		filesystem.Setup,
@@ -95,9 +95,9 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 	return nil
 }
 
-// SetupGated_monolith creates all controllers with the supplied logger and adds them to
+// SetupGated creates all controllers with the supplied logger and adds them to
 // the supplied manager gated.
-func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
+func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		disk.SetupGated,
 		filesystem.SetupGated,
