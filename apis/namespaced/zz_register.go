@@ -19,6 +19,7 @@ import (
 	v1beta1quotas "github.com/upbound/provider-nebius/apis/namespaced/quotas/v1beta1"
 	v1beta1registry "github.com/upbound/provider-nebius/apis/namespaced/registry/v1beta1"
 	v1beta1storage "github.com/upbound/provider-nebius/apis/namespaced/storage/v1beta1"
+	v1beta1tunnel "github.com/upbound/provider-nebius/apis/namespaced/tunnel/v1beta1"
 	v1alpha1 "github.com/upbound/provider-nebius/apis/namespaced/v1alpha1"
 	v1beta1namespaced "github.com/upbound/provider-nebius/apis/namespaced/v1beta1"
 	v1beta1vpc "github.com/upbound/provider-nebius/apis/namespaced/vpc/v1beta1"
@@ -36,6 +37,7 @@ func init() {
 		v1beta1quotas.SchemeBuilder.AddToScheme,
 		v1beta1registry.SchemeBuilder.AddToScheme,
 		v1beta1storage.SchemeBuilder.AddToScheme,
+		v1beta1tunnel.SchemeBuilder.AddToScheme,
 		v1alpha1.SchemeBuilder.AddToScheme,
 		v1beta1namespaced.SchemeBuilder.AddToScheme,
 		v1beta1vpc.SchemeBuilder.AddToScheme,

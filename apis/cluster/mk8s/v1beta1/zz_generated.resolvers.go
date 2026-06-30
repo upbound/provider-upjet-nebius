@@ -156,6 +156,27 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 		}
 	}
 	if mg.Spec.ForProvider.Template != nil {
+		if mg.Spec.ForProvider.Template.Nvlink != nil {
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Template.Nvlink.NvlInstanceGroupID),
+				Extract:      resource.ExtractParamPath("id", true),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.ForProvider.Template.Nvlink.NvlInstanceGroupIDRef,
+				Selector:     mg.Spec.ForProvider.Template.Nvlink.NvlInstanceGroupIDSelector,
+				To: reference.To{
+					List:    &v1beta11.NvlInstanceGroupList{},
+					Managed: &v1beta11.NvlInstanceGroup{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Template.Nvlink.NvlInstanceGroupID")
+			}
+			mg.Spec.ForProvider.Template.Nvlink.NvlInstanceGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Template.Nvlink.NvlInstanceGroupIDRef = rsp.ResolvedReference
+
+		}
+	}
+	if mg.Spec.ForProvider.Template != nil {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Template.ServiceAccountID),
 			Extract:      resource.ExtractParamPath("id", true),
@@ -253,6 +274,27 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 			}
 			mg.Spec.InitProvider.Template.NetworkInterfaces[i4].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 			mg.Spec.InitProvider.Template.NetworkInterfaces[i4].SubnetIDRef = rsp.ResolvedReference
+
+		}
+	}
+	if mg.Spec.InitProvider.Template != nil {
+		if mg.Spec.InitProvider.Template.Nvlink != nil {
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Template.Nvlink.NvlInstanceGroupID),
+				Extract:      resource.ExtractParamPath("id", true),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.InitProvider.Template.Nvlink.NvlInstanceGroupIDRef,
+				Selector:     mg.Spec.InitProvider.Template.Nvlink.NvlInstanceGroupIDSelector,
+				To: reference.To{
+					List:    &v1beta11.NvlInstanceGroupList{},
+					Managed: &v1beta11.NvlInstanceGroup{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.Template.Nvlink.NvlInstanceGroupID")
+			}
+			mg.Spec.InitProvider.Template.Nvlink.NvlInstanceGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.Template.Nvlink.NvlInstanceGroupIDRef = rsp.ResolvedReference
 
 		}
 	}

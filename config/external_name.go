@@ -36,6 +36,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"nebius_compute_v1_disk":        config.FrameworkResourceWithComputedIdentifier("id", "computedisk-e01000000000000000"),
 	// computeinstance is grep-confirmed in the gosdk.
 	"nebius_compute_v1_instance": config.FrameworkResourceWithComputedIdentifier("id", "computeinstance-e01000000000000000"),
+	// computenvlinstancegroup follows the compute<message> convention (gosdk message NVLInstanceGroup); confirm via E2E observe.
+	"nebius_compute_v1_nvl_instance_group": config.FrameworkResourceWithComputedIdentifier("id", "computenvlinstancegroup-e01000000000000000"),
 	// mk8s_v1 resources can have any valid routing code prefix e.g. e0t in ComputedIdentifier independently of the project they're deployed in
 	"nebius_mk8s_v1_cluster":    config.FrameworkResourceWithComputedIdentifier("id", "mk8scluster-e0t000000000000000"),
 	"nebius_mk8s_v1_node_group": config.FrameworkResourceWithComputedIdentifier("id", "mk8snodegroup-e0t000000000000000"),
@@ -57,6 +59,10 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"nebius_registry_v1_registry":      config.FrameworkResourceWithComputedIdentifier("id", "registry-u00000000000000000"),
 	"nebius_kms_v1_asymmetric_key":     config.FrameworkResourceWithComputedIdentifier("id", "kmsasymkey-u00000000000000000"),
 	"nebius_kms_v1_symmetric_key":      config.FrameworkResourceWithComputedIdentifier("id", "kmssymkey-u00000000000000000"),
+	// tunnel_v1: the SDK type is "applicationtunnel" (not "tunnel") with routing "u00", taken from
+	// a real ID the API assigned in E2E (applicationtunnel-u00v6sb9b47bktqbhw); tunnel is not in the
+	// Nebius CLI, so this was confirmed via the resource's external-name after create, not the CLI.
+	"nebius_tunnel_v1_tunnel": config.FrameworkResourceWithComputedIdentifier("id", "applicationtunnel-u00000000000000000"),
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

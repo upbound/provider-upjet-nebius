@@ -1,0 +1,14 @@
+apiVersion: tunnel.nebius.m.upbound.io/v1beta1
+kind: Tunnel
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tunnel/v1beta1/tunnel
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+  namespace: upbound-system
+spec:
+  forProvider:
+    title: Example Tunnel
+    description: Example tunnel managed by provider-upjet-nebius
+    parentId: ${data.nebius_project_id}

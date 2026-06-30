@@ -1104,7 +1104,17 @@ type NvlinkInitParameters struct {
 
 	// (String) Existing NVLInstanceGroup ID to use.
 	// Existing NVLInstanceGroup ID to use.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-nebius/apis/namespaced/compute/v1beta1.NvlInstanceGroup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)
 	NvlInstanceGroupID *string `json:"nvlInstanceGroupId,omitempty" tf:"nvl_instance_group_id,omitempty"`
+
+	// Reference to a NvlInstanceGroup in compute to populate nvlInstanceGroupId.
+	// +kubebuilder:validation:Optional
+	NvlInstanceGroupIDRef *v1.NamespacedReference `json:"nvlInstanceGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a NvlInstanceGroup in compute to populate nvlInstanceGroupId.
+	// +kubebuilder:validation:Optional
+	NvlInstanceGroupIDSelector *v1.NamespacedSelector `json:"nvlInstanceGroupIdSelector,omitempty" tf:"-"`
 }
 
 type NvlinkObservation struct {
@@ -1118,8 +1128,18 @@ type NvlinkParameters struct {
 
 	// (String) Existing NVLInstanceGroup ID to use.
 	// Existing NVLInstanceGroup ID to use.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-nebius/apis/namespaced/compute/v1beta1.NvlInstanceGroup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)
 	// +kubebuilder:validation:Optional
 	NvlInstanceGroupID *string `json:"nvlInstanceGroupId,omitempty" tf:"nvl_instance_group_id,omitempty"`
+
+	// Reference to a NvlInstanceGroup in compute to populate nvlInstanceGroupId.
+	// +kubebuilder:validation:Optional
+	NvlInstanceGroupIDRef *v1.NamespacedReference `json:"nvlInstanceGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a NvlInstanceGroup in compute to populate nvlInstanceGroupId.
+	// +kubebuilder:validation:Optional
+	NvlInstanceGroupIDSelector *v1.NamespacedSelector `json:"nvlInstanceGroupIdSelector,omitempty" tf:"-"`
 }
 
 type PassthroughGroupInitParameters struct {

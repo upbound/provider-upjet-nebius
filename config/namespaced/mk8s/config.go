@@ -50,6 +50,10 @@ func Configure(p *config.Provider) {
 			TerraformName: "nebius_iam_v1_service_account",
 			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)`,
 		}
+		r.References["template.nvlink.nvl_instance_group_id"] = config.Reference{
+			TerraformName: "nebius_compute_v1_nvl_instance_group",
+			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)`,
+		}
 		// Do not late initialize the node count as it may conflict with autoscaling/karpenter
 		r.LateInitializer = config.LateInitializer{
 			IgnoredFields: []string{"fixed_node_count"},
