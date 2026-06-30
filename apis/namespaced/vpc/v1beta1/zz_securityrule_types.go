@@ -234,9 +234,7 @@ type SecurityRuleInitParameters struct {
 	// (Attributes) :
 	Ingress *IngressInitParameters `json:"ingress,omitempty" tf:"ingress,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -353,9 +351,7 @@ type SecurityRuleObservation struct {
 	// (Attributes) :
 	Ingress *IngressObservation `json:"ingress,omitempty" tf:"ingress,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -465,9 +461,7 @@ type SecurityRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	Ingress *IngressParameters `json:"ingress,omitempty" tf:"ingress,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular

@@ -26,8 +26,6 @@ type FilesystemInitParameters struct {
 	// Prevents deletion whilst set
 	ForbidDeletion *bool `json:"forbidDeletion,omitempty" tf:"forbid_deletion,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -99,8 +97,6 @@ type FilesystemObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -173,8 +169,6 @@ type FilesystemParameters struct {
 	// +kubebuilder:validation:Optional
 	ForbidDeletion *bool `json:"forbidDeletion,omitempty" tf:"forbid_deletion,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular

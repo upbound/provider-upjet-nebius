@@ -13,7 +13,7 @@ TERRAFORM_VERSION_VALID := $(shell [ "$(TERRAFORM_VERSION)" = "`printf "$(TERRAF
 
 export TERRAFORM_PROVIDER_SOURCE ?= nebius/nebius
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/nebius/terraform-provider-nebius
-export TERRAFORM_PROVIDER_VERSION ?= 0.6.17
+export TERRAFORM_PROVIDER_VERSION ?= 0.6.22
 export TERRAFORM_DOCS_PATH ?= docs/resources
 export PROVIDER_NAME
 
@@ -120,7 +120,7 @@ TERRAFORM_WORKDIR := $(WORK_DIR)/terraform
 TERRAFORM_PROVIDER_SCHEMA := config/schema.json
 
 # Keep dynamic/write-only features out of the scraped schema and codegen.
-# Generate-time only: terraform-provider-nebius v0.6.12 omits the
+# Generate-time only: terraform-provider-nebius v0.6.22 omits the
 # versioned_ephemeral_values attribute from its provider schema when these are
 # set, but its provider config struct still declares the field, so any
 # ConfigureProvider call fails with "Struct defines fields not found in

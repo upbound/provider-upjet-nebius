@@ -16,8 +16,6 @@ import (
 
 type ProjectInitParameters struct {
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -57,8 +55,6 @@ type ProjectObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -97,8 +93,6 @@ type ProjectObservation struct {
 
 type ProjectParameters struct {
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular

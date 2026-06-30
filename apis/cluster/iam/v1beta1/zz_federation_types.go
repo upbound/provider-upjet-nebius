@@ -18,8 +18,6 @@ type FederationInitParameters struct {
 	// Specifies if the federation in active state
 	Active *bool `json:"active,omitempty" tf:"active,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -64,8 +62,6 @@ type FederationObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -110,8 +106,6 @@ type FederationParameters struct {
 	// +kubebuilder:validation:Optional
 	Active *bool `json:"active,omitempty" tf:"active,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular

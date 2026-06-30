@@ -767,9 +767,7 @@ type NodeGroupInitParameters struct {
 	// *Cannot be set alongside autoscaling.*
 	FixedNodeCount *float64 `json:"fixedNodeCount,omitempty" tf:"fixed_node_count,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -846,9 +844,7 @@ type NodeGroupObservation struct {
 	// (String) Identifier for the resource, unique for its resource type.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -918,9 +914,7 @@ type NodeGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	FixedNodeCount *float64 `json:"fixedNodeCount,omitempty" tf:"fixed_node_count,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
@@ -1104,6 +1098,28 @@ type NodeGroupStrategyParameters struct {
 	// is also set to 0.
 	// +kubebuilder:validation:Optional
 	MaxUnavailable *StrategyMaxUnavailableParameters `json:"maxUnavailable,omitempty" tf:"max_unavailable,omitempty"`
+}
+
+type NvlinkInitParameters struct {
+
+	// (String) Existing NVLInstanceGroup ID to use.
+	// Existing NVLInstanceGroup ID to use.
+	NvlInstanceGroupID *string `json:"nvlInstanceGroupId,omitempty" tf:"nvl_instance_group_id,omitempty"`
+}
+
+type NvlinkObservation struct {
+
+	// (String) Existing NVLInstanceGroup ID to use.
+	// Existing NVLInstanceGroup ID to use.
+	NvlInstanceGroupID *string `json:"nvlInstanceGroupId,omitempty" tf:"nvl_instance_group_id,omitempty"`
+}
+
+type NvlinkParameters struct {
+
+	// (String) Existing NVLInstanceGroup ID to use.
+	// Existing NVLInstanceGroup ID to use.
+	// +kubebuilder:validation:Optional
+	NvlInstanceGroupID *string `json:"nvlInstanceGroupId,omitempty" tf:"nvl_instance_group_id,omitempty"`
 }
 
 type PassthroughGroupInitParameters struct {
@@ -1534,6 +1550,9 @@ type TemplateInitParameters struct {
 	// (Attributes List) (see below for nested schema)
 	NetworkInterfaces []NetworkInterfacesInitParameters `json:"networkInterfaces,omitempty" tf:"network_interfaces,omitempty"`
 
+	// (Attributes) NVLinkSpec configures NVLink settings for the NodeGroup. (see below for nested schema)
+	Nvlink *NvlinkInitParameters `json:"nvlink,omitempty" tf:"nvlink,omitempty"`
+
 	// (String) :
 	// :
 	//
@@ -1600,7 +1619,7 @@ type TemplateInitParameters struct {
 
 type TemplateMetadataInitParameters struct {
 
-	// (Map of String) :
+	// (Map of String) Labels associated with the resource.
 	// :
 	//
 	// Kubernetes Node labels.
@@ -1620,7 +1639,7 @@ type TemplateMetadataInitParameters struct {
 
 type TemplateMetadataObservation struct {
 
-	// (Map of String) :
+	// (Map of String) Labels associated with the resource.
 	// :
 	//
 	// Kubernetes Node labels.
@@ -1640,7 +1659,7 @@ type TemplateMetadataObservation struct {
 
 type TemplateMetadataParameters struct {
 
-	// (Map of String) :
+	// (Map of String) Labels associated with the resource.
 	// :
 	//
 	// Kubernetes Node labels.
@@ -1690,6 +1709,9 @@ type TemplateObservation struct {
 
 	// (Attributes List) (see below for nested schema)
 	NetworkInterfaces []NetworkInterfacesObservation `json:"networkInterfaces,omitempty" tf:"network_interfaces,omitempty"`
+
+	// (Attributes) NVLinkSpec configures NVLink settings for the NodeGroup. (see below for nested schema)
+	Nvlink *NvlinkObservation `json:"nvlink,omitempty" tf:"nvlink,omitempty"`
 
 	// (String) :
 	// :
@@ -1792,6 +1814,10 @@ type TemplateParameters struct {
 	// (Attributes List) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	NetworkInterfaces []NetworkInterfacesParameters `json:"networkInterfaces,omitempty" tf:"network_interfaces,omitempty"`
+
+	// (Attributes) NVLinkSpec configures NVLink settings for the NodeGroup. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Nvlink *NvlinkParameters `json:"nvlink,omitempty" tf:"nvlink,omitempty"`
 
 	// (String) :
 	// :

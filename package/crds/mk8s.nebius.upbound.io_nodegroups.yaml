@@ -152,9 +152,7 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) :
-                      :
-
+                      (Map of String) Labels associated with the resource.
                       Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
@@ -632,7 +630,7 @@ spec:
                             additionalProperties:
                               type: string
                             description: |-
-                              (Map of String) :
+                              (Map of String) Labels associated with the resource.
                               :
 
                               Kubernetes Node labels.
@@ -755,6 +753,16 @@ spec:
                               type: object
                           type: object
                         type: array
+                      nvlink:
+                        description: (Attributes) NVLinkSpec configures NVLink settings
+                          for the NodeGroup. (see below for nested schema)
+                        properties:
+                          nvlInstanceGroupId:
+                            description: |-
+                              (String) Existing NVLInstanceGroup ID to use.
+                              Existing NVLInstanceGroup ID to use.
+                            type: string
+                        type: object
                       os:
                         description: |-
                           (String) :
@@ -1050,9 +1058,7 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) :
-                      :
-
+                      (Map of String) Labels associated with the resource.
                       Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
@@ -1530,7 +1536,7 @@ spec:
                             additionalProperties:
                               type: string
                             description: |-
-                              (Map of String) :
+                              (Map of String) Labels associated with the resource.
                               :
 
                               Kubernetes Node labels.
@@ -1653,6 +1659,16 @@ spec:
                               type: object
                           type: object
                         type: array
+                      nvlink:
+                        description: (Attributes) NVLinkSpec configures NVLink settings
+                          for the NodeGroup. (see below for nested schema)
+                        properties:
+                          nvlInstanceGroupId:
+                            description: |-
+                              (String) Existing NVLInstanceGroup ID to use.
+                              Existing NVLInstanceGroup ID to use.
+                            type: string
+                        type: object
                       os:
                         description: |-
                           (String) :
@@ -2044,9 +2060,7 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) :
-                      :
-
+                      (Map of String) Labels associated with the resource.
                       Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
@@ -2463,7 +2477,7 @@ spec:
                             additionalProperties:
                               type: string
                             description: |-
-                              (Map of String) :
+                              (Map of String) Labels associated with the resource.
                               :
 
                               Kubernetes Node labels.
@@ -2510,6 +2524,16 @@ spec:
                               type: string
                           type: object
                         type: array
+                      nvlink:
+                        description: (Attributes) NVLinkSpec configures NVLink settings
+                          for the NodeGroup. (see below for nested schema)
+                        properties:
+                          nvlInstanceGroupId:
+                            description: |-
+                              (String) Existing NVLInstanceGroup ID to use.
+                              Existing NVLInstanceGroup ID to use.
+                            type: string
+                        type: object
                       os:
                         description: |-
                           (String) :

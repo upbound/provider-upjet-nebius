@@ -329,6 +329,10 @@ type LastIterationObservation struct {
 	// (Attributes) Error information if the transfer has failed. (see below for nested schema)
 	Error *LastIterationErrorObservation `json:"error,omitempty" tf:"error,omitempty"`
 
+	// (Number) Number of objects deleted from destination bucket during this iteration.
+	// Number of objects deleted from destination bucket during this iteration.
+	ObjectsDeletedCount *float64 `json:"objectsDeletedCount,omitempty" tf:"objects_deleted_count,omitempty"`
+
 	// (Number) Number of objects transferred during this iteration.
 	// Number of objects transferred during this iteration.
 	ObjectsTransferredCount *float64 `json:"objectsTransferredCount,omitempty" tf:"objects_transferred_count,omitempty"`
@@ -894,6 +898,13 @@ type TransferInitParameters struct {
 	// (Attributes) Destination to which the transfer writes data. (see below for nested schema)
 	Destination *DestinationInitParameters `json:"destination,omitempty" tf:"destination,omitempty"`
 
+	// (Boolean) :
+	// :
+	//
+	// If enable_deletes_in_destination flag is set, service will delete objects that exist in destination, but don't exist in source.
+	// If touch_unmanaged flag isn't set, we do not delete objects that haven't been created by Data Transfer service.
+	EnableDeletesInDestination *bool `json:"enableDeletesInDestination,omitempty" tf:"enable_deletes_in_destination,omitempty"`
+
 	// (Attributes) :
 	Infinite *InfiniteInitParameters `json:"infinite,omitempty" tf:"infinite,omitempty"`
 
@@ -906,9 +917,7 @@ type TransferInitParameters struct {
 	// Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as `300ms`, `-1.5h` or `2h45m`. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`, `d`.
 	InterIterationInterval *string `json:"interIterationInterval,omitempty" tf:"inter_iteration_interval,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -989,6 +998,13 @@ type TransferObservation struct {
 	// (Attributes) Destination to which the transfer writes data. (see below for nested schema)
 	Destination *DestinationObservation `json:"destination,omitempty" tf:"destination,omitempty"`
 
+	// (Boolean) :
+	// :
+	//
+	// If enable_deletes_in_destination flag is set, service will delete objects that exist in destination, but don't exist in source.
+	// If touch_unmanaged flag isn't set, we do not delete objects that haven't been created by Data Transfer service.
+	EnableDeletesInDestination *bool `json:"enableDeletesInDestination,omitempty" tf:"enable_deletes_in_destination,omitempty"`
+
 	// (String) Identifier for the resource, unique for its resource type.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -1004,9 +1020,7 @@ type TransferObservation struct {
 	// Duration as a string: possibly signed sequence of decimal numbers, each with optional fraction and a unit suffix, such as `300ms`, `-1.5h` or `2h45m`. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`, `d`.
 	InterIterationInterval *string `json:"interIterationInterval,omitempty" tf:"inter_iteration_interval,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -1093,6 +1107,14 @@ type TransferParameters struct {
 	// +kubebuilder:validation:Optional
 	Destination *DestinationParameters `json:"destination,omitempty" tf:"destination,omitempty"`
 
+	// (Boolean) :
+	// :
+	//
+	// If enable_deletes_in_destination flag is set, service will delete objects that exist in destination, but don't exist in source.
+	// If touch_unmanaged flag isn't set, we do not delete objects that haven't been created by Data Transfer service.
+	// +kubebuilder:validation:Optional
+	EnableDeletesInDestination *bool `json:"enableDeletesInDestination,omitempty" tf:"enable_deletes_in_destination,omitempty"`
+
 	// (Attributes) :
 	// +kubebuilder:validation:Optional
 	Infinite *InfiniteParameters `json:"infinite,omitempty" tf:"infinite,omitempty"`
@@ -1107,9 +1129,7 @@ type TransferParameters struct {
 	// +kubebuilder:validation:Optional
 	InterIterationInterval *string `json:"interIterationInterval,omitempty" tf:"inter_iteration_interval,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
@@ -1246,7 +1266,7 @@ type TransferStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Transfer is the Schema for the Transfers API. Transfer that migrates data from other providers or across different regions of Nebius Object Storage. Transfer consists of consecutive iterations where the service lists objects in the source bucket and moves those that need to be transferred according to the specified overwrite strategy and touch unmanaged flag value. After an iteration completes, the transfer will stop if its stop condition is met. Otherwise, it will wait for the defined inter-iteration interval before starting the next iteration.
+// Transfer is the Schema for the Transfers API. Transfer that migrates data from other providers or across different regions of Nebius Object Storage. Transfer consists of consecutive iterations where the service lists objects in the source bucket and moves those that need to be transferred according to the specified overwrite strategy and touch unmanaged flag value. If the enable deletes in destination flag is set, the service also lists destination bucket and deletes objects which do not exist in the source bucket according to the touch unmanaged flag value. After an iteration completes, the transfer will stop if its stop condition is met. Otherwise, it will wait for the defined inter-iteration interval before starting the next iteration.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

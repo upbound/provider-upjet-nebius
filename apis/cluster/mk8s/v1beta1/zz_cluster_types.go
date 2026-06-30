@@ -39,9 +39,7 @@ type ClusterInitParameters struct {
 	// (Attributes) Defines kubernetes network configuration, like IP allocation. (see below for nested schema)
 	KubeNetwork *KubeNetworkInitParameters `json:"kubeNetwork,omitempty" tf:"kube_network,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -77,9 +75,7 @@ type ClusterObservation struct {
 	// (Attributes) Defines kubernetes network configuration, like IP allocation. (see below for nested schema)
 	KubeNetwork *KubeNetworkObservation `json:"kubeNetwork,omitempty" tf:"kube_network,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -126,9 +122,7 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	KubeNetwork *KubeNetworkParameters `json:"kubeNetwork,omitempty" tf:"kube_network,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular

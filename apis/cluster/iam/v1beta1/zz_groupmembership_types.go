@@ -28,8 +28,6 @@ type GroupMemberMetadataObservation struct {
 	// Identifier for the resource, unique for its resource type.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -61,8 +59,6 @@ type GroupMemberMetadataParameters struct {
 
 type GroupMembershipInitParameters struct {
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -119,8 +115,6 @@ type GroupMembershipObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -156,8 +150,6 @@ type GroupMembershipObservation struct {
 
 type GroupMembershipParameters struct {
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular

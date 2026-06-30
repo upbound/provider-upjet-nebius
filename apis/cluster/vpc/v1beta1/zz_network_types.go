@@ -101,9 +101,7 @@ type NetworkInitParameters struct {
 	// (Attributes) :
 	IPv4PublicPools *IPv4PublicPoolsInitParameters `json:"ipv4PublicPools,omitempty" tf:"ipv4_public_pools,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -148,9 +146,7 @@ type NetworkObservation struct {
 	// (Attributes) :
 	IPv4PublicPools *IPv4PublicPoolsObservation `json:"ipv4PublicPools,omitempty" tf:"ipv4_public_pools,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -197,9 +193,7 @@ type NetworkParameters struct {
 	// +kubebuilder:validation:Optional
 	IPv4PublicPools *IPv4PublicPoolsParameters `json:"ipv4PublicPools,omitempty" tf:"ipv4_public_pools,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular

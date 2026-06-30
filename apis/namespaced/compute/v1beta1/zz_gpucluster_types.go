@@ -22,8 +22,6 @@ type GpuClusterInitParameters struct {
 	// For details, see https://docs.nebius.com/compute/clusters/gpu#fabrics
 	InfinibandFabric *string `json:"infinibandFabric,omitempty" tf:"infiniband_fabric,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -63,8 +61,6 @@ type GpuClusterObservation struct {
 	// For details, see https://docs.nebius.com/compute/clusters/gpu#fabrics
 	InfinibandFabric *string `json:"infinibandFabric,omitempty" tf:"infiniband_fabric,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -104,8 +100,6 @@ type GpuClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	InfinibandFabric *string `json:"infinibandFabric,omitempty" tf:"infiniband_fabric,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular

@@ -76,9 +76,7 @@ type AuthPublicKeyInitParameters struct {
 	// A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
 	ExpiresAt *string `json:"expiresAt,omitempty" tf:"expires_at,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -127,9 +125,7 @@ type AuthPublicKeyObservation struct {
 	// (String) Identifier for the resource, unique for its resource type.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -185,9 +181,7 @@ type AuthPublicKeyParameters struct {
 	// +kubebuilder:validation:Optional
 	ExpiresAt *string `json:"expiresAt,omitempty" tf:"expires_at,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular

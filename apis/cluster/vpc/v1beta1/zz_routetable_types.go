@@ -15,8 +15,6 @@ import (
 
 type RouteTableInitParameters struct {
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -63,8 +61,6 @@ type RouteTableObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -100,8 +96,6 @@ type RouteTableObservation struct {
 
 type RouteTableParameters struct {
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular

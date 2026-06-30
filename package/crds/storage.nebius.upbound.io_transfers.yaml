@@ -38,10 +38,12 @@ spec:
           data from other providers or across different regions of Nebius Object Storage.
           Transfer consists of consecutive iterations where the service lists objects
           in the source bucket and moves those that need to be transferred according
-          to the specified overwrite strategy and touch unmanaged flag value. After
-          an iteration completes, the transfer will stop if its stop condition is
-          met. Otherwise, it will wait for the defined inter-iteration interval before
-          starting the next iteration.
+          to the specified overwrite strategy and touch unmanaged flag value. If the
+          enable deletes in destination flag is set, the service also lists destination
+          bucket and deletes objects which do not exist in the source bucket according
+          to the touch unmanaged flag value. After an iteration completes, the transfer
+          will stop if its stop condition is met. Otherwise, it will wait for the
+          defined inter-iteration interval before starting the next iteration.
         properties:
           apiVersion:
             description: |-
@@ -312,6 +314,14 @@ spec:
                             type: string
                         type: object
                     type: object
+                  enableDeletesInDestination:
+                    description: |-
+                      (Boolean) :
+                      :
+
+                      If enable_deletes_in_destination flag is set, service will delete objects that exist in destination, but don't exist in source.
+                      If touch_unmanaged flag isn't set, we do not delete objects that haven't been created by Data Transfer service.
+                    type: boolean
                   infinite:
                     description: '(Attributes) :'
                     type: object
@@ -329,9 +339,7 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) :
-                      :
-
+                      (Map of String) Labels associated with the resource.
                       Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
@@ -920,6 +928,14 @@ spec:
                             type: string
                         type: object
                     type: object
+                  enableDeletesInDestination:
+                    description: |-
+                      (Boolean) :
+                      :
+
+                      If enable_deletes_in_destination flag is set, service will delete objects that exist in destination, but don't exist in source.
+                      If touch_unmanaged flag isn't set, we do not delete objects that haven't been created by Data Transfer service.
+                    type: boolean
                   infinite:
                     description: '(Attributes) :'
                     type: object
@@ -937,9 +953,7 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) :
-                      :
-
+                      (Map of String) Labels associated with the resource.
                       Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
@@ -1552,6 +1566,14 @@ spec:
                             type: string
                         type: object
                     type: object
+                  enableDeletesInDestination:
+                    description: |-
+                      (Boolean) :
+                      :
+
+                      If enable_deletes_in_destination flag is set, service will delete objects that exist in destination, but don't exist in source.
+                      If touch_unmanaged flag isn't set, we do not delete objects that haven't been created by Data Transfer service.
+                    type: boolean
                   id:
                     description: (String) Identifier for the resource, unique for
                       its resource type.
@@ -1573,9 +1595,7 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) :
-                      :
-
+                      (Map of String) Labels associated with the resource.
                       Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
@@ -1899,6 +1919,11 @@ spec:
                                   - `DESTINATION` - Error originated from the destination.
                                 type: string
                             type: object
+                          objectsDeletedCount:
+                            description: |-
+                              (Number) Number of objects deleted from destination bucket during this iteration.
+                              Number of objects deleted from destination bucket during this iteration.
+                            type: number
                           objectsTransferredCount:
                             description: |-
                               (Number) Number of objects transferred during this iteration.

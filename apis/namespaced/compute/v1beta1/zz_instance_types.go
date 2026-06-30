@@ -403,9 +403,7 @@ type InstanceInitParameters struct {
 	// or `<instance_id>.<network_id>.compute.internal.` if hostname is not specified.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -521,9 +519,7 @@ type InstanceObservation struct {
 	// (String) Identifier for the resource, unique for its resource type.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -641,9 +637,7 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
@@ -802,9 +796,7 @@ type LocalDisksParameters struct {
 
 type ManagedDiskInitParameters struct {
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with disk resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -823,9 +815,7 @@ type ManagedDiskInitParameters struct {
 
 type ManagedDiskObservation struct {
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with disk resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -844,9 +834,7 @@ type ManagedDiskObservation struct {
 
 type ManagedDiskParameters struct {
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with disk resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
@@ -1628,9 +1616,7 @@ type SecondaryDisksInitParameters struct {
 
 type SecondaryDisksManagedDiskInitParameters struct {
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with disk resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -1649,9 +1635,7 @@ type SecondaryDisksManagedDiskInitParameters struct {
 
 type SecondaryDisksManagedDiskObservation struct {
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with disk resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -1670,9 +1654,7 @@ type SecondaryDisksManagedDiskObservation struct {
 
 type SecondaryDisksManagedDiskParameters struct {
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with disk resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
