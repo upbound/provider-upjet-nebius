@@ -141,8 +141,6 @@ type RouteInitParameters struct {
 
 	Destination *DestinationInitParameters `json:"destination,omitempty" tf:"destination,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -193,8 +191,6 @@ type RouteObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -236,8 +232,6 @@ type RouteParameters struct {
 	// +kubebuilder:validation:Optional
 	Destination *DestinationParameters `json:"destination,omitempty" tf:"destination,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular

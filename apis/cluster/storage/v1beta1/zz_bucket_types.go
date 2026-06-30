@@ -82,9 +82,7 @@ type BucketInitParameters struct {
 	// Flag to force usage of default_storage_class, ignoring `x-amz-storage-class` header.
 	ForceStorageClass *bool `json:"forceStorageClass,omitempty" tf:"force_storage_class,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -186,9 +184,7 @@ type BucketObservation struct {
 	// (String) Identifier for the resource, unique for its resource type.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -303,9 +299,7 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	ForceStorageClass *bool `json:"forceStorageClass,omitempty" tf:"force_storage_class,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular

@@ -73,7 +73,8 @@ spec:
               forProvider:
                 properties:
                   cidrs:
-                    description: '(Attributes List) :'
+                    description: (Attributes List) CIDR blocks defined by the pool.
+                      (see below for nested schema)
                     items:
                       properties:
                         cidr:
@@ -117,9 +118,7 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) :
-                      :
-
+                      (Map of String) Labels associated with the resource.
                       Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
@@ -264,7 +263,8 @@ spec:
                   autoscaler.
                 properties:
                   cidrs:
-                    description: '(Attributes List) :'
+                    description: (Attributes List) CIDR blocks defined by the pool.
+                      (see below for nested schema)
                     items:
                       properties:
                         cidr:
@@ -308,9 +308,7 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) :
-                      :
-
+                      (Map of String) Labels associated with the resource.
                       Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
@@ -542,7 +540,8 @@ spec:
               atProvider:
                 properties:
                   cidrs:
-                    description: '(Attributes List) :'
+                    description: (Attributes List) CIDR blocks defined by the pool.
+                      (see below for nested schema)
                     items:
                       properties:
                         cidr:
@@ -599,9 +598,7 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) :
-                      :
-
+                      (Map of String) Labels associated with the resource.
                       Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
@@ -661,7 +658,7 @@ spec:
                         type: object
                       cidrs:
                         description: |-
-                          (Attributes List) :
+                          (Attributes List) CIDR blocks defined by the pool. (see below for nested schema)
                           CIDR blocks.
                         items:
                           type: string

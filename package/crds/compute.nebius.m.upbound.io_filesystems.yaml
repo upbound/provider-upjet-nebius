@@ -72,10 +72,7 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: |-
-                      :
-
-                      Labels associated with the resource.
+                    description: Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
                   metadata:
@@ -148,10 +145,7 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: |-
-                      :
-
-                      Labels associated with the resource.
+                    description: Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
                   metadata:
@@ -289,10 +283,7 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: |-
-                      :
-
-                      Labels associated with the resource.
+                    description: Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
                   metadata:

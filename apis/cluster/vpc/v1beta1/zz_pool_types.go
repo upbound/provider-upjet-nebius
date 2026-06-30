@@ -123,12 +123,10 @@ type CidrsParameters struct {
 
 type PoolInitParameters struct {
 
-	// (Attributes List) :
+	// (Attributes List) CIDR blocks defined by the pool. (see below for nested schema)
 	Cidrs []CidrsInitParameters `json:"cidrs,omitempty" tf:"cidrs,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -202,7 +200,7 @@ type PoolMetadataParameters struct {
 
 type PoolObservation struct {
 
-	// (Attributes List) :
+	// (Attributes List) CIDR blocks defined by the pool. (see below for nested schema)
 	Cidrs []CidrsObservation `json:"cidrs,omitempty" tf:"cidrs,omitempty"`
 
 	// (String) :
@@ -216,9 +214,7 @@ type PoolObservation struct {
 	// (String) Identifier for the resource, unique for its resource type.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -293,13 +289,11 @@ type PoolObservation struct {
 
 type PoolParameters struct {
 
-	// (Attributes List) :
+	// (Attributes List) CIDR blocks defined by the pool. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Cidrs []CidrsParameters `json:"cidrs,omitempty" tf:"cidrs,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
@@ -377,7 +371,7 @@ type PoolStatusObservation struct {
 	// (Attributes) Assignment details for this Pool (see below for nested schema)
 	Assignment *StatusAssignmentObservation `json:"assignment,omitempty" tf:"assignment,omitempty"`
 
-	// (Attributes List) :
+	// (Attributes List) CIDR blocks defined by the pool. (see below for nested schema)
 	// CIDR blocks.
 	Cidrs []*string `json:"cidrs,omitempty" tf:"cidrs,omitempty"`
 

@@ -1,0 +1,14 @@
+apiVersion: compute.nebius.upbound.io/v1beta1
+kind: NvlInstanceGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1beta1/nvlinstancegroup
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    name: computev1nvlinstancegroup
+    parentId: ${data.nebius_project_id}
+    size: 18 # Size: Size 1 is not allowed for Type "GB200", the only valid value is 18 - NvlInstanceGroup is only a container, does not provision GPUs
+    type: GB200

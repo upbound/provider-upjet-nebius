@@ -13,6 +13,7 @@ import (
 	filesystem "github.com/upbound/provider-nebius/internal/controller/namespaced/compute/filesystem"
 	gpucluster "github.com/upbound/provider-nebius/internal/controller/namespaced/compute/gpucluster"
 	instance "github.com/upbound/provider-nebius/internal/controller/namespaced/compute/instance"
+	nvlinstancegroup "github.com/upbound/provider-nebius/internal/controller/namespaced/compute/nvlinstancegroup"
 	record "github.com/upbound/provider-nebius/internal/controller/namespaced/dns/record"
 	zone "github.com/upbound/provider-nebius/internal/controller/namespaced/dns/zone"
 	accesskey "github.com/upbound/provider-nebius/internal/controller/namespaced/iam/accesskey"
@@ -37,6 +38,7 @@ import (
 	registry "github.com/upbound/provider-nebius/internal/controller/namespaced/registry/registry"
 	bucket "github.com/upbound/provider-nebius/internal/controller/namespaced/storage/bucket"
 	transfer "github.com/upbound/provider-nebius/internal/controller/namespaced/storage/transfer"
+	tunnel "github.com/upbound/provider-nebius/internal/controller/namespaced/tunnel/tunnel"
 	allocation "github.com/upbound/provider-nebius/internal/controller/namespaced/vpc/allocation"
 	network "github.com/upbound/provider-nebius/internal/controller/namespaced/vpc/network"
 	pool "github.com/upbound/provider-nebius/internal/controller/namespaced/vpc/pool"
@@ -55,6 +57,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		filesystem.Setup,
 		gpucluster.Setup,
 		instance.Setup,
+		nvlinstancegroup.Setup,
 		record.Setup,
 		zone.Setup,
 		accesskey.Setup,
@@ -79,6 +82,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		registry.Setup,
 		bucket.Setup,
 		transfer.Setup,
+		tunnel.Setup,
 		allocation.Setup,
 		network.Setup,
 		pool.Setup,
@@ -103,6 +107,7 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		filesystem.SetupGated,
 		gpucluster.SetupGated,
 		instance.SetupGated,
+		nvlinstancegroup.SetupGated,
 		record.SetupGated,
 		zone.SetupGated,
 		accesskey.SetupGated,
@@ -127,6 +132,7 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		registry.SetupGated,
 		bucket.SetupGated,
 		transfer.SetupGated,
+		tunnel.SetupGated,
 		allocation.SetupGated,
 		network.SetupGated,
 		pool.SetupGated,

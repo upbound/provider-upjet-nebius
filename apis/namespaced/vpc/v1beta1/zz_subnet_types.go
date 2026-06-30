@@ -16,19 +16,19 @@ import (
 
 type IPv4PrivatePoolsPoolsInitParameters struct {
 
-	// (Attributes List) (see below for nested schema)
+	// instead.
 	Cidrs []PoolsCidrsInitParameters `json:"cidrs,omitempty" tf:"cidrs,omitempty"`
 }
 
 type IPv4PrivatePoolsPoolsObservation struct {
 
-	// (Attributes List) (see below for nested schema)
+	// instead.
 	Cidrs []PoolsCidrsObservation `json:"cidrs,omitempty" tf:"cidrs,omitempty"`
 }
 
 type IPv4PrivatePoolsPoolsParameters struct {
 
-	// (Attributes List) (see below for nested schema)
+	// instead.
 	// +kubebuilder:validation:Optional
 	Cidrs []PoolsCidrsParameters `json:"cidrs,omitempty" tf:"cidrs,omitempty"`
 }
@@ -225,6 +225,40 @@ type PoolsCidrsParameters struct {
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 }
 
+type StatusIPv4PrivatePoolsInitParameters struct {
+}
+
+type StatusIPv4PrivatePoolsObservation struct {
+
+	// instead.
+	// CIDR blocks sourced from this pool.
+	Cidrs []*string `json:"cidrs,omitempty" tf:"cidrs,omitempty"`
+
+	// (String) ID of the pool available for allocations in this subnet.
+	// ID of the pool available for allocations in this subnet.
+	PoolID *string `json:"poolId,omitempty" tf:"pool_id,omitempty"`
+}
+
+type StatusIPv4PrivatePoolsParameters struct {
+}
+
+type StatusIPv4PublicPoolsInitParameters struct {
+}
+
+type StatusIPv4PublicPoolsObservation struct {
+
+	// instead.
+	// CIDR blocks sourced from this pool.
+	Cidrs []*string `json:"cidrs,omitempty" tf:"cidrs,omitempty"`
+
+	// (String) ID of the pool available for allocations in this subnet.
+	// ID of the pool available for allocations in this subnet.
+	PoolID *string `json:"poolId,omitempty" tf:"pool_id,omitempty"`
+}
+
+type StatusIPv4PublicPoolsParameters struct {
+}
+
 type StatusRouteTableInitParameters struct {
 }
 
@@ -330,19 +364,19 @@ type SubnetIPv4PublicPoolsParameters struct {
 
 type SubnetIPv4PublicPoolsPoolsInitParameters struct {
 
-	// (Attributes List) (see below for nested schema)
+	// instead.
 	Cidrs []IPv4PublicPoolsPoolsCidrsInitParameters `json:"cidrs,omitempty" tf:"cidrs,omitempty"`
 }
 
 type SubnetIPv4PublicPoolsPoolsObservation struct {
 
-	// (Attributes List) (see below for nested schema)
+	// instead.
 	Cidrs []IPv4PublicPoolsPoolsCidrsObservation `json:"cidrs,omitempty" tf:"cidrs,omitempty"`
 }
 
 type SubnetIPv4PublicPoolsPoolsParameters struct {
 
-	// (Attributes List) (see below for nested schema)
+	// instead.
 	// +kubebuilder:validation:Optional
 	Cidrs []IPv4PublicPoolsPoolsCidrsParameters `json:"cidrs,omitempty" tf:"cidrs,omitempty"`
 }
@@ -355,9 +389,7 @@ type SubnetInitParameters struct {
 	// (Attributes) :
 	IPv4PublicPools *SubnetIPv4PublicPoolsInitParameters `json:"ipv4PublicPools,omitempty" tf:"ipv4_public_pools,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -433,9 +465,7 @@ type SubnetObservation struct {
 	// (Attributes) :
 	IPv4PublicPools *SubnetIPv4PublicPoolsObservation `json:"ipv4PublicPools,omitempty" tf:"ipv4_public_pools,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -493,9 +523,7 @@ type SubnetParameters struct {
 	// +kubebuilder:validation:Optional
 	IPv4PublicPools *SubnetIPv4PublicPoolsParameters `json:"ipv4PublicPools,omitempty" tf:"ipv4_public_pools,omitempty"`
 
-	// (Map of String) :
-	// :
-	//
+	// (Map of String) Labels associated with the resource.
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
@@ -554,13 +582,25 @@ type SubnetStatusInitParameters struct {
 
 type SubnetStatusObservation struct {
 
-	// (List of String) CIDR blocks.
+	// (List of String, Deprecated) :
+	// :
+	//
 	// CIDR blocks.
+	// Deprecated: Use `ipv4_private_pools.cidrs` instead.
 	IPv4PrivateCidrs []*string `json:"ipv4PrivateCidrs,omitempty" tf:"ipv4_private_cidrs,omitempty"`
 
-	// (List of String) CIDR blocks.
+	// (Attributes) :
+	IPv4PrivatePools []StatusIPv4PrivatePoolsObservation `json:"ipv4PrivatePools,omitempty" tf:"ipv4_private_pools,omitempty"`
+
+	// (List of String, Deprecated) :
+	// :
+	//
 	// CIDR blocks.
+	// Deprecated: Use `ipv4_public_pools.cidrs` instead.
 	IPv4PublicCidrs []*string `json:"ipv4PublicCidrs,omitempty" tf:"ipv4_public_cidrs,omitempty"`
+
+	// (Attributes) :
+	IPv4PublicPools []StatusIPv4PublicPoolsObservation `json:"ipv4PublicPools,omitempty" tf:"ipv4_public_pools,omitempty"`
 
 	// (Attributes) :
 	RouteTable *StatusRouteTableObservation `json:"routeTable,omitempty" tf:"route_table,omitempty"`

@@ -54,6 +54,7 @@ var GroupMap = map[string]GroupKindCalculator{
 	"nebius_compute_v1_filesystem":         ReplaceGroupWords("compute", 2),
 	"nebius_compute_v1_disk":               ReplaceGroupWords("compute", 2),
 	"nebius_compute_v1_instance":           ReplaceGroupWords("compute", 2),
+	"nebius_compute_v1_nvl_instance_group": ReplaceGroupWords("compute", 2),
 	"nebius_iam_v1_service_account":        ReplaceGroupWords("iam", 2),
 	"nebius_iam_v1_group":                  ReplaceGroupWords("iam", 2),
 	"nebius_iam_v1_group_membership":       ReplaceGroupWords("iam", 2),
@@ -75,4 +76,5 @@ var GroupMap = map[string]GroupKindCalculator{
 	"nebius_registry_v1_registry":          ReplaceGroupWords("registry", 2),
 	"nebius_kms_v1_asymmetric_key":         ReplaceGroupWords("kms", 2),
 	"nebius_kms_v1_symmetric_key":          ReplaceGroupWords("kms", 2),
+	"nebius_tunnel_v1_tunnel":              ReplaceGroupWords("tunnel", 2),
 }

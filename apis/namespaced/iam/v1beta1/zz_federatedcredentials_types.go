@@ -22,8 +22,6 @@ type FederatedCredentialsInitParameters struct {
 	// "sub" claim of the federated JWT token.
 	FederatedSubjectID *string `json:"federatedSubjectId,omitempty" tf:"federated_subject_id,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -78,8 +76,6 @@ type FederatedCredentialsObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -124,8 +120,6 @@ type FederatedCredentialsParameters struct {
 	// +kubebuilder:validation:Optional
 	FederatedSubjectID *string `json:"federatedSubjectId,omitempty" tf:"federated_subject_id,omitempty"`
 
-	// :
-	//
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular

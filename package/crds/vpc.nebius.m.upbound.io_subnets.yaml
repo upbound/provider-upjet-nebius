@@ -68,8 +68,7 @@ spec:
                         items:
                           properties:
                             cidrs:
-                              description: (Attributes List) (see below for nested
-                                schema)
+                              description: instead.
                               items:
                                 properties:
                                   cidr:
@@ -124,8 +123,7 @@ spec:
                         items:
                           properties:
                             cidrs:
-                              description: (Attributes List) (see below for nested
-                                schema)
+                              description: instead.
                               items:
                                 properties:
                                   cidr:
@@ -176,9 +174,7 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) :
-                      :
-
+                      (Map of String) Labels associated with the resource.
                       Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
@@ -390,8 +386,7 @@ spec:
                         items:
                           properties:
                             cidrs:
-                              description: (Attributes List) (see below for nested
-                                schema)
+                              description: instead.
                               items:
                                 properties:
                                   cidr:
@@ -446,8 +441,7 @@ spec:
                         items:
                           properties:
                             cidrs:
-                              description: (Attributes List) (see below for nested
-                                schema)
+                              description: instead.
                               items:
                                 properties:
                                   cidr:
@@ -498,9 +492,7 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) :
-                      :
-
+                      (Map of String) Labels associated with the resource.
                       Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
@@ -775,8 +767,7 @@ spec:
                         items:
                           properties:
                             cidrs:
-                              description: (Attributes List) (see below for nested
-                                schema)
+                              description: instead.
                               items:
                                 properties:
                                   cidr:
@@ -831,8 +822,7 @@ spec:
                         items:
                           properties:
                             cidrs:
-                              description: (Attributes List) (see below for nested
-                                schema)
+                              description: instead.
                               items:
                                 properties:
                                   cidr:
@@ -883,9 +873,7 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) :
-                      :
-
+                      (Map of String) Labels associated with the resource.
                       Labels associated with the resource.
                     type: object
                     x-kubernetes-map-type: granular
@@ -931,17 +919,59 @@ spec:
                     properties:
                       ipv4PrivateCidrs:
                         description: |-
-                          (List of String) CIDR blocks.
+                          (List of String, Deprecated) :
+                          :
+
                           CIDR blocks.
+                          Deprecated: Use `ipv4_private_pools.cidrs` instead.
                         items:
                           type: string
                         type: array
+                      ipv4PrivatePools:
+                        description: '(Attributes) :'
+                        items:
+                          properties:
+                            cidrs:
+                              description: |-
+                                instead.
+                                CIDR blocks sourced from this pool.
+                              items:
+                                type: string
+                              type: array
+                            poolId:
+                              description: |-
+                                (String) ID of the pool available for allocations in this subnet.
+                                ID of the pool available for allocations in this subnet.
+                              type: string
+                          type: object
+                        type: array
                       ipv4PublicCidrs:
                         description: |-
-                          (List of String) CIDR blocks.
+                          (List of String, Deprecated) :
+                          :
+
                           CIDR blocks.
+                          Deprecated: Use `ipv4_public_pools.cidrs` instead.
                         items:
                           type: string
+                        type: array
+                      ipv4PublicPools:
+                        description: '(Attributes) :'
+                        items:
+                          properties:
+                            cidrs:
+                              description: |-
+                                instead.
+                                CIDR blocks sourced from this pool.
+                              items:
+                                type: string
+                              type: array
+                            poolId:
+                              description: |-
+                                (String) ID of the pool available for allocations in this subnet.
+                                ID of the pool available for allocations in this subnet.
+                              type: string
+                          type: object
                         type: array
                       routeTable:
                         description: '(Attributes) :'

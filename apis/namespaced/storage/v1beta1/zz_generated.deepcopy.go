@@ -2037,6 +2037,11 @@ func (in *LastIterationObservation) DeepCopyInto(out *LastIterationObservation) 
 		*out = new(LastIterationErrorObservation)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.ObjectsDeletedCount != nil {
+		in, out := &in.ObjectsDeletedCount, &out.ObjectsDeletedCount
+		*out = new(float64)
+		**out = **in
+	}
 	if in.ObjectsTransferredCount != nil {
 		in, out := &in.ObjectsTransferredCount, &out.ObjectsTransferredCount
 		*out = new(float64)
@@ -3919,6 +3924,11 @@ func (in *TransferInitParameters) DeepCopyInto(out *TransferInitParameters) {
 		*out = new(DestinationInitParameters)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.EnableDeletesInDestination != nil {
+		in, out := &in.EnableDeletesInDestination, &out.EnableDeletesInDestination
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Infinite != nil {
 		in, out := &in.Infinite, &out.Infinite
 		*out = new(InfiniteInitParameters)
@@ -4092,6 +4102,11 @@ func (in *TransferObservation) DeepCopyInto(out *TransferObservation) {
 		*out = new(DestinationObservation)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.EnableDeletesInDestination != nil {
+		in, out := &in.EnableDeletesInDestination, &out.EnableDeletesInDestination
+		*out = new(bool)
+		**out = **in
+	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -4202,6 +4217,11 @@ func (in *TransferParameters) DeepCopyInto(out *TransferParameters) {
 		in, out := &in.Destination, &out.Destination
 		*out = new(DestinationParameters)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.EnableDeletesInDestination != nil {
+		in, out := &in.EnableDeletesInDestination, &out.EnableDeletesInDestination
+		*out = new(bool)
+		**out = **in
 	}
 	if in.Infinite != nil {
 		in, out := &in.Infinite, &out.Infinite
