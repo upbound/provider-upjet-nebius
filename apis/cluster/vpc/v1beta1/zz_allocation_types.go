@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AllocationInitParameters struct {
@@ -203,11 +203,11 @@ type IPv4PrivateInitParameters struct {
 
 	// Reference to a Pool in vpc to populate poolId.
 	// +kubebuilder:validation:Optional
-	PoolIDRef *v1.Reference `json:"poolIdRef,omitempty" tf:"-"`
+	PoolIDRef *v2.Reference `json:"poolIdRef,omitempty" tf:"-"`
 
 	// Selector for a Pool in vpc to populate poolId.
 	// +kubebuilder:validation:Optional
-	PoolIDSelector *v1.Selector `json:"poolIdSelector,omitempty" tf:"-"`
+	PoolIDSelector *v2.Selector `json:"poolIdSelector,omitempty" tf:"-"`
 
 	// (String) :
 	// :
@@ -225,11 +225,11 @@ type IPv4PrivateInitParameters struct {
 
 	// Reference to a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+	SubnetIDRef *v2.Reference `json:"subnetIdRef,omitempty" tf:"-"`
 
 	// Selector for a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+	SubnetIDSelector *v2.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type IPv4PrivateObservation struct {
@@ -291,11 +291,11 @@ type IPv4PrivateParameters struct {
 
 	// Reference to a Pool in vpc to populate poolId.
 	// +kubebuilder:validation:Optional
-	PoolIDRef *v1.Reference `json:"poolIdRef,omitempty" tf:"-"`
+	PoolIDRef *v2.Reference `json:"poolIdRef,omitempty" tf:"-"`
 
 	// Selector for a Pool in vpc to populate poolId.
 	// +kubebuilder:validation:Optional
-	PoolIDSelector *v1.Selector `json:"poolIdSelector,omitempty" tf:"-"`
+	PoolIDSelector *v2.Selector `json:"poolIdSelector,omitempty" tf:"-"`
 
 	// (String) :
 	// :
@@ -314,11 +314,11 @@ type IPv4PrivateParameters struct {
 
 	// Reference to a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+	SubnetIDRef *v2.Reference `json:"subnetIdRef,omitempty" tf:"-"`
 
 	// Selector for a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+	SubnetIDSelector *v2.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type IPv4PublicInitParameters struct {
@@ -345,11 +345,11 @@ type IPv4PublicInitParameters struct {
 
 	// Reference to a Pool in vpc to populate poolId.
 	// +kubebuilder:validation:Optional
-	PoolIDRef *v1.Reference `json:"poolIdRef,omitempty" tf:"-"`
+	PoolIDRef *v2.Reference `json:"poolIdRef,omitempty" tf:"-"`
 
 	// Selector for a Pool in vpc to populate poolId.
 	// +kubebuilder:validation:Optional
-	PoolIDSelector *v1.Selector `json:"poolIdSelector,omitempty" tf:"-"`
+	PoolIDSelector *v2.Selector `json:"poolIdSelector,omitempty" tf:"-"`
 
 	// (String) :
 	// :
@@ -367,11 +367,11 @@ type IPv4PublicInitParameters struct {
 
 	// Reference to a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+	SubnetIDRef *v2.Reference `json:"subnetIdRef,omitempty" tf:"-"`
 
 	// Selector for a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+	SubnetIDSelector *v2.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type IPv4PublicObservation struct {
@@ -433,11 +433,11 @@ type IPv4PublicParameters struct {
 
 	// Reference to a Pool in vpc to populate poolId.
 	// +kubebuilder:validation:Optional
-	PoolIDRef *v1.Reference `json:"poolIdRef,omitempty" tf:"-"`
+	PoolIDRef *v2.Reference `json:"poolIdRef,omitempty" tf:"-"`
 
 	// Selector for a Pool in vpc to populate poolId.
 	// +kubebuilder:validation:Optional
-	PoolIDSelector *v1.Selector `json:"poolIdSelector,omitempty" tf:"-"`
+	PoolIDSelector *v2.Selector `json:"poolIdSelector,omitempty" tf:"-"`
 
 	// (String) :
 	// :
@@ -456,11 +456,11 @@ type IPv4PublicParameters struct {
 
 	// Reference to a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+	SubnetIDRef *v2.Reference `json:"subnetIdRef,omitempty" tf:"-"`
 
 	// Selector for a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+	SubnetIDSelector *v2.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type LoadBalancerInitParameters struct {
@@ -555,8 +555,8 @@ type StatusParameters struct {
 
 // AllocationSpec defines the desired state of Allocation
 type AllocationSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     AllocationParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   AllocationParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -572,8 +572,8 @@ type AllocationSpec struct {
 
 // AllocationStatus defines the observed state of Allocation.
 type AllocationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AllocationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AllocationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

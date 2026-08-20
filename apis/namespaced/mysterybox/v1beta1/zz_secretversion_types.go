@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type SecretVersionInitParameters_2 struct {
@@ -40,11 +39,11 @@ type SecretVersionInitParameters_2 struct {
 
 	// Reference to a Secret in mysterybox to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.NamespacedReference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.NamespacedReference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a Secret in mysterybox to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.NamespacedSelector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.NamespacedSelector `json:"parentIdSelector,omitempty" tf:"-"`
 
 	// (Attributes List) :
 	Payload []SecretVersionPayloadInitParameters `json:"payload,omitempty" tf:"payload,omitempty"`
@@ -153,11 +152,11 @@ type SecretVersionParameters_2 struct {
 
 	// Reference to a Secret in mysterybox to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.NamespacedReference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.NamespacedReference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a Secret in mysterybox to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.NamespacedSelector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.NamespacedSelector `json:"parentIdSelector,omitempty" tf:"-"`
 
 	// (Attributes List) :
 	// +kubebuilder:validation:Optional
@@ -176,7 +175,7 @@ type SecretVersionPayloadInitParameters struct {
 	// The binary data to encrypt and store in the version of the secret.
 	//
 	// *Cannot be set alongside string_value.*
-	BinaryValueSecretRef *v1.LocalSecretKeySelector `json:"binaryValueSecretRef,omitempty" tf:"-"`
+	BinaryValueSecretRef *v2.LocalSecretKeySelector `json:"binaryValueSecretRef,omitempty" tf:"-"`
 
 	// confidential key of the payload entry.
 	// Non-confidential key of the payload entry.
@@ -188,7 +187,7 @@ type SecretVersionPayloadInitParameters struct {
 	// The text data to encrypt and store in the version of the secret.
 	//
 	// *Cannot be set alongside binary_value.*
-	StringValueSecretRef *v1.LocalSecretKeySelector `json:"stringValueSecretRef,omitempty" tf:"-"`
+	StringValueSecretRef *v2.LocalSecretKeySelector `json:"stringValueSecretRef,omitempty" tf:"-"`
 }
 
 type SecretVersionPayloadObservation struct {
@@ -207,7 +206,7 @@ type SecretVersionPayloadParameters struct {
 	//
 	// *Cannot be set alongside string_value.*
 	// +kubebuilder:validation:Optional
-	BinaryValueSecretRef *v1.LocalSecretKeySelector `json:"binaryValueSecretRef,omitempty" tf:"-"`
+	BinaryValueSecretRef *v2.LocalSecretKeySelector `json:"binaryValueSecretRef,omitempty" tf:"-"`
 
 	// confidential key of the payload entry.
 	// Non-confidential key of the payload entry.
@@ -221,7 +220,7 @@ type SecretVersionPayloadParameters struct {
 	//
 	// *Cannot be set alongside binary_value.*
 	// +kubebuilder:validation:Optional
-	StringValueSecretRef *v1.LocalSecretKeySelector `json:"stringValueSecretRef,omitempty" tf:"-"`
+	StringValueSecretRef *v2.LocalSecretKeySelector `json:"stringValueSecretRef,omitempty" tf:"-"`
 }
 
 type SecretVersionStatusInitParameters struct {
@@ -282,8 +281,8 @@ type SecretVersionSpec struct {
 
 // SecretVersionStatus defines the observed state of SecretVersion.
 type SecretVersionStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SecretVersionObservation_2 `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SecretVersionObservation_2 `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

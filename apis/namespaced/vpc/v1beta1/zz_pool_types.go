@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CidrsInitParameters struct {
@@ -154,11 +153,11 @@ type PoolInitParameters struct {
 
 	// Reference to a Pool in vpc to populate sourcePoolId.
 	// +kubebuilder:validation:Optional
-	SourcePoolIDRef *v1.NamespacedReference `json:"sourcePoolIdRef,omitempty" tf:"-"`
+	SourcePoolIDRef *v2.NamespacedReference `json:"sourcePoolIdRef,omitempty" tf:"-"`
 
 	// Selector for a Pool in vpc to populate sourcePoolId.
 	// +kubebuilder:validation:Optional
-	SourcePoolIDSelector *v1.NamespacedSelector `json:"sourcePoolIdSelector,omitempty" tf:"-"`
+	SourcePoolIDSelector *v2.NamespacedSelector `json:"sourcePoolIdSelector,omitempty" tf:"-"`
 
 	// (String) :
 	// :
@@ -326,11 +325,11 @@ type PoolParameters struct {
 
 	// Reference to a Pool in vpc to populate sourcePoolId.
 	// +kubebuilder:validation:Optional
-	SourcePoolIDRef *v1.NamespacedReference `json:"sourcePoolIdRef,omitempty" tf:"-"`
+	SourcePoolIDRef *v2.NamespacedReference `json:"sourcePoolIdRef,omitempty" tf:"-"`
 
 	// Selector for a Pool in vpc to populate sourcePoolId.
 	// +kubebuilder:validation:Optional
-	SourcePoolIDSelector *v1.NamespacedSelector `json:"sourcePoolIdSelector,omitempty" tf:"-"`
+	SourcePoolIDSelector *v2.NamespacedSelector `json:"sourcePoolIdSelector,omitempty" tf:"-"`
 
 	// (String) :
 	// :
@@ -436,8 +435,8 @@ type PoolSpec struct {
 
 // PoolStatus defines the observed state of Pool.
 type PoolStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        PoolObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               PoolObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

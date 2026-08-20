@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type IPv4PrivatePoolsPoolsInitParameters struct {
@@ -408,11 +408,11 @@ type SubnetInitParameters struct {
 
 	// Reference to a Network in vpc to populate networkId.
 	// +kubebuilder:validation:Optional
-	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
+	NetworkIDRef *v2.Reference `json:"networkIdRef,omitempty" tf:"-"`
 
 	// Selector for a Network in vpc to populate networkId.
 	// +kubebuilder:validation:Optional
-	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
+	NetworkIDSelector *v2.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
 	// Identifier of the parent resource to which the resource belongs.
@@ -429,11 +429,11 @@ type SubnetInitParameters struct {
 
 	// Reference to a RouteTable in vpc to populate routeTableId.
 	// +kubebuilder:validation:Optional
-	RouteTableIDRef *v1.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
+	RouteTableIDRef *v2.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
 
 	// Selector for a RouteTable in vpc to populate routeTableId.
 	// +kubebuilder:validation:Optional
-	RouteTableIDSelector *v1.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
+	RouteTableIDSelector *v2.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
 }
 
 type SubnetMetadataInitParameters struct {
@@ -546,11 +546,11 @@ type SubnetParameters struct {
 
 	// Reference to a Network in vpc to populate networkId.
 	// +kubebuilder:validation:Optional
-	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
+	NetworkIDRef *v2.Reference `json:"networkIdRef,omitempty" tf:"-"`
 
 	// Selector for a Network in vpc to populate networkId.
 	// +kubebuilder:validation:Optional
-	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
+	NetworkIDSelector *v2.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
 	// Identifier of the parent resource to which the resource belongs.
@@ -569,11 +569,11 @@ type SubnetParameters struct {
 
 	// Reference to a RouteTable in vpc to populate routeTableId.
 	// +kubebuilder:validation:Optional
-	RouteTableIDRef *v1.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
+	RouteTableIDRef *v2.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
 
 	// Selector for a RouteTable in vpc to populate routeTableId.
 	// +kubebuilder:validation:Optional
-	RouteTableIDSelector *v1.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
+	RouteTableIDSelector *v2.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
 }
 
 type SubnetStatusInitParameters struct {
@@ -626,8 +626,8 @@ type SubnetStatusParameters struct {
 
 // SubnetSpec defines the desired state of Subnet
 type SubnetSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     SubnetParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   SubnetParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -643,8 +643,8 @@ type SubnetSpec struct {
 
 // SubnetStatus defines the observed state of Subnet.
 type SubnetStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SubnetObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SubnetObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

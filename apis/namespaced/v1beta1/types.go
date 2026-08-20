@@ -3,8 +3,7 @@ package v1beta1
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	xpv2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 	"github.com/crossplane/upjet/v2/apis/configuration/v1alpha1"
 
 	internalconfig "github.com/upbound/provider-nebius/internal/config"
@@ -39,9 +38,9 @@ type ProviderConfigSpec struct {
 type ProviderCredentials struct {
 	// Source of the provider credentials.
 	// +kubebuilder:validation:Enum=None;Secret;InjectedIdentity;Environment;Filesystem
-	Source xpv1.CredentialsSource `json:"source"`
+	Source xpv2.CredentialsSource `json:"source"`
 
-	xpv1.CommonCredentialSelectors `json:",inline"`
+	xpv2.CommonCredentialSelectors `json:",inline"`
 }
 
 // A NamespacedProviderConfigSpec defines the desired state of a namespaced
@@ -69,33 +68,33 @@ type NamespacedProviderConfigSpec struct {
 
 // NamespacedProviderCredentials required to authenticate. The secret reference
 // omits the namespace and resolves to the namespace of the referencing managed
-// resource. It mirrors xpv1.CommonCredentialSelectors but uses a
+// resource. It mirrors xpv2.CommonCredentialSelectors but uses a
 // LocalSecretKeySelector for the secret reference.
 type NamespacedProviderCredentials struct {
 	// Source of the provider credentials.
 	// +kubebuilder:validation:Enum=None;Secret;InjectedIdentity;Environment;Filesystem
-	Source xpv1.CredentialsSource `json:"source"`
+	Source xpv2.CredentialsSource `json:"source"`
 
 	// Fs is a reference to a filesystem location that contains credentials that
 	// must be used to connect to the provider.
 	// +optional
-	Fs *xpv1.FsSelector `json:"fs,omitempty"`
+	Fs *xpv2.FsSelector `json:"fs,omitempty"`
 
 	// Env is a reference to an environment variable that contains credentials
 	// that must be used to connect to the provider.
 	// +optional
-	Env *xpv1.EnvSelector `json:"env,omitempty"`
+	Env *xpv2.EnvSelector `json:"env,omitempty"`
 
 	// A SecretRef is a reference to a secret key in the same namespace as the
 	// referencing managed resource that contains the credentials that must be
 	// used to connect to the provider.
 	// +optional
-	SecretRef *xpv1.LocalSecretKeySelector `json:"secretRef,omitempty"`
+	SecretRef *xpv2.LocalSecretKeySelector `json:"secretRef,omitempty"`
 }
 
 // A ProviderConfigStatus reflects the observed state of a ProviderConfig.
 type ProviderConfigStatus struct {
-	xpv1.ProviderConfigStatus `json:",inline"`
+	xpv2.ProviderConfigStatus `json:",inline"`
 }
 
 // +kubebuilder:object:root=true

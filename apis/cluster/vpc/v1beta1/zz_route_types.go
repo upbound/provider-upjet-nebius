@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type DefaultEgressGatewayInitParameters struct {
@@ -62,11 +62,11 @@ type NextHopAllocationInitParameters struct {
 
 	// Reference to a Allocation in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.Reference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.Reference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Allocation in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.Selector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.Selector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type NextHopAllocationObservation struct {
@@ -85,11 +85,11 @@ type NextHopAllocationParameters struct {
 
 	// Reference to a Allocation in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.Reference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.Reference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Allocation in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.Selector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.Selector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type NextHopInitParameters struct {
@@ -159,11 +159,11 @@ type RouteInitParameters struct {
 
 	// Reference to a RouteTable in vpc to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.Reference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.Reference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a RouteTable in vpc to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.Selector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.Selector `json:"parentIdSelector,omitempty" tf:"-"`
 }
 
 type RouteMetadataInitParameters struct {
@@ -255,11 +255,11 @@ type RouteParameters struct {
 
 	// Reference to a RouteTable in vpc to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.Reference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.Reference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a RouteTable in vpc to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.Selector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.Selector `json:"parentIdSelector,omitempty" tf:"-"`
 }
 
 type RouteStatusInitParameters struct {
@@ -332,8 +332,8 @@ type StatusNextHopParameters struct {
 
 // RouteSpec defines the desired state of Route
 type RouteSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     RouteParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   RouteParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -349,8 +349,8 @@ type RouteSpec struct {
 
 // RouteStatus defines the observed state of Route.
 type RouteStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        RouteObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               RouteObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

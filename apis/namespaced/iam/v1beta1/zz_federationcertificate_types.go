@@ -10,12 +10,11 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type FederationCertificateInitParameters struct {
-	DataSecretRef *v1.LocalSecretKeySelector `json:"dataSecretRef,omitempty" tf:"-"`
+	DataSecretRef *v2.LocalSecretKeySelector `json:"dataSecretRef,omitempty" tf:"-"`
 
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -35,11 +34,11 @@ type FederationCertificateInitParameters struct {
 
 	// Reference to a Federation in iam to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.NamespacedReference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.NamespacedReference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a Federation in iam to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.NamespacedSelector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.NamespacedSelector `json:"parentIdSelector,omitempty" tf:"-"`
 }
 
 type FederationCertificateMetadataInitParameters struct {
@@ -97,7 +96,7 @@ type FederationCertificateObservation struct {
 type FederationCertificateParameters struct {
 
 	// +kubebuilder:validation:Optional
-	DataSecretRef *v1.LocalSecretKeySelector `json:"dataSecretRef,omitempty" tf:"-"`
+	DataSecretRef *v2.LocalSecretKeySelector `json:"dataSecretRef,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -122,11 +121,11 @@ type FederationCertificateParameters struct {
 
 	// Reference to a Federation in iam to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.NamespacedReference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.NamespacedReference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a Federation in iam to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.NamespacedSelector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.NamespacedSelector `json:"parentIdSelector,omitempty" tf:"-"`
 }
 
 type FederationCertificateStatusInitParameters struct {
@@ -179,8 +178,8 @@ type FederationCertificateSpec struct {
 
 // FederationCertificateStatus defines the observed state of FederationCertificate.
 type FederationCertificateStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        FederationCertificateObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               FederationCertificateObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type SoaSpecInitParameters struct {
@@ -57,11 +56,11 @@ type VPCInitParameters struct {
 
 	// Reference to a Network in vpc to populate primaryNetworkId.
 	// +kubebuilder:validation:Optional
-	PrimaryNetworkIDRef *v1.NamespacedReference `json:"primaryNetworkIdRef,omitempty" tf:"-"`
+	PrimaryNetworkIDRef *v2.NamespacedReference `json:"primaryNetworkIdRef,omitempty" tf:"-"`
 
 	// Selector for a Network in vpc to populate primaryNetworkId.
 	// +kubebuilder:validation:Optional
-	PrimaryNetworkIDSelector *v1.NamespacedSelector `json:"primaryNetworkIdSelector,omitempty" tf:"-"`
+	PrimaryNetworkIDSelector *v2.NamespacedSelector `json:"primaryNetworkIdSelector,omitempty" tf:"-"`
 }
 
 type VPCObservation struct {
@@ -86,11 +85,11 @@ type VPCParameters struct {
 
 	// Reference to a Network in vpc to populate primaryNetworkId.
 	// +kubebuilder:validation:Optional
-	PrimaryNetworkIDRef *v1.NamespacedReference `json:"primaryNetworkIdRef,omitempty" tf:"-"`
+	PrimaryNetworkIDRef *v2.NamespacedReference `json:"primaryNetworkIdRef,omitempty" tf:"-"`
 
 	// Selector for a Network in vpc to populate primaryNetworkId.
 	// +kubebuilder:validation:Optional
-	PrimaryNetworkIDSelector *v1.NamespacedSelector `json:"primaryNetworkIdSelector,omitempty" tf:"-"`
+	PrimaryNetworkIDSelector *v2.NamespacedSelector `json:"primaryNetworkIdSelector,omitempty" tf:"-"`
 }
 
 type ZoneInitParameters struct {
@@ -244,8 +243,8 @@ type ZoneSpec struct {
 
 // ZoneStatus defines the observed state of Zone.
 type ZoneStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ZoneObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ZoneObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

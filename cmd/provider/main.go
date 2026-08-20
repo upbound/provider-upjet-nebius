@@ -193,6 +193,13 @@ func main() {
 		kingpin.FatalIfError(clustercontroller.Setup(mgr, clusterOpts), "Cannot setup cluster-scoped Nebius controllers")
 		kingpin.FatalIfError(namespacedcontroller.Setup(mgr, namespacedOpts), "Cannot setup namespaced Nebius controllers")
 	}
+
+	// conversion webhooks are registered eagerly on every pod, not gated
+	// behind leader election, whenever a certs dir is configured.
+	if len(*certsDir) > 0 {
+		kingpin.FatalIfError(clustercontroller.SetupWebhookWithManager(mgr), "Cannot setup cluster-scoped Nebius webhooks")
+		kingpin.FatalIfError(namespacedcontroller.SetupWebhookWithManager(mgr), "Cannot setup namespaced Nebius webhooks")
+	}
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }
 

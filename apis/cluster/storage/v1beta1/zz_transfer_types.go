@@ -10,18 +10,18 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AccessKeyInitParameters struct {
 
 	// (String) Access key ID.
 	// Access key ID.
-	AccessKeyIDSecretRef v1.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
+	AccessKeyIDSecretRef v2.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
 
 	// (String, Sensitive) Secret access key.
 	// Secret access key.
-	SecretAccessKeySecretRef *v1.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
+	SecretAccessKeySecretRef *v2.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
 }
 
 type AccessKeyObservation struct {
@@ -32,12 +32,12 @@ type AccessKeyParameters struct {
 	// (String) Access key ID.
 	// Access key ID.
 	// +kubebuilder:validation:Optional
-	AccessKeyIDSecretRef v1.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
+	AccessKeyIDSecretRef v2.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
 
 	// (String, Sensitive) Secret access key.
 	// Secret access key.
 	// +kubebuilder:validation:Optional
-	SecretAccessKeySecretRef *v1.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
+	SecretAccessKeySecretRef *v2.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
 }
 
 type AfterNEmptyIterationsInitParameters struct {
@@ -151,7 +151,7 @@ type AzureStorageAccountInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	// Storage account access key.
-	AccessKeySecretRef *v1.SecretKeySelector `json:"accessKeySecretRef,omitempty" tf:"-"`
+	AccessKeySecretRef *v2.SecretKeySelector `json:"accessKeySecretRef,omitempty" tf:"-"`
 
 	// (String) Storage account name.
 	// Storage account name.
@@ -170,7 +170,7 @@ type AzureStorageAccountParameters struct {
 	// (Attributes) (see below for nested schema)
 	// Storage account access key.
 	// +kubebuilder:validation:Optional
-	AccessKeySecretRef *v1.SecretKeySelector `json:"accessKeySecretRef,omitempty" tf:"-"`
+	AccessKeySecretRef *v2.SecretKeySelector `json:"accessKeySecretRef,omitempty" tf:"-"`
 
 	// (String) Storage account name.
 	// Storage account name.
@@ -413,11 +413,11 @@ type NebiusAccessKeyInitParameters struct {
 
 	// (String) Access key ID.
 	// Access key ID.
-	AccessKeyIDSecretRef v1.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
+	AccessKeyIDSecretRef v2.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
 
 	// (String, Sensitive) Secret access key.
 	// Secret access key.
-	SecretAccessKeySecretRef *v1.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
+	SecretAccessKeySecretRef *v2.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
 }
 
 type NebiusAccessKeyObservation struct {
@@ -428,12 +428,12 @@ type NebiusAccessKeyParameters struct {
 	// (String) Access key ID.
 	// Access key ID.
 	// +kubebuilder:validation:Optional
-	AccessKeyIDSecretRef v1.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
+	AccessKeyIDSecretRef v2.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
 
 	// (String, Sensitive) Secret access key.
 	// Secret access key.
 	// +kubebuilder:validation:Optional
-	SecretAccessKeySecretRef *v1.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
+	SecretAccessKeySecretRef *v2.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
 }
 
 type NebiusAnonymousInitParameters struct {
@@ -458,11 +458,11 @@ type NebiusInitParameters struct {
 
 	// Reference to a Bucket in storage to populate bucketName.
 	// +kubebuilder:validation:Optional
-	BucketNameRef *v1.Reference `json:"bucketNameRef,omitempty" tf:"-"`
+	BucketNameRef *v2.Reference `json:"bucketNameRef,omitempty" tf:"-"`
 
 	// Selector for a Bucket in storage to populate bucketName.
 	// +kubebuilder:validation:Optional
-	BucketNameSelector *v1.Selector `json:"bucketNameSelector,omitempty" tf:"-"`
+	BucketNameSelector *v2.Selector `json:"bucketNameSelector,omitempty" tf:"-"`
 
 	// (String) Nebius region where the destination bucket is located.
 	// Nebius region where the destination bucket is located.
@@ -498,11 +498,11 @@ type NebiusParameters struct {
 
 	// Reference to a Bucket in storage to populate bucketName.
 	// +kubebuilder:validation:Optional
-	BucketNameRef *v1.Reference `json:"bucketNameRef,omitempty" tf:"-"`
+	BucketNameRef *v2.Reference `json:"bucketNameRef,omitempty" tf:"-"`
 
 	// Selector for a Bucket in storage to populate bucketName.
 	// +kubebuilder:validation:Optional
-	BucketNameSelector *v1.Selector `json:"bucketNameSelector,omitempty" tf:"-"`
+	BucketNameSelector *v2.Selector `json:"bucketNameSelector,omitempty" tf:"-"`
 
 	// (String) Nebius region where the destination bucket is located.
 	// Nebius region where the destination bucket is located.
@@ -514,11 +514,11 @@ type S3CompatibleAccessKeyInitParameters struct {
 
 	// (String) Access key ID.
 	// Access key ID.
-	AccessKeyIDSecretRef v1.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
+	AccessKeyIDSecretRef v2.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
 
 	// (String, Sensitive) Secret access key.
 	// Secret access key.
-	SecretAccessKeySecretRef *v1.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
+	SecretAccessKeySecretRef *v2.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
 }
 
 type S3CompatibleAccessKeyObservation struct {
@@ -529,12 +529,12 @@ type S3CompatibleAccessKeyParameters struct {
 	// (String) Access key ID.
 	// Access key ID.
 	// +kubebuilder:validation:Optional
-	AccessKeyIDSecretRef v1.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
+	AccessKeyIDSecretRef v2.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
 
 	// (String, Sensitive) Secret access key.
 	// Secret access key.
 	// +kubebuilder:validation:Optional
-	SecretAccessKeySecretRef *v1.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
+	SecretAccessKeySecretRef *v2.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
 }
 
 type S3CompatibleAnonymousInitParameters struct {
@@ -664,11 +664,11 @@ type SourceNebiusInitParameters struct {
 
 	// Reference to a Bucket in storage to populate bucketName.
 	// +kubebuilder:validation:Optional
-	BucketNameRef *v1.Reference `json:"bucketNameRef,omitempty" tf:"-"`
+	BucketNameRef *v2.Reference `json:"bucketNameRef,omitempty" tf:"-"`
 
 	// Selector for a Bucket in storage to populate bucketName.
 	// +kubebuilder:validation:Optional
-	BucketNameSelector *v1.Selector `json:"bucketNameSelector,omitempty" tf:"-"`
+	BucketNameSelector *v2.Selector `json:"bucketNameSelector,omitempty" tf:"-"`
 
 	// (String) Nebius region where the destination bucket is located.
 	// Nebius region where the source bucket is located.
@@ -711,11 +711,11 @@ type SourceNebiusParameters struct {
 
 	// Reference to a Bucket in storage to populate bucketName.
 	// +kubebuilder:validation:Optional
-	BucketNameRef *v1.Reference `json:"bucketNameRef,omitempty" tf:"-"`
+	BucketNameRef *v2.Reference `json:"bucketNameRef,omitempty" tf:"-"`
 
 	// Selector for a Bucket in storage to populate bucketName.
 	// +kubebuilder:validation:Optional
-	BucketNameSelector *v1.Selector `json:"bucketNameSelector,omitempty" tf:"-"`
+	BucketNameSelector *v2.Selector `json:"bucketNameSelector,omitempty" tf:"-"`
 
 	// (String) Nebius region where the destination bucket is located.
 	// Nebius region where the source bucket is located.
@@ -775,11 +775,11 @@ type SourceS3CompatibleAccessKeyInitParameters struct {
 
 	// (String) Access key ID.
 	// Access key ID.
-	AccessKeyIDSecretRef v1.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
+	AccessKeyIDSecretRef v2.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
 
 	// (String, Sensitive) Secret access key.
 	// Secret access key.
-	SecretAccessKeySecretRef *v1.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
+	SecretAccessKeySecretRef *v2.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
 }
 
 type SourceS3CompatibleAccessKeyObservation struct {
@@ -790,12 +790,12 @@ type SourceS3CompatibleAccessKeyParameters struct {
 	// (String) Access key ID.
 	// Access key ID.
 	// +kubebuilder:validation:Optional
-	AccessKeyIDSecretRef v1.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
+	AccessKeyIDSecretRef v2.SecretKeySelector `json:"accessKeyIdSecretRef" tf:"-"`
 
 	// (String, Sensitive) Secret access key.
 	// Secret access key.
 	// +kubebuilder:validation:Optional
-	SecretAccessKeySecretRef *v1.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
+	SecretAccessKeySecretRef *v2.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
 }
 
 type SourceS3CompatibleAnonymousInitParameters struct {
@@ -1241,8 +1241,8 @@ type TransferStatusParameters struct {
 
 // TransferSpec defines the desired state of Transfer
 type TransferSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     TransferParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   TransferParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -1258,8 +1258,8 @@ type TransferSpec struct {
 
 // TransferStatus defines the observed state of Transfer.
 type TransferStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TransferObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TransferObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

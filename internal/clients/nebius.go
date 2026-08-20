@@ -6,9 +6,9 @@ import (
 
 	fwprovider "github.com/hashicorp/terraform-plugin-framework/provider"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
+	xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
@@ -150,7 +150,7 @@ func resolveNamespacedSpec(spec namespacedv1beta1.NamespacedProviderConfigSpec, 
 		Identity:             spec.Identity,
 		Credentials: namespacedv1beta1.ProviderCredentials{
 			Source: spec.Credentials.Source,
-			CommonCredentialSelectors: xpv1.CommonCredentialSelectors{
+			CommonCredentialSelectors: xpv2.CommonCredentialSelectors{
 				Fs:  spec.Credentials.Fs,
 				Env: spec.Credentials.Env,
 			},

@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AutoRepairInitParameters struct {
@@ -423,11 +423,11 @@ type ExistingFilesystemInitParameters struct {
 
 	// Reference to a Filesystem in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.Reference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.Reference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Filesystem in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.Selector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.Selector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type ExistingFilesystemObservation struct {
@@ -446,11 +446,11 @@ type ExistingFilesystemParameters struct {
 
 	// Reference to a Filesystem in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.Reference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.Reference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Filesystem in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.Selector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.Selector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type FilesystemsInitParameters struct {
@@ -531,11 +531,11 @@ type GpuClusterInitParameters struct {
 
 	// Reference to a GpuCluster in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.Reference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.Reference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a GpuCluster in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.Selector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.Selector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type GpuClusterObservation struct {
@@ -554,11 +554,11 @@ type GpuClusterParameters struct {
 
 	// Reference to a GpuCluster in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.Reference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.Reference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a GpuCluster in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.Selector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.Selector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type GpuSettingsInitParameters struct {
@@ -696,11 +696,11 @@ type NetworkInterfacesInitParameters struct {
 
 	// Reference to a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+	SubnetIDRef *v2.Reference `json:"subnetIdRef,omitempty" tf:"-"`
 
 	// Selector for a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+	SubnetIDSelector *v2.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type NetworkInterfacesObservation struct {
@@ -743,11 +743,11 @@ type NetworkInterfacesParameters struct {
 
 	// Reference to a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+	SubnetIDRef *v2.Reference `json:"subnetIdRef,omitempty" tf:"-"`
 
 	// Selector for a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+	SubnetIDSelector *v2.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type NodeGroupInitParameters struct {
@@ -786,11 +786,11 @@ type NodeGroupInitParameters struct {
 
 	// Reference to a Cluster in mk8s to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.Reference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.Reference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a Cluster in mk8s to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.Selector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.Selector `json:"parentIdSelector,omitempty" tf:"-"`
 
 	// (Attributes) :
 	Strategy *NodeGroupStrategyInitParameters `json:"strategy,omitempty" tf:"strategy,omitempty"`
@@ -937,11 +937,11 @@ type NodeGroupParameters struct {
 
 	// Reference to a Cluster in mk8s to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.Reference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.Reference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a Cluster in mk8s to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.Selector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.Selector `json:"parentIdSelector,omitempty" tf:"-"`
 
 	// (Attributes) :
 	// +kubebuilder:validation:Optional
@@ -1109,11 +1109,11 @@ type NvlinkInitParameters struct {
 
 	// Reference to a NvlInstanceGroup in compute to populate nvlInstanceGroupId.
 	// +kubebuilder:validation:Optional
-	NvlInstanceGroupIDRef *v1.Reference `json:"nvlInstanceGroupIdRef,omitempty" tf:"-"`
+	NvlInstanceGroupIDRef *v2.Reference `json:"nvlInstanceGroupIdRef,omitempty" tf:"-"`
 
 	// Selector for a NvlInstanceGroup in compute to populate nvlInstanceGroupId.
 	// +kubebuilder:validation:Optional
-	NvlInstanceGroupIDSelector *v1.Selector `json:"nvlInstanceGroupIdSelector,omitempty" tf:"-"`
+	NvlInstanceGroupIDSelector *v2.Selector `json:"nvlInstanceGroupIdSelector,omitempty" tf:"-"`
 }
 
 type NvlinkObservation struct {
@@ -1134,11 +1134,11 @@ type NvlinkParameters struct {
 
 	// Reference to a NvlInstanceGroup in compute to populate nvlInstanceGroupId.
 	// +kubebuilder:validation:Optional
-	NvlInstanceGroupIDRef *v1.Reference `json:"nvlInstanceGroupIdRef,omitempty" tf:"-"`
+	NvlInstanceGroupIDRef *v2.Reference `json:"nvlInstanceGroupIdRef,omitempty" tf:"-"`
 
 	// Selector for a NvlInstanceGroup in compute to populate nvlInstanceGroupId.
 	// +kubebuilder:validation:Optional
-	NvlInstanceGroupIDSelector *v1.Selector `json:"nvlInstanceGroupIdSelector,omitempty" tf:"-"`
+	NvlInstanceGroupIDSelector *v2.Selector `json:"nvlInstanceGroupIdSelector,omitempty" tf:"-"`
 }
 
 type PassthroughGroupInitParameters struct {
@@ -1540,7 +1540,7 @@ type TemplateInitParameters struct {
 	//
 	// cloud-init user-data
 	// Should contain at least one SSH key.
-	CloudInitUserDataSecretRef *v1.SecretKeySelector `json:"cloudInitUserDataSecretRef,omitempty" tf:"-"`
+	CloudInitUserDataSecretRef *v2.SecretKeySelector `json:"cloudInitUserDataSecretRef,omitempty" tf:"-"`
 
 	// (Attributes List) :
 	Filesystems []FilesystemsInitParameters `json:"filesystems,omitempty" tf:"filesystems,omitempty"`
@@ -1626,11 +1626,11 @@ type TemplateInitParameters struct {
 
 	// Reference to a ServiceAccount in iam to populate serviceAccountId.
 	// +kubebuilder:validation:Optional
-	ServiceAccountIDRef *v1.Reference `json:"serviceAccountIdRef,omitempty" tf:"-"`
+	ServiceAccountIDRef *v2.Reference `json:"serviceAccountIdRef,omitempty" tf:"-"`
 
 	// Selector for a ServiceAccount in iam to populate serviceAccountId.
 	// +kubebuilder:validation:Optional
-	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
+	ServiceAccountIDSelector *v2.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
 	// (Attributes List) :
 	Taints []TaintsInitParameters `json:"taints,omitempty" tf:"taints,omitempty"`
@@ -1798,7 +1798,7 @@ type TemplateParameters struct {
 	// cloud-init user-data
 	// Should contain at least one SSH key.
 	// +kubebuilder:validation:Optional
-	CloudInitUserDataSecretRef *v1.SecretKeySelector `json:"cloudInitUserDataSecretRef,omitempty" tf:"-"`
+	CloudInitUserDataSecretRef *v2.SecretKeySelector `json:"cloudInitUserDataSecretRef,omitempty" tf:"-"`
 
 	// (Attributes List) :
 	// +kubebuilder:validation:Optional
@@ -1897,11 +1897,11 @@ type TemplateParameters struct {
 
 	// Reference to a ServiceAccount in iam to populate serviceAccountId.
 	// +kubebuilder:validation:Optional
-	ServiceAccountIDRef *v1.Reference `json:"serviceAccountIdRef,omitempty" tf:"-"`
+	ServiceAccountIDRef *v2.Reference `json:"serviceAccountIdRef,omitempty" tf:"-"`
 
 	// Selector for a ServiceAccount in iam to populate serviceAccountId.
 	// +kubebuilder:validation:Optional
-	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
+	ServiceAccountIDSelector *v2.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
 	// (Attributes List) :
 	// +kubebuilder:validation:Optional
@@ -1910,8 +1910,8 @@ type TemplateParameters struct {
 
 // NodeGroupSpec defines the desired state of NodeGroup
 type NodeGroupSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     NodeGroupParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   NodeGroupParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -1927,8 +1927,8 @@ type NodeGroupSpec struct {
 
 // NodeGroupStatus defines the observed state of NodeGroup.
 type NodeGroupStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        NodeGroupObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               NodeGroupObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

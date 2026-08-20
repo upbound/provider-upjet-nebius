@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type MetadataInitParameters struct {
@@ -55,11 +55,11 @@ type RecordInitParameters struct {
 
 	// Reference to a Zone in dns to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.Reference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.Reference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in dns to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.Selector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.Selector `json:"parentIdSelector,omitempty" tf:"-"`
 
 	// :
 	//
@@ -229,11 +229,11 @@ type RecordParameters struct {
 
 	// Reference to a Zone in dns to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.Reference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.Reference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in dns to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.Selector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.Selector `json:"parentIdSelector,omitempty" tf:"-"`
 
 	// :
 	//
@@ -295,8 +295,8 @@ type StatusParameters struct {
 
 // RecordSpec defines the desired state of Record
 type RecordSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     RecordParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   RecordParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -312,8 +312,8 @@ type RecordSpec struct {
 
 // RecordStatus defines the observed state of Record.
 type RecordStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        RecordObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               RecordObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
