@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type EgressInitParameters struct {
@@ -42,11 +41,11 @@ type EgressInitParameters struct {
 
 	// Reference to a SecurityGroup in vpc to populate destinationSecurityGroupId.
 	// +kubebuilder:validation:Optional
-	DestinationSecurityGroupIDRef *v1.NamespacedReference `json:"destinationSecurityGroupIdRef,omitempty" tf:"-"`
+	DestinationSecurityGroupIDRef *v2.NamespacedReference `json:"destinationSecurityGroupIdRef,omitempty" tf:"-"`
 
 	// Selector for a SecurityGroup in vpc to populate destinationSecurityGroupId.
 	// +kubebuilder:validation:Optional
-	DestinationSecurityGroupIDSelector *v1.NamespacedSelector `json:"destinationSecurityGroupIdSelector,omitempty" tf:"-"`
+	DestinationSecurityGroupIDSelector *v2.NamespacedSelector `json:"destinationSecurityGroupIdSelector,omitempty" tf:"-"`
 }
 
 type EgressObservation struct {
@@ -105,11 +104,11 @@ type EgressParameters struct {
 
 	// Reference to a SecurityGroup in vpc to populate destinationSecurityGroupId.
 	// +kubebuilder:validation:Optional
-	DestinationSecurityGroupIDRef *v1.NamespacedReference `json:"destinationSecurityGroupIdRef,omitempty" tf:"-"`
+	DestinationSecurityGroupIDRef *v2.NamespacedReference `json:"destinationSecurityGroupIdRef,omitempty" tf:"-"`
 
 	// Selector for a SecurityGroup in vpc to populate destinationSecurityGroupId.
 	// +kubebuilder:validation:Optional
-	DestinationSecurityGroupIDSelector *v1.NamespacedSelector `json:"destinationSecurityGroupIdSelector,omitempty" tf:"-"`
+	DestinationSecurityGroupIDSelector *v2.NamespacedSelector `json:"destinationSecurityGroupIdSelector,omitempty" tf:"-"`
 }
 
 type IngressInitParameters struct {
@@ -140,11 +139,11 @@ type IngressInitParameters struct {
 
 	// Reference to a SecurityGroup in vpc to populate sourceSecurityGroupId.
 	// +kubebuilder:validation:Optional
-	SourceSecurityGroupIDRef *v1.NamespacedReference `json:"sourceSecurityGroupIdRef,omitempty" tf:"-"`
+	SourceSecurityGroupIDRef *v2.NamespacedReference `json:"sourceSecurityGroupIdRef,omitempty" tf:"-"`
 
 	// Selector for a SecurityGroup in vpc to populate sourceSecurityGroupId.
 	// +kubebuilder:validation:Optional
-	SourceSecurityGroupIDSelector *v1.NamespacedSelector `json:"sourceSecurityGroupIdSelector,omitempty" tf:"-"`
+	SourceSecurityGroupIDSelector *v2.NamespacedSelector `json:"sourceSecurityGroupIdSelector,omitempty" tf:"-"`
 }
 
 type IngressObservation struct {
@@ -203,11 +202,11 @@ type IngressParameters struct {
 
 	// Reference to a SecurityGroup in vpc to populate sourceSecurityGroupId.
 	// +kubebuilder:validation:Optional
-	SourceSecurityGroupIDRef *v1.NamespacedReference `json:"sourceSecurityGroupIdRef,omitempty" tf:"-"`
+	SourceSecurityGroupIDRef *v2.NamespacedReference `json:"sourceSecurityGroupIdRef,omitempty" tf:"-"`
 
 	// Selector for a SecurityGroup in vpc to populate sourceSecurityGroupId.
 	// +kubebuilder:validation:Optional
-	SourceSecurityGroupIDSelector *v1.NamespacedSelector `json:"sourceSecurityGroupIdSelector,omitempty" tf:"-"`
+	SourceSecurityGroupIDSelector *v2.NamespacedSelector `json:"sourceSecurityGroupIdSelector,omitempty" tf:"-"`
 }
 
 type SecurityRuleInitParameters struct {
@@ -254,11 +253,11 @@ type SecurityRuleInitParameters struct {
 
 	// Reference to a SecurityGroup in vpc to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.NamespacedReference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.NamespacedReference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a SecurityGroup in vpc to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.NamespacedSelector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.NamespacedSelector `json:"parentIdSelector,omitempty" tf:"-"`
 
 	// (Number) :
 	// :
@@ -485,11 +484,11 @@ type SecurityRuleParameters struct {
 
 	// Reference to a SecurityGroup in vpc to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.NamespacedReference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.NamespacedReference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a SecurityGroup in vpc to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.NamespacedSelector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.NamespacedSelector `json:"parentIdSelector,omitempty" tf:"-"`
 
 	// (Number) :
 	// :
@@ -654,8 +653,8 @@ type SecurityRuleSpec struct {
 
 // SecurityRuleStatus defines the observed state of SecurityRule.
 type SecurityRuleStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SecurityRuleObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SecurityRuleObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

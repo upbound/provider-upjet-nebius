@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AccessKeyAccountInitParameters struct {
@@ -284,11 +283,11 @@ type AccountServiceAccountInitParameters struct {
 
 	// Reference to a ServiceAccount in iam to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a ServiceAccount in iam to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type AccountServiceAccountObservation struct {
@@ -307,11 +306,11 @@ type AccountServiceAccountParameters struct {
 
 	// Reference to a ServiceAccount in iam to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a ServiceAccount in iam to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type AccountUserAccountInitParameters struct {
@@ -352,8 +351,8 @@ type AccessKeySpec struct {
 
 // AccessKeyStatus defines the observed state of AccessKey.
 type AccessKeyStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AccessKeyObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AccessKeyObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

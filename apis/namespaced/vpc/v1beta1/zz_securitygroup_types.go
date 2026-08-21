@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type SecurityGroupInitParameters struct {
@@ -36,11 +35,11 @@ type SecurityGroupInitParameters struct {
 
 	// Reference to a Network in vpc to populate networkId.
 	// +kubebuilder:validation:Optional
-	NetworkIDRef *v1.NamespacedReference `json:"networkIdRef,omitempty" tf:"-"`
+	NetworkIDRef *v2.NamespacedReference `json:"networkIdRef,omitempty" tf:"-"`
 
 	// Selector for a Network in vpc to populate networkId.
 	// +kubebuilder:validation:Optional
-	NetworkIDSelector *v1.NamespacedSelector `json:"networkIdSelector,omitempty" tf:"-"`
+	NetworkIDSelector *v2.NamespacedSelector `json:"networkIdSelector,omitempty" tf:"-"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
 	// Identifier of the parent resource to which the resource belongs.
@@ -136,11 +135,11 @@ type SecurityGroupParameters struct {
 
 	// Reference to a Network in vpc to populate networkId.
 	// +kubebuilder:validation:Optional
-	NetworkIDRef *v1.NamespacedReference `json:"networkIdRef,omitempty" tf:"-"`
+	NetworkIDRef *v2.NamespacedReference `json:"networkIdRef,omitempty" tf:"-"`
 
 	// Selector for a Network in vpc to populate networkId.
 	// +kubebuilder:validation:Optional
-	NetworkIDSelector *v1.NamespacedSelector `json:"networkIdSelector,omitempty" tf:"-"`
+	NetworkIDSelector *v2.NamespacedSelector `json:"networkIdSelector,omitempty" tf:"-"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
 	// Identifier of the parent resource to which the resource belongs.
@@ -198,8 +197,8 @@ type SecurityGroupSpec struct {
 
 // SecurityGroupStatus defines the observed state of SecurityGroup.
 type SecurityGroupStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SecurityGroupObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SecurityGroupObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

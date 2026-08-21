@@ -10,13 +10,13 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type InvitationInitParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	EmailSecretRef *v1.SecretKeySelector `json:"emailSecretRef,omitempty" tf:"-"`
+	EmailSecretRef *v2.SecretKeySelector `json:"emailSecretRef,omitempty" tf:"-"`
 
 	// Labels associated with the resource.
 	// +mapType=granular
@@ -89,7 +89,7 @@ type InvitationParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	EmailSecretRef *v1.SecretKeySelector `json:"emailSecretRef,omitempty" tf:"-"`
+	EmailSecretRef *v2.SecretKeySelector `json:"emailSecretRef,omitempty" tf:"-"`
 
 	// Labels associated with the resource.
 	// +kubebuilder:validation:Optional
@@ -138,8 +138,8 @@ type InvitationStatusParameters struct {
 
 // InvitationSpec defines the desired state of Invitation
 type InvitationSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     InvitationParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   InvitationParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -155,8 +155,8 @@ type InvitationSpec struct {
 
 // InvitationStatus defines the observed state of Invitation.
 type InvitationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        InvitationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               InvitationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

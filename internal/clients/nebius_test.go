@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 	"github.com/google/go-cmp/cmp"
 
 	namespacedv1beta1 "github.com/upbound/provider-nebius/apis/namespaced/v1beta1"
@@ -26,9 +26,9 @@ func TestResolveNamespacedSpec(t *testing.T) {
 				namespace: "team-a",
 				spec: namespacedv1beta1.NamespacedProviderConfigSpec{
 					Credentials: namespacedv1beta1.NamespacedProviderCredentials{
-						Source: xpv1.CredentialsSourceSecret,
-						SecretRef: &xpv1.LocalSecretKeySelector{
-							LocalSecretReference: xpv1.LocalSecretReference{Name: "creds"},
+						Source: xpv2.CredentialsSourceSecret,
+						SecretRef: &xpv2.LocalSecretKeySelector{
+							LocalSecretReference: xpv2.LocalSecretReference{Name: "creds"},
 							Key:                  "credentials",
 						},
 					},
@@ -36,10 +36,10 @@ func TestResolveNamespacedSpec(t *testing.T) {
 			},
 			want: namespacedv1beta1.ProviderConfigSpec{
 				Credentials: namespacedv1beta1.ProviderCredentials{
-					Source: xpv1.CredentialsSourceSecret,
-					CommonCredentialSelectors: xpv1.CommonCredentialSelectors{
-						SecretRef: &xpv1.SecretKeySelector{
-							SecretReference: xpv1.SecretReference{Name: "creds", Namespace: "team-a"},
+					Source: xpv2.CredentialsSourceSecret,
+					CommonCredentialSelectors: xpv2.CommonCredentialSelectors{
+						SecretRef: &xpv2.SecretKeySelector{
+							SecretReference: xpv2.SecretReference{Name: "creds", Namespace: "team-a"},
 							Key:             "credentials",
 						},
 					},
@@ -51,13 +51,13 @@ func TestResolveNamespacedSpec(t *testing.T) {
 				namespace: "team-a",
 				spec: namespacedv1beta1.NamespacedProviderConfigSpec{
 					Credentials: namespacedv1beta1.NamespacedProviderCredentials{
-						Source: xpv1.CredentialsSourceInjectedIdentity,
+						Source: xpv2.CredentialsSourceInjectedIdentity,
 					},
 				},
 			},
 			want: namespacedv1beta1.ProviderConfigSpec{
 				Credentials: namespacedv1beta1.ProviderCredentials{
-					Source: xpv1.CredentialsSourceInjectedIdentity,
+					Source: xpv2.CredentialsSourceInjectedIdentity,
 				},
 			},
 		},
@@ -68,9 +68,9 @@ func TestResolveNamespacedSpec(t *testing.T) {
 					ProjectID: new("project-e00example"),
 					Identity:  &internalconfig.Identity{Type: internalconfig.IdentityTypeToken},
 					Credentials: namespacedv1beta1.NamespacedProviderCredentials{
-						Source: xpv1.CredentialsSourceFilesystem,
-						Fs:     &xpv1.FsSelector{Path: "/creds"},
-						Env:    &xpv1.EnvSelector{Name: "NEBIUS_CREDS"},
+						Source: xpv2.CredentialsSourceFilesystem,
+						Fs:     &xpv2.FsSelector{Path: "/creds"},
+						Env:    &xpv2.EnvSelector{Name: "NEBIUS_CREDS"},
 					},
 				},
 			},
@@ -78,10 +78,10 @@ func TestResolveNamespacedSpec(t *testing.T) {
 				ProjectID: new("project-e00example"),
 				Identity:  &internalconfig.Identity{Type: internalconfig.IdentityTypeToken},
 				Credentials: namespacedv1beta1.ProviderCredentials{
-					Source: xpv1.CredentialsSourceFilesystem,
-					CommonCredentialSelectors: xpv1.CommonCredentialSelectors{
-						Fs:  &xpv1.FsSelector{Path: "/creds"},
-						Env: &xpv1.EnvSelector{Name: "NEBIUS_CREDS"},
+					Source: xpv2.CredentialsSourceFilesystem,
+					CommonCredentialSelectors: xpv2.CommonCredentialSelectors{
+						Fs:  &xpv2.FsSelector{Path: "/creds"},
+						Env: &xpv2.EnvSelector{Name: "NEBIUS_CREDS"},
 					},
 				},
 			},

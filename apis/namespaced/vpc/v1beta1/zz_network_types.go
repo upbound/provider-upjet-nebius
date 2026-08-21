@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type IPv4PrivatePoolsInitParameters struct {
@@ -62,11 +61,11 @@ type IPv4PublicPoolsPoolsInitParameters struct {
 
 	// Reference to a Pool in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Pool in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type IPv4PublicPoolsPoolsObservation struct {
@@ -87,11 +86,11 @@ type IPv4PublicPoolsPoolsParameters struct {
 
 	// Reference to a Pool in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Pool in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type NetworkInitParameters struct {
@@ -254,11 +253,11 @@ type PoolsInitParameters struct {
 
 	// Reference to a Pool in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Pool in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type PoolsObservation struct {
@@ -279,11 +278,11 @@ type PoolsParameters struct {
 
 	// Reference to a Pool in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Pool in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 // NetworkSpec defines the desired state of Network
@@ -305,8 +304,8 @@ type NetworkSpec struct {
 
 // NetworkStatus defines the observed state of Network.
 type NetworkStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        NetworkObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               NetworkObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type GroupMemberMetadataInitParameters struct {
@@ -70,11 +70,11 @@ type GroupMembershipInitParameters struct {
 
 	// Reference to a ServiceAccount in iam to populate memberId.
 	// +kubebuilder:validation:Optional
-	MemberIDRef *v1.Reference `json:"memberIdRef,omitempty" tf:"-"`
+	MemberIDRef *v2.Reference `json:"memberIdRef,omitempty" tf:"-"`
 
 	// Selector for a ServiceAccount in iam to populate memberId.
 	// +kubebuilder:validation:Optional
-	MemberIDSelector *v1.Selector `json:"memberIdSelector,omitempty" tf:"-"`
+	MemberIDSelector *v2.Selector `json:"memberIdSelector,omitempty" tf:"-"`
 
 	Metadata *GroupMembershipMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
@@ -88,11 +88,11 @@ type GroupMembershipInitParameters struct {
 
 	// Reference to a Group in iam to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.Reference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.Reference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a Group in iam to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.Selector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.Selector `json:"parentIdSelector,omitempty" tf:"-"`
 }
 
 type GroupMembershipMetadataInitParameters struct {
@@ -163,11 +163,11 @@ type GroupMembershipParameters struct {
 
 	// Reference to a ServiceAccount in iam to populate memberId.
 	// +kubebuilder:validation:Optional
-	MemberIDRef *v1.Reference `json:"memberIdRef,omitempty" tf:"-"`
+	MemberIDRef *v2.Reference `json:"memberIdRef,omitempty" tf:"-"`
 
 	// Selector for a ServiceAccount in iam to populate memberId.
 	// +kubebuilder:validation:Optional
-	MemberIDSelector *v1.Selector `json:"memberIdSelector,omitempty" tf:"-"`
+	MemberIDSelector *v2.Selector `json:"memberIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	Metadata *GroupMembershipMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
@@ -184,11 +184,11 @@ type GroupMembershipParameters struct {
 
 	// Reference to a Group in iam to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.Reference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.Reference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a Group in iam to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.Selector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.Selector `json:"parentIdSelector,omitempty" tf:"-"`
 }
 
 type GroupMembershipStatusInitParameters struct {
@@ -274,8 +274,8 @@ type TenantUserAccountStatusParameters struct {
 
 // GroupMembershipSpec defines the desired state of GroupMembership
 type GroupMembershipSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     GroupMembershipParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   GroupMembershipParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -291,8 +291,8 @@ type GroupMembershipSpec struct {
 
 // GroupMembershipStatus defines the observed state of GroupMembership.
 type GroupMembershipStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        GroupMembershipObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               GroupMembershipObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

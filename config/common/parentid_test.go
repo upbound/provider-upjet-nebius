@@ -8,9 +8,9 @@ import (
 	"context"
 	"testing"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/test"
+	xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 	"github.com/google/go-cmp/cmp"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -67,11 +67,11 @@ func TestParentIDInitializer(t *testing.T) {
 			// ProviderConfig path in providerConfigProjectID.
 			n := &clustervpc.Network{}
 			n.SetName("example")
-			n.SetProviderConfigReference(&xpv1.Reference{Name: "default"})
+			n.SetProviderConfigReference(&xpv2.Reference{Name: "default"})
 			n.Spec.ForProvider.ParentID = tc.args.forProvider
 			n.Spec.InitProvider.ParentID = tc.args.initProvider
 			if tc.args.observeOnly {
-				n.SetManagementPolicies(xpv1.ManagementPolicies{xpv1.ManagementActionObserve})
+				n.SetManagementPolicies(xpv2.ManagementPolicies{xpv2.ManagementActionObserve})
 			}
 
 			got := want{}

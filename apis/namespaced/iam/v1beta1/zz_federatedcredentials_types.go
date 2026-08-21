@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type FederatedCredentialsInitParameters struct {
@@ -43,11 +42,11 @@ type FederatedCredentialsInitParameters struct {
 
 	// Reference to a ServiceAccount in iam to populate subjectId.
 	// +kubebuilder:validation:Optional
-	SubjectIDRef *v1.NamespacedReference `json:"subjectIdRef,omitempty" tf:"-"`
+	SubjectIDRef *v2.NamespacedReference `json:"subjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a ServiceAccount in iam to populate subjectId.
 	// +kubebuilder:validation:Optional
-	SubjectIDSelector *v1.NamespacedSelector `json:"subjectIdSelector,omitempty" tf:"-"`
+	SubjectIDSelector *v2.NamespacedSelector `json:"subjectIdSelector,omitempty" tf:"-"`
 }
 
 type FederatedCredentialsMetadataInitParameters struct {
@@ -147,11 +146,11 @@ type FederatedCredentialsParameters struct {
 
 	// Reference to a ServiceAccount in iam to populate subjectId.
 	// +kubebuilder:validation:Optional
-	SubjectIDRef *v1.NamespacedReference `json:"subjectIdRef,omitempty" tf:"-"`
+	SubjectIDRef *v2.NamespacedReference `json:"subjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a ServiceAccount in iam to populate subjectId.
 	// +kubebuilder:validation:Optional
-	SubjectIDSelector *v1.NamespacedSelector `json:"subjectIdSelector,omitempty" tf:"-"`
+	SubjectIDSelector *v2.NamespacedSelector `json:"subjectIdSelector,omitempty" tf:"-"`
 }
 
 type FederatedCredentialsStatusInitParameters struct {
@@ -223,8 +222,8 @@ type FederatedCredentialsSpec struct {
 
 // FederatedCredentialsStatus defines the observed state of FederatedCredentials.
 type FederatedCredentialsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        FederatedCredentialsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               FederatedCredentialsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

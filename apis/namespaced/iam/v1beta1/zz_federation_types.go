@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type FederationInitParameters struct {
@@ -220,8 +219,8 @@ type FederationSpec struct {
 
 // FederationStatus defines the observed state of Federation.
 type FederationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        FederationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               FederationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

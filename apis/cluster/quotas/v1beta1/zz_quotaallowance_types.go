@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type MetadataInitParameters struct {
@@ -236,8 +236,8 @@ type StatusParameters struct {
 
 // QuotaAllowanceSpec defines the desired state of QuotaAllowance
 type QuotaAllowanceSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     QuotaAllowanceParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   QuotaAllowanceParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -253,8 +253,8 @@ type QuotaAllowanceSpec struct {
 
 // QuotaAllowanceStatus defines the observed state of QuotaAllowance.
 type QuotaAllowanceStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        QuotaAllowanceObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               QuotaAllowanceObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type MetadataInitParameters struct {
@@ -142,8 +142,8 @@ type TunnelParameters struct {
 
 // TunnelSpec defines the desired state of Tunnel
 type TunnelSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     TunnelParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   TunnelParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -159,8 +159,8 @@ type TunnelSpec struct {
 
 // TunnelStatus defines the observed state of Tunnel.
 type TunnelStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TunnelObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TunnelObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

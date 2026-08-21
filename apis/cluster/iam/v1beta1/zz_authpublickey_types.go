@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AccountInitParameters struct {
@@ -67,7 +67,7 @@ type AuthPublicKeyInitParameters struct {
 	Account *AccountInitParameters `json:"account,omitempty" tf:"account,omitempty"`
 
 	// (String)
-	DataSecretRef *v1.SecretKeySelector `json:"dataSecretRef,omitempty" tf:"-"`
+	DataSecretRef *v2.SecretKeySelector `json:"dataSecretRef,omitempty" tf:"-"`
 
 	// (String)
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -170,7 +170,7 @@ type AuthPublicKeyParameters struct {
 
 	// (String)
 	// +kubebuilder:validation:Optional
-	DataSecretRef *v1.SecretKeySelector `json:"dataSecretRef,omitempty" tf:"-"`
+	DataSecretRef *v2.SecretKeySelector `json:"dataSecretRef,omitempty" tf:"-"`
 
 	// (String)
 	// +kubebuilder:validation:Optional
@@ -244,11 +244,11 @@ type ServiceAccountInitParameters struct {
 
 	// Reference to a ServiceAccount in iam to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.Reference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.Reference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a ServiceAccount in iam to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.Selector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.Selector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type ServiceAccountObservation struct {
@@ -267,11 +267,11 @@ type ServiceAccountParameters struct {
 
 	// Reference to a ServiceAccount in iam to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.Reference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.Reference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a ServiceAccount in iam to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.Selector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.Selector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type UserAccountInitParameters struct {
@@ -295,8 +295,8 @@ type UserAccountParameters struct {
 
 // AuthPublicKeySpec defines the desired state of AuthPublicKey
 type AuthPublicKeySpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     AuthPublicKeyParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   AuthPublicKeyParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -312,8 +312,8 @@ type AuthPublicKeySpec struct {
 
 // AuthPublicKeyStatus defines the observed state of AuthPublicKey.
 type AuthPublicKeyStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AuthPublicKeyObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AuthPublicKeyObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

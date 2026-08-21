@@ -7,11 +7,11 @@ package common
 import (
 	"context"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/fieldpath"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
 	xpresource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
+	xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 	"github.com/crossplane/upjet/v2/pkg/config"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -113,7 +113,7 @@ func NewParentIDInitializer(kube client.Client) managed.Initializer {
 func (i *parentIDInitializer) Initialize(ctx context.Context, mg xpresource.Managed) error {
 	// Do not mutate spec.forProvider for observe-only resources.
 	if sets.New(mg.GetManagementPolicies()...).
-		Equal(sets.New(xpv1.ManagementActionObserve)) {
+		Equal(sets.New(xpv2.ManagementActionObserve)) {
 		return nil
 	}
 

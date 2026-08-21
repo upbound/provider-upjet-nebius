@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AccessPermitInitParameters struct {
@@ -31,11 +31,11 @@ type AccessPermitInitParameters struct {
 
 	// Reference to a Group in iam to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.Reference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.Reference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a Group in iam to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.Selector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.Selector `json:"parentIdSelector,omitempty" tf:"-"`
 
 	// Resource for granting access permit.
 	ResourceID *string `json:"resourceId,omitempty" tf:"resource_id,omitempty"`
@@ -113,11 +113,11 @@ type AccessPermitParameters struct {
 
 	// Reference to a Group in iam to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDRef *v1.Reference `json:"parentIdRef,omitempty" tf:"-"`
+	ParentIDRef *v2.Reference `json:"parentIdRef,omitempty" tf:"-"`
 
 	// Selector for a Group in iam to populate parentId.
 	// +kubebuilder:validation:Optional
-	ParentIDSelector *v1.Selector `json:"parentIdSelector,omitempty" tf:"-"`
+	ParentIDSelector *v2.Selector `json:"parentIdSelector,omitempty" tf:"-"`
 
 	// Resource for granting access permit.
 	// +kubebuilder:validation:Optional
@@ -148,8 +148,8 @@ type StatusParameters struct {
 
 // AccessPermitSpec defines the desired state of AccessPermit
 type AccessPermitSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     AccessPermitParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   AccessPermitParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -165,8 +165,8 @@ type AccessPermitSpec struct {
 
 // AccessPermitStatus defines the observed state of AccessPermit.
 type AccessPermitStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AccessPermitObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AccessPermitObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

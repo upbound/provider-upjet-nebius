@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AliasesInitParameters struct {
@@ -161,11 +160,11 @@ type ExistingDiskInitParameters struct {
 
 	// Reference to a Disk in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Disk in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type ExistingDiskObservation struct {
@@ -184,11 +183,11 @@ type ExistingDiskParameters struct {
 
 	// Reference to a Disk in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Disk in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type ExistingFilesystemInitParameters struct {
@@ -200,11 +199,11 @@ type ExistingFilesystemInitParameters struct {
 
 	// Reference to a Filesystem in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Filesystem in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type ExistingFilesystemObservation struct {
@@ -223,11 +222,11 @@ type ExistingFilesystemParameters struct {
 
 	// Reference to a Filesystem in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Filesystem in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type FilesystemsInitParameters struct {
@@ -336,11 +335,11 @@ type InstanceGpuClusterInitParameters struct {
 
 	// Reference to a GpuCluster in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a GpuCluster in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type InstanceGpuClusterObservation struct {
@@ -371,11 +370,11 @@ type InstanceGpuClusterParameters struct {
 
 	// Reference to a GpuCluster in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a GpuCluster in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type InstanceInitParameters struct {
@@ -388,7 +387,7 @@ type InstanceInitParameters struct {
 	//
 	// Data in cloud-init format for customizing instance initialization.
 	// For details, see https://docs.nebius.com/compute/virtual-machines/manage#user-data
-	CloudInitUserDataSecretRef *v1.LocalSecretKeySelector `json:"cloudInitUserDataSecretRef,omitempty" tf:"-"`
+	CloudInitUserDataSecretRef *v2.LocalSecretKeySelector `json:"cloudInitUserDataSecretRef,omitempty" tf:"-"`
 
 	// (Attributes List) List of Shared Filesystems attached to the instance. (see below for nested schema)
 	Filesystems []FilesystemsInitParameters `json:"filesystems,omitempty" tf:"filesystems,omitempty"`
@@ -470,11 +469,11 @@ type InstanceInitParameters struct {
 
 	// Reference to a ServiceAccount in iam to populate serviceAccountId.
 	// +kubebuilder:validation:Optional
-	ServiceAccountIDRef *v1.NamespacedReference `json:"serviceAccountIdRef,omitempty" tf:"-"`
+	ServiceAccountIDRef *v2.NamespacedReference `json:"serviceAccountIdRef,omitempty" tf:"-"`
 
 	// Selector for a ServiceAccount in iam to populate serviceAccountId.
 	// +kubebuilder:validation:Optional
-	ServiceAccountIDSelector *v1.NamespacedSelector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
+	ServiceAccountIDSelector *v2.NamespacedSelector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
 	// (Boolean) Indicates whether the instance should be stopped.
 	// Indicates whether the instance should be stopped.
@@ -619,7 +618,7 @@ type InstanceParameters struct {
 	// Data in cloud-init format for customizing instance initialization.
 	// For details, see https://docs.nebius.com/compute/virtual-machines/manage#user-data
 	// +kubebuilder:validation:Optional
-	CloudInitUserDataSecretRef *v1.LocalSecretKeySelector `json:"cloudInitUserDataSecretRef,omitempty" tf:"-"`
+	CloudInitUserDataSecretRef *v2.LocalSecretKeySelector `json:"cloudInitUserDataSecretRef,omitempty" tf:"-"`
 
 	// (Attributes List) List of Shared Filesystems attached to the instance. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -717,11 +716,11 @@ type InstanceParameters struct {
 
 	// Reference to a ServiceAccount in iam to populate serviceAccountId.
 	// +kubebuilder:validation:Optional
-	ServiceAccountIDRef *v1.NamespacedReference `json:"serviceAccountIdRef,omitempty" tf:"-"`
+	ServiceAccountIDRef *v2.NamespacedReference `json:"serviceAccountIdRef,omitempty" tf:"-"`
 
 	// Selector for a ServiceAccount in iam to populate serviceAccountId.
 	// +kubebuilder:validation:Optional
-	ServiceAccountIDSelector *v1.NamespacedSelector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
+	ServiceAccountIDSelector *v2.NamespacedSelector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
 	// (Boolean) Indicates whether the instance should be stopped.
 	// Indicates whether the instance should be stopped.
@@ -1178,11 +1177,11 @@ type NetworkInterfacesInitParameters struct {
 
 	// Reference to a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDRef *v1.NamespacedReference `json:"subnetIdRef,omitempty" tf:"-"`
+	SubnetIDRef *v2.NamespacedReference `json:"subnetIdRef,omitempty" tf:"-"`
 
 	// Selector for a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDSelector *v1.NamespacedSelector `json:"subnetIdSelector,omitempty" tf:"-"`
+	SubnetIDSelector *v2.NamespacedSelector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type NetworkInterfacesObservation struct {
@@ -1248,11 +1247,11 @@ type NetworkInterfacesParameters struct {
 
 	// Reference to a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDRef *v1.NamespacedReference `json:"subnetIdRef,omitempty" tf:"-"`
+	SubnetIDRef *v2.NamespacedReference `json:"subnetIdRef,omitempty" tf:"-"`
 
 	// Selector for a Subnet in vpc to populate subnetId.
 	// +kubebuilder:validation:Optional
-	SubnetIDSelector *v1.NamespacedSelector `json:"subnetIdSelector,omitempty" tf:"-"`
+	SubnetIDSelector *v2.NamespacedSelector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type NetworkInterfacesPublicIPAddressInitParameters struct {
@@ -1559,11 +1558,11 @@ type SecondaryDisksExistingDiskInitParameters struct {
 
 	// Reference to a Disk in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Disk in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type SecondaryDisksExistingDiskObservation struct {
@@ -1582,11 +1581,11 @@ type SecondaryDisksExistingDiskParameters struct {
 
 	// Reference to a Disk in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a Disk in compute to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type SecondaryDisksInitParameters struct {
@@ -1738,11 +1737,11 @@ type SecurityGroupsInitParameters struct {
 
 	// Reference to a SecurityGroup in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a SecurityGroup in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type SecurityGroupsObservation struct {
@@ -1763,11 +1762,11 @@ type SecurityGroupsParameters struct {
 
 	// Reference to a SecurityGroup in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDRef *v1.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
 
 	// Selector for a SecurityGroup in vpc to populate id.
 	// +kubebuilder:validation:Optional
-	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type SpecDiskEncryptionInitParameters struct {
@@ -2103,8 +2102,8 @@ type InstanceSpec struct {
 
 // InstanceStatus defines the observed state of Instance.
 type InstanceStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        InstanceObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               InstanceObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

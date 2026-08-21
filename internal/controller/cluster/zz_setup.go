@@ -148,3 +148,52 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		disk.SetupWebhookWithManager,
+		filesystem.SetupWebhookWithManager,
+		gpucluster.SetupWebhookWithManager,
+		instance.SetupWebhookWithManager,
+		nvlinstancegroup.SetupWebhookWithManager,
+		record.SetupWebhookWithManager,
+		zone.SetupWebhookWithManager,
+		accesskey.SetupWebhookWithManager,
+		accesspermit.SetupWebhookWithManager,
+		authpublickey.SetupWebhookWithManager,
+		federatedcredentials.SetupWebhookWithManager,
+		federation.SetupWebhookWithManager,
+		federationcertificate.SetupWebhookWithManager,
+		group.SetupWebhookWithManager,
+		groupmembership.SetupWebhookWithManager,
+		invitation.SetupWebhookWithManager,
+		project.SetupWebhookWithManager,
+		serviceaccount.SetupWebhookWithManager,
+		asymmetrickey.SetupWebhookWithManager,
+		symmetrickey.SetupWebhookWithManager,
+		cluster.SetupWebhookWithManager,
+		nodegroup.SetupWebhookWithManager,
+		secret.SetupWebhookWithManager,
+		secretversion.SetupWebhookWithManager,
+		providerconfig.SetupWebhookWithManager,
+		quotaallowance.SetupWebhookWithManager,
+		registry.SetupWebhookWithManager,
+		bucket.SetupWebhookWithManager,
+		transfer.SetupWebhookWithManager,
+		tunnel.SetupWebhookWithManager,
+		allocation.SetupWebhookWithManager,
+		network.SetupWebhookWithManager,
+		pool.SetupWebhookWithManager,
+		route.SetupWebhookWithManager,
+		routetable.SetupWebhookWithManager,
+		securitygroup.SetupWebhookWithManager,
+		securityrule.SetupWebhookWithManager,
+		subnet.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

@@ -27,6 +27,15 @@ import (
 	features "github.com/upbound/provider-nebius/internal/features"
 )
 
+// SetupWebhookWithManager registers the conversion webhook for AuthPublicKey.
+func SetupWebhookWithManager(mgr ctrl.Manager) error {
+	if err := ctrl.NewWebhookManagedBy(mgr, &v1beta1.AuthPublicKey{}).
+		Complete(); err != nil {
+		return errors.Wrap(err, "cannot register webhook for the kind v1beta1.AuthPublicKey")
+	}
+	return nil
+}
+
 // SetupGated adds a controller that reconciles AuthPublicKey managed resources.
 func SetupGated(mgr ctrl.Manager, o tjcontroller.Options) error {
 	o.Options.Gate.Register(func() {
@@ -81,14 +90,6 @@ func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
 	}
 	if o.Features.Enabled(xpfeature.EnableAlphaChangeLogs) {
 		opts = append(opts, managed.WithChangeLogger(o.ChangeLogOptions.ChangeLogger))
-	}
-
-	// register webhooks for the kind v1beta1.AuthPublicKey if they're enabled.
-	if o.StartWebhooks {
-		if err := ctrl.NewWebhookManagedBy(mgr, &v1beta1.AuthPublicKey{}).
-			Complete(); err != nil {
-			return errors.Wrap(err, "cannot register webhook for the kind v1beta1.AuthPublicKey")
-		}
 	}
 
 	if o.MetricOptions != nil && o.MetricOptions.MRStateMetrics != nil {
