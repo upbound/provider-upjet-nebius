@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: storage/v1beta1/transfer
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: storage-v1beta1-transfer
+  name: storagev1transfer
   namespace: upbound-system
 spec:
   forProvider:
@@ -16,7 +16,7 @@ spec:
     source:
       nebius:
         bucketNameRef:
-          name: source
+          name: storagev1transfersource
         region: us-central1
         # Credentials come from the AccessKey connection secret below. The secret
         # access key lands under the prefixed key "attribute.status.secret"; the
@@ -31,7 +31,7 @@ spec:
     destination:
       nebius:
         bucketNameRef:
-          name: destination
+          name: storagev1transferdestination
         region: us-central1
         accessKey:
           accessKeyIdSecretRef:
@@ -49,8 +49,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: storage/v1beta1/transfer
   labels:
-    testing.upbound.io/example-name: default
-  name: source
+    testing.upbound.io/example-name: storage-v1beta1-transfer
+  name: storagev1transfersource
   namespace: upbound-system
 spec:
   forProvider:
@@ -65,8 +65,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: storage/v1beta1/transfer
   labels:
-    testing.upbound.io/example-name: default
-  name: destination
+    testing.upbound.io/example-name: storage-v1beta1-transfer
+  name: storagev1transferdestination
   namespace: upbound-system
 spec:
   forProvider:
@@ -81,8 +81,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: storage/v1beta1/transfer
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: storage-v1beta1-transfer
+  name: storagev1transfer
   namespace: upbound-system
 spec:
   forProvider:
@@ -97,8 +97,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: storage/v1beta1/transfer
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: storage-v1beta1-transfer
+  name: storagev1transfer
   namespace: upbound-system
 spec:
   forProvider:
@@ -110,7 +110,7 @@ spec:
       serviceAccount:
         idSelector:
           matchLabels:
-            testing.upbound.io/example-name: default
+            testing.upbound.io/example-name: storage-v1beta1-transfer
   writeConnectionSecretToRef:
     name: storage-transfer-keys
 
@@ -122,8 +122,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: storage/v1beta1/transfer
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: storage-v1beta1-transfer
+  name: storagev1transfer
   namespace: upbound-system
 spec:
   forProvider:
@@ -132,4 +132,4 @@ spec:
     parentId: ${data.nebius_default_editor_group_id}
     memberIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: storage-v1beta1-transfer

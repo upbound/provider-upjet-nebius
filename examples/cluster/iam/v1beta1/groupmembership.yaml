@@ -4,16 +4,16 @@ metadata:
   annotations:
     meta.upbound.io/example-id: iam/v1beta1/groupmembership
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: iam-v1beta1-groupmembership
+  name: iamv1groupmembership
 spec:
   forProvider:
     parentIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: iam-v1beta1-groupmembership
     memberIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: iam-v1beta1-groupmembership
 
 ---
 
@@ -23,8 +23,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: iam/v1beta1/groupmembership
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: iam-v1beta1-groupmembership
+  name: iamv1groupmembership
 spec:
   forProvider:
     name: iamv1groupmembership
@@ -38,8 +38,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: iam/v1beta1/groupmembership
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: iam-v1beta1-groupmembership
+  name: iamv1groupmembership
 spec:
   forProvider:
     name: iamv1groupmembership

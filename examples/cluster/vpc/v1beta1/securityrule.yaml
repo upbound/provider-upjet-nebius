@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/securityrule
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-securityrule
+  name: vpcv1securityrule
 spec:
   forProvider:
     access: ALLOW
@@ -20,7 +20,7 @@ spec:
       - 0.0.0.0/0
     parentIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: vpc-v1beta1-securityrule
 
 ---
 
@@ -30,14 +30,14 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/securityrule
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-securityrule
+  name: vpcv1securityrule
 spec:
   forProvider:
     name: vpcv1securityrule
     networkIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: vpc-v1beta1-securityrule
     parentId: ${data.nebius_project_id}
 
 ---
@@ -48,8 +48,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/securityrule
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-securityrule
+  name: vpcv1securityrule
 spec:
   forProvider:
     name: vpcv1securityrule

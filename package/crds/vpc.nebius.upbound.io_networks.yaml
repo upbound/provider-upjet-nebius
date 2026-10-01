@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.20.1
+    controller-gen.kubebuilder.io/version: v0.22.0
   name: networks.vpc.nebius.upbound.io
 spec:
   group: vpc.nebius.upbound.io
@@ -672,11 +672,6 @@ spec:
                     description: (Attributes) Status of the network. (see below for
                       nested schema)
                     properties:
-                      default:
-                        description: |-
-                          (Boolean) Indicates whether this is the project's default network.
-                          Indicates whether this is the project's default network.
-                        type: boolean
                       defaultRouteTableId:
                         description: |-
                           (String) ID of the network's default route table.

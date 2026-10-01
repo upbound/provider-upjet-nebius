@@ -4,7 +4,7 @@ metadata:
   annotations:
     meta.upbound.io/example-id: tunnel/v1beta1/tunnel
   labels:
-    testing.upbound.io/example-name: default
+    testing.upbound.io/example-name: tunnel-v1beta1-tunnel
   name: default
 spec:
   forProvider:

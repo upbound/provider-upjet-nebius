@@ -88,8 +88,11 @@ Adding a TF resource requires touching, in order:
    use a server-computed `id`, so:
    `config.FrameworkResourceWithComputedIdentifier("id", "<placeholder-NID>")`.
    The placeholder must be a syntactically valid Nebius ID (NID) of the form
-   `<type>-<routingCode><weakID>`; `e0t` is the default SDK routing code, so the
-   convention is `<type>-e0t000000000000000`. The `<type>` prefix is the SDK
+   `<type>-<routingCode><weakID>`. The routing code names a region (`e00`
+   eu-north1, `u00` us-central1, ...); the SDK's legacy default `e0t` names none
+   and is rejected by compute, storage and some mk8s instances. The convention is
+   `<type>-u00000000000000000` for every resource (UUID weak IDs keep their
+   shape, e.g. `storagetransfer-u0000000000-0000-0000-0000-000000000000`). The `<type>` prefix is the SDK
    resource type (see **NID type prefixes** below). This map drives both the
    external-name behavior and `WithTerraformPluginFrameworkIncludeList` (only
    resources listed here are generated).
@@ -134,7 +137,13 @@ After editing config, run `make generate`, then curate `examples/`.
 - **Examples**: `examples/<scope>/<group>/<version>/<kind-lowercase>.yaml`. Project
   parent is templated as `parentId: ${data.nebius_project_id}` for uptest; cross-
   resource fields use `<field>Selector.matchLabels` against
-  `testing.upbound.io/example-name`.
+  `testing.upbound.io/example-name`, whose value is the file's
+  `meta.upbound.io/example-id` with `/` replaced by `-` (e.g.
+  `mk8s-v1beta1-nodegroup`) so files applied together never cross-select.
+  Two resources of the same kind in one file link by `<field>Ref.name`
+  instead of a selector. Every managed resource that sets
+  `spec.forProvider.name` uses the same value as its `metadata.name`; a
+  `<field>Ref.name` points at that name.
 
 ## E2E testing
 

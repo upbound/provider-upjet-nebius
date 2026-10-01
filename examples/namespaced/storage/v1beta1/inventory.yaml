@@ -4,17 +4,17 @@ metadata:
   annotations:
     meta.upbound.io/example-id: storage/v1beta1/inventory
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: storage-v1beta1-inventory
+  name: storagev1inventory
   namespace: upbound-system
 spec:
   forProvider:
     name: storagev1inventory
     # parentId is the (source) bucket whose contents get inventoried.
     parentIdRef:
-      name: source
+      name: storagev1inventorysource
     destinationBucketIdRef:
-      name: destination
+      name: storagev1inventorydestination
     outputFormat: CSV_GZIP
     schedule: DAILY
     enabled: true
@@ -27,8 +27,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: storage/v1beta1/inventory
   labels:
-    testing.upbound.io/example-name: default
-  name: source
+    testing.upbound.io/example-name: storage-v1beta1-inventory
+  name: storagev1inventorysource
   namespace: upbound-system
 spec:
   forProvider:
@@ -43,8 +43,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: storage/v1beta1/inventory
   labels:
-    testing.upbound.io/example-name: default
-  name: destination
+    testing.upbound.io/example-name: storage-v1beta1-inventory
+  name: storagev1inventorydestination
   namespace: upbound-system
 spec:
   forProvider:

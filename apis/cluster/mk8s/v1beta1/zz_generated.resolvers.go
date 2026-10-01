@@ -11,6 +11,7 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	resource "github.com/crossplane/upjet/v2/pkg/resource"
 	errors "github.com/pkg/errors"
+	v1beta13 "github.com/upbound/provider-nebius/apis/cluster/billing/v1beta1"
 	v1beta11 "github.com/upbound/provider-nebius/apis/cluster/compute/v1beta1"
 	v1beta12 "github.com/upbound/provider-nebius/apis/cluster/iam/v1beta1"
 	v1beta1 "github.com/upbound/provider-nebius/apis/cluster/vpc/v1beta1"
@@ -195,6 +196,27 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 		mg.Spec.ForProvider.Template.ServiceAccountIDRef = rsp.ResolvedReference
 
 	}
+	if mg.Spec.ForProvider.Template != nil {
+		if mg.Spec.ForProvider.Template.SpotPricingPolicy != nil {
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Template.SpotPricingPolicy.ID),
+				Extract:      resource.ExtractParamPath("id", true),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.ForProvider.Template.SpotPricingPolicy.IDRef,
+				Selector:     mg.Spec.ForProvider.Template.SpotPricingPolicy.IDSelector,
+				To: reference.To{
+					List:    &v1beta13.PricingPolicyList{},
+					Managed: &v1beta13.PricingPolicy{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Template.SpotPricingPolicy.ID")
+			}
+			mg.Spec.ForProvider.Template.SpotPricingPolicy.ID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Template.SpotPricingPolicy.IDRef = rsp.ResolvedReference
+
+		}
+	}
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ParentID),
 		Extract:      resource.ExtractParamPath("id", true),
@@ -316,6 +338,27 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 		mg.Spec.InitProvider.Template.ServiceAccountID = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.InitProvider.Template.ServiceAccountIDRef = rsp.ResolvedReference
 
+	}
+	if mg.Spec.InitProvider.Template != nil {
+		if mg.Spec.InitProvider.Template.SpotPricingPolicy != nil {
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Template.SpotPricingPolicy.ID),
+				Extract:      resource.ExtractParamPath("id", true),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.InitProvider.Template.SpotPricingPolicy.IDRef,
+				Selector:     mg.Spec.InitProvider.Template.SpotPricingPolicy.IDSelector,
+				To: reference.To{
+					List:    &v1beta13.PricingPolicyList{},
+					Managed: &v1beta13.PricingPolicy{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.Template.SpotPricingPolicy.ID")
+			}
+			mg.Spec.InitProvider.Template.SpotPricingPolicy.ID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.Template.SpotPricingPolicy.IDRef = rsp.ResolvedReference
+
+		}
 	}
 
 	return nil

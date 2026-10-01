@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: kms/v1beta1/asymmetrickey
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: kms-v1beta1-asymmetrickey
+  name: kmsv1asymmetrickey
 spec:
   forProvider:
     parentId: ${data.nebius_project_id}

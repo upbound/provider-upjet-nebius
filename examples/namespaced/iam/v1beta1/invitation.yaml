@@ -4,7 +4,7 @@ metadata:
   annotations:
     meta.upbound.io/example-id: iam/v1beta1/invitation
   labels:
-    testing.upbound.io/example-name: default
+    testing.upbound.io/example-name: iam-v1beta1-invitation
   name: default
   namespace: upbound-system
 spec:

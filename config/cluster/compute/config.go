@@ -47,6 +47,10 @@ func Configure(p *config.Provider) {
 			TerraformName: "nebius_compute_v1_disk_snapshot",
 			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)`,
 		}
+		r.References["spot_pricing_policy.id"] = config.Reference{
+			TerraformName: "nebius_billing_v1_pricing_policy",
+			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)`,
+		}
 	})
 	p.AddResourceConfigurator("nebius_compute_v1_disk_snapshot", func(r *config.Resource) {
 		r.References["source_disk_id"] = config.Reference{

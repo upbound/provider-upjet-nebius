@@ -11,6 +11,7 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	resource "github.com/crossplane/upjet/v2/pkg/resource"
 	errors "github.com/pkg/errors"
+	v1beta12 "github.com/upbound/provider-nebius/apis/cluster/billing/v1beta1"
 	v1beta11 "github.com/upbound/provider-nebius/apis/cluster/iam/v1beta1"
 	v1beta1 "github.com/upbound/provider-nebius/apis/cluster/vpc/v1beta1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
@@ -296,6 +297,25 @@ func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) erro
 	mg.Spec.ForProvider.ServiceAccountID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServiceAccountIDRef = rsp.ResolvedReference
 
+	if mg.Spec.ForProvider.SpotPricingPolicy != nil {
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SpotPricingPolicy.ID),
+			Extract:      resource.ExtractParamPath("id", true),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.SpotPricingPolicy.IDRef,
+			Selector:     mg.Spec.ForProvider.SpotPricingPolicy.IDSelector,
+			To: reference.To{
+				List:    &v1beta12.PricingPolicyList{},
+				Managed: &v1beta12.PricingPolicy{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.SpotPricingPolicy.ID")
+		}
+		mg.Spec.ForProvider.SpotPricingPolicy.ID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.SpotPricingPolicy.IDRef = rsp.ResolvedReference
+
+	}
 	if mg.Spec.InitProvider.BootDisk != nil {
 		if mg.Spec.InitProvider.BootDisk.ExistingDisk != nil {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -480,6 +500,26 @@ func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.InitProvider.ServiceAccountID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ServiceAccountIDRef = rsp.ResolvedReference
+
+	if mg.Spec.InitProvider.SpotPricingPolicy != nil {
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SpotPricingPolicy.ID),
+			Extract:      resource.ExtractParamPath("id", true),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.SpotPricingPolicy.IDRef,
+			Selector:     mg.Spec.InitProvider.SpotPricingPolicy.IDSelector,
+			To: reference.To{
+				List:    &v1beta12.PricingPolicyList{},
+				Managed: &v1beta12.PricingPolicy{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.SpotPricingPolicy.ID")
+		}
+		mg.Spec.InitProvider.SpotPricingPolicy.ID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.SpotPricingPolicy.IDRef = rsp.ResolvedReference
+
+	}
 
 	return nil
 }

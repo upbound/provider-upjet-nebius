@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/route
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-route
+  name: vpcv1route
   namespace: upbound-system
 spec:
   forProvider:
@@ -16,7 +16,7 @@ spec:
       defaultEgressGateway: true
     parentIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: vpc-v1beta1-route
 
 ---
 
@@ -26,15 +26,15 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/route
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-route
+  name: vpcv1route
   namespace: upbound-system
 spec:
   forProvider:
     name: vpcv1route
     networkIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: vpc-v1beta1-route
     parentId: ${data.nebius_project_id}
 
 ---
@@ -45,8 +45,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/route
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-route
+  name: vpcv1route
   namespace: upbound-system
 spec:
   forProvider:

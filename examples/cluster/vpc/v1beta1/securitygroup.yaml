@@ -4,14 +4,14 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/securitygroup
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-securitygroup
+  name: vpcv1securitygroup
 spec:
   forProvider:
     name: vpcv1securitygroup
     networkIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: vpc-v1beta1-securitygroup
     parentId: ${data.nebius_project_id}
 
 ---
@@ -22,8 +22,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/securitygroup
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-securitygroup
+  name: vpcv1securitygroup
 spec:
   forProvider:
     name: vpcv1securitygroup

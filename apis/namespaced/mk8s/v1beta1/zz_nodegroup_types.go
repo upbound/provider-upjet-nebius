@@ -575,6 +575,15 @@ type FilesystemsParameters struct {
 	MountTag *string `json:"mountTag" tf:"mount_tag,omitempty"`
 }
 
+type FollowsSpotPriceInitParameters struct {
+}
+
+type FollowsSpotPriceObservation struct {
+}
+
+type FollowsSpotPriceParameters struct {
+}
+
 type GpuClusterInitParameters struct {
 
 	// (String) Identifier for the resource, unique for its resource type.
@@ -616,6 +625,14 @@ type GpuClusterParameters struct {
 
 type GpuSettingsInitParameters struct {
 
+	// (Boolean) :
+	// :
+	//
+	// Enables Dynamic Resource Allocation for this GPU node group.
+	// For nodes whose image contains preinstalled NVIDIA drivers, disables the legacy NVIDIA device plugin.
+	// For GPU nodes attached to a Compute GPU cluster, advertises RDMA capability through the managed DRANet DaemonSet.
+	Dra *bool `json:"dra,omitempty" tf:"dra,omitempty"`
+
 	// (String) :
 	// :
 	//
@@ -628,6 +645,14 @@ type GpuSettingsInitParameters struct {
 }
 
 type GpuSettingsObservation struct {
+
+	// (Boolean) :
+	// :
+	//
+	// Enables Dynamic Resource Allocation for this GPU node group.
+	// For nodes whose image contains preinstalled NVIDIA drivers, disables the legacy NVIDIA device plugin.
+	// For GPU nodes attached to a Compute GPU cluster, advertises RDMA capability through the managed DRANet DaemonSet.
+	Dra *bool `json:"dra,omitempty" tf:"dra,omitempty"`
 
 	// (String) :
 	// :
@@ -642,6 +667,15 @@ type GpuSettingsObservation struct {
 
 type GpuSettingsParameters struct {
 
+	// (Boolean) :
+	// :
+	//
+	// Enables Dynamic Resource Allocation for this GPU node group.
+	// For nodes whose image contains preinstalled NVIDIA drivers, disables the legacy NVIDIA device plugin.
+	// For GPU nodes attached to a Compute GPU cluster, advertises RDMA capability through the managed DRANet DaemonSet.
+	// +kubebuilder:validation:Optional
+	Dra *bool `json:"dra,omitempty" tf:"dra,omitempty"`
+
 	// (String) :
 	// :
 	//
@@ -652,6 +686,40 @@ type GpuSettingsParameters struct {
 	// Leave empty for GPU nodes that do not have preinstalled drivers, including DRA-enabled node groups.
 	// +kubebuilder:validation:Optional
 	DriversPreset *string `json:"driversPreset,omitempty" tf:"drivers_preset,omitempty"`
+}
+
+type InstanceMetadataInitParameters struct {
+
+	// (Map of String) Labels associated with the resource.
+	// :
+	//
+	// Labels propagated into Compute Instance metadata.
+	// Provider-managed labels take precedence over user-provided instance labels.
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+}
+
+type InstanceMetadataObservation struct {
+
+	// (Map of String) Labels associated with the resource.
+	// :
+	//
+	// Labels propagated into Compute Instance metadata.
+	// Provider-managed labels take precedence over user-provided instance labels.
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+}
+
+type InstanceMetadataParameters struct {
+
+	// (Map of String) Labels associated with the resource.
+	// :
+	//
+	// Labels propagated into Compute Instance metadata.
+	// Provider-managed labels take precedence over user-provided instance labels.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 }
 
 type LocalDisksInitParameters struct {
@@ -1205,6 +1273,15 @@ type NvlinkParameters struct {
 	NvlInstanceGroupIDSelector *v2.NamespacedSelector `json:"nvlInstanceGroupIdSelector,omitempty" tf:"-"`
 }
 
+type OnDemandInitParameters struct {
+}
+
+type OnDemandObservation struct {
+}
+
+type OnDemandParameters struct {
+}
+
 type PassthroughGroupInitParameters struct {
 
 	// (Boolean) :
@@ -1401,6 +1478,48 @@ type SecurityGroupsParameters struct {
 	// (String) Identifier for the resource, unique for its resource type.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type SpotPricingPolicyInitParameters struct {
+
+	// (String) Identifier for the resource, unique for its resource type.
+	// PricingPolicy ID used as the maximum agreed price for the preemptible VM.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-nebius/apis/namespaced/billing/v1beta1.PricingPolicy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Reference to a PricingPolicy in billing to populate id.
+	// +kubebuilder:validation:Optional
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+
+	// Selector for a PricingPolicy in billing to populate id.
+	// +kubebuilder:validation:Optional
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+}
+
+type SpotPricingPolicyObservation struct {
+
+	// (String) Identifier for the resource, unique for its resource type.
+	// PricingPolicy ID used as the maximum agreed price for the preemptible VM.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type SpotPricingPolicyParameters struct {
+
+	// (String) Identifier for the resource, unique for its resource type.
+	// PricingPolicy ID used as the maximum agreed price for the preemptible VM.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-nebius/apis/namespaced/billing/v1beta1.PricingPolicy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)
+	// +kubebuilder:validation:Optional
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Reference to a PricingPolicy in billing to populate id.
+	// +kubebuilder:validation:Optional
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+
+	// Selector for a PricingPolicy in billing to populate id.
+	// +kubebuilder:validation:Optional
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type StatusEventsInitParameters struct {
@@ -1615,11 +1734,17 @@ type TemplateInitParameters struct {
 	// (Attributes List) :
 	Filesystems []FilesystemsInitParameters `json:"filesystems,omitempty" tf:"filesystems,omitempty"`
 
+	// (Attributes) :
+	FollowsSpotPrice *FollowsSpotPriceInitParameters `json:"followsSpotPrice,omitempty" tf:"follows_spot_price,omitempty"`
+
 	// (Attributes) Nebius Compute GPUCluster ID that will be attached to node. (see below for nested schema)
 	GpuCluster *GpuClusterInitParameters `json:"gpuCluster,omitempty" tf:"gpu_cluster,omitempty"`
 
 	// (Attributes) :
 	GpuSettings *GpuSettingsInitParameters `json:"gpuSettings,omitempty" tf:"gpu_settings,omitempty"`
+
+	// (Attributes) Metadata propagated to the Compute Instances in the NodeGroup. (see below for nested schema)
+	InstanceMetadata *InstanceMetadataInitParameters `json:"instanceMetadata,omitempty" tf:"instance_metadata,omitempty"`
 
 	// (Attributes) :
 	LocalDisks *LocalDisksInitParameters `json:"localDisks,omitempty" tf:"local_disks,omitempty"`
@@ -1641,6 +1766,9 @@ type TemplateInitParameters struct {
 
 	// (Attributes) NVLinkSpec configures NVLink settings for the NodeGroup. (see below for nested schema)
 	Nvlink *NvlinkInitParameters `json:"nvlink,omitempty" tf:"nvlink,omitempty"`
+
+	// (Attributes) :
+	OnDemand *OnDemandInitParameters `json:"onDemand,omitempty" tf:"on_demand,omitempty"`
 
 	// (String) :
 	// :
@@ -1680,6 +1808,9 @@ type TemplateInitParameters struct {
 	// Selector for a ServiceAccount in iam to populate serviceAccountId.
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v2.NamespacedSelector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
+
+	// (Attributes) :
+	SpotPricingPolicy *SpotPricingPolicyInitParameters `json:"spotPricingPolicy,omitempty" tf:"spot_pricing_policy,omitempty"`
 
 	// (Attributes List) :
 	Taints []TaintsInitParameters `json:"taints,omitempty" tf:"taints,omitempty"`
@@ -1754,11 +1885,17 @@ type TemplateObservation struct {
 	// (Attributes List) :
 	Filesystems []FilesystemsObservation `json:"filesystems,omitempty" tf:"filesystems,omitempty"`
 
+	// (Attributes) :
+	FollowsSpotPrice *FollowsSpotPriceParameters `json:"followsSpotPrice,omitempty" tf:"follows_spot_price,omitempty"`
+
 	// (Attributes) Nebius Compute GPUCluster ID that will be attached to node. (see below for nested schema)
 	GpuCluster *GpuClusterObservation `json:"gpuCluster,omitempty" tf:"gpu_cluster,omitempty"`
 
 	// (Attributes) :
 	GpuSettings *GpuSettingsObservation `json:"gpuSettings,omitempty" tf:"gpu_settings,omitempty"`
+
+	// (Attributes) Metadata propagated to the Compute Instances in the NodeGroup. (see below for nested schema)
+	InstanceMetadata *InstanceMetadataObservation `json:"instanceMetadata,omitempty" tf:"instance_metadata,omitempty"`
 
 	// (Attributes) :
 	LocalDisks *LocalDisksObservation `json:"localDisks,omitempty" tf:"local_disks,omitempty"`
@@ -1780,6 +1917,9 @@ type TemplateObservation struct {
 
 	// (Attributes) NVLinkSpec configures NVLink settings for the NodeGroup. (see below for nested schema)
 	Nvlink *NvlinkObservation `json:"nvlink,omitempty" tf:"nvlink,omitempty"`
+
+	// (Attributes) :
+	OnDemand *OnDemandParameters `json:"onDemand,omitempty" tf:"on_demand,omitempty"`
 
 	// (String) :
 	// :
@@ -1810,6 +1950,9 @@ type TemplateObservation struct {
 	// `resource.serviceaccount.issueAccessToken` permission is required to use this field.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
+	// (Attributes) :
+	SpotPricingPolicy *SpotPricingPolicyObservation `json:"spotPricingPolicy,omitempty" tf:"spot_pricing_policy,omitempty"`
+
 	// (Attributes List) :
 	Taints []TaintsObservation `json:"taints,omitempty" tf:"taints,omitempty"`
 }
@@ -1832,6 +1975,10 @@ type TemplateParameters struct {
 	// +kubebuilder:validation:Optional
 	Filesystems []FilesystemsParameters `json:"filesystems,omitempty" tf:"filesystems,omitempty"`
 
+	// (Attributes) :
+	// +kubebuilder:validation:Optional
+	FollowsSpotPrice *FollowsSpotPriceParameters `json:"followsSpotPrice,omitempty" tf:"follows_spot_price,omitempty"`
+
 	// (Attributes) Nebius Compute GPUCluster ID that will be attached to node. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	GpuCluster *GpuClusterParameters `json:"gpuCluster,omitempty" tf:"gpu_cluster,omitempty"`
@@ -1839,6 +1986,10 @@ type TemplateParameters struct {
 	// (Attributes) :
 	// +kubebuilder:validation:Optional
 	GpuSettings *GpuSettingsParameters `json:"gpuSettings,omitempty" tf:"gpu_settings,omitempty"`
+
+	// (Attributes) Metadata propagated to the Compute Instances in the NodeGroup. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	InstanceMetadata *InstanceMetadataParameters `json:"instanceMetadata,omitempty" tf:"instance_metadata,omitempty"`
 
 	// (Attributes) :
 	// +kubebuilder:validation:Optional
@@ -1865,6 +2016,10 @@ type TemplateParameters struct {
 	// (Attributes) NVLinkSpec configures NVLink settings for the NodeGroup. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Nvlink *NvlinkParameters `json:"nvlink,omitempty" tf:"nvlink,omitempty"`
+
+	// (Attributes) :
+	// +kubebuilder:validation:Optional
+	OnDemand *OnDemandParameters `json:"onDemand,omitempty" tf:"on_demand,omitempty"`
 
 	// (String) :
 	// :
@@ -1909,6 +2064,10 @@ type TemplateParameters struct {
 	// Selector for a ServiceAccount in iam to populate serviceAccountId.
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v2.NamespacedSelector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
+
+	// (Attributes) :
+	// +kubebuilder:validation:Optional
+	SpotPricingPolicy *SpotPricingPolicyParameters `json:"spotPricingPolicy,omitempty" tf:"spot_pricing_policy,omitempty"`
 
 	// (Attributes List) :
 	// +kubebuilder:validation:Optional

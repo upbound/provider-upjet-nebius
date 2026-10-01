@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: compute/v1beta1/instance
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: compute-v1beta1-instance
+  name: computev1instance
   namespace: upbound-system
 spec:
   forProvider:
@@ -27,7 +27,7 @@ spec:
       - name: eth0
         subnetIdSelector:
           matchLabels:
-            testing.upbound.io/example-name: default
+            testing.upbound.io/example-name: compute-v1beta1-instance
         ipAddress: {}
 
 ---
@@ -38,8 +38,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: compute/v1beta1/instance
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: compute-v1beta1-instance
+  name: computev1instance
   namespace: upbound-system
 spec:
   forProvider:
@@ -48,7 +48,7 @@ spec:
     name: computev1instance
     networkIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: compute-v1beta1-instance
     parentId: ${data.nebius_project_id}
 
 ---
@@ -59,8 +59,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: compute/v1beta1/instance
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: compute-v1beta1-instance
+  name: computev1instance
   namespace: upbound-system
 spec:
   forProvider:

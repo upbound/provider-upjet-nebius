@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: storage/v1beta1/bucket
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: storage-v1beta1-bucket
+  name: storagev1bucket
 spec:
   forProvider:
     name: storagev1bucket

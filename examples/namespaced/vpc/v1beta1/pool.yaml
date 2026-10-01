@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/pool
   labels:
-    testing.upbound.io/example-name: private-with-source-pool-child
-  name: private-child
+    testing.upbound.io/example-name: vpc-v1beta1-pool
+  name: private-ipv4-pool-child
   namespace: upbound-system
 spec:
   forProvider:
@@ -16,9 +16,8 @@ spec:
     parentId: ${data.nebius_project_id}
     version: IPV4
     visibility: PRIVATE
-    sourcePoolIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: private-with-source-pool-parent
+    sourcePoolIdRef:
+      name: private-ipv4-pool-parent
 ---
 apiVersion: vpc.nebius.m.upbound.io/v1beta1
 kind: Pool
@@ -26,8 +25,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/pool
   labels:
-    testing.upbound.io/example-name: private-with-source-pool-parent
-  name: private-parent
+    testing.upbound.io/example-name: vpc-v1beta1-pool
+  name: private-ipv4-pool-parent
   namespace: upbound-system
 spec:
   forProvider:

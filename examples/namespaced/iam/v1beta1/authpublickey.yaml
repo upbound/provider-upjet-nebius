@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: iam/v1beta1/authpublickey
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: iam-v1beta1-authpublickey
+  name: iamv1authpublickey
   namespace: upbound-system
 spec:
   forProvider:
@@ -15,7 +15,7 @@ spec:
       serviceAccount:
         idSelector:
           matchLabels:
-            testing.upbound.io/example-name: default
+            testing.upbound.io/example-name: iam-v1beta1-authpublickey
     # data is a PEM-encoded public key (sensitive), supplied via a Secret.
     dataSecretRef:
       name: iamv1authpublickey-data
@@ -29,8 +29,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: iam/v1beta1/authpublickey
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: iam-v1beta1-authpublickey
+  name: iamv1authpublickey
   namespace: upbound-system
 spec:
   forProvider:

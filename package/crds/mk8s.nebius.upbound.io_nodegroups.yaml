@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.20.1
+    controller-gen.kubebuilder.io/version: v0.22.0
   name: nodegroups.mk8s.nebius.upbound.io
 spec:
   group: mk8s.nebius.upbound.io
@@ -487,6 +487,9 @@ spec:
                               type: string
                           type: object
                         type: array
+                      followsSpotPrice:
+                        description: '(Attributes) :'
+                        type: object
                       gpuCluster:
                         description: (Attributes) Nebius Compute GPUCluster ID that
                           will be attached to node. (see below for nested schema)
@@ -575,6 +578,15 @@ spec:
                       gpuSettings:
                         description: '(Attributes) :'
                         properties:
+                          dra:
+                            description: |-
+                              (Boolean) :
+                              :
+
+                              Enables Dynamic Resource Allocation for this GPU node group.
+                              For nodes whose image contains preinstalled NVIDIA drivers, disables the legacy NVIDIA device plugin.
+                              For GPU nodes attached to a Compute GPU cluster, advertises RDMA capability through the managed DRANet DaemonSet.
+                            type: boolean
                           driversPreset:
                             description: |-
                               (String) :
@@ -586,6 +598,22 @@ spec:
                               nebius mk8s node-group get-compatibility-matrix --cluster-kubernetes-version VERSION --platform PLATFORM
                               Leave empty for GPU nodes that do not have preinstalled drivers, including DRA-enabled node groups.
                             type: string
+                        type: object
+                      instanceMetadata:
+                        description: (Attributes) Metadata propagated to the Compute
+                          Instances in the NodeGroup. (see below for nested schema)
+                        properties:
+                          labels:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              (Map of String) Labels associated with the resource.
+                              :
+
+                              Labels propagated into Compute Instance metadata.
+                              Provider-managed labels take precedence over user-provided instance labels.
+                            type: object
+                            x-kubernetes-map-type: granular
                         type: object
                       localDisks:
                         description: '(Attributes) :'
@@ -857,6 +885,9 @@ spec:
                                 type: object
                             type: object
                         type: object
+                      onDemand:
+                        description: '(Attributes) :'
+                        type: object
                       os:
                         description: |-
                           (String) :
@@ -1003,6 +1034,91 @@ spec:
                                 - Always
                                 - IfNotPresent
                                 type: string
+                            type: object
+                        type: object
+                      spotPricingPolicy:
+                        description: '(Attributes) :'
+                        properties:
+                          id:
+                            description: |-
+                              (String) Identifier for the resource, unique for its resource type.
+                              PricingPolicy ID used as the maximum agreed price for the preemptible VM.
+                            type: string
+                          idRef:
+                            description: Reference to a PricingPolicy in billing to
+                              populate id.
+                            properties:
+                              name:
+                                description: Name of the referenced object.
+                                type: string
+                              policy:
+                                description: Policies for referencing.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            required:
+                            - name
+                            type: object
+                          idSelector:
+                            description: Selector for a PricingPolicy in billing to
+                              populate id.
+                            properties:
+                              matchControllerRef:
+                                description: |-
+                                  MatchControllerRef ensures an object with the same controller reference
+                                  as the selecting object is selected.
+                                type: boolean
+                              matchLabels:
+                                additionalProperties:
+                                  type: string
+                                description: MatchLabels ensures an object with matching
+                                  labels is selected.
+                                type: object
+                              policy:
+                                description: Policies for selection.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
                             type: object
                         type: object
                       taints:
@@ -1466,6 +1582,9 @@ spec:
                               type: string
                           type: object
                         type: array
+                      followsSpotPrice:
+                        description: '(Attributes) :'
+                        type: object
                       gpuCluster:
                         description: (Attributes) Nebius Compute GPUCluster ID that
                           will be attached to node. (see below for nested schema)
@@ -1554,6 +1673,15 @@ spec:
                       gpuSettings:
                         description: '(Attributes) :'
                         properties:
+                          dra:
+                            description: |-
+                              (Boolean) :
+                              :
+
+                              Enables Dynamic Resource Allocation for this GPU node group.
+                              For nodes whose image contains preinstalled NVIDIA drivers, disables the legacy NVIDIA device plugin.
+                              For GPU nodes attached to a Compute GPU cluster, advertises RDMA capability through the managed DRANet DaemonSet.
+                            type: boolean
                           driversPreset:
                             description: |-
                               (String) :
@@ -1565,6 +1693,22 @@ spec:
                               nebius mk8s node-group get-compatibility-matrix --cluster-kubernetes-version VERSION --platform PLATFORM
                               Leave empty for GPU nodes that do not have preinstalled drivers, including DRA-enabled node groups.
                             type: string
+                        type: object
+                      instanceMetadata:
+                        description: (Attributes) Metadata propagated to the Compute
+                          Instances in the NodeGroup. (see below for nested schema)
+                        properties:
+                          labels:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              (Map of String) Labels associated with the resource.
+                              :
+
+                              Labels propagated into Compute Instance metadata.
+                              Provider-managed labels take precedence over user-provided instance labels.
+                            type: object
+                            x-kubernetes-map-type: granular
                         type: object
                       localDisks:
                         description: '(Attributes) :'
@@ -1836,6 +1980,9 @@ spec:
                                 type: object
                             type: object
                         type: object
+                      onDemand:
+                        description: '(Attributes) :'
+                        type: object
                       os:
                         description: |-
                           (String) :
@@ -1982,6 +2129,91 @@ spec:
                                 - Always
                                 - IfNotPresent
                                 type: string
+                            type: object
+                        type: object
+                      spotPricingPolicy:
+                        description: '(Attributes) :'
+                        properties:
+                          id:
+                            description: |-
+                              (String) Identifier for the resource, unique for its resource type.
+                              PricingPolicy ID used as the maximum agreed price for the preemptible VM.
+                            type: string
+                          idRef:
+                            description: Reference to a PricingPolicy in billing to
+                              populate id.
+                            properties:
+                              name:
+                                description: Name of the referenced object.
+                                type: string
+                              policy:
+                                description: Policies for referencing.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            required:
+                            - name
+                            type: object
+                          idSelector:
+                            description: Selector for a PricingPolicy in billing to
+                              populate id.
+                            properties:
+                              matchControllerRef:
+                                description: |-
+                                  MatchControllerRef ensures an object with the same controller reference
+                                  as the selecting object is selected.
+                                type: boolean
+                              matchLabels:
+                                additionalProperties:
+                                  type: string
+                                description: MatchLabels ensures an object with matching
+                                  labels is selected.
+                                type: object
+                              policy:
+                                description: Policies for selection.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
                             type: object
                         type: object
                       taints:
@@ -2570,6 +2802,9 @@ spec:
                               type: string
                           type: object
                         type: array
+                      followsSpotPrice:
+                        description: '(Attributes) :'
+                        type: object
                       gpuCluster:
                         description: (Attributes) Nebius Compute GPUCluster ID that
                           will be attached to node. (see below for nested schema)
@@ -2582,6 +2817,15 @@ spec:
                       gpuSettings:
                         description: '(Attributes) :'
                         properties:
+                          dra:
+                            description: |-
+                              (Boolean) :
+                              :
+
+                              Enables Dynamic Resource Allocation for this GPU node group.
+                              For nodes whose image contains preinstalled NVIDIA drivers, disables the legacy NVIDIA device plugin.
+                              For GPU nodes attached to a Compute GPU cluster, advertises RDMA capability through the managed DRANet DaemonSet.
+                            type: boolean
                           driversPreset:
                             description: |-
                               (String) :
@@ -2593,6 +2837,22 @@ spec:
                               nebius mk8s node-group get-compatibility-matrix --cluster-kubernetes-version VERSION --platform PLATFORM
                               Leave empty for GPU nodes that do not have preinstalled drivers, including DRA-enabled node groups.
                             type: string
+                        type: object
+                      instanceMetadata:
+                        description: (Attributes) Metadata propagated to the Compute
+                          Instances in the NodeGroup. (see below for nested schema)
+                        properties:
+                          labels:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              (Map of String) Labels associated with the resource.
+                              :
+
+                              Labels propagated into Compute Instance metadata.
+                              Provider-managed labels take precedence over user-provided instance labels.
+                            type: object
+                            x-kubernetes-map-type: granular
                         type: object
                       localDisks:
                         description: '(Attributes) :'
@@ -2712,6 +2972,9 @@ spec:
                               Existing NVLInstanceGroup ID to use.
                             type: string
                         type: object
+                      onDemand:
+                        description: '(Attributes) :'
+                        type: object
                       os:
                         description: |-
                           (String) :
@@ -2784,6 +3047,15 @@ spec:
 
                           `resource.serviceaccount.issueAccessToken` permission is required to use this field.
                         type: string
+                      spotPricingPolicy:
+                        description: '(Attributes) :'
+                        properties:
+                          id:
+                            description: |-
+                              (String) Identifier for the resource, unique for its resource type.
+                              PricingPolicy ID used as the maximum agreed price for the preemptible VM.
+                            type: string
+                        type: object
                       taints:
                         description: '(Attributes List) :'
                         items:

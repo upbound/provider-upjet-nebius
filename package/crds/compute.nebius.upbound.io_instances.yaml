@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.20.1
+    controller-gen.kubebuilder.io/version: v0.22.0
   name: instances.compute.nebius.upbound.io
 spec:
   group: compute.nebius.upbound.io
@@ -91,8 +91,11 @@ spec:
                         type: string
                       deviceId:
                         description: |-
-                          defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
-                          Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                          (String) :
+                          :
+
+                          Specifies the user-defined device identifier.
+                          Use `/dev/disk/by-id/virtio-{device_id}` as the device path in a mount command.
                         type: string
                       existingDisk:
                         description: '(Attributes) :'
@@ -508,6 +511,9 @@ spec:
                           type: string
                       type: object
                     type: array
+                  followsSpotPrice:
+                    description: '(Attributes) :'
+                    type: object
                   gpuCluster:
                     description: '(Attributes) :'
                     properties:
@@ -866,6 +872,9 @@ spec:
                       (String) NVLink Instance Group ID associated with the VM
                       NVLink Instance Group ID associated with the VM
                     type: string
+                  onDemand:
+                    description: '(Attributes) :'
+                    type: object
                   parentId:
                     description: |-
                       (String) Identifier of the parent resource to which the resource belongs.
@@ -981,8 +990,11 @@ spec:
                           type: string
                         deviceId:
                           description: |-
-                            defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
-                            Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                            (String) :
+                            :
+
+                            Specifies the user-defined device identifier.
+                            Use `/dev/disk/by-id/virtio-{device_id}` as the device path in a mount command.
                           type: string
                         existingDisk:
                           description: '(Attributes) :'
@@ -1350,6 +1362,91 @@ spec:
                             - Always
                             - IfNotPresent
                             type: string
+                        type: object
+                    type: object
+                  spotPricingPolicy:
+                    description: '(Attributes) :'
+                    properties:
+                      id:
+                        description: |-
+                          (String) Identifier for the resource, unique for its resource type.
+                          PricingPolicy ID used as the maximum agreed price for the preemptible VM.
+                        type: string
+                      idRef:
+                        description: Reference to a PricingPolicy in billing to populate
+                          id.
+                        properties:
+                          name:
+                            description: Name of the referenced object.
+                            type: string
+                          policy:
+                            description: Policies for referencing.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        required:
+                        - name
+                        type: object
+                      idSelector:
+                        description: Selector for a PricingPolicy in billing to populate
+                          id.
+                        properties:
+                          matchControllerRef:
+                            description: |-
+                              MatchControllerRef ensures an object with the same controller reference
+                              as the selecting object is selected.
+                            type: boolean
+                          matchLabels:
+                            additionalProperties:
+                              type: string
+                            description: MatchLabels ensures an object with matching
+                              labels is selected.
+                            type: object
+                          policy:
+                            description: Policies for selection.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
                         type: object
                     type: object
                   stopped:
@@ -1390,8 +1487,11 @@ spec:
                         type: string
                       deviceId:
                         description: |-
-                          defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
-                          Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                          (String) :
+                          :
+
+                          Specifies the user-defined device identifier.
+                          Use `/dev/disk/by-id/virtio-{device_id}` as the device path in a mount command.
                         type: string
                       existingDisk:
                         description: '(Attributes) :'
@@ -1807,6 +1907,9 @@ spec:
                           type: string
                       type: object
                     type: array
+                  followsSpotPrice:
+                    description: '(Attributes) :'
+                    type: object
                   gpuCluster:
                     description: '(Attributes) :'
                     properties:
@@ -2165,6 +2268,9 @@ spec:
                       (String) NVLink Instance Group ID associated with the VM
                       NVLink Instance Group ID associated with the VM
                     type: string
+                  onDemand:
+                    description: '(Attributes) :'
+                    type: object
                   parentId:
                     description: |-
                       (String) Identifier of the parent resource to which the resource belongs.
@@ -2280,8 +2386,11 @@ spec:
                           type: string
                         deviceId:
                           description: |-
-                            defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
-                            Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                            (String) :
+                            :
+
+                            Specifies the user-defined device identifier.
+                            Use `/dev/disk/by-id/virtio-{device_id}` as the device path in a mount command.
                           type: string
                         existingDisk:
                           description: '(Attributes) :'
@@ -2649,6 +2758,91 @@ spec:
                             - Always
                             - IfNotPresent
                             type: string
+                        type: object
+                    type: object
+                  spotPricingPolicy:
+                    description: '(Attributes) :'
+                    properties:
+                      id:
+                        description: |-
+                          (String) Identifier for the resource, unique for its resource type.
+                          PricingPolicy ID used as the maximum agreed price for the preemptible VM.
+                        type: string
+                      idRef:
+                        description: Reference to a PricingPolicy in billing to populate
+                          id.
+                        properties:
+                          name:
+                            description: Name of the referenced object.
+                            type: string
+                          policy:
+                            description: Policies for referencing.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
+                        required:
+                        - name
+                        type: object
+                      idSelector:
+                        description: Selector for a PricingPolicy in billing to populate
+                          id.
+                        properties:
+                          matchControllerRef:
+                            description: |-
+                              MatchControllerRef ensures an object with the same controller reference
+                              as the selecting object is selected.
+                            type: boolean
+                          matchLabels:
+                            additionalProperties:
+                              type: string
+                            description: MatchLabels ensures an object with matching
+                              labels is selected.
+                            type: object
+                          policy:
+                            description: Policies for selection.
+                            properties:
+                              resolution:
+                                default: Required
+                                description: |-
+                                  Resolution specifies whether resolution of this reference is required.
+                                  The default is 'Required', which means the reconcile will fail if the
+                                  reference cannot be resolved. 'Optional' means this reference will be
+                                  a no-op if it cannot be resolved.
+                                enum:
+                                - Required
+                                - Optional
+                                type: string
+                              resolve:
+                                description: |-
+                                  Resolve specifies when this reference should be resolved. The default
+                                  is 'IfNotPresent', which will attempt to resolve the reference only when
+                                  the corresponding field is not present. Use 'Always' to resolve the
+                                  reference on every reconcile.
+                                enum:
+                                - Always
+                                - IfNotPresent
+                                type: string
+                            type: object
                         type: object
                     type: object
                   stopped:
@@ -2780,8 +2974,11 @@ spec:
                         type: string
                       deviceId:
                         description: |-
-                          defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
-                          Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                          (String) :
+                          :
+
+                          Specifies the user-defined device identifier.
+                          Use `/dev/disk/by-id/virtio-{device_id}` as the device path in a mount command.
                         type: string
                       existingDisk:
                         description: '(Attributes) :'
@@ -2956,6 +3153,9 @@ spec:
                           type: string
                       type: object
                     type: array
+                  followsSpotPrice:
+                    description: '(Attributes) :'
+                    type: object
                   gpuCluster:
                     description: '(Attributes) :'
                     properties:
@@ -3100,6 +3300,9 @@ spec:
                       (String) NVLink Instance Group ID associated with the VM
                       NVLink Instance Group ID associated with the VM
                     type: string
+                  onDemand:
+                    description: '(Attributes) :'
+                    type: object
                   parentId:
                     description: |-
                       (String) Identifier of the parent resource to which the resource belongs.
@@ -3225,8 +3428,11 @@ spec:
                           type: string
                         deviceId:
                           description: |-
-                            defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
-                            Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+                            (String) :
+                            :
+
+                            Specifies the user-defined device identifier.
+                            Use `/dev/disk/by-id/virtio-{device_id}` as the device path in a mount command.
                           type: string
                         existingDisk:
                           description: '(Attributes) :'
@@ -3368,6 +3574,15 @@ spec:
                       Unique identifier of the service account associated with this instance.
                       For details, see https://docs.nebius.com/iam/service-accounts/manage
                     type: string
+                  spotPricingPolicy:
+                    description: '(Attributes) :'
+                    properties:
+                      id:
+                        description: |-
+                          (String) Identifier for the resource, unique for its resource type.
+                          PricingPolicy ID used as the maximum agreed price for the preemptible VM.
+                        type: string
+                    type: object
                   status:
                     description: (Attributes) (see below for nested schema)
                     properties:
@@ -3418,7 +3633,9 @@ spec:
                             type: array
                         type: object
                       maintenanceEventId:
-                        description: (String)
+                        description: |-
+                          (String) Identifier of the maintenance event associated with the instance, if any.
+                          Identifier of the maintenance event associated with the instance, if any.
                         type: string
                       networkInterfaces:
                         description: '(Attributes List) :'

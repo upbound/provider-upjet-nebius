@@ -49,8 +49,11 @@ type BootDiskInitParameters struct {
 	// - `READ_WRITE`
 	AttachMode *string `json:"attachMode,omitempty" tf:"attach_mode,omitempty"`
 
-	// defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
-	// Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+	// (String) :
+	// :
+	//
+	// Specifies the user-defined device identifier.
+	// Use `/dev/disk/by-id/virtio-{device_id}` as the device path in a mount command.
 	DeviceID *string `json:"deviceId,omitempty" tf:"device_id,omitempty"`
 
 	// (Attributes) :
@@ -74,8 +77,11 @@ type BootDiskObservation struct {
 	// - `READ_WRITE`
 	AttachMode *string `json:"attachMode,omitempty" tf:"attach_mode,omitempty"`
 
-	// defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
-	// Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+	// (String) :
+	// :
+	//
+	// Specifies the user-defined device identifier.
+	// Use `/dev/disk/by-id/virtio-{device_id}` as the device path in a mount command.
 	DeviceID *string `json:"deviceId,omitempty" tf:"device_id,omitempty"`
 
 	// (Attributes) :
@@ -100,8 +106,11 @@ type BootDiskParameters struct {
 	// +kubebuilder:validation:Optional
 	AttachMode *string `json:"attachMode" tf:"attach_mode,omitempty"`
 
-	// defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
-	// Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+	// (String) :
+	// :
+	//
+	// Specifies the user-defined device identifier.
+	// Use `/dev/disk/by-id/virtio-{device_id}` as the device path in a mount command.
 	// +kubebuilder:validation:Optional
 	DeviceID *string `json:"deviceId,omitempty" tf:"device_id,omitempty"`
 
@@ -298,6 +307,15 @@ type FilesystemsParameters struct {
 	MountTag *string `json:"mountTag" tf:"mount_tag,omitempty"`
 }
 
+type FollowsSpotPriceInitParameters struct {
+}
+
+type FollowsSpotPriceObservation struct {
+}
+
+type FollowsSpotPriceParameters struct {
+}
+
 type IPAddressInitParameters struct {
 
 	// (String) Allocation identifier if it was created before.
@@ -393,6 +411,9 @@ type InstanceInitParameters struct {
 	Filesystems []FilesystemsInitParameters `json:"filesystems,omitempty" tf:"filesystems,omitempty"`
 
 	// (Attributes) :
+	FollowsSpotPrice *FollowsSpotPriceInitParameters `json:"followsSpotPrice,omitempty" tf:"follows_spot_price,omitempty"`
+
+	// (Attributes) :
 	GpuCluster *InstanceGpuClusterInitParameters `json:"gpuCluster,omitempty" tf:"gpu_cluster,omitempty"`
 
 	// (String) :
@@ -423,6 +444,9 @@ type InstanceInitParameters struct {
 	// (String) NVLink Instance Group ID associated with the VM
 	// NVLink Instance Group ID associated with the VM
 	NvlInstanceGroupID *string `json:"nvlInstanceGroupId,omitempty" tf:"nvl_instance_group_id,omitempty"`
+
+	// (Attributes) :
+	OnDemand *OnDemandInitParameters `json:"onDemand,omitempty" tf:"on_demand,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
 	// Identifier of the parent resource to which the resource belongs.
@@ -478,6 +502,9 @@ type InstanceInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v2.NamespacedSelector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
+	// (Attributes) :
+	SpotPricingPolicy *SpotPricingPolicyInitParameters `json:"spotPricingPolicy,omitempty" tf:"spot_pricing_policy,omitempty"`
+
 	// (Boolean) Indicates whether the instance should be stopped.
 	// Indicates whether the instance should be stopped.
 	Stopped *bool `json:"stopped,omitempty" tf:"stopped,omitempty"`
@@ -507,6 +534,9 @@ type InstanceObservation struct {
 
 	// (Attributes List) List of Shared Filesystems attached to the instance. (see below for nested schema)
 	Filesystems []FilesystemsObservation `json:"filesystems,omitempty" tf:"filesystems,omitempty"`
+
+	// (Attributes) :
+	FollowsSpotPrice *FollowsSpotPriceParameters `json:"followsSpotPrice,omitempty" tf:"follows_spot_price,omitempty"`
 
 	// (Attributes) :
 	GpuCluster *InstanceGpuClusterObservation `json:"gpuCluster,omitempty" tf:"gpu_cluster,omitempty"`
@@ -547,6 +577,9 @@ type InstanceObservation struct {
 	// (String) NVLink Instance Group ID associated with the VM
 	// NVLink Instance Group ID associated with the VM
 	NvlInstanceGroupID *string `json:"nvlInstanceGroupId,omitempty" tf:"nvl_instance_group_id,omitempty"`
+
+	// (Attributes) :
+	OnDemand *OnDemandParameters `json:"onDemand,omitempty" tf:"on_demand,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
 	// Identifier of the parent resource to which the resource belongs.
@@ -601,6 +634,9 @@ type InstanceObservation struct {
 	// For details, see https://docs.nebius.com/iam/service-accounts/manage
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
+	// (Attributes) :
+	SpotPricingPolicy *SpotPricingPolicyObservation `json:"spotPricingPolicy,omitempty" tf:"spot_pricing_policy,omitempty"`
+
 	// (Attributes) (see below for nested schema)
 	Status *InstanceStatusObservation `json:"status,omitempty" tf:"status,omitempty"`
 
@@ -634,6 +670,10 @@ type InstanceParameters struct {
 	// (Attributes List) List of Shared Filesystems attached to the instance. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Filesystems []FilesystemsParameters `json:"filesystems,omitempty" tf:"filesystems,omitempty"`
+
+	// (Attributes) :
+	// +kubebuilder:validation:Optional
+	FollowsSpotPrice *FollowsSpotPriceParameters `json:"followsSpotPrice,omitempty" tf:"follows_spot_price,omitempty"`
 
 	// (Attributes) :
 	// +kubebuilder:validation:Optional
@@ -674,6 +714,10 @@ type InstanceParameters struct {
 	// NVLink Instance Group ID associated with the VM
 	// +kubebuilder:validation:Optional
 	NvlInstanceGroupID *string `json:"nvlInstanceGroupId,omitempty" tf:"nvl_instance_group_id,omitempty"`
+
+	// (Attributes) :
+	// +kubebuilder:validation:Optional
+	OnDemand *OnDemandParameters `json:"onDemand,omitempty" tf:"on_demand,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
 	// Identifier of the parent resource to which the resource belongs.
@@ -736,6 +780,10 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v2.NamespacedSelector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
+	// (Attributes) :
+	// +kubebuilder:validation:Optional
+	SpotPricingPolicy *SpotPricingPolicyParameters `json:"spotPricingPolicy,omitempty" tf:"spot_pricing_policy,omitempty"`
+
 	// (Boolean) Indicates whether the instance should be stopped.
 	// Indicates whether the instance should be stopped.
 	// +kubebuilder:validation:Optional
@@ -753,7 +801,8 @@ type InstanceStatusObservation struct {
 	// (Attributes) (see below for nested schema)
 	InfinibandTopologyPath *StatusInfinibandTopologyPathObservation `json:"infinibandTopologyPath,omitempty" tf:"infiniband_topology_path,omitempty"`
 
-	// (String)
+	// (String) Identifier of the maintenance event associated with the instance, if any.
+	// Identifier of the maintenance event associated with the instance, if any.
 	MaintenanceEventID *string `json:"maintenanceEventId,omitempty" tf:"maintenance_event_id,omitempty"`
 
 	// (Attributes List) :
@@ -1339,6 +1388,15 @@ type NetworkInterfacesSecurityGroupsObservation struct {
 type NetworkInterfacesSecurityGroupsParameters struct {
 }
 
+type OnDemandInitParameters struct {
+}
+
+type OnDemandObservation struct {
+}
+
+type OnDemandParameters struct {
+}
+
 type PassthroughGroupInitParameters struct {
 
 	// (Boolean) :
@@ -1662,8 +1720,11 @@ type SecondaryDisksInitParameters struct {
 	// - `READ_WRITE`
 	AttachMode *string `json:"attachMode,omitempty" tf:"attach_mode,omitempty"`
 
-	// defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
-	// Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+	// (String) :
+	// :
+	//
+	// Specifies the user-defined device identifier.
+	// Use `/dev/disk/by-id/virtio-{device_id}` as the device path in a mount command.
 	DeviceID *string `json:"deviceId,omitempty" tf:"device_id,omitempty"`
 
 	// (Attributes) :
@@ -1747,8 +1808,11 @@ type SecondaryDisksObservation struct {
 	// - `READ_WRITE`
 	AttachMode *string `json:"attachMode,omitempty" tf:"attach_mode,omitempty"`
 
-	// defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
-	// Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+	// (String) :
+	// :
+	//
+	// Specifies the user-defined device identifier.
+	// Use `/dev/disk/by-id/virtio-{device_id}` as the device path in a mount command.
 	DeviceID *string `json:"deviceId,omitempty" tf:"device_id,omitempty"`
 
 	// (Attributes) :
@@ -1773,8 +1837,11 @@ type SecondaryDisksParameters struct {
 	// +kubebuilder:validation:Optional
 	AttachMode *string `json:"attachMode" tf:"attach_mode,omitempty"`
 
-	// defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
-	// Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+	// (String) :
+	// :
+	//
+	// Specifies the user-defined device identifier.
+	// Use `/dev/disk/by-id/virtio-{device_id}` as the device path in a mount command.
 	// +kubebuilder:validation:Optional
 	DeviceID *string `json:"deviceId,omitempty" tf:"device_id,omitempty"`
 
@@ -2125,6 +2192,48 @@ type SpecSourceImageFamilyParameters struct {
 	// (String) Identifier of the parent resource to which the resource belongs.
 	// +kubebuilder:validation:Optional
 	ParentID *string `json:"parentId,omitempty" tf:"parent_id,omitempty"`
+}
+
+type SpotPricingPolicyInitParameters struct {
+
+	// (String) Identifier for the resource, unique for its resource type.
+	// PricingPolicy ID used as the maximum agreed price for the preemptible VM.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-nebius/apis/namespaced/billing/v1beta1.PricingPolicy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Reference to a PricingPolicy in billing to populate id.
+	// +kubebuilder:validation:Optional
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+
+	// Selector for a PricingPolicy in billing to populate id.
+	// +kubebuilder:validation:Optional
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
+}
+
+type SpotPricingPolicyObservation struct {
+
+	// (String) Identifier for the resource, unique for its resource type.
+	// PricingPolicy ID used as the maximum agreed price for the preemptible VM.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type SpotPricingPolicyParameters struct {
+
+	// (String) Identifier for the resource, unique for its resource type.
+	// PricingPolicy ID used as the maximum agreed price for the preemptible VM.
+	// +crossplane:generate:reference:type=github.com/upbound/provider-nebius/apis/namespaced/billing/v1beta1.PricingPolicy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)
+	// +kubebuilder:validation:Optional
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Reference to a PricingPolicy in billing to populate id.
+	// +kubebuilder:validation:Optional
+	IDRef *v2.NamespacedReference `json:"idRef,omitempty" tf:"-"`
+
+	// Selector for a PricingPolicy in billing to populate id.
+	// +kubebuilder:validation:Optional
+	IDSelector *v2.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 }
 
 type StatusInfinibandTopologyPathInitParameters struct {

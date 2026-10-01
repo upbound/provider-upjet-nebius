@@ -4,15 +4,15 @@ metadata:
   annotations:
     meta.upbound.io/example-id: iam/v1beta1/federationcertificate
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: iam-v1beta1-federationcertificate
+  name: iamv1federationcertificate
 spec:
   forProvider:
     name: iamv1federationcertificate
     # parent_id of a federation certificate represents the Federation it belongs to.
     parentIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: iam-v1beta1-federationcertificate
     # data is a PEM-encoded X.509 certificate (sensitive), supplied via a Secret.
     dataSecretRef:
       name: iamv1federationcertificate-data
@@ -28,8 +28,8 @@ metadata:
     meta.upbound.io/example-id: iam/v1beta1/federationcertificate
     upjet.upbound.io/manual-intervention: "The Federation needs to state transition from ACTIVE to INACTIVE which does not work in 0.6.16 version of the provider (status.state is always ACTIVE)"
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: iam-v1beta1-federationcertificate
+  name: iamv1federationcertificate
 spec:
   forProvider:
     name: iamv1federationcertificate

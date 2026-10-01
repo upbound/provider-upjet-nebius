@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: registry/v1beta1/registry
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: registry-v1beta1-registry
+  name: registryv1registry
   namespace: upbound-system
 spec:
   forProvider:

@@ -224,10 +224,6 @@ type NetworkStatusInitParameters struct {
 
 type NetworkStatusObservation struct {
 
-	// (Boolean) Indicates whether this is the project's default network.
-	// Indicates whether this is the project's default network.
-	Default *bool `json:"default,omitempty" tf:"default,omitempty"`
-
 	// (String) ID of the network's default route table.
 	// ID of the network's default route table.
 	DefaultRouteTableID *string `json:"defaultRouteTableId,omitempty" tf:"default_route_table_id,omitempty"`

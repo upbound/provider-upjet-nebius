@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/subnet
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-subnet
+  name: vpv1subnet
 spec:
   forProvider:
     ipv4PrivatePools:
@@ -13,7 +13,7 @@ spec:
     name: vpv1subnet
     networkIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: vpc-v1beta1-subnet
     parentId: ${data.nebius_project_id}
 
 ---
@@ -24,8 +24,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/subnet
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-subnet
+  name: vpv1subnet
 spec:
   forProvider:
     name: vpv1subnet

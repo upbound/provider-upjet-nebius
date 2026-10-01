@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: mk8s/v1beta1/cluster
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: mk8s-v1beta1-cluster
+  name: mk8sv1cluster
 spec:
   forProvider:
     controlPlane:
@@ -14,8 +14,8 @@ spec:
       etcdClusterSize: 1
       subnetIdSelector:
         matchLabels:
-          testing.upbound.io/example-name: default
-      version: "1.34"
+          testing.upbound.io/example-name: mk8s-v1beta1-cluster
+      version: "1.36"
     name: mk8sv1cluster
     parentId: ${data.nebius_project_id}
 
@@ -27,8 +27,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: mk8s/v1beta1/cluster
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: mk8s-v1beta1-cluster
+  name: mk8sv1cluster
 spec:
   forProvider:
     ipv4PrivatePools:
@@ -36,7 +36,7 @@ spec:
     name: mk8sv1cluster
     networkIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: mk8s-v1beta1-cluster
     parentId: ${data.nebius_project_id}
 
 ---
@@ -47,8 +47,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: mk8s/v1beta1/cluster
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: mk8s-v1beta1-cluster
+  name: mk8sv1cluster
 spec:
   forProvider:
     name: mk8sv1cluster

@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/allocation
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-allocation
+  name: vpcv1allocation
   namespace: upbound-system
 spec:
   forProvider:
@@ -14,7 +14,7 @@ spec:
       cidr: /32
       subnetIdSelector:
         matchLabels:
-          testing.upbound.io/example-name: default
+          testing.upbound.io/example-name: vpc-v1beta1-allocation
     parentId: ${data.nebius_project_id}
 
 ---
@@ -25,8 +25,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/allocation
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-allocation
+  name: vpcv1allocation
   namespace: upbound-system
 spec:
   forProvider:
@@ -35,7 +35,7 @@ spec:
     name: vpcv1allocation
     networkIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: vpc-v1beta1-allocation
     parentId: ${data.nebius_project_id}
 
 ---
@@ -46,8 +46,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/allocation
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-allocation
+  name: vpcv1allocation
   namespace: upbound-system
 spec:
   forProvider:
