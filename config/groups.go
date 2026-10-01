@@ -80,4 +80,5 @@ var GroupMap = map[string]GroupKindCalculator{
 	"nebius_capacity_v1_capacity_allowance": ReplaceGroupWords("capacity", 2),
 	"nebius_compute_v1_disk_snapshot":       ReplaceGroupWords("compute", 2),
 	"nebius_storage_v1_inventory":           ReplaceGroupWords("storage", 2),
+	"nebius_billing_v1_pricing_policy":      ReplaceGroupWords("billing", 2),
 }

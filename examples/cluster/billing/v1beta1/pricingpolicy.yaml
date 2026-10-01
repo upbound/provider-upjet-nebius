@@ -1,0 +1,18 @@
+apiVersion: billing.nebius.upbound.io/v1beta1
+kind: PricingPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: billing/v1beta1/pricingpolicy
+  labels:
+    testing.upbound.io/example-name: billing-v1beta1-pricingpolicy
+  name: billingv1pricingpolicy
+spec:
+  forProvider:
+    parentId: ${data.nebius_project_id}
+    name: billingv1pricingpolicy
+    computeInstanceSpec:
+      v1:
+        platform: gpu-h200-sxm
+    pricing:
+      maxPriceV1:
+        maxPrice: "3.515"

@@ -9,6 +9,7 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/controller"
 
+	pricingpolicy "github.com/upbound/provider-nebius/internal/controller/namespaced/billing/pricingpolicy"
 	capacityallowance "github.com/upbound/provider-nebius/internal/controller/namespaced/capacity/capacityallowance"
 	disk "github.com/upbound/provider-nebius/internal/controller/namespaced/compute/disk"
 	disksnapshot "github.com/upbound/provider-nebius/internal/controller/namespaced/compute/disksnapshot"
@@ -56,6 +57,7 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		pricingpolicy.Setup,
 		capacityallowance.Setup,
 		disk.Setup,
 		disksnapshot.Setup,
@@ -109,6 +111,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 // the supplied manager gated.
 func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		pricingpolicy.SetupGated,
 		capacityallowance.SetupGated,
 		disk.SetupGated,
 		disksnapshot.SetupGated,
@@ -161,6 +164,7 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 // SetupWebhookWithManager registers conversion webhooks for all resource kinds in the group.
 func SetupWebhookWithManager(mgr ctrl.Manager) error {
 	for _, setup := range []func(ctrl.Manager) error{
+		pricingpolicy.SetupWebhookWithManager,
 		capacityallowance.SetupWebhookWithManager,
 		disk.SetupWebhookWithManager,
 		disksnapshot.SetupWebhookWithManager,

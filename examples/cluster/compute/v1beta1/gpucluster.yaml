@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: compute/v1beta1/gpucluster
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: compute-v1beta1-gpucluster
+  name: computev1gpucluster
 spec:
   forProvider:
     infinibandFabric: us-central1-a # test project is located in us-central1

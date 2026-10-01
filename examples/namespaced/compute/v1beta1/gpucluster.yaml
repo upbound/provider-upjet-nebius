@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: compute/v1beta1/gpucluster
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: compute-v1beta1-gpucluster
+  name: computev1gpucluster
   namespace: upbound-system
 spec:
   forProvider:

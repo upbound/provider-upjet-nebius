@@ -4,15 +4,15 @@ metadata:
   annotations:
     meta.upbound.io/example-id: dns/v1beta1/record
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: dns-v1beta1-record
+  name: dnsv1record
   namespace: upbound-system
 spec:
   forProvider:
     name: dnsv1record
     parentIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: dns-v1beta1-record
     relativeName: www
     type: A
     data: 192.0.2.1
@@ -26,8 +26,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: dns/v1beta1/record
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: dns-v1beta1-record
+  name: dnsv1record
   namespace: upbound-system
 spec:
   forProvider:
@@ -37,7 +37,7 @@ spec:
     vpc:
       primaryNetworkIdSelector:
         matchLabels:
-          testing.upbound.io/example-name: default
+          testing.upbound.io/example-name: dns-v1beta1-record
 
 ---
 
@@ -47,8 +47,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: dns/v1beta1/record
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: dns-v1beta1-record
+  name: dnsv1record
   namespace: upbound-system
 spec:
   forProvider:

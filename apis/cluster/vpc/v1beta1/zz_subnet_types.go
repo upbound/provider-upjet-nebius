@@ -263,7 +263,7 @@ type StatusRouteTableInitParameters struct {
 
 type StatusRouteTableObservation struct {
 
-	// (Boolean) Indicates whether this is the network's default subnet.
+	// (Boolean) :
 	// :
 	//
 	// Indicates whether this is the network's default route table.
@@ -585,10 +585,6 @@ type SubnetStatusInitParameters struct {
 }
 
 type SubnetStatusObservation struct {
-
-	// (Boolean) Indicates whether this is the network's default subnet.
-	// Indicates whether this is the network's default subnet.
-	Default *bool `json:"default,omitempty" tf:"default,omitempty"`
 
 	// (List of String, Deprecated) :
 	// :

@@ -27,6 +27,56 @@ resources:
             values: (String, Sensitive)
             version: (String) The version of the write-only fields combined. You can use a hash here, some number, or a version of the secret from which you pull the value, or you can concatenate all of that together. This field is not sent to the server, but it is stored in the state, so don't store raw secrets here. Changing this field will trigger an update of the resource even if no other fields are changed. Use of this field is not required, but if you do not use it, changes in write-only fields will not trigger updates of the resource by themselves and therefore might not be reflected.
         importStatements: []
+    nebius_billing_v1_pricing_policy Resource - nebius:
+        subCategory: ""
+        description: 'How preemptible VMs are priced: a standing per-GPU bid for one (region, platform). One policy backs any number of VMs, referenced by id from the preemptible spec. A VM without a policy is a price-taker and pays the market price.'
+        name: nebius_billing_v1_pricing_policy Resource - nebius
+        title: nebius_billing_v1_pricing_policy Resource - nebius
+        argumentDocs:
+            SCHEDULING_STATE_ALLOWED: '- New VMs may start.'
+            SCHEDULING_STATE_BLOCKED: |-
+                :
+                The max_price limit is below the market price in force or below a market price
+                that is being applied; VM creation succeeds once the price falls to it.
+            STATE_ACTIVE: '- Ready; whether VMs may start is scheduling_state.'
+            STATE_CREATING: |-
+                :
+                Not ready yet; a VM referencing the policy gets a retryable error.
+                The state can last while a market price change is applied to the segment.
+            STATE_DELETING: '- Being deleted; does not accept new VMs.'
+            STATE_UPDATING: |-
+                :
+                The bid is being changed; scheduling is blocked until the change lands.
+                The state can last while a market price change is applied to the segment.
+            YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
+            compute_instance_spec: '(Attributes) :'
+            created_at: '(String) :'
+            currency: (String) ISO 4217 currency code of max_price, e.g. "USD".
+            id: (String) Identifier for the resource, unique for its resource type.
+            labels: (Map of String) Labels associated with the resource.
+            labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
+            max_price: |-
+                ranks the policy's VMs for
+                scheduling and preemption.
+            max_price_v1: '(Attributes) :'
+            metadata: '(Attributes) :'
+            name: (String) Human readable name for the resource.
+            parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            platform: '(String) Compute platform. Example: "gpu-h100-sxm".'
+            pricing: '(Attributes) :'
+            resource_version: '(Number) :'
+            running_vm_count: '(Number) :'
+            scheduling_state: '(String) :'
+            sku_id: (String) SKU resolved from the spec.
+            state: '(String) :'
+            status: '(Attributes) :'
+            status.running_vm_count: |-
+                is 0
+                (FAILED_PRECONDITION otherwise); the policy reports STATE_UPDATING and
+                blocks scheduling while the change is applied.
+            updated_at: '(String) :'
+            v1: (Attributes) First version of the compute instance specification. (see below for nested schema)
+        importStatements: []
     nebius_capacity_v1_capacity_allowance Resource - nebius:
         subCategory: ""
         description: Resource that restricts Capacity Block Group quota by project.
@@ -239,6 +289,7 @@ resources:
                   }
                 }
         argumentDocs:
+            /dev/disk/by-id/virtio-{device_id}: as the device path in a mount command.
             <hostname>.<network_id>.compute.internal.: or <instance_id>.<network_id>.compute.internal. if hostname is not specified.
             AUTO: ':'
             DISK_ENCRYPTION_MANAGED: |-
@@ -266,12 +317,13 @@ resources:
             cidrs: (List of String)
             cloud_init_user_data: '(String, Sensitive) :'
             created_at: '(String) :'
-            device_id: (String) Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+            device_id: '(String) :'
             disk_attachments: (Attributes List) Status of the requested disk attachments. (see below for nested schema)
             disk_encryption: (Attributes) Defines how data on the disk is encrypted. By default, no encryption is applied. (see below for nested schema)
             existing_disk: '(Attributes) :'
             existing_filesystem: (Attributes) (see below for nested schema)
             filesystems: (Attributes List) List of Shared Filesystems attached to the instance. (see below for nested schema)
+            follows_spot_price: '(Attributes) :'
             forbid_deletion: (Boolean) Prevents deletion whilst set
             fqdn: (String) FQDN of the interface
             gpu_cluster: '(Attributes) :'
@@ -287,13 +339,14 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             local_disks: '(Attributes) :'
             mac_address: (String) MAC address
-            maintenance_event_id: (String)
+            maintenance_event_id: (String) Identifier of the maintenance event associated with the instance, if any.
             managed_disk: '(Attributes) :'
             metadata: '(Attributes) :'
             mount_tag: (String) Specifies the user-defined identifier, allowing to use it as a device in mount command.
             name: (String) Human readable name for the resource.
             network_interfaces: '(Attributes List) :'
             nvl_instance_group_id: (String) NVLink Instance Group ID associated with the VM
+            on_demand: '(Attributes) :'
             on_preemption: '(String) :'
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             passthrough_group: '(Attributes) :'
@@ -323,6 +376,7 @@ resources:
             source_image_id: (String) Cannot be set alongside source_image_family or source_snapshot_id.
             source_snapshot_id: (String) Cannot be set alongside source_image_id or source_image_family.
             spec: (Attributes) Specification of a dependent disk to be created. (see below for nested schema)
+            spot_pricing_policy: '(Attributes) :'
             state: '(String) :'
             static: '(Boolean) :'
             status: (Attributes) (see below for nested schema)
@@ -1093,6 +1147,7 @@ resources:
             created_at: '(String) :'
             disabled: '(Boolean) :'
             disk_encryption: (Attributes) (see below for nested schema)
+            dra: '(Boolean) :'
             drain_timeout: '(String) :'
             drivers_preset: '(String) :'
             effect: '(String) :'
@@ -1101,9 +1156,11 @@ resources:
             filesystems: '(Attributes List) :'
             first_occurred_at: '(String) :'
             fixed_node_count: '(Number) :'
+            follows_spot_price: '(Attributes) :'
             gpu_cluster: (Attributes) Nebius Compute GPUCluster ID that will be attached to node. (see below for nested schema)
             gpu_settings: '(Attributes) :'
             id: (String) Identifier for the resource, unique for its resource type.
+            instance_metadata: (Attributes) Metadata propagated to the Compute Instances in the NodeGroup. (see below for nested schema)
             key: (String)
             kubectl drain --timeout: ', which gives up and returns an error.'
             kubelet_ephemeral: '(Boolean) :'
@@ -1132,6 +1189,7 @@ resources:
             nvlink: (Attributes) NVLinkSpec configures NVLink settings for the NodeGroup. (see below for nested schema)
             occurred_at: '(String) :'
             occurrence_count: (Number) The number of times this event has occurred between first_occurred_at and last_occurrence.occurred_at. Must be > 0
+            on_demand: '(Attributes) :'
             os: '(String) :'
             outdated_node_count: '(Number) :'
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
@@ -1156,6 +1214,7 @@ resources:
             size_gibibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
             size_kibibytes: (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
             size_mebibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+            spot_pricing_policy: '(Attributes) :'
             state: '(String) :'
             status: (Attributes) (see below for nested schema)
             strategy: '(Attributes) :'
@@ -2016,7 +2075,6 @@ resources:
             STATE_UNSPECIFIED: '- Default state, unspecified.'
             YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
             created_at: '(String) :'
-            default: (Boolean) Indicates whether this is the project's default network.
             default_route_table_id: (String) ID of the network's default route table.
             id: (String) Identifier for the resource, unique for its resource type.
             ipv4_private_pools: '(Attributes) :'
@@ -2278,7 +2336,7 @@ resources:
             cidr: '(String) :'
             cidrs: (Attributes List) (see below for nested schema)
             created_at: '(String) :'
-            default: (Boolean) Indicates whether this is the network's default subnet.
+            default: '(Boolean) :'
             id: (String) Identifier for the resource, unique for its resource type.
             ipv4_private_cidrs: '(List of String, Deprecated) :'
             ipv4_private_pools: '(Attributes) :'

@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: compute/v1beta1/disksnapshot
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: compute-v1beta1-disksnapshot
+  name: computev1disksnapshot
 spec:
   forProvider:
     name: computev1disksnapshot
@@ -13,7 +13,7 @@ spec:
     description: Example snapshot of the example disk
     sourceDiskIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: compute-v1beta1-disksnapshot
 
 ---
 
@@ -23,8 +23,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: compute/v1beta1/disksnapshot
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: compute-v1beta1-disksnapshot
+  name: computev1disksnapshot
 spec:
   forProvider:
     name: computev1disksnapshot

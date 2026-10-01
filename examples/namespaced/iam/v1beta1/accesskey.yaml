@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: iam/v1beta1/accesskey
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: iam-v1beta1-accesskey
+  name: iamv2accesskey
   namespace: upbound-system
 spec:
   forProvider:
@@ -19,7 +19,7 @@ spec:
       serviceAccount:
         idSelector:
           matchLabels:
-            testing.upbound.io/example-name: default
+            testing.upbound.io/example-name: iam-v1beta1-accesskey
   writeConnectionSecretToRef:
     name: storage-access-key-conn
 
@@ -31,8 +31,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: iam/v1beta1/accesskey
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: iam-v1beta1-accesskey
+  name: iamv2accesskey
   namespace: upbound-system
 spec:
   forProvider:

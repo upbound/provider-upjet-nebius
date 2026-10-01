@@ -4,15 +4,15 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/routetable
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-routetable
+  name: vpcv1routetable
   namespace: upbound-system
 spec:
   forProvider:
     name: vpcv1routetable
     networkIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: default
+        testing.upbound.io/example-name: vpc-v1beta1-routetable
     parentId: ${data.nebius_project_id}
 
 ---
@@ -23,8 +23,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: vpc/v1beta1/routetable
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: vpc-v1beta1-routetable
+  name: vpcv1routetable
   namespace: upbound-system
 spec:
   forProvider:

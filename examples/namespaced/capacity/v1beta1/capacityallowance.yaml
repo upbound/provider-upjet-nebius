@@ -5,8 +5,8 @@ metadata:
     meta.upbound.io/example-id: capacity/v1beta1/capacityallowance
     upjet.upbound.io/manual-intervention: "Requires a real, pre-existing Capacity Block Group NID (capacityBlockGroupId) reserved for the tenant; these cannot be created via this provider or Terraform, so uptest has no way to provision one automatically."
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: capacity-v1beta1-capacityallowance
+  name: capacityv1capacityallowance
   namespace: upbound-system
 spec:
   forProvider:

@@ -1,4 +1,5 @@
 [
+"nebius_billing_v1_pricing_policy",
 "nebius_capacity_v1_capacity_allowance",
 "nebius_compute_v1_disk",
 "nebius_compute_v1_disk_snapshot",

@@ -54,6 +54,10 @@ func Configure(p *config.Provider) {
 			TerraformName: "nebius_compute_v1_nvl_instance_group",
 			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)`,
 		}
+		r.References["template.spot_pricing_policy.id"] = config.Reference{
+			TerraformName: "nebius_billing_v1_pricing_policy",
+			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)`,
+		}
 		// Do not late initialize the node count as it may conflict with autoscaling/karpenter
 		r.LateInitializer = config.LateInitializer{
 			IgnoredFields: []string{"fixed_node_count"},

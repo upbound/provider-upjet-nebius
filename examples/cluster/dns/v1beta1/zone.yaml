@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: dns/v1beta1/zone
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: dns-v1beta1-zone
+  name: dnsv1zone
 spec:
   forProvider:
     domainName: dnsv1zone.uptest.
@@ -14,7 +14,7 @@ spec:
     vpc:
       primaryNetworkIdSelector:
         matchLabels:
-          testing.upbound.io/example-name: default
+          testing.upbound.io/example-name: dns-v1beta1-zone
 
 ---
 
@@ -24,8 +24,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: dns/v1beta1/zone
   labels:
-    testing.upbound.io/example-name: default
-  name: default
+    testing.upbound.io/example-name: dns-v1beta1-zone
+  name: dnsv1zone
 spec:
   forProvider:
     name: dnsv1zone
