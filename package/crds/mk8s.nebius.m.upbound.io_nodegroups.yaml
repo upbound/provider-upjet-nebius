@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.22.0
+    controller-gen.kubebuilder.io/version: v0.23.0
   name: nodegroups.mk8s.nebius.m.upbound.io
 spec:
   group: mk8s.nebius.m.upbound.io
@@ -2517,7 +2517,7 @@ spec:
                                 (String) :
                                 :
 
-                                # Time of the first occurrence of a recurrent event
+                                Time of the first occurrence of a recurrent event
 
                                 A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
                               type: string
@@ -2534,7 +2534,7 @@ spec:
                                     (String) :
                                     :
 
-                                    # Severity level for the event
+                                    Severity level for the event
 
                                     #### Supported values
 
@@ -2562,7 +2562,7 @@ spec:
                                     (String) :
                                     :
 
-                                    # Time at which the event has occurred
+                                    Time at which the event has occurred
 
                                     A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
                                   type: string

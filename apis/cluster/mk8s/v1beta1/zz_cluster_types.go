@@ -321,7 +321,7 @@ type EventsObservation struct {
 	// (String) :
 	// :
 	//
-	// # Time of the first occurrence of a recurrent event
+	// Time of the first occurrence of a recurrent event
 	//
 	// A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
 	FirstOccurredAt *string `json:"firstOccurredAt,omitempty" tf:"first_occurred_at,omitempty"`
@@ -404,7 +404,7 @@ type LastOccurrenceObservation struct {
 	// (String) :
 	// :
 	//
-	// # Severity level for the event
+	// Severity level for the event
 	//
 	// #### Supported values
 	//
@@ -430,7 +430,7 @@ type LastOccurrenceObservation struct {
 	// (String) :
 	// :
 	//
-	// # Time at which the event has occurred
+	// Time at which the event has occurred
 	//
 	// A string representing a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ` or `YYYY-MM-DDTHH:MM:SS.SSS±HH:MM`
 	OccurredAt *string `json:"occurredAt,omitempty" tf:"occurred_at,omitempty"`

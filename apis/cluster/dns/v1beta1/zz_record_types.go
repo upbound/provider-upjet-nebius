@@ -26,7 +26,7 @@ type RecordInitParameters struct {
 
 	// :
 	//
-	// # Record data in text format
+	// Record data in text format
 	//
 	// This should be the RDATA part of this Resource Record's
 	// [presentation (zonefile) format](https://datatracker.ietf.org/doc/html/rfc9499#name-resource-records).
@@ -73,7 +73,7 @@ type RecordInitParameters struct {
 
 	// :
 	//
-	// # Record type
+	// Record type
 	//
 	// #### Supported values
 	//
@@ -109,7 +109,7 @@ type RecordObservation struct {
 
 	// :
 	//
-	// # Record data in text format
+	// Record data in text format
 	//
 	// This should be the RDATA part of this Resource Record's
 	// [presentation (zonefile) format](https://datatracker.ietf.org/doc/html/rfc9499#name-resource-records).
@@ -162,7 +162,7 @@ type RecordObservation struct {
 
 	// :
 	//
-	// # Record type
+	// Record type
 	//
 	// #### Supported values
 	//
@@ -198,7 +198,7 @@ type RecordParameters struct {
 
 	// :
 	//
-	// # Record data in text format
+	// Record data in text format
 	//
 	// This should be the RDATA part of this Resource Record's
 	// [presentation (zonefile) format](https://datatracker.ietf.org/doc/html/rfc9499#name-resource-records).
@@ -253,7 +253,7 @@ type RecordParameters struct {
 
 	// :
 	//
-	// # Record type
+	// Record type
 	//
 	// #### Supported values
 	//
