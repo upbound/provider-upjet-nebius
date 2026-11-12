@@ -147,8 +147,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -365,6 +365,26 @@ spec:
                         required:
                         - key
                         - name
+                        type: object
+                      containerRuntime:
+                        description: '(Attributes) :'
+                        properties:
+                          sociPullMode:
+                            description: |-
+                              (String) :
+                              :
+
+                              Uses SOCI Snapshotter to pull images.
+
+                              #### Supported values
+
+                              Image pull modes for SOCI Snapshotter
+                              Possible values:
+
+                              - `SOCI_PULL_MODE_UNSPECIFIED` - Uses the default containerd pull.
+                              - `LAZY` - Uses SOCI Snapshotter to fetch image layers on demand.
+                              - `PARALLEL` - Uses SOCI Snapshotter to download and unpack image layers in parallel.
+                            type: string
                         type: object
                       filesystems:
                         description: '(Attributes List) :'
@@ -1279,8 +1299,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -1497,6 +1517,26 @@ spec:
                         required:
                         - key
                         - name
+                        type: object
+                      containerRuntime:
+                        description: '(Attributes) :'
+                        properties:
+                          sociPullMode:
+                            description: |-
+                              (String) :
+                              :
+
+                              Uses SOCI Snapshotter to pull images.
+
+                              #### Supported values
+
+                              Image pull modes for SOCI Snapshotter
+                              Possible values:
+
+                              - `SOCI_PULL_MODE_UNSPECIFIED` - Uses the default containerd pull.
+                              - `LAZY` - Uses SOCI Snapshotter to fetch image layers on demand.
+                              - `PARALLEL` - Uses SOCI Snapshotter to download and unpack image layers in parallel.
+                            type: string
                         type: object
                       filesystems:
                         description: '(Attributes List) :'
@@ -2487,8 +2527,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -2800,6 +2840,26 @@ spec:
                               - `NETWORK_HDD`
                               - `NETWORK_SSD_IO_M3`
                               - `NETWORK_SSD_NON_REPLICATED`
+                            type: string
+                        type: object
+                      containerRuntime:
+                        description: '(Attributes) :'
+                        properties:
+                          sociPullMode:
+                            description: |-
+                              (String) :
+                              :
+
+                              Uses SOCI Snapshotter to pull images.
+
+                              #### Supported values
+
+                              Image pull modes for SOCI Snapshotter
+                              Possible values:
+
+                              - `SOCI_PULL_MODE_UNSPECIFIED` - Uses the default containerd pull.
+                              - `LAZY` - Uses SOCI Snapshotter to fetch image layers on demand.
+                              - `PARALLEL` - Uses SOCI Snapshotter to download and unpack image layers in parallel.
                             type: string
                         type: object
                       filesystems:

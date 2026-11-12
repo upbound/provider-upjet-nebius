@@ -31,7 +31,7 @@ type MaxPriceV1InitParameters struct {
 
 	// :
 	//
-	// Per-GPU hourly limit in USD, decimal string 3 digits precision. Example: "3.515".
+	// Per-GPU hourly limit in USD, as a string with three decimal places. Example: "3.515".
 	// Must be within the allowed price range (OUT_OF_RANGE otherwise);
 	// a value below the current market price is accepted but blocks scheduling.
 	// Mutable only while `status.running_vm_count` is 0
@@ -44,7 +44,7 @@ type MaxPriceV1Observation struct {
 
 	// :
 	//
-	// Per-GPU hourly limit in USD, decimal string 3 digits precision. Example: "3.515".
+	// Per-GPU hourly limit in USD, as a string with three decimal places. Example: "3.515".
 	// Must be within the allowed price range (OUT_OF_RANGE otherwise);
 	// a value below the current market price is accepted but blocks scheduling.
 	// Mutable only while `status.running_vm_count` is 0
@@ -57,7 +57,7 @@ type MaxPriceV1Parameters struct {
 
 	// :
 	//
-	// Per-GPU hourly limit in USD, decimal string 3 digits precision. Example: "3.515".
+	// Per-GPU hourly limit in USD, as a string with three decimal places. Example: "3.515".
 	// Must be within the allowed price range (OUT_OF_RANGE otherwise);
 	// a value below the current market price is accepted but blocks scheduling.
 	// Mutable only while `status.running_vm_count` is 0
@@ -99,7 +99,7 @@ type PricingPolicyInitParameters struct {
 
 	Metadata *MetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -130,7 +130,7 @@ type PricingPolicyObservation struct {
 
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -169,7 +169,7 @@ type PricingPolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -227,7 +227,8 @@ type StatusObservation struct {
 	// - `STATE_ACTIVE` - Ready; whether VMs may start is `scheduling_state`.
 	// - `STATE_DELETING` - Being deleted; does not accept new VMs.
 	// - `STATE_UPDATING`:
-	// The bid is being changed; scheduling is blocked until the change lands.
+	// The max_price is being changed; scheduling is blocked until the change
+	// is applied.
 	// The state can last while a market price change is applied to the segment.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 }

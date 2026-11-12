@@ -144,7 +144,7 @@ type DiskAttachmentsObservation struct {
 	// If false, the disk is preserved and only detached on instance deletion.
 	IsManaged *bool `json:"isManaged,omitempty" tf:"is_managed,omitempty"`
 
-	// (String) Human readable name for the resource.
+	// readable name for the resource.
 	// :
 	//
 	// Disk name used to match this status entry with the desired attachment
@@ -434,8 +434,8 @@ type InstanceInitParameters struct {
 	// (Attributes) :
 	Metadata *InstanceMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Attributes List) :
@@ -567,8 +567,8 @@ type InstanceObservation struct {
 	// (Attributes) :
 	Metadata *InstanceMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Attributes List) :
@@ -701,8 +701,8 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *InstanceMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -863,7 +863,7 @@ type ManagedDiskInitParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) Human readable name for the resource.
+	// readable name for the resource.
 	// :
 	//
 	// Name of a dependent disk.
@@ -882,7 +882,7 @@ type ManagedDiskObservation struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) Human readable name for the resource.
+	// readable name for the resource.
 	// :
 	//
 	// Name of a dependent disk.
@@ -902,7 +902,7 @@ type ManagedDiskParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) Human readable name for the resource.
+	// readable name for the resource.
 	// :
 	//
 	// Name of a dependent disk.
@@ -1251,7 +1251,7 @@ type NetworkInterfacesInitParameters struct {
 	// (Attributes) :
 	IPAddress *IPAddressInitParameters `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
-	// (String) Human readable name for the resource.
+	// readable name for the resource.
 	// :
 	//
 	// Interface name
@@ -1288,7 +1288,7 @@ type NetworkInterfacesObservation struct {
 	// (Attributes) :
 	IPAddress *IPAddressObservation `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
-	// (String) Human readable name for the resource.
+	// readable name for the resource.
 	// :
 	//
 	// Interface name
@@ -1317,7 +1317,7 @@ type NetworkInterfacesParameters struct {
 	// +kubebuilder:validation:Optional
 	IPAddress *IPAddressParameters `json:"ipAddress" tf:"ip_address,omitempty"`
 
-	// (String) Human readable name for the resource.
+	// readable name for the resource.
 	// :
 	//
 	// Interface name
@@ -1741,7 +1741,7 @@ type SecondaryDisksManagedDiskInitParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) Human readable name for the resource.
+	// readable name for the resource.
 	// :
 	//
 	// Name of a dependent disk.
@@ -1760,7 +1760,7 @@ type SecondaryDisksManagedDiskObservation struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) Human readable name for the resource.
+	// readable name for the resource.
 	// :
 	//
 	// Name of a dependent disk.
@@ -1780,7 +1780,7 @@ type SecondaryDisksManagedDiskParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) Human readable name for the resource.
+	// readable name for the resource.
 	// :
 	//
 	// Name of a dependent disk.
@@ -2271,7 +2271,7 @@ type StatusNetworkInterfacesObservation struct {
 	// MAC address
 	MacAddress *string `json:"macAddress,omitempty" tf:"mac_address,omitempty"`
 
-	// (String) Human readable name for the resource.
+	// readable name for the resource.
 	// :
 	//
 	// Name for interface.

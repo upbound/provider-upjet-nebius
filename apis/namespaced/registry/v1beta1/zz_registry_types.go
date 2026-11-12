@@ -35,8 +35,8 @@ type RegistryInitParameters struct {
 	// (Attributes) :
 	Metadata *MetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -60,8 +60,7 @@ type RegistryObservation struct {
 	// (String) Identifier for the resource, unique for its resource type.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Number) Registry.Type type = 2;
-	// Registry.Type type = 2;
+	// (Number)
 	ImagesCount *float64 `json:"imagesCount,omitempty" tf:"images_count,omitempty"`
 
 	// (Map of String) Labels associated with the resource.
@@ -77,8 +76,8 @@ type RegistryObservation struct {
 	// (Attributes) :
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -122,8 +121,8 @@ type RegistryParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -138,7 +137,7 @@ type StatusInitParameters struct {
 
 type StatusObservation struct {
 
-	// (Number) Registry.Type type = 2;
+	// (Number)
 	ImagesCount *float64 `json:"imagesCount,omitempty" tf:"images_count,omitempty"`
 
 	// north1.nebius.cloud"

@@ -157,7 +157,7 @@ spec:
                   metadata:
                     type: object
                   name:
-                    description: Human readable name for the resource.
+                    description: Human-readable name for the resource.
                     type: string
                   noncurrentVersions:
                     description: Include noncurrent versions in inventory if set to
@@ -411,7 +411,7 @@ spec:
                   metadata:
                     type: object
                   name:
-                    description: Human readable name for the resource.
+                    description: Human-readable name for the resource.
                     type: string
                   noncurrentVersions:
                     description: Include noncurrent versions in inventory if set to
@@ -661,7 +661,7 @@ spec:
                   metadata:
                     type: object
                   name:
-                    description: Human readable name for the resource.
+                    description: Human-readable name for the resource.
                     type: string
                   noncurrentVersions:
                     description: Include noncurrent versions in inventory if set to

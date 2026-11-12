@@ -14,7 +14,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             namespace: (String)
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             product_slug: (String)
@@ -29,7 +29,7 @@ resources:
         importStatements: []
     nebius_billing_v1_pricing_policy Resource - nebius:
         subCategory: ""
-        description: 'How preemptible VMs are priced: a standing per-GPU bid for one (region, platform). One policy backs any number of VMs, referenced by id from the preemptible spec. A VM without a policy is a price-taker and pays the market price.'
+        description: 'How preemptible VMs are priced: a per-GPU maximum price for one (region, platform). One policy backs any number of VMs, referenced by id from the preemptible spec. A VM without a policy is a price-taker and pays the market price.'
         name: nebius_billing_v1_pricing_policy Resource - nebius
         title: nebius_billing_v1_pricing_policy Resource - nebius
         argumentDocs:
@@ -46,7 +46,8 @@ resources:
             STATE_DELETING: '- Being deleted; does not accept new VMs.'
             STATE_UPDATING: |-
                 :
-                The bid is being changed; scheduling is blocked until the change lands.
+                The max_price is being changed; scheduling is blocked until the change
+                is applied.
                 The state can last while a market price change is applied to the segment.
             YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
             compute_instance_spec: '(Attributes) :'
@@ -56,11 +57,11 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             max_price: |-
-                ranks the policy's VMs for
-                scheduling and preemption.
+                sets the priority of the policy's
+                VMs for scheduling and preemption.
             max_price_v1: '(Attributes) :'
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             platform: '(String) Compute platform. Example: "gpu-h100-sxm".'
             pricing: '(Attributes) :'
@@ -100,7 +101,7 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             limit: '(Number) :'
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             reconciling: (Boolean) Shows that changes are in flight.
             resource_version: '(Number) :'
@@ -150,7 +151,7 @@ resources:
             lock_state: (Attributes) Indicates resources that prevent the disk from being attached as read-write. (see below for nested schema)
             managed_by: '(String) :'
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             read_only_attachments: (List of String)
             read_write_attachment: '(String) :'
@@ -187,7 +188,7 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             lock_state: (Attributes) Indicates which resources prevent the disk snapshot from being deleted. (see below for nested schema)
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             resource_version: '(Number) :'
             source_cpu_architecture: '(String) :'
@@ -211,7 +212,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             read_only_attachments: (List of String)
             read_write_attachments: (List of String)
@@ -242,7 +243,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             path: (List of String)
             reconciling: (Boolean) Indicates whether there is an ongoing operation
@@ -343,7 +344,7 @@ resources:
             managed_disk: '(Attributes) :'
             metadata: '(Attributes) :'
             mount_tag: (String) Specifies the user-defined identifier, allowing to use it as a device in mount command.
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             network_interfaces: '(Attributes List) :'
             nvl_instance_group_id: (String) NVLink Instance Group ID associated with the VM
             on_demand: '(Attributes) :'
@@ -399,7 +400,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             reconciling: (Boolean) Indicates whether there is an ongoing operation with any VM in the InstanceGroup
             resource_version: '(Number) :'
@@ -442,7 +443,7 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
             metadata.parent_id: must be a DNS zone ID
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             reconciling: (Boolean) Indicates whether there is a running Operation for this Record
             relative_name: '(String) :'
@@ -478,7 +479,7 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
             metadata.parent_id: must be an IAM Container ID
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             negative_ttl: '(Number) :'
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             primary_network_id: '(String) :'
@@ -516,7 +517,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             resource_id: (String) Resource for granting access permit.
             resource_version: '(Number) :'
@@ -562,7 +563,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             resource_version: '(Number) :'
             service_account: (Attributes) Cannot be set alongside user_account or anonymous_account. (see below for nested schema)
@@ -585,7 +586,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             oidc_provider: '(Attributes) :'
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             resource_version: '(Number) :'
@@ -608,7 +609,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             resource_version: '(Number) :'
             saml_settings: (Attributes) SAML federation settings. (see below for nested schema)
@@ -635,7 +636,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             not_after: '(String) A string representing a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM'
             not_before: '(String) A string representing a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM'
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
@@ -656,7 +657,7 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             members_count: (Number)
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             resource_version: '(Number) :'
             service_accounts_count: (Number)
@@ -688,7 +689,7 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             member_id: (String) Member of the group. Can be tenant user account id or service account id.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             resource_version: '(Number) :'
             service_account_status: (Attributes) Cannot be set alongside tenant_user_account_status. (see below for nested schema)
@@ -717,7 +718,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             resource_version: '(Number) :'
             state: '(String) :'
@@ -746,7 +747,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             resource_version: '(Number) :'
             status: (Attributes) (see below for nested schema)
@@ -794,7 +795,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             resource_version: '(Number) :'
             secret: (String, Sensitive)
@@ -817,7 +818,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             project_state: '(String) :'
             region: '(String) :'
@@ -827,7 +828,7 @@ resources:
         importStatements: []
     nebius_kms_v1_asymmetric_key Resource - nebius:
         subCategory: ""
-        description: An asymmetric KMS key that may contain several versions of the cryptographic material.
+        description: An asymmetric KMS key that contains at most one key pair.
         name: nebius_kms_v1_asymmetric_key Resource - nebius
         title: nebius_kms_v1_asymmetric_key Resource - nebius
         argumentDocs:
@@ -845,7 +846,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             purge_at: '(String) :'
             resource_version: '(Number) :'
@@ -876,7 +877,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             purge_at: '(String) :'
             resource_version: '(Number) :'
@@ -907,7 +908,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             private_endpoint: (String) DNS name or IP address accessible from the user VPC.
             public_endpoint: (Attributes) PublicEndpointSpec is a specification of public endpoint for control plane. (see below for nested schema)
@@ -960,7 +961,7 @@ resources:
             max_unavailable: '(Attributes) :'
             metadata: '(Attributes) :'
             min_node_count: (Number)
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             nebius: |-
                 CLI or public API requests from the nodes without the need for extra authentication. This service account is also used to
                 make requests to container registry.
@@ -1035,42 +1036,58 @@ resources:
                 but requires no immediate action (yet)
             YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
             allowed_cidrs: '(List of String) :'
+            audiences: (List of String) Lists the token audiences that this issuer accepts, for example, ["kubernetes", "dashboard"].
             audit_logs: '(Attributes) :'
             auth: (Attributes) (see below for nested schema)
+            authentication: (Attributes) Configures customer JWT authentication. Requires Kubernetes 1.34 and a compatible control-plane infra version. (see below for nested schema)
+            certificate_authority: (String) PEM CA bundle for discovery and JWKS. Omission uses system trust.
+            claim: (String) Names the token claim to map.
+            claim_mappings: (Attributes) Maps token claims to Kubernetes user attributes. (see below for nested schema)
+            claim_validation_rules: (Attributes List) Validates token claims before Kubernetes authenticates the user. (see below for nested schema)
             cluster_ca_certificate: (String) PEM with the Cluster Certificate Authority, that must be used for TLS connection to Kubernetes API.
             code: (String) Event code (unique within the API service), in UpperCamelCase, e.g. "DiskAttached"
             control_plane: (Attributes) (see below for nested schema)
             created_at: '(String) :'
+            discovery_url: (String) Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL.
             endpoints: (Attributes) Specification of endpoints of cluster control plane. (see below for nested schema)
             etcd_cluster_size: '(Number) :'
             'etcd_cluster_size: 3': |-
                 called "Highly Available" ("HA"), because it's Kubernetes API
                 will be available despite a failure of one control plane instance.
             events: '(Attributes List) :'
+            expression: (String) Maps token claims with a CEL expression.
             first_occurred_at: '(String) :'
+            groups: (Attributes) Maps token claims to Kubernetes groups. Omission disables group mapping. (see below for nested schema)
             https://endpoint/: . (see below for nested schema)
             id: (String) Identifier for the resource, unique for its resource type.
+            issuer: (Attributes) Defines the issuer for accepted tokens. (see below for nested schema)
             karpenter: '(Attributes) :'
             kube_network: (Attributes) Defines kubernetes network configuration, like IP allocation. (see below for nested schema)
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             last_occurrence: '(Attributes) :'
             level: '(String) :'
-            message: '(String) :'
+            message: (String) Describes a failed CEL validation.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             occurred_at: '(String) :'
             occurrence_count: (Number) The number of times this event has occurred between first_occurred_at and last_occurrence.occurred_at. Must be > 0
+            oidc: (Attributes List) Configures OIDC providers for Kubernetes user authentication. (see below for nested schema)
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
+            prefix: (String) Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
             private_endpoint: (String) DNS name or IP address accessible from the user VPC.
             public_endpoint: (Attributes) Public endpoint specification. When set, a public endpoint is created. (see below for nested schema)
             reconciling: (Boolean) Show that changes are in flight
+            required_value: (String) An omitted value matches an empty string, following upstream behavior.
             resource_version: '(Number) :'
             service_cidrs: '(List of String) :'
             state: '(String) :'
             status: (Attributes) (see below for nested schema)
             subnet_id: '(String) :'
             updated_at: '(String) :'
+            url: (String) Identifies the issuer and must match the token iss claim.
+            user_validation_rules: (Attributes List) Validates the mapped Kubernetes user information. (see below for nested schema)
+            username: (Attributes) Maps token claims to the Kubernetes username. (see below for nested schema)
             version: '(String) :'
         importStatements: []
     nebius_mk8s_v1_node_group:
@@ -1123,9 +1140,12 @@ resources:
                 No attempt is made to find or use a Capacity Block.
                 It's an error to provide reservation_ids with policy = FORBID
             INFO: '- A normal event or state change. Informs what is happening with the API resource. Does not require user attention or interaction'
+            LAZY: '- Uses SOCI Snapshotter to fetch image layers on demand.'
             NodeGroupSpec.fixed_node_count: |-
                 or arbitrary number between
                 NodeGroupAutoscalingSpec.min_node_count and NodeGroupAutoscalingSpec.max_node_count decided by autoscaler.
+            PARALLEL: '- Uses SOCI Snapshotter to download and unpack image layers in parallel.'
+            SOCI_PULL_MODE_UNSPECIFIED: '- Uses the default containerd pull.'
             STRICT: ':'
             UNSPECIFIED: '- Unspecified event severity level'
             WARN: |-
@@ -1143,6 +1163,7 @@ resources:
             compute/v1/instance.proto: . (see below for nested schema)
             conditions: (Attributes List) Conditions that determine whether a node should be auto repaired. (see below for nested schema)
             config: '(Attributes) :'
+            container_runtime: '(Attributes) :'
             count: (Number) Cannot be set alongside percent.
             created_at: '(String) :'
             disabled: '(Boolean) :'
@@ -1177,7 +1198,7 @@ resources:
             metadata: '(Attributes) :'
             min_node_count: (Number)
             mount_tag: (String) Specifies the user-defined identifier, allowing to use it as a device in mount command.
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             nebius: |-
                 CLI or public API requests from the nodes
                 without the need for extra authentication.
@@ -1214,6 +1235,7 @@ resources:
             size_gibibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_mebibytes.
             size_kibibytes: (Number) Cannot be set alongside size_bytes, size_mebibytes or size_gibibytes.
             size_mebibytes: (Number) Cannot be set alongside size_bytes, size_kibibytes or size_gibibytes.
+            soci_pull_mode: '(String) :'
             spot_pricing_policy: '(Attributes) :'
             state: '(String) :'
             status: (Attributes) (see below for nested schema)
@@ -1269,7 +1291,7 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
             mlflow_version: (String) MLflow version
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             network_id: (String) ID of the vpc network.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             phase: '(String) :'
@@ -1359,8 +1381,8 @@ resources:
             max_pool_size: (Number) Maximum number of connections in the pool for a single user/database pair.
             memory_gibibytes: (Number)
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
-            network_id: (String) Network ID in which the cluster is created.
+            name: (String) Human-readable name for the resource.
+            network_id: '(String) :'
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             phase: '(String) :'
             platform: (String)
@@ -1417,7 +1439,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             payload: '(Attributes List) :'
             primary_version_id: (String) Specifies the primary version of the secret to update its payload. This parameter should only be provided during update operations.
@@ -1474,7 +1496,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             payload: '(Attributes List) :'
             purge_at: '(String) :'
@@ -1519,7 +1541,7 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             limit: (Number) Total amount of resources allocated.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             region: '(String) :'
             resource_version: '(Number) :'
@@ -1550,11 +1572,11 @@ resources:
             created_at: '(String) :'
             description: (String)
             id: (String) Identifier for the resource, unique for its resource type.
-            images_count: (Number) Registry.Type type = 2;
+            images_count: (Number)
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             registry_fqdn: (String) regional fqdn "cr.eu-north1.nebius.cloud"
             resource_version: '(Number) :'
@@ -1609,7 +1631,7 @@ resources:
             last_iteration: (Attributes) (see below for nested schema)
             limiters: '(Attributes) :'
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             objects_discovered_count: (Number)
             objects_migrated_count: (Number)
             objects_migrated_size: (Number)
@@ -1716,6 +1738,7 @@ resources:
             key: (String)
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
+            last_access: '(Attributes) :'
             last_access_filter: '(Attributes) :'
             lifecycle_configuration: '(Attributes) :'
             max_age_seconds: (Number) Time in seconds that your browser can cache the response for a preflight request as identified by the resource.
@@ -1726,7 +1749,7 @@ resources:
             multipart_objects_quantity: (Number)
             multipart_objects_size: (Number)
             multipart_uploads_quantity: (Number)
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             newer_noncurrent_versions: (Number) Specifies how many noncurrent versions the system will retain.
             non_current_counters: '(Attributes) :'
             noncurrent_days: (Number) Specifies the number of days an object is noncurrent before the system will expire it.
@@ -1793,7 +1816,7 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             last_success: '(String) :'
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             noncurrent_versions: (Boolean) Include noncurrent versions in inventory if set to true.
             optional_fields: '(List of String) :'
             output_format: '(String) :'
@@ -1899,7 +1922,7 @@ resources:
             limiters: '(Attributes) :'
             message: (String) Error message, usually taken from the endpoint response.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             nebius: (Attributes) Cannot be set alongside s3_compatible. (see below for nested schema)
             objects_deleted_count: (Number) Number of objects deleted from destination bucket during this iteration.
             objects_transferred_count: (Number) Number of objects transferred during this iteration.
@@ -1948,7 +1971,7 @@ resources:
             labels: (Map of String) Labels associated with the resource.
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             resource_version: '(Number) :'
             services: '(Attributes List) :'
@@ -1988,7 +2011,7 @@ resources:
             load_balancer: (Attributes) Cannot be set alongside network_interface. (see below for nested schema)
             metadata: '(Attributes) :'
             metadata.parent_id: represents IAM Container.
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             network_interface: (Attributes) Cannot be set alongside load_balancer. (see below for nested schema)
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             pool_id: '(String) :'
@@ -2043,7 +2066,7 @@ resources:
             load_balancer: (Attributes) Cannot be set alongside network_interface. (see below for nested schema)
             metadata: '(Attributes) :'
             metadata.parent_id: represents IAM Container.
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             network_interface: (Attributes) Cannot be set alongside load_balancer. (see below for nested schema)
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             pool_id: '(String) :'
@@ -2075,6 +2098,7 @@ resources:
             STATE_UNSPECIFIED: '- Default state, unspecified.'
             YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
             created_at: '(String) :'
+            default: (Boolean) Indicates whether this is the project's default network.
             default_route_table_id: (String) ID of the network's default route table.
             id: (String) Identifier for the resource, unique for its resource type.
             ipv4_private_pools: '(Attributes) :'
@@ -2083,7 +2107,7 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
             metadata.parent_id: represents IAM container
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             pools: (Attributes List) (see below for nested schema)
             resource_version: '(Number) :'
@@ -2134,7 +2158,7 @@ resources:
             max_mask_length: '(Number) :'
             metadata: '(Attributes) :'
             metadata.parent_id: represents the Project.
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             networks: (List of String) IDs of Networks to which the Pool is assigned.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             resource_version: '(Number) :'
@@ -2167,7 +2191,7 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
             metadata.parent_id: represents the RouteTable.
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             next_hop: (Attributes) Next hop configuration specifying where to send matching traffic. (see below for nested schema)
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             priority: '(Number) :'
@@ -2183,7 +2207,11 @@ resources:
         name: nebius_vpc_v1_route_table Resource - nebius
         title: nebius_vpc_v1_route_table Resource - nebius
         argumentDocs:
+            CREATING: '- The route table is being created.'
+            DELETING: '- The route table is being deleted.'
+            FAILED: '- Reconciliation stopped because of an error.'
             READY: '- The route table is configured and operational.'
+            RECONCILING: '- The route table is reconciling changes after it has been created.'
             STATE_UNSPECIFIED: '- The state is unknown or not yet set.'
             YYYY-MM-DDTHH:MM:SSZ: or YYYY-MM-DDTHH:MM:SS.SSS±HH:MM
             assignment: (Attributes) Information about which subnets are using this route table. (see below for nested schema)
@@ -2194,7 +2222,7 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
             metadata.parent_id: represents the Project.
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             network_id: (String) ID of the VPC network this route table belongs to.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             resource_version: '(Number) :'
@@ -2227,7 +2255,7 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
             metadata.parent_id: represents the Project.
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             network_id: (String) ID of the VPC network this security group belongs to.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             resource_version: '(Number) :'
@@ -2286,7 +2314,7 @@ resources:
             labels_all: (Map of String) Effective labels sent to the API after merging provider default_labels with resource labels.
             metadata: '(Attributes) :'
             metadata.parent_id: represents the SecurityGroup.
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             ports: (List of Number) List of ports.
             priority: '(Number) :'
@@ -2336,7 +2364,7 @@ resources:
             cidr: '(String) :'
             cidrs: (Attributes List) (see below for nested schema)
             created_at: '(String) :'
-            default: '(Boolean) :'
+            default: (Boolean) Indicates whether this is the network's default subnet.
             id: (String) Identifier for the resource, unique for its resource type.
             ipv4_private_cidrs: '(List of String, Deprecated) :'
             ipv4_private_pools: '(Attributes) :'
@@ -2349,7 +2377,7 @@ resources:
             max_mask_length: (Number) Maximum mask length for an allocation from this block. Defaults to /32 for IPv4.
             metadata: '(Attributes) :'
             metadata.parent_id: represents IAM container
-            name: (String) Human readable name for the resource.
+            name: (String) Human-readable name for the resource.
             network_id: (String) ID of the network this subnet belongs to.
             parent_id: (String) Identifier of the parent resource to which the resource belongs.
             pool_id: (String) ID of the pool available for allocations in this subnet.
