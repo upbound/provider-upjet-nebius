@@ -21,7 +21,7 @@ type RouteTableInitParameters struct {
 
 	Metadata *RouteTableMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// ID of the VPC network this route table belongs to.
@@ -71,7 +71,7 @@ type RouteTableObservation struct {
 
 	Metadata *RouteTableMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// ID of the VPC network this route table belongs to.
@@ -108,7 +108,7 @@ type RouteTableParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *RouteTableMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -166,6 +166,10 @@ type RouteTableStatusObservation struct {
 	//
 	// - `STATE_UNSPECIFIED` - The state is unknown or not yet set.
 	// - `READY` - The route table is configured and operational.
+	// - `CREATING` - The route table is being created.
+	// - `RECONCILING` - The route table is reconciling changes after it has been created.
+	// - `DELETING` - The route table is being deleted.
+	// - `FAILED` - Reconciliation stopped because of an error.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 }
 

@@ -377,6 +377,61 @@ type ConfigParameters struct {
 	None *bool `json:"none,omitempty" tf:"none,omitempty"`
 }
 
+type ContainerRuntimeInitParameters struct {
+
+	// (String) :
+	// :
+	//
+	// Uses SOCI Snapshotter to pull images.
+	//
+	// #### Supported values
+	//
+	// Image pull modes for SOCI Snapshotter
+	// Possible values:
+	//
+	// - `SOCI_PULL_MODE_UNSPECIFIED` - Uses the default containerd pull.
+	// - `LAZY` - Uses SOCI Snapshotter to fetch image layers on demand.
+	// - `PARALLEL` - Uses SOCI Snapshotter to download and unpack image layers in parallel.
+	SociPullMode *string `json:"sociPullMode,omitempty" tf:"soci_pull_mode,omitempty"`
+}
+
+type ContainerRuntimeObservation struct {
+
+	// (String) :
+	// :
+	//
+	// Uses SOCI Snapshotter to pull images.
+	//
+	// #### Supported values
+	//
+	// Image pull modes for SOCI Snapshotter
+	// Possible values:
+	//
+	// - `SOCI_PULL_MODE_UNSPECIFIED` - Uses the default containerd pull.
+	// - `LAZY` - Uses SOCI Snapshotter to fetch image layers on demand.
+	// - `PARALLEL` - Uses SOCI Snapshotter to download and unpack image layers in parallel.
+	SociPullMode *string `json:"sociPullMode,omitempty" tf:"soci_pull_mode,omitempty"`
+}
+
+type ContainerRuntimeParameters struct {
+
+	// (String) :
+	// :
+	//
+	// Uses SOCI Snapshotter to pull images.
+	//
+	// #### Supported values
+	//
+	// Image pull modes for SOCI Snapshotter
+	// Possible values:
+	//
+	// - `SOCI_PULL_MODE_UNSPECIFIED` - Uses the default containerd pull.
+	// - `LAZY` - Uses SOCI Snapshotter to fetch image layers on demand.
+	// - `PARALLEL` - Uses SOCI Snapshotter to download and unpack image layers in parallel.
+	// +kubebuilder:validation:Optional
+	SociPullMode *string `json:"sociPullMode,omitempty" tf:"soci_pull_mode,omitempty"`
+}
+
 type DiskEncryptionInitParameters struct {
 
 	// (String) :
@@ -883,8 +938,8 @@ type NodeGroupInitParameters struct {
 	// (Attributes) :
 	Metadata *NodeGroupMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -965,8 +1020,8 @@ type NodeGroupObservation struct {
 	// (Attributes) :
 	Metadata *NodeGroupMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -1037,8 +1092,8 @@ type NodeGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *NodeGroupMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -1731,6 +1786,9 @@ type TemplateInitParameters struct {
 	// Should contain at least one SSH key.
 	CloudInitUserDataSecretRef *v2.SecretKeySelector `json:"cloudInitUserDataSecretRef,omitempty" tf:"-"`
 
+	// (Attributes) :
+	ContainerRuntime *ContainerRuntimeInitParameters `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
+
 	// (Attributes List) :
 	Filesystems []FilesystemsInitParameters `json:"filesystems,omitempty" tf:"filesystems,omitempty"`
 
@@ -1882,6 +1940,9 @@ type TemplateObservation struct {
 	// (Attributes) Parameters of a Node Nebius Compute Instance boot disk. (see below for nested schema)
 	BootDisk *BootDiskObservation `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
 
+	// (Attributes) :
+	ContainerRuntime *ContainerRuntimeObservation `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
+
 	// (Attributes List) :
 	Filesystems []FilesystemsObservation `json:"filesystems,omitempty" tf:"filesystems,omitempty"`
 
@@ -1970,6 +2031,10 @@ type TemplateParameters struct {
 	// Should contain at least one SSH key.
 	// +kubebuilder:validation:Optional
 	CloudInitUserDataSecretRef *v2.SecretKeySelector `json:"cloudInitUserDataSecretRef,omitempty" tf:"-"`
+
+	// (Attributes) :
+	// +kubebuilder:validation:Optional
+	ContainerRuntime *ContainerRuntimeParameters `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
 
 	// (Attributes List) :
 	// +kubebuilder:validation:Optional

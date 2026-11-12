@@ -91,6 +91,9 @@ type BucketInitParameters struct {
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// (Attributes) :
+	LastAccess *LastAccessInitParameters `json:"lastAccess,omitempty" tf:"last_access,omitempty"`
+
+	// (Attributes) :
 	LifecycleConfiguration *LifecycleConfigurationInitParameters `json:"lifecycleConfiguration,omitempty" tf:"lifecycle_configuration,omitempty"`
 
 	// (Number) :
@@ -105,8 +108,8 @@ type BucketInitParameters struct {
 	// (Attributes) :
 	Metadata *MetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) :
@@ -201,6 +204,9 @@ type BucketObservation struct {
 	LabelsAll map[string]*string `json:"labelsAll,omitempty" tf:"labels_all,omitempty"`
 
 	// (Attributes) :
+	LastAccess *LastAccessObservation `json:"lastAccess,omitempty" tf:"last_access,omitempty"`
+
+	// (Attributes) :
 	LifecycleConfiguration *LifecycleConfigurationObservation `json:"lifecycleConfiguration,omitempty" tf:"lifecycle_configuration,omitempty"`
 
 	// (Number) :
@@ -215,8 +221,8 @@ type BucketObservation struct {
 	// (Attributes) :
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) :
@@ -322,6 +328,10 @@ type BucketParameters struct {
 
 	// (Attributes) :
 	// +kubebuilder:validation:Optional
+	LastAccess *LastAccessParameters `json:"lastAccess,omitempty" tf:"last_access,omitempty"`
+
+	// (Attributes) :
+	// +kubebuilder:validation:Optional
 	LifecycleConfiguration *LifecycleConfigurationParameters `json:"lifecycleConfiguration,omitempty" tf:"lifecycle_configuration,omitempty"`
 
 	// (Number) :
@@ -338,8 +348,8 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -1070,19 +1080,191 @@ type InsecureEndpointObservation struct {
 type InsecureEndpointParameters struct {
 }
 
+type LastAccessFilterConditionsInitParameters struct {
+
+	// (List of String) :
+	// :
+	//
+	// The s3 methods to match.
+	// An empty list matches all methods
+	//
+	// #### Supported values
+	//
+	// Possible values:
+	//
+	// - `METHOD_UNSPECIFIED`
+	// - `GET_OBJECT`
+	// - `HEAD_OBJECT`
+	// - `GET_OBJECT_TAGGING`
+	// - `COPY_OBJECT`:
+	// Copy object method reads the source object.
+	// We account for those operations as source object accesses when calculating `days_since_last_access` for source object.
+	//
+	// - `UPLOAD_PART_COPY`:
+	// Upload part copy method reads the source object.
+	// We account for those operations as source object accesses when calculating `days_since_last_access` for source object.
+	Methods []*string `json:"methods,omitempty" tf:"methods,omitempty"`
+
+	// (String) :
+	// :
+	//
+	// #### Supported values
+	//
+	// Possible values:
+	//
+	// - `TYPE_UNSPECIFIED`
+	// - `INCLUDE`:
+	// If an include type condition is the first condition that the request match, the request will be included in
+	// `days_since_last_access` calculation.
+	//
+	// - `EXCLUDE`:
+	// If an exclude type condition is the first condition that the request match, the request will be ignored in `days_since_last_access`
+	// calculation.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// (List of String) :
+	// :
+	//
+	// User agents to match. Condition is satisfied if the request's user agent contains any of these substrings.
+	// An empty list matches all user agents.
+	UserAgents []*string `json:"userAgents,omitempty" tf:"user_agents,omitempty"`
+}
+
+type LastAccessFilterConditionsObservation struct {
+
+	// (List of String) :
+	// :
+	//
+	// The s3 methods to match.
+	// An empty list matches all methods
+	//
+	// #### Supported values
+	//
+	// Possible values:
+	//
+	// - `METHOD_UNSPECIFIED`
+	// - `GET_OBJECT`
+	// - `HEAD_OBJECT`
+	// - `GET_OBJECT_TAGGING`
+	// - `COPY_OBJECT`:
+	// Copy object method reads the source object.
+	// We account for those operations as source object accesses when calculating `days_since_last_access` for source object.
+	//
+	// - `UPLOAD_PART_COPY`:
+	// Upload part copy method reads the source object.
+	// We account for those operations as source object accesses when calculating `days_since_last_access` for source object.
+	Methods []*string `json:"methods,omitempty" tf:"methods,omitempty"`
+
+	// (String) :
+	// :
+	//
+	// #### Supported values
+	//
+	// Possible values:
+	//
+	// - `TYPE_UNSPECIFIED`
+	// - `INCLUDE`:
+	// If an include type condition is the first condition that the request match, the request will be included in
+	// `days_since_last_access` calculation.
+	//
+	// - `EXCLUDE`:
+	// If an exclude type condition is the first condition that the request match, the request will be ignored in `days_since_last_access`
+	// calculation.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// (List of String) :
+	// :
+	//
+	// User agents to match. Condition is satisfied if the request's user agent contains any of these substrings.
+	// An empty list matches all user agents.
+	UserAgents []*string `json:"userAgents,omitempty" tf:"user_agents,omitempty"`
+}
+
+type LastAccessFilterConditionsParameters struct {
+
+	// (List of String) :
+	// :
+	//
+	// The s3 methods to match.
+	// An empty list matches all methods
+	//
+	// #### Supported values
+	//
+	// Possible values:
+	//
+	// - `METHOD_UNSPECIFIED`
+	// - `GET_OBJECT`
+	// - `HEAD_OBJECT`
+	// - `GET_OBJECT_TAGGING`
+	// - `COPY_OBJECT`:
+	// Copy object method reads the source object.
+	// We account for those operations as source object accesses when calculating `days_since_last_access` for source object.
+	//
+	// - `UPLOAD_PART_COPY`:
+	// Upload part copy method reads the source object.
+	// We account for those operations as source object accesses when calculating `days_since_last_access` for source object.
+	// +kubebuilder:validation:Optional
+	Methods []*string `json:"methods,omitempty" tf:"methods,omitempty"`
+
+	// (String) :
+	// :
+	//
+	// #### Supported values
+	//
+	// Possible values:
+	//
+	// - `TYPE_UNSPECIFIED`
+	// - `INCLUDE`:
+	// If an include type condition is the first condition that the request match, the request will be included in
+	// `days_since_last_access` calculation.
+	//
+	// - `EXCLUDE`:
+	// If an exclude type condition is the first condition that the request match, the request will be ignored in `days_since_last_access`
+	// calculation.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+
+	// (List of String) :
+	// :
+	//
+	// User agents to match. Condition is satisfied if the request's user agent contains any of these substrings.
+	// An empty list matches all user agents.
+	// +kubebuilder:validation:Optional
+	UserAgents []*string `json:"userAgents,omitempty" tf:"user_agents,omitempty"`
+}
+
 type LastAccessFilterInitParameters struct {
 
 	// (Attributes List) :
-	Conditions []ConditionsInitParameters `json:"conditions,omitempty" tf:"conditions,omitempty"`
+	Conditions []LastAccessFilterConditionsInitParameters `json:"conditions,omitempty" tf:"conditions,omitempty"`
 }
 
 type LastAccessFilterObservation struct {
 
 	// (Attributes List) :
-	Conditions []ConditionsObservation `json:"conditions,omitempty" tf:"conditions,omitempty"`
+	Conditions []LastAccessFilterConditionsObservation `json:"conditions,omitempty" tf:"conditions,omitempty"`
 }
 
 type LastAccessFilterParameters struct {
+
+	// (Attributes List) :
+	// +kubebuilder:validation:Optional
+	Conditions []LastAccessFilterConditionsParameters `json:"conditions,omitempty" tf:"conditions,omitempty"`
+}
+
+type LastAccessInitParameters struct {
+
+	// (Attributes List) :
+	Conditions []ConditionsInitParameters `json:"conditions,omitempty" tf:"conditions,omitempty"`
+}
+
+type LastAccessObservation struct {
+
+	// (Attributes List) :
+	Conditions []ConditionsObservation `json:"conditions,omitempty" tf:"conditions,omitempty"`
+}
+
+type LastAccessParameters struct {
 
 	// (Attributes List) :
 	// +kubebuilder:validation:Optional

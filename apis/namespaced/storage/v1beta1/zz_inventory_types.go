@@ -40,7 +40,7 @@ type InventoryInitParameters struct {
 
 	Metadata *InventoryMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Include noncurrent versions in inventory if set to true.
@@ -145,7 +145,7 @@ type InventoryObservation struct {
 
 	Metadata *InventoryMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Include noncurrent versions in inventory if set to true.
@@ -250,7 +250,7 @@ type InventoryParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *InventoryMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 

@@ -24,7 +24,7 @@ type DiskSnapshotInitParameters struct {
 
 	Metadata *DiskSnapshotMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -77,7 +77,7 @@ type DiskSnapshotObservation struct {
 
 	Metadata *DiskSnapshotMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -118,7 +118,7 @@ type DiskSnapshotParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *DiskSnapshotMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 

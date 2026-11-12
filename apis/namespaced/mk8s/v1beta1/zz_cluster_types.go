@@ -31,6 +31,115 @@ type AuthObservation struct {
 type AuthParameters struct {
 }
 
+type AuthenticationInitParameters struct {
+
+	// (Attributes List) Configures OIDC providers for Kubernetes user authentication. (see below for nested schema)
+	Oidc []OidcInitParameters `json:"oidc,omitempty" tf:"oidc,omitempty"`
+}
+
+type AuthenticationObservation struct {
+
+	// (Attributes List) Configures OIDC providers for Kubernetes user authentication. (see below for nested schema)
+	Oidc []OidcObservation `json:"oidc,omitempty" tf:"oidc,omitempty"`
+}
+
+type AuthenticationParameters struct {
+
+	// (Attributes List) Configures OIDC providers for Kubernetes user authentication. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Oidc []OidcParameters `json:"oidc,omitempty" tf:"oidc,omitempty"`
+}
+
+type ClaimMappingsInitParameters struct {
+
+	// (Attributes) Maps token claims to Kubernetes groups. Omission disables group mapping. (see below for nested schema)
+	Groups *GroupsInitParameters `json:"groups,omitempty" tf:"groups,omitempty"`
+
+	// (Attributes) Maps token claims to the Kubernetes username. (see below for nested schema)
+	Username *UsernameInitParameters `json:"username,omitempty" tf:"username,omitempty"`
+}
+
+type ClaimMappingsObservation struct {
+
+	// (Attributes) Maps token claims to Kubernetes groups. Omission disables group mapping. (see below for nested schema)
+	Groups *GroupsObservation `json:"groups,omitempty" tf:"groups,omitempty"`
+
+	// (Attributes) Maps token claims to the Kubernetes username. (see below for nested schema)
+	Username *UsernameObservation `json:"username,omitempty" tf:"username,omitempty"`
+}
+
+type ClaimMappingsParameters struct {
+
+	// (Attributes) Maps token claims to Kubernetes groups. Omission disables group mapping. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Groups *GroupsParameters `json:"groups,omitempty" tf:"groups,omitempty"`
+
+	// (Attributes) Maps token claims to the Kubernetes username. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Username *UsernameParameters `json:"username" tf:"username,omitempty"`
+}
+
+type ClaimValidationRulesInitParameters struct {
+
+	// (String) Names the token claim to map.
+	// Names the token claim that must match required_value exactly.
+	Claim *string `json:"claim,omitempty" tf:"claim,omitempty"`
+
+	// (String) Maps token claims with a CEL expression.
+	// Validates token claims with CEL. The expression must evaluate to true.
+	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
+
+	// (String) Describes a failed CEL validation.
+	// Describes a failed CEL validation.
+	Message *string `json:"message,omitempty" tf:"message,omitempty"`
+
+	// (String) An omitted value matches an empty string, following upstream behavior.
+	// An omitted value matches an empty string, following upstream behavior.
+	RequiredValue *string `json:"requiredValue,omitempty" tf:"required_value,omitempty"`
+}
+
+type ClaimValidationRulesObservation struct {
+
+	// (String) Names the token claim to map.
+	// Names the token claim that must match required_value exactly.
+	Claim *string `json:"claim,omitempty" tf:"claim,omitempty"`
+
+	// (String) Maps token claims with a CEL expression.
+	// Validates token claims with CEL. The expression must evaluate to true.
+	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
+
+	// (String) Describes a failed CEL validation.
+	// Describes a failed CEL validation.
+	Message *string `json:"message,omitempty" tf:"message,omitempty"`
+
+	// (String) An omitted value matches an empty string, following upstream behavior.
+	// An omitted value matches an empty string, following upstream behavior.
+	RequiredValue *string `json:"requiredValue,omitempty" tf:"required_value,omitempty"`
+}
+
+type ClaimValidationRulesParameters struct {
+
+	// (String) Names the token claim to map.
+	// Names the token claim that must match required_value exactly.
+	// +kubebuilder:validation:Optional
+	Claim *string `json:"claim,omitempty" tf:"claim,omitempty"`
+
+	// (String) Maps token claims with a CEL expression.
+	// Validates token claims with CEL. The expression must evaluate to true.
+	// +kubebuilder:validation:Optional
+	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
+
+	// (String) Describes a failed CEL validation.
+	// Describes a failed CEL validation.
+	// +kubebuilder:validation:Optional
+	Message *string `json:"message,omitempty" tf:"message,omitempty"`
+
+	// (String) An omitted value matches an empty string, following upstream behavior.
+	// An omitted value matches an empty string, following upstream behavior.
+	// +kubebuilder:validation:Optional
+	RequiredValue *string `json:"requiredValue,omitempty" tf:"required_value,omitempty"`
+}
+
 type ClusterInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
@@ -47,8 +156,8 @@ type ClusterInitParameters struct {
 	// (Attributes) :
 	Metadata *MetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -88,8 +197,8 @@ type ClusterObservation struct {
 	// (Attributes) :
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -137,8 +246,8 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -162,6 +271,9 @@ type ControlPlaneInitParameters struct {
 	// (Attributes) :
 	AuditLogs *AuditLogsInitParameters `json:"auditLogs,omitempty" tf:"audit_logs,omitempty"`
 
+	// plane infra version. (see below for nested schema)
+	Authentication *AuthenticationInitParameters `json:"authentication,omitempty" tf:"authentication,omitempty"`
+
 	// (Attributes) Specification of endpoints of cluster control plane. (see below for nested schema)
 	Endpoints *EndpointsInitParameters `json:"endpoints,omitempty" tf:"endpoints,omitempty"`
 
@@ -181,6 +293,7 @@ type ControlPlaneInitParameters struct {
 	// :
 	//
 	// Nebius VPC Subnet ID where control plane instances will be located.
+	// If it isn't specified default network of the parent container will be used.
 	// Also will be default NodeGroup subnet.
 	// +crossplane:generate:reference:type=github.com/upbound/provider-nebius/apis/namespaced/vpc/v1beta1.Subnet
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)
@@ -209,6 +322,9 @@ type ControlPlaneObservation struct {
 	// (Attributes) :
 	AuditLogs *AuditLogsParameters `json:"auditLogs,omitempty" tf:"audit_logs,omitempty"`
 
+	// plane infra version. (see below for nested schema)
+	Authentication *AuthenticationObservation `json:"authentication,omitempty" tf:"authentication,omitempty"`
+
 	// (Attributes) Specification of endpoints of cluster control plane. (see below for nested schema)
 	Endpoints *EndpointsObservation `json:"endpoints,omitempty" tf:"endpoints,omitempty"`
 
@@ -228,6 +344,7 @@ type ControlPlaneObservation struct {
 	// :
 	//
 	// Nebius VPC Subnet ID where control plane instances will be located.
+	// If it isn't specified default network of the parent container will be used.
 	// Also will be default NodeGroup subnet.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -246,6 +363,10 @@ type ControlPlaneParameters struct {
 	// (Attributes) :
 	// +kubebuilder:validation:Optional
 	AuditLogs *AuditLogsParameters `json:"auditLogs,omitempty" tf:"audit_logs,omitempty"`
+
+	// plane infra version. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Authentication *AuthenticationParameters `json:"authentication,omitempty" tf:"authentication,omitempty"`
 
 	// (Attributes) Specification of endpoints of cluster control plane. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -269,6 +390,7 @@ type ControlPlaneParameters struct {
 	// :
 	//
 	// Nebius VPC Subnet ID where control plane instances will be located.
+	// If it isn't specified default network of the parent container will be used.
 	// Also will be default NodeGroup subnet.
 	// +crossplane:generate:reference:type=github.com/upbound/provider-nebius/apis/namespaced/vpc/v1beta1.Subnet
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("id",true)
@@ -335,6 +457,115 @@ type EventsObservation struct {
 }
 
 type EventsParameters struct {
+}
+
+type GroupsInitParameters struct {
+
+	// (String) Names the token claim to map.
+	// Names the token claim to map.
+	Claim *string `json:"claim,omitempty" tf:"claim,omitempty"`
+
+	// (String) Maps token claims with a CEL expression.
+	// Maps token claims with a CEL expression.
+	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
+
+	// (String) Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+	// Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+}
+
+type GroupsObservation struct {
+
+	// (String) Names the token claim to map.
+	// Names the token claim to map.
+	Claim *string `json:"claim,omitempty" tf:"claim,omitempty"`
+
+	// (String) Maps token claims with a CEL expression.
+	// Maps token claims with a CEL expression.
+	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
+
+	// (String) Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+	// Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+}
+
+type GroupsParameters struct {
+
+	// (String) Names the token claim to map.
+	// Names the token claim to map.
+	// +kubebuilder:validation:Optional
+	Claim *string `json:"claim,omitempty" tf:"claim,omitempty"`
+
+	// (String) Maps token claims with a CEL expression.
+	// Maps token claims with a CEL expression.
+	// +kubebuilder:validation:Optional
+	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
+
+	// (String) Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+	// Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+	// +kubebuilder:validation:Optional
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+}
+
+type IssuerInitParameters struct {
+
+	// (List of String) Lists the token audiences that this issuer accepts, for example, ["kubernetes", "dashboard"].
+	// Lists the token audiences that this issuer accepts, for example, `["kubernetes", "dashboard"]`.
+	Audiences []*string `json:"audiences,omitempty" tf:"audiences,omitempty"`
+
+	// (String) PEM CA bundle for discovery and JWKS. Omission uses system trust.
+	// PEM CA bundle for discovery and JWKS. Omission uses system trust.
+	CertificateAuthority *string `json:"certificateAuthority,omitempty" tf:"certificate_authority,omitempty"`
+
+	// (String) Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL.
+	// Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL.
+	DiscoveryURL *string `json:"discoveryUrl,omitempty" tf:"discovery_url,omitempty"`
+
+	// (String) Identifies the issuer and must match the token iss claim.
+	// Identifies the issuer and must match the token `iss` claim.
+	URL *string `json:"url,omitempty" tf:"url,omitempty"`
+}
+
+type IssuerObservation struct {
+
+	// (List of String) Lists the token audiences that this issuer accepts, for example, ["kubernetes", "dashboard"].
+	// Lists the token audiences that this issuer accepts, for example, `["kubernetes", "dashboard"]`.
+	Audiences []*string `json:"audiences,omitempty" tf:"audiences,omitempty"`
+
+	// (String) PEM CA bundle for discovery and JWKS. Omission uses system trust.
+	// PEM CA bundle for discovery and JWKS. Omission uses system trust.
+	CertificateAuthority *string `json:"certificateAuthority,omitempty" tf:"certificate_authority,omitempty"`
+
+	// (String) Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL.
+	// Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL.
+	DiscoveryURL *string `json:"discoveryUrl,omitempty" tf:"discovery_url,omitempty"`
+
+	// (String) Identifies the issuer and must match the token iss claim.
+	// Identifies the issuer and must match the token `iss` claim.
+	URL *string `json:"url,omitempty" tf:"url,omitempty"`
+}
+
+type IssuerParameters struct {
+
+	// (List of String) Lists the token audiences that this issuer accepts, for example, ["kubernetes", "dashboard"].
+	// Lists the token audiences that this issuer accepts, for example, `["kubernetes", "dashboard"]`.
+	// +kubebuilder:validation:Optional
+	Audiences []*string `json:"audiences,omitempty" tf:"audiences,omitempty"`
+
+	// (String) PEM CA bundle for discovery and JWKS. Omission uses system trust.
+	// PEM CA bundle for discovery and JWKS. Omission uses system trust.
+	// +kubebuilder:validation:Optional
+	CertificateAuthority *string `json:"certificateAuthority,omitempty" tf:"certificate_authority,omitempty"`
+
+	// (String) Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL.
+	// Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL.
+	// +kubebuilder:validation:Optional
+	DiscoveryURL *string `json:"discoveryUrl,omitempty" tf:"discovery_url,omitempty"`
+
+	// (String) Identifies the issuer and must match the token iss claim.
+	// Identifies the issuer and must match the token `iss` claim.
+	// +kubebuilder:validation:Optional
+	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 }
 
 type KarpenterInitParameters struct {
@@ -420,7 +651,7 @@ type LastOccurrenceObservation struct {
 	// - `ERROR` - Error event. Indicates a serious problem with the API resource and/or the corresponding processes. Requires immediate user action
 	Level *string `json:"level,omitempty" tf:"level,omitempty"`
 
-	// (String) :
+	// (String) Describes a failed CEL validation.
 	// :
 	//
 	// A human-readable message describing what has happened
@@ -448,6 +679,68 @@ type MetadataObservation struct {
 type MetadataParameters struct {
 }
 
+type OidcInitParameters struct {
+
+	// (Attributes) Maps token claims to Kubernetes user attributes. (see below for nested schema)
+	ClaimMappings *ClaimMappingsInitParameters `json:"claimMappings,omitempty" tf:"claim_mappings,omitempty"`
+
+	// (Attributes List) Validates token claims before Kubernetes authenticates the user. (see below for nested schema)
+	ClaimValidationRules []ClaimValidationRulesInitParameters `json:"claimValidationRules,omitempty" tf:"claim_validation_rules,omitempty"`
+
+	// (Attributes) Defines the issuer for accepted tokens. (see below for nested schema)
+	Issuer *IssuerInitParameters `json:"issuer,omitempty" tf:"issuer,omitempty"`
+
+	// readable name for the resource.
+	// Identifies this provider within the cluster configuration.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Attributes List) Validates the mapped Kubernetes user information. (see below for nested schema)
+	UserValidationRules []UserValidationRulesInitParameters `json:"userValidationRules,omitempty" tf:"user_validation_rules,omitempty"`
+}
+
+type OidcObservation struct {
+
+	// (Attributes) Maps token claims to Kubernetes user attributes. (see below for nested schema)
+	ClaimMappings *ClaimMappingsObservation `json:"claimMappings,omitempty" tf:"claim_mappings,omitempty"`
+
+	// (Attributes List) Validates token claims before Kubernetes authenticates the user. (see below for nested schema)
+	ClaimValidationRules []ClaimValidationRulesObservation `json:"claimValidationRules,omitempty" tf:"claim_validation_rules,omitempty"`
+
+	// (Attributes) Defines the issuer for accepted tokens. (see below for nested schema)
+	Issuer *IssuerObservation `json:"issuer,omitempty" tf:"issuer,omitempty"`
+
+	// readable name for the resource.
+	// Identifies this provider within the cluster configuration.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Attributes List) Validates the mapped Kubernetes user information. (see below for nested schema)
+	UserValidationRules []UserValidationRulesObservation `json:"userValidationRules,omitempty" tf:"user_validation_rules,omitempty"`
+}
+
+type OidcParameters struct {
+
+	// (Attributes) Maps token claims to Kubernetes user attributes. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	ClaimMappings *ClaimMappingsParameters `json:"claimMappings" tf:"claim_mappings,omitempty"`
+
+	// (Attributes List) Validates token claims before Kubernetes authenticates the user. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	ClaimValidationRules []ClaimValidationRulesParameters `json:"claimValidationRules,omitempty" tf:"claim_validation_rules,omitempty"`
+
+	// (Attributes) Defines the issuer for accepted tokens. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Issuer *IssuerParameters `json:"issuer" tf:"issuer,omitempty"`
+
+	// readable name for the resource.
+	// Identifies this provider within the cluster configuration.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Attributes List) Validates the mapped Kubernetes user information. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	UserValidationRules []UserValidationRulesParameters `json:"userValidationRules,omitempty" tf:"user_validation_rules,omitempty"`
+}
+
 type PublicEndpointInitParameters struct {
 
 	// (List of String) :
@@ -455,7 +748,7 @@ type PublicEndpointInitParameters struct {
 	//
 	// List of CIDR blocks from which access to public endpoint is allowed.
 	// If field is not set, or list is empty, it means that access is not restricted at all.
-	// You can specify a maximum of 8 CIDRs.
+	// You can specify a maximum of 100 CIDRs.
 	AllowedCidrs []*string `json:"allowedCidrs,omitempty" tf:"allowed_cidrs,omitempty"`
 }
 
@@ -466,7 +759,7 @@ type PublicEndpointObservation struct {
 	//
 	// List of CIDR blocks from which access to public endpoint is allowed.
 	// If field is not set, or list is empty, it means that access is not restricted at all.
-	// You can specify a maximum of 8 CIDRs.
+	// You can specify a maximum of 100 CIDRs.
 	AllowedCidrs []*string `json:"allowedCidrs,omitempty" tf:"allowed_cidrs,omitempty"`
 }
 
@@ -477,7 +770,7 @@ type PublicEndpointParameters struct {
 	//
 	// List of CIDR blocks from which access to public endpoint is allowed.
 	// If field is not set, or list is empty, it means that access is not restricted at all.
-	// You can specify a maximum of 8 CIDRs.
+	// You can specify a maximum of 100 CIDRs.
 	// +kubebuilder:validation:Optional
 	AllowedCidrs []*string `json:"allowedCidrs,omitempty" tf:"allowed_cidrs,omitempty"`
 }
@@ -541,6 +834,89 @@ type StatusObservation struct {
 }
 
 type StatusParameters struct {
+}
+
+type UserValidationRulesInitParameters struct {
+
+	// (String) Maps token claims with a CEL expression.
+	// Validates the mapped Kubernetes user information with CEL.
+	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
+
+	// (String) Describes a failed CEL validation.
+	// Describes a failed CEL validation.
+	Message *string `json:"message,omitempty" tf:"message,omitempty"`
+}
+
+type UserValidationRulesObservation struct {
+
+	// (String) Maps token claims with a CEL expression.
+	// Validates the mapped Kubernetes user information with CEL.
+	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
+
+	// (String) Describes a failed CEL validation.
+	// Describes a failed CEL validation.
+	Message *string `json:"message,omitempty" tf:"message,omitempty"`
+}
+
+type UserValidationRulesParameters struct {
+
+	// (String) Maps token claims with a CEL expression.
+	// Validates the mapped Kubernetes user information with CEL.
+	// +kubebuilder:validation:Optional
+	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
+
+	// (String) Describes a failed CEL validation.
+	// Describes a failed CEL validation.
+	// +kubebuilder:validation:Optional
+	Message *string `json:"message,omitempty" tf:"message,omitempty"`
+}
+
+type UsernameInitParameters struct {
+
+	// (String) Names the token claim to map.
+	// Names the token claim to map.
+	Claim *string `json:"claim,omitempty" tf:"claim,omitempty"`
+
+	// (String) Maps token claims with a CEL expression.
+	// Maps token claims with a CEL expression.
+	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
+
+	// (String) Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+	// Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+}
+
+type UsernameObservation struct {
+
+	// (String) Names the token claim to map.
+	// Names the token claim to map.
+	Claim *string `json:"claim,omitempty" tf:"claim,omitempty"`
+
+	// (String) Maps token claims with a CEL expression.
+	// Maps token claims with a CEL expression.
+	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
+
+	// (String) Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+	// Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+}
+
+type UsernameParameters struct {
+
+	// (String) Names the token claim to map.
+	// Names the token claim to map.
+	// +kubebuilder:validation:Optional
+	Claim *string `json:"claim,omitempty" tf:"claim,omitempty"`
+
+	// (String) Maps token claims with a CEL expression.
+	// Maps token claims with a CEL expression.
+	// +kubebuilder:validation:Optional
+	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
+
+	// (String) Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+	// Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+	// +kubebuilder:validation:Optional
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 }
 
 // ClusterSpec defines the desired state of Cluster

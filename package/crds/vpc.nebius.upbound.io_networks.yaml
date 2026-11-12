@@ -269,8 +269,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -486,8 +486,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -650,8 +650,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -672,6 +672,11 @@ spec:
                     description: (Attributes) Status of the network. (see below for
                       nested schema)
                     properties:
+                      default:
+                        description: |-
+                          (Boolean) Indicates whether this is the project's default network.
+                          Indicates whether this is the project's default network.
+                        type: boolean
                       defaultRouteTableId:
                         description: |-
                           (String) ID of the network's default route table.

@@ -109,8 +109,8 @@ type NetworkInitParameters struct {
 	// (Attributes) :
 	Metadata *NetworkMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -159,8 +159,8 @@ type NetworkObservation struct {
 	// (Attributes) :
 	Metadata *NetworkMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -208,8 +208,8 @@ type NetworkParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *NetworkMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -223,6 +223,10 @@ type NetworkStatusInitParameters struct {
 }
 
 type NetworkStatusObservation struct {
+
+	// (Boolean) Indicates whether this is the project's default network.
+	// Indicates whether this is the project's default network.
+	Default *bool `json:"default,omitempty" tf:"default,omitempty"`
 
 	// (String) ID of the network's default route table.
 	// ID of the network's default route table.

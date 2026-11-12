@@ -263,7 +263,7 @@ type StatusRouteTableInitParameters struct {
 
 type StatusRouteTableObservation struct {
 
-	// (Boolean) :
+	// (Boolean) Indicates whether this is the network's default subnet.
 	// :
 	//
 	// Indicates whether this is the network's default route table.
@@ -396,8 +396,8 @@ type SubnetInitParameters struct {
 	// (Attributes) :
 	Metadata *SubnetMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) ID of the network this subnet belongs to.
@@ -477,8 +477,8 @@ type SubnetObservation struct {
 	// (Attributes) :
 	Metadata *SubnetMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) ID of the network this subnet belongs to.
@@ -537,8 +537,8 @@ type SubnetParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *SubnetMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -585,6 +585,10 @@ type SubnetStatusInitParameters struct {
 }
 
 type SubnetStatusObservation struct {
+
+	// (Boolean) Indicates whether this is the network's default subnet.
+	// Indicates whether this is the network's default subnet.
+	Default *bool `json:"default,omitempty" tf:"default,omitempty"`
 
 	// (List of String, Deprecated) :
 	// :

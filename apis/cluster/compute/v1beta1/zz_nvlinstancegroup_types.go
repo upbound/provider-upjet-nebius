@@ -21,7 +21,7 @@ type NvlInstanceGroupInitParameters struct {
 
 	Metadata *NvlInstanceGroupMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -75,7 +75,7 @@ type NvlInstanceGroupObservation struct {
 
 	Metadata *NvlInstanceGroupMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -126,7 +126,7 @@ type NvlInstanceGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *NvlInstanceGroupMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
