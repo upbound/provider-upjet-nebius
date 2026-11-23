@@ -34,29 +34,66 @@ type AutoRepairParameters struct {
 
 type AutoscalingInitParameters struct {
 
+	// (Number) :
+	// :
+	//
+	// Initial number of nodes in the autoscaled node group. Defaults to `min_node_count`.
+	// At creation, the value must be between `min_node_count` and `max_node_count`, inclusive.
+	//
+	// Updating or clearing this field after creation has no effect.
+	// This also applies when switching an existing node group from a fixed size to autoscaling.
+	// Autoscaling starts from the current node count, subject to `min_node_count` and `max_node_count`.
+	InitialNodeCount *float64 `json:"initialNodeCount,omitempty" tf:"initial_node_count,omitempty"`
+
 	// (Number)
 	MaxNodeCount *float64 `json:"maxNodeCount,omitempty" tf:"max_node_count,omitempty"`
 
-	// (Number)
+	// .
+	// At creation, the value must be between min_node_count and max_node_count, inclusive.
 	MinNodeCount *float64 `json:"minNodeCount,omitempty" tf:"min_node_count,omitempty"`
 }
 
 type AutoscalingObservation struct {
 
+	// (Number) :
+	// :
+	//
+	// Initial number of nodes in the autoscaled node group. Defaults to `min_node_count`.
+	// At creation, the value must be between `min_node_count` and `max_node_count`, inclusive.
+	//
+	// Updating or clearing this field after creation has no effect.
+	// This also applies when switching an existing node group from a fixed size to autoscaling.
+	// Autoscaling starts from the current node count, subject to `min_node_count` and `max_node_count`.
+	InitialNodeCount *float64 `json:"initialNodeCount,omitempty" tf:"initial_node_count,omitempty"`
+
 	// (Number)
 	MaxNodeCount *float64 `json:"maxNodeCount,omitempty" tf:"max_node_count,omitempty"`
 
-	// (Number)
+	// .
+	// At creation, the value must be between min_node_count and max_node_count, inclusive.
 	MinNodeCount *float64 `json:"minNodeCount,omitempty" tf:"min_node_count,omitempty"`
 }
 
 type AutoscalingParameters struct {
 
+	// (Number) :
+	// :
+	//
+	// Initial number of nodes in the autoscaled node group. Defaults to `min_node_count`.
+	// At creation, the value must be between `min_node_count` and `max_node_count`, inclusive.
+	//
+	// Updating or clearing this field after creation has no effect.
+	// This also applies when switching an existing node group from a fixed size to autoscaling.
+	// Autoscaling starts from the current node count, subject to `min_node_count` and `max_node_count`.
+	// +kubebuilder:validation:Optional
+	InitialNodeCount *float64 `json:"initialNodeCount,omitempty" tf:"initial_node_count,omitempty"`
+
 	// (Number)
 	// +kubebuilder:validation:Optional
 	MaxNodeCount *float64 `json:"maxNodeCount,omitempty" tf:"max_node_count,omitempty"`
 
-	// (Number)
+	// .
+	// At creation, the value must be between min_node_count and max_node_count, inclusive.
 	// +kubebuilder:validation:Optional
 	MinNodeCount *float64 `json:"minNodeCount,omitempty" tf:"min_node_count,omitempty"`
 }
@@ -965,9 +1002,11 @@ type NodeGroupInitParameters struct {
 	// (String) :
 	// :
 	//
-	// Version is desired Kubernetes version of the cluster. For now only acceptable format is
-	// `<major>.<minor>` like "1.31". Option for patch version update will be added later.
-	// By default the cluster control plane `<major>.<minor>` version will be used.
+	// Desired Kubernetes version and optional node image version for the node group.
+	// Use `<major>.<minor>[-nebius-node.<image>]`, for example, "1.36" or "1.36-nebius-node.80".
+	// If this field is omitted, the Kubernetes version defaults to the cluster control plane version.
+	// If the image version suffix is omitted, the latest compatible node image version is selected on NodeGroup creation.
+	// To upgrade to the latest node image version later, use `NodeGroupService.Upgrade`.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -1057,9 +1096,11 @@ type NodeGroupObservation struct {
 	// (String) :
 	// :
 	//
-	// Version is desired Kubernetes version of the cluster. For now only acceptable format is
-	// `<major>.<minor>` like "1.31". Option for patch version update will be added later.
-	// By default the cluster control plane `<major>.<minor>` version will be used.
+	// Desired Kubernetes version and optional node image version for the node group.
+	// Use `<major>.<minor>[-nebius-node.<image>]`, for example, "1.36" or "1.36-nebius-node.80".
+	// If this field is omitted, the Kubernetes version defaults to the cluster control plane version.
+	// If the image version suffix is omitted, the latest compatible node image version is selected on NodeGroup creation.
+	// To upgrade to the latest node image version later, use `NodeGroupService.Upgrade`.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -1123,9 +1164,11 @@ type NodeGroupParameters struct {
 	// (String) :
 	// :
 	//
-	// Version is desired Kubernetes version of the cluster. For now only acceptable format is
-	// `<major>.<minor>` like "1.31". Option for patch version update will be added later.
-	// By default the cluster control plane `<major>.<minor>` version will be used.
+	// Desired Kubernetes version and optional node image version for the node group.
+	// Use `<major>.<minor>[-nebius-node.<image>]`, for example, "1.36" or "1.36-nebius-node.80".
+	// If this field is omitted, the Kubernetes version defaults to the cluster control plane version.
+	// If the image version suffix is omitted, the latest compatible node image version is selected on NodeGroup creation.
+	// To upgrade to the latest node image version later, use `NodeGroupService.Upgrade`.
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
@@ -1190,9 +1233,10 @@ type NodeGroupStatusObservation struct {
 	// (String) :
 	// :
 	//
-	// Actual version of NodeGroup. Have format `<major>.<minor>.<patch>-nebius-node.<infra_version>` like "1.30.0-nebius-node.10".
-	// Where `<major>.<minor>.<patch>` is Kubernetes version and `<infra_version>` is version of Node infrastructure and configuration,
-	// which update may include bug fixes, security updates and new features depending on worker node configuration.
+	// Actual Kubernetes version and node image version of the node group.
+	// Format: `<major>.<minor>.<patch>-nebius-node.<image>`, for example, "1.36.3-nebius-node.80".
+	// `<major>.<minor>.<patch>` is the Kubernetes version, and `<image>` is the node image version.
+	// Node image updates can include bug fixes, security updates, and new features for the selected node configuration.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
