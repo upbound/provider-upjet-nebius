@@ -17,6 +17,8 @@ spec:
       bootDisk:
         sizeGibibytes: 64
         type: NETWORK_SSD
+      containerRuntime:
+        sociPullMode: PARALLEL
       networkInterfaces:
         - subnetIdSelector:
             matchLabels:

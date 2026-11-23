@@ -147,7 +147,7 @@ type RouteInitParameters struct {
 
 	Metadata *RouteMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	NextHop *NextHopInitParameters `json:"nextHop,omitempty" tf:"next_hop,omitempty"`
@@ -201,7 +201,7 @@ type RouteObservation struct {
 
 	Metadata *RouteMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	NextHop *NextHopObservation `json:"nextHop,omitempty" tf:"next_hop,omitempty"`
@@ -244,7 +244,7 @@ type RouteParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *RouteMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 

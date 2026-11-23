@@ -32,7 +32,7 @@ type GroupMemberMetadataObservation struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -78,7 +78,7 @@ type GroupMembershipInitParameters struct {
 
 	Metadata *GroupMembershipMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -128,7 +128,7 @@ type GroupMembershipObservation struct {
 
 	Metadata *GroupMembershipMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -176,7 +176,7 @@ type GroupMembershipParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *GroupMembershipMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 

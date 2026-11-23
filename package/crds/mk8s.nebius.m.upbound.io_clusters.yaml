@@ -64,6 +64,143 @@ spec:
                       auditLogs:
                         description: '(Attributes) :'
                         type: object
+                      authentication:
+                        description: plane infra version. (see below for nested schema)
+                        properties:
+                          oidc:
+                            description: (Attributes List) Configures OIDC providers
+                              for Kubernetes user authentication. (see below for nested
+                              schema)
+                            items:
+                              properties:
+                                claimMappings:
+                                  description: (Attributes) Maps token claims to Kubernetes
+                                    user attributes. (see below for nested schema)
+                                  properties:
+                                    groups:
+                                      description: (Attributes) Maps token claims
+                                        to Kubernetes groups. Omission disables group
+                                        mapping. (see below for nested schema)
+                                      properties:
+                                        claim:
+                                          description: |-
+                                            (String) Names the token claim to map.
+                                            Names the token claim to map.
+                                          type: string
+                                        expression:
+                                          description: |-
+                                            (String) Maps token claims with a CEL expression.
+                                            Maps token claims with a CEL expression.
+                                          type: string
+                                        prefix:
+                                          description: |-
+                                            (String) Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+                                            Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+                                          type: string
+                                      type: object
+                                    username:
+                                      description: (Attributes) Maps token claims
+                                        to the Kubernetes username. (see below for
+                                        nested schema)
+                                      properties:
+                                        claim:
+                                          description: |-
+                                            (String) Names the token claim to map.
+                                            Names the token claim to map.
+                                          type: string
+                                        expression:
+                                          description: |-
+                                            (String) Maps token claims with a CEL expression.
+                                            Maps token claims with a CEL expression.
+                                          type: string
+                                        prefix:
+                                          description: |-
+                                            (String) Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+                                            Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+                                          type: string
+                                      type: object
+                                  type: object
+                                claimValidationRules:
+                                  description: (Attributes List) Validates token claims
+                                    before Kubernetes authenticates the user. (see
+                                    below for nested schema)
+                                  items:
+                                    properties:
+                                      claim:
+                                        description: |-
+                                          (String) Names the token claim to map.
+                                          Names the token claim that must match required_value exactly.
+                                        type: string
+                                      expression:
+                                        description: |-
+                                          (String) Maps token claims with a CEL expression.
+                                          Validates token claims with CEL. The expression must evaluate to true.
+                                        type: string
+                                      message:
+                                        description: |-
+                                          (String) Describes a failed CEL validation.
+                                          Describes a failed CEL validation.
+                                        type: string
+                                      requiredValue:
+                                        description: |-
+                                          (String) An omitted value matches an empty string, following upstream behavior.
+                                          An omitted value matches an empty string, following upstream behavior.
+                                        type: string
+                                    type: object
+                                  type: array
+                                issuer:
+                                  description: (Attributes) Defines the issuer for
+                                    accepted tokens. (see below for nested schema)
+                                  properties:
+                                    audiences:
+                                      description: |-
+                                        (List of String) Lists the token audiences that this issuer accepts, for example, ["kubernetes", "dashboard"].
+                                        Lists the token audiences that this issuer accepts, for example, `["kubernetes", "dashboard"]`.
+                                      items:
+                                        type: string
+                                      type: array
+                                    certificateAuthority:
+                                      description: |-
+                                        (String) PEM CA bundle for discovery and JWKS. Omission uses system trust.
+                                        PEM CA bundle for discovery and JWKS. Omission uses system trust.
+                                      type: string
+                                    discoveryUrl:
+                                      description: |-
+                                        (String) Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL.
+                                        Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL.
+                                      type: string
+                                    url:
+                                      description: |-
+                                        (String) Identifies the issuer and must match the token iss claim.
+                                        Identifies the issuer and must match the token `iss` claim.
+                                      type: string
+                                  type: object
+                                name:
+                                  description: |-
+                                    readable name for the resource.
+                                    Identifies this provider within the cluster configuration.
+                                  type: string
+                                userValidationRules:
+                                  description: (Attributes List) Validates the mapped
+                                    Kubernetes user information. (see below for nested
+                                    schema)
+                                  items:
+                                    properties:
+                                      expression:
+                                        description: |-
+                                          (String) Maps token claims with a CEL expression.
+                                          Validates the mapped Kubernetes user information with CEL.
+                                        type: string
+                                      message:
+                                        description: |-
+                                          (String) Describes a failed CEL validation.
+                                          Describes a failed CEL validation.
+                                        type: string
+                                    type: object
+                                  type: array
+                              type: object
+                            type: array
+                        type: object
                       endpoints:
                         description: (Attributes) Specification of endpoints of cluster
                           control plane. (see below for nested schema)
@@ -80,7 +217,7 @@ spec:
 
                                   List of CIDR blocks from which access to public endpoint is allowed.
                                   If field is not set, or list is empty, it means that access is not restricted at all.
-                                  You can specify a maximum of 8 CIDRs.
+                                  You can specify a maximum of 100 CIDRs.
                                 items:
                                   type: string
                                 type: array
@@ -105,6 +242,7 @@ spec:
                           :
 
                           Nebius VPC Subnet ID where control plane instances will be located.
+                          If it isn't specified default network of the parent container will be used.
                           Also will be default NodeGroup subnet.
                         type: string
                       subnetIdRef:
@@ -231,8 +369,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -259,6 +397,143 @@ spec:
                       auditLogs:
                         description: '(Attributes) :'
                         type: object
+                      authentication:
+                        description: plane infra version. (see below for nested schema)
+                        properties:
+                          oidc:
+                            description: (Attributes List) Configures OIDC providers
+                              for Kubernetes user authentication. (see below for nested
+                              schema)
+                            items:
+                              properties:
+                                claimMappings:
+                                  description: (Attributes) Maps token claims to Kubernetes
+                                    user attributes. (see below for nested schema)
+                                  properties:
+                                    groups:
+                                      description: (Attributes) Maps token claims
+                                        to Kubernetes groups. Omission disables group
+                                        mapping. (see below for nested schema)
+                                      properties:
+                                        claim:
+                                          description: |-
+                                            (String) Names the token claim to map.
+                                            Names the token claim to map.
+                                          type: string
+                                        expression:
+                                          description: |-
+                                            (String) Maps token claims with a CEL expression.
+                                            Maps token claims with a CEL expression.
+                                          type: string
+                                        prefix:
+                                          description: |-
+                                            (String) Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+                                            Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+                                          type: string
+                                      type: object
+                                    username:
+                                      description: (Attributes) Maps token claims
+                                        to the Kubernetes username. (see below for
+                                        nested schema)
+                                      properties:
+                                        claim:
+                                          description: |-
+                                            (String) Names the token claim to map.
+                                            Names the token claim to map.
+                                          type: string
+                                        expression:
+                                          description: |-
+                                            (String) Maps token claims with a CEL expression.
+                                            Maps token claims with a CEL expression.
+                                          type: string
+                                        prefix:
+                                          description: |-
+                                            (String) Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+                                            Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+                                          type: string
+                                      type: object
+                                  type: object
+                                claimValidationRules:
+                                  description: (Attributes List) Validates token claims
+                                    before Kubernetes authenticates the user. (see
+                                    below for nested schema)
+                                  items:
+                                    properties:
+                                      claim:
+                                        description: |-
+                                          (String) Names the token claim to map.
+                                          Names the token claim that must match required_value exactly.
+                                        type: string
+                                      expression:
+                                        description: |-
+                                          (String) Maps token claims with a CEL expression.
+                                          Validates token claims with CEL. The expression must evaluate to true.
+                                        type: string
+                                      message:
+                                        description: |-
+                                          (String) Describes a failed CEL validation.
+                                          Describes a failed CEL validation.
+                                        type: string
+                                      requiredValue:
+                                        description: |-
+                                          (String) An omitted value matches an empty string, following upstream behavior.
+                                          An omitted value matches an empty string, following upstream behavior.
+                                        type: string
+                                    type: object
+                                  type: array
+                                issuer:
+                                  description: (Attributes) Defines the issuer for
+                                    accepted tokens. (see below for nested schema)
+                                  properties:
+                                    audiences:
+                                      description: |-
+                                        (List of String) Lists the token audiences that this issuer accepts, for example, ["kubernetes", "dashboard"].
+                                        Lists the token audiences that this issuer accepts, for example, `["kubernetes", "dashboard"]`.
+                                      items:
+                                        type: string
+                                      type: array
+                                    certificateAuthority:
+                                      description: |-
+                                        (String) PEM CA bundle for discovery and JWKS. Omission uses system trust.
+                                        PEM CA bundle for discovery and JWKS. Omission uses system trust.
+                                      type: string
+                                    discoveryUrl:
+                                      description: |-
+                                        (String) Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL.
+                                        Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL.
+                                      type: string
+                                    url:
+                                      description: |-
+                                        (String) Identifies the issuer and must match the token iss claim.
+                                        Identifies the issuer and must match the token `iss` claim.
+                                      type: string
+                                  type: object
+                                name:
+                                  description: |-
+                                    readable name for the resource.
+                                    Identifies this provider within the cluster configuration.
+                                  type: string
+                                userValidationRules:
+                                  description: (Attributes List) Validates the mapped
+                                    Kubernetes user information. (see below for nested
+                                    schema)
+                                  items:
+                                    properties:
+                                      expression:
+                                        description: |-
+                                          (String) Maps token claims with a CEL expression.
+                                          Validates the mapped Kubernetes user information with CEL.
+                                        type: string
+                                      message:
+                                        description: |-
+                                          (String) Describes a failed CEL validation.
+                                          Describes a failed CEL validation.
+                                        type: string
+                                    type: object
+                                  type: array
+                              type: object
+                            type: array
+                        type: object
                       endpoints:
                         description: (Attributes) Specification of endpoints of cluster
                           control plane. (see below for nested schema)
@@ -275,7 +550,7 @@ spec:
 
                                   List of CIDR blocks from which access to public endpoint is allowed.
                                   If field is not set, or list is empty, it means that access is not restricted at all.
-                                  You can specify a maximum of 8 CIDRs.
+                                  You can specify a maximum of 100 CIDRs.
                                 items:
                                   type: string
                                 type: array
@@ -300,6 +575,7 @@ spec:
                           :
 
                           Nebius VPC Subnet ID where control plane instances will be located.
+                          If it isn't specified default network of the parent container will be used.
                           Also will be default NodeGroup subnet.
                         type: string
                       subnetIdRef:
@@ -426,8 +702,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -509,6 +785,143 @@ spec:
                       auditLogs:
                         description: '(Attributes) :'
                         type: object
+                      authentication:
+                        description: plane infra version. (see below for nested schema)
+                        properties:
+                          oidc:
+                            description: (Attributes List) Configures OIDC providers
+                              for Kubernetes user authentication. (see below for nested
+                              schema)
+                            items:
+                              properties:
+                                claimMappings:
+                                  description: (Attributes) Maps token claims to Kubernetes
+                                    user attributes. (see below for nested schema)
+                                  properties:
+                                    groups:
+                                      description: (Attributes) Maps token claims
+                                        to Kubernetes groups. Omission disables group
+                                        mapping. (see below for nested schema)
+                                      properties:
+                                        claim:
+                                          description: |-
+                                            (String) Names the token claim to map.
+                                            Names the token claim to map.
+                                          type: string
+                                        expression:
+                                          description: |-
+                                            (String) Maps token claims with a CEL expression.
+                                            Maps token claims with a CEL expression.
+                                          type: string
+                                        prefix:
+                                          description: |-
+                                            (String) Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+                                            Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+                                          type: string
+                                      type: object
+                                    username:
+                                      description: (Attributes) Maps token claims
+                                        to the Kubernetes username. (see below for
+                                        nested schema)
+                                      properties:
+                                        claim:
+                                          description: |-
+                                            (String) Names the token claim to map.
+                                            Names the token claim to map.
+                                          type: string
+                                        expression:
+                                          description: |-
+                                            (String) Maps token claims with a CEL expression.
+                                            Maps token claims with a CEL expression.
+                                          type: string
+                                        prefix:
+                                          description: |-
+                                            (String) Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+                                            Omission and an empty value disable prefixing for claims. Expressions require omission, including for an empty value.
+                                          type: string
+                                      type: object
+                                  type: object
+                                claimValidationRules:
+                                  description: (Attributes List) Validates token claims
+                                    before Kubernetes authenticates the user. (see
+                                    below for nested schema)
+                                  items:
+                                    properties:
+                                      claim:
+                                        description: |-
+                                          (String) Names the token claim to map.
+                                          Names the token claim that must match required_value exactly.
+                                        type: string
+                                      expression:
+                                        description: |-
+                                          (String) Maps token claims with a CEL expression.
+                                          Validates token claims with CEL. The expression must evaluate to true.
+                                        type: string
+                                      message:
+                                        description: |-
+                                          (String) Describes a failed CEL validation.
+                                          Describes a failed CEL validation.
+                                        type: string
+                                      requiredValue:
+                                        description: |-
+                                          (String) An omitted value matches an empty string, following upstream behavior.
+                                          An omitted value matches an empty string, following upstream behavior.
+                                        type: string
+                                    type: object
+                                  type: array
+                                issuer:
+                                  description: (Attributes) Defines the issuer for
+                                    accepted tokens. (see below for nested schema)
+                                  properties:
+                                    audiences:
+                                      description: |-
+                                        (List of String) Lists the token audiences that this issuer accepts, for example, ["kubernetes", "dashboard"].
+                                        Lists the token audiences that this issuer accepts, for example, `["kubernetes", "dashboard"]`.
+                                      items:
+                                        type: string
+                                      type: array
+                                    certificateAuthority:
+                                      description: |-
+                                        (String) PEM CA bundle for discovery and JWKS. Omission uses system trust.
+                                        PEM CA bundle for discovery and JWKS. Omission uses system trust.
+                                      type: string
+                                    discoveryUrl:
+                                      description: |-
+                                        (String) Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL.
+                                        Overrides the OpenID discovery URL. An empty value uses the issuer's standard discovery URL.
+                                      type: string
+                                    url:
+                                      description: |-
+                                        (String) Identifies the issuer and must match the token iss claim.
+                                        Identifies the issuer and must match the token `iss` claim.
+                                      type: string
+                                  type: object
+                                name:
+                                  description: |-
+                                    readable name for the resource.
+                                    Identifies this provider within the cluster configuration.
+                                  type: string
+                                userValidationRules:
+                                  description: (Attributes List) Validates the mapped
+                                    Kubernetes user information. (see below for nested
+                                    schema)
+                                  items:
+                                    properties:
+                                      expression:
+                                        description: |-
+                                          (String) Maps token claims with a CEL expression.
+                                          Validates the mapped Kubernetes user information with CEL.
+                                        type: string
+                                      message:
+                                        description: |-
+                                          (String) Describes a failed CEL validation.
+                                          Describes a failed CEL validation.
+                                        type: string
+                                    type: object
+                                  type: array
+                              type: object
+                            type: array
+                        type: object
                       endpoints:
                         description: (Attributes) Specification of endpoints of cluster
                           control plane. (see below for nested schema)
@@ -525,7 +938,7 @@ spec:
 
                                   List of CIDR blocks from which access to public endpoint is allowed.
                                   If field is not set, or list is empty, it means that access is not restricted at all.
-                                  You can specify a maximum of 8 CIDRs.
+                                  You can specify a maximum of 100 CIDRs.
                                 items:
                                   type: string
                                 type: array
@@ -550,6 +963,7 @@ spec:
                           :
 
                           Nebius VPC Subnet ID where control plane instances will be located.
+                          If it isn't specified default network of the parent container will be used.
                           Also will be default NodeGroup subnet.
                         type: string
                       version:
@@ -617,8 +1031,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -708,7 +1122,7 @@ spec:
                                   type: string
                                 message:
                                   description: |-
-                                    (String) :
+                                    (String) Describes a failed CEL validation.
                                     :
 
                                     A human-readable message describing what has happened

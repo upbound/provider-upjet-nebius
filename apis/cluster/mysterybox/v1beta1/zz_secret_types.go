@@ -45,8 +45,8 @@ type SecretInitParameters struct {
 	// (Attributes) :
 	Metadata *MetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -84,8 +84,8 @@ type SecretObservation struct {
 	// (Attributes) :
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -137,8 +137,8 @@ type SecretParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 

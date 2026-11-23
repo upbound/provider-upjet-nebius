@@ -27,7 +27,7 @@ type FederatedCredentialsInitParameters struct {
 
 	Metadata *FederatedCredentialsMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	OidcProvider *OidcProviderInitParameters `json:"oidcProvider,omitempty" tf:"oidc_provider,omitempty"`
@@ -85,7 +85,7 @@ type FederatedCredentialsObservation struct {
 
 	Metadata *FederatedCredentialsMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	OidcProvider *OidcProviderObservation `json:"oidcProvider,omitempty" tf:"oidc_provider,omitempty"`
@@ -131,7 +131,7 @@ type FederatedCredentialsParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *FederatedCredentialsMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 

@@ -40,7 +40,7 @@ type AsymmetricKeyInitParameters struct {
 
 	Metadata *MetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -87,7 +87,7 @@ type AsymmetricKeyObservation struct {
 
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -142,7 +142,7 @@ type AsymmetricKeyParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -181,7 +181,7 @@ type StatusObservation struct {
 
 	// :
 	//
-	// State (ACTIVE, SCHEDULED_FOR_DELETION)
+	// State (ACTIVE, SCHEDULED_FOR_DELETION).
 	//
 	// #### Supported values
 	//
@@ -191,6 +191,7 @@ type StatusObservation struct {
 	// - `KEY_STATE_UNSPECIFIED`
 	// - `ACTIVE` - Key is active, ready for use
 	// - `SCHEDULED_FOR_DELETION` - Key is scheduled for deletion.
+	// - `PENDING_IMPORT`
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 }
 

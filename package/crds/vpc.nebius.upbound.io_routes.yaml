@@ -95,7 +95,7 @@ spec:
                   metadata:
                     type: object
                   name:
-                    description: Human readable name for the resource.
+                    description: Human-readable name for the resource.
                     type: string
                   nextHop:
                     properties:
@@ -308,7 +308,7 @@ spec:
                   metadata:
                     type: object
                   name:
-                    description: Human readable name for the resource.
+                    description: Human-readable name for the resource.
                     type: string
                   nextHop:
                     properties:
@@ -625,7 +625,7 @@ spec:
                   metadata:
                     type: object
                   name:
-                    description: Human readable name for the resource.
+                    description: Human-readable name for the resource.
                     type: string
                   nextHop:
                     properties:

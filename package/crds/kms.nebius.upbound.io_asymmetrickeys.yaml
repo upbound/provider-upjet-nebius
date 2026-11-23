@@ -101,7 +101,7 @@ spec:
                   metadata:
                     type: object
                   name:
-                    description: Human readable name for the resource.
+                    description: Human-readable name for the resource.
                     type: string
                   parentId:
                     description: Identifier of the parent resource to which the resource
@@ -150,7 +150,7 @@ spec:
                   metadata:
                     type: object
                   name:
-                    description: Human readable name for the resource.
+                    description: Human-readable name for the resource.
                     type: string
                   parentId:
                     description: Identifier of the parent resource to which the resource
@@ -299,7 +299,7 @@ spec:
                   metadata:
                     type: object
                   name:
-                    description: Human readable name for the resource.
+                    description: Human-readable name for the resource.
                     type: string
                   parentId:
                     description: Identifier of the parent resource to which the resource
@@ -336,7 +336,7 @@ spec:
                         description: |-
                           :
 
-                          State (ACTIVE, SCHEDULED_FOR_DELETION)
+                          State (ACTIVE, SCHEDULED_FOR_DELETION).
 
                           #### Supported values
 
@@ -346,6 +346,7 @@ spec:
                           - `KEY_STATE_UNSPECIFIED`
                           - `ACTIVE` - Key is active, ready for use
                           - `SCHEDULED_FOR_DELETION` - Key is scheduled for deletion.
+                          - `PENDING_IMPORT`
                         type: string
                     type: object
                   updatedAt:

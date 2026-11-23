@@ -21,7 +21,7 @@ type AccessPermitInitParameters struct {
 
 	Metadata *MetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -65,7 +65,7 @@ type AccessPermitObservation struct {
 
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -105,7 +105,7 @@ type AccessPermitParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 

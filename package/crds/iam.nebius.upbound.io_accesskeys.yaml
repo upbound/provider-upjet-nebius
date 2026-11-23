@@ -195,8 +195,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -354,8 +354,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -536,8 +536,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-

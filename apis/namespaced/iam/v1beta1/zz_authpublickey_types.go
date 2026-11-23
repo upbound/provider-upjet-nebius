@@ -84,8 +84,8 @@ type AuthPublicKeyInitParameters struct {
 	// (Attributes) :
 	Metadata *AuthPublicKeyMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -138,8 +138,8 @@ type AuthPublicKeyObservation struct {
 	// (Attributes) :
 	Metadata *AuthPublicKeyMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -196,8 +196,8 @@ type AuthPublicKeyParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *AuthPublicKeyMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 

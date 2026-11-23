@@ -1,0 +1,75 @@
+apiVersion: mk8s.nebius.m.upbound.io/v1beta1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mk8s/v1beta1/cluster-authentication
+  labels:
+    testing.upbound.io/example-name: mk8s-v1beta1-cluster-authentication
+  name: mk8sv1clusterauth
+  namespace: upbound-system
+spec:
+  forProvider:
+    controlPlane:
+      authentication:
+        oidc:
+          - name: google
+            issuer:
+              url: https://accounts.google.com
+              audiences:
+                - kubernetes
+            claimMappings:
+              username:
+                claim: sub
+                prefix: "oidc:"
+              groups:
+                claim: groups
+                prefix: "oidc:"
+            userValidationRules:
+              - expression: "!user.username.startsWith('system:')"
+                message: "username cannot use the reserved system: prefix"
+      endpoints:
+        publicEndpoint: {}
+      etcdClusterSize: 1
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: mk8s-v1beta1-cluster-authentication
+      version: "1.36"
+    name: mk8sv1clusterauth
+    parentId: ${data.nebius_project_id}
+
+---
+
+apiVersion: vpc.nebius.m.upbound.io/v1beta1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mk8s/v1beta1/cluster-authentication
+  labels:
+    testing.upbound.io/example-name: mk8s-v1beta1-cluster-authentication
+  name: mk8sv1clusterauth
+  namespace: upbound-system
+spec:
+  forProvider:
+    ipv4PrivatePools:
+      useNetworkPools: true
+    name: mk8sv1clusterauth
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: mk8s-v1beta1-cluster-authentication
+    parentId: ${data.nebius_project_id}
+
+---
+
+apiVersion: vpc.nebius.m.upbound.io/v1beta1
+kind: Network
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mk8s/v1beta1/cluster-authentication
+  labels:
+    testing.upbound.io/example-name: mk8s-v1beta1-cluster-authentication
+  name: mk8sv1clusterauth
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: mk8sv1clusterauth
+    parentId: ${data.nebius_project_id}

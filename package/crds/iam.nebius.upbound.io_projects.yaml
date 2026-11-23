@@ -81,7 +81,7 @@ spec:
                   metadata:
                     type: object
                   name:
-                    description: Human readable name for the resource.
+                    description: Human-readable name for the resource.
                     type: string
                   parentId:
                     description: Identifier of the parent resource to which the resource
@@ -117,7 +117,7 @@ spec:
                   metadata:
                     type: object
                   name:
-                    description: Human readable name for the resource.
+                    description: Human-readable name for the resource.
                     type: string
                   parentId:
                     description: Identifier of the parent resource to which the resource
@@ -248,7 +248,7 @@ spec:
                   metadata:
                     type: object
                   name:
-                    description: Human readable name for the resource.
+                    description: Human-readable name for the resource.
                     type: string
                   parentId:
                     description: Identifier of the parent resource to which the resource

@@ -88,8 +88,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -126,8 +126,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -243,9 +243,7 @@ spec:
                       its resource type.
                     type: string
                   imagesCount:
-                    description: |-
-                      (Number) Registry.Type type = 2;
-                      Registry.Type type = 2;
+                    description: (Number)
                     type: number
                   labels:
                     additionalProperties:
@@ -268,8 +266,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -292,7 +290,7 @@ spec:
                       schema)
                     properties:
                       imagesCount:
-                        description: (Number) Registry.Type type = 2;
+                        description: (Number)
                         type: number
                       registryFqdn:
                         description: |-

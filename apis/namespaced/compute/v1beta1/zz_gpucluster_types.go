@@ -27,7 +27,7 @@ type GpuClusterInitParameters struct {
 
 	Metadata *GpuClusterMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -70,7 +70,7 @@ type GpuClusterObservation struct {
 
 	Metadata *GpuClusterMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -111,7 +111,7 @@ type GpuClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *GpuClusterMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -194,9 +194,8 @@ type GpuClusterStatus struct {
 type GpuCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.infinibandFabric) || (has(self.initProvider) && has(self.initProvider.infinibandFabric))",message="spec.forProvider.infinibandFabric is a required parameter"
-	Spec   GpuClusterSpec   `json:"spec"`
-	Status GpuClusterStatus `json:"status,omitempty"`
+	Spec              GpuClusterSpec   `json:"spec"`
+	Status            GpuClusterStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

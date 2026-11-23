@@ -34,29 +34,66 @@ type AutoRepairParameters struct {
 
 type AutoscalingInitParameters struct {
 
+	// (Number) :
+	// :
+	//
+	// Initial number of nodes in the autoscaled node group. Defaults to `min_node_count`.
+	// At creation, the value must be between `min_node_count` and `max_node_count`, inclusive.
+	//
+	// Updating or clearing this field after creation has no effect.
+	// This also applies when switching an existing node group from a fixed size to autoscaling.
+	// Autoscaling starts from the current node count, subject to `min_node_count` and `max_node_count`.
+	InitialNodeCount *float64 `json:"initialNodeCount,omitempty" tf:"initial_node_count,omitempty"`
+
 	// (Number)
 	MaxNodeCount *float64 `json:"maxNodeCount,omitempty" tf:"max_node_count,omitempty"`
 
-	// (Number)
+	// .
+	// At creation, the value must be between min_node_count and max_node_count, inclusive.
 	MinNodeCount *float64 `json:"minNodeCount,omitempty" tf:"min_node_count,omitempty"`
 }
 
 type AutoscalingObservation struct {
 
+	// (Number) :
+	// :
+	//
+	// Initial number of nodes in the autoscaled node group. Defaults to `min_node_count`.
+	// At creation, the value must be between `min_node_count` and `max_node_count`, inclusive.
+	//
+	// Updating or clearing this field after creation has no effect.
+	// This also applies when switching an existing node group from a fixed size to autoscaling.
+	// Autoscaling starts from the current node count, subject to `min_node_count` and `max_node_count`.
+	InitialNodeCount *float64 `json:"initialNodeCount,omitempty" tf:"initial_node_count,omitempty"`
+
 	// (Number)
 	MaxNodeCount *float64 `json:"maxNodeCount,omitempty" tf:"max_node_count,omitempty"`
 
-	// (Number)
+	// .
+	// At creation, the value must be between min_node_count and max_node_count, inclusive.
 	MinNodeCount *float64 `json:"minNodeCount,omitempty" tf:"min_node_count,omitempty"`
 }
 
 type AutoscalingParameters struct {
 
+	// (Number) :
+	// :
+	//
+	// Initial number of nodes in the autoscaled node group. Defaults to `min_node_count`.
+	// At creation, the value must be between `min_node_count` and `max_node_count`, inclusive.
+	//
+	// Updating or clearing this field after creation has no effect.
+	// This also applies when switching an existing node group from a fixed size to autoscaling.
+	// Autoscaling starts from the current node count, subject to `min_node_count` and `max_node_count`.
+	// +kubebuilder:validation:Optional
+	InitialNodeCount *float64 `json:"initialNodeCount,omitempty" tf:"initial_node_count,omitempty"`
+
 	// (Number)
 	// +kubebuilder:validation:Optional
 	MaxNodeCount *float64 `json:"maxNodeCount,omitempty" tf:"max_node_count,omitempty"`
 
-	// (Number)
+	// .
+	// At creation, the value must be between min_node_count and max_node_count, inclusive.
 	// +kubebuilder:validation:Optional
 	MinNodeCount *float64 `json:"minNodeCount,omitempty" tf:"min_node_count,omitempty"`
 }
@@ -375,6 +412,61 @@ type ConfigParameters struct {
 	// *Cannot be set alongside kubelet_ephemeral.*
 	// +kubebuilder:validation:Optional
 	None *bool `json:"none,omitempty" tf:"none,omitempty"`
+}
+
+type ContainerRuntimeInitParameters struct {
+
+	// (String) :
+	// :
+	//
+	// Uses SOCI Snapshotter to pull images.
+	//
+	// #### Supported values
+	//
+	// Image pull modes for SOCI Snapshotter
+	// Possible values:
+	//
+	// - `SOCI_PULL_MODE_UNSPECIFIED` - Uses the default containerd pull.
+	// - `LAZY` - Uses SOCI Snapshotter to fetch image layers on demand.
+	// - `PARALLEL` - Uses SOCI Snapshotter to download and unpack image layers in parallel.
+	SociPullMode *string `json:"sociPullMode,omitempty" tf:"soci_pull_mode,omitempty"`
+}
+
+type ContainerRuntimeObservation struct {
+
+	// (String) :
+	// :
+	//
+	// Uses SOCI Snapshotter to pull images.
+	//
+	// #### Supported values
+	//
+	// Image pull modes for SOCI Snapshotter
+	// Possible values:
+	//
+	// - `SOCI_PULL_MODE_UNSPECIFIED` - Uses the default containerd pull.
+	// - `LAZY` - Uses SOCI Snapshotter to fetch image layers on demand.
+	// - `PARALLEL` - Uses SOCI Snapshotter to download and unpack image layers in parallel.
+	SociPullMode *string `json:"sociPullMode,omitempty" tf:"soci_pull_mode,omitempty"`
+}
+
+type ContainerRuntimeParameters struct {
+
+	// (String) :
+	// :
+	//
+	// Uses SOCI Snapshotter to pull images.
+	//
+	// #### Supported values
+	//
+	// Image pull modes for SOCI Snapshotter
+	// Possible values:
+	//
+	// - `SOCI_PULL_MODE_UNSPECIFIED` - Uses the default containerd pull.
+	// - `LAZY` - Uses SOCI Snapshotter to fetch image layers on demand.
+	// - `PARALLEL` - Uses SOCI Snapshotter to download and unpack image layers in parallel.
+	// +kubebuilder:validation:Optional
+	SociPullMode *string `json:"sociPullMode,omitempty" tf:"soci_pull_mode,omitempty"`
 }
 
 type DiskEncryptionInitParameters struct {
@@ -883,8 +975,8 @@ type NodeGroupInitParameters struct {
 	// (Attributes) :
 	Metadata *NodeGroupMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -910,9 +1002,11 @@ type NodeGroupInitParameters struct {
 	// (String) :
 	// :
 	//
-	// Version is desired Kubernetes version of the cluster. For now only acceptable format is
-	// `<major>.<minor>` like "1.31". Option for patch version update will be added later.
-	// By default the cluster control plane `<major>.<minor>` version will be used.
+	// Desired Kubernetes version and optional node image version for the node group.
+	// Use `<major>.<minor>[-nebius-node.<image>]`, for example, "1.36" or "1.36-nebius-node.80".
+	// If this field is omitted, the Kubernetes version defaults to the cluster control plane version.
+	// If the image version suffix is omitted, the latest compatible node image version is selected on NodeGroup creation.
+	// To upgrade to the latest node image version later, use `NodeGroupService.Upgrade`.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -965,8 +1059,8 @@ type NodeGroupObservation struct {
 	// (Attributes) :
 	Metadata *NodeGroupMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -1002,9 +1096,11 @@ type NodeGroupObservation struct {
 	// (String) :
 	// :
 	//
-	// Version is desired Kubernetes version of the cluster. For now only acceptable format is
-	// `<major>.<minor>` like "1.31". Option for patch version update will be added later.
-	// By default the cluster control plane `<major>.<minor>` version will be used.
+	// Desired Kubernetes version and optional node image version for the node group.
+	// Use `<major>.<minor>[-nebius-node.<image>]`, for example, "1.36" or "1.36-nebius-node.80".
+	// If this field is omitted, the Kubernetes version defaults to the cluster control plane version.
+	// If the image version suffix is omitted, the latest compatible node image version is selected on NodeGroup creation.
+	// To upgrade to the latest node image version later, use `NodeGroupService.Upgrade`.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -1037,8 +1133,8 @@ type NodeGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *NodeGroupMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -1068,9 +1164,11 @@ type NodeGroupParameters struct {
 	// (String) :
 	// :
 	//
-	// Version is desired Kubernetes version of the cluster. For now only acceptable format is
-	// `<major>.<minor>` like "1.31". Option for patch version update will be added later.
-	// By default the cluster control plane `<major>.<minor>` version will be used.
+	// Desired Kubernetes version and optional node image version for the node group.
+	// Use `<major>.<minor>[-nebius-node.<image>]`, for example, "1.36" or "1.36-nebius-node.80".
+	// If this field is omitted, the Kubernetes version defaults to the cluster control plane version.
+	// If the image version suffix is omitted, the latest compatible node image version is selected on NodeGroup creation.
+	// To upgrade to the latest node image version later, use `NodeGroupService.Upgrade`.
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
@@ -1135,9 +1233,10 @@ type NodeGroupStatusObservation struct {
 	// (String) :
 	// :
 	//
-	// Actual version of NodeGroup. Have format `<major>.<minor>.<patch>-nebius-node.<infra_version>` like "1.30.0-nebius-node.10".
-	// Where `<major>.<minor>.<patch>` is Kubernetes version and `<infra_version>` is version of Node infrastructure and configuration,
-	// which update may include bug fixes, security updates and new features depending on worker node configuration.
+	// Actual Kubernetes version and node image version of the node group.
+	// Format: `<major>.<minor>.<patch>-nebius-node.<image>`, for example, "1.36.3-nebius-node.80".
+	// `<major>.<minor>.<patch>` is the Kubernetes version, and `<image>` is the node image version.
+	// Node image updates can include bug fixes, security updates, and new features for the selected node configuration.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -1731,6 +1830,9 @@ type TemplateInitParameters struct {
 	// Should contain at least one SSH key.
 	CloudInitUserDataSecretRef *v2.LocalSecretKeySelector `json:"cloudInitUserDataSecretRef,omitempty" tf:"-"`
 
+	// (Attributes) :
+	ContainerRuntime *ContainerRuntimeInitParameters `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
+
 	// (Attributes List) :
 	Filesystems []FilesystemsInitParameters `json:"filesystems,omitempty" tf:"filesystems,omitempty"`
 
@@ -1882,6 +1984,9 @@ type TemplateObservation struct {
 	// (Attributes) Parameters of a Node Nebius Compute Instance boot disk. (see below for nested schema)
 	BootDisk *BootDiskObservation `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
 
+	// (Attributes) :
+	ContainerRuntime *ContainerRuntimeObservation `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
+
 	// (Attributes List) :
 	Filesystems []FilesystemsObservation `json:"filesystems,omitempty" tf:"filesystems,omitempty"`
 
@@ -1970,6 +2075,10 @@ type TemplateParameters struct {
 	// Should contain at least one SSH key.
 	// +kubebuilder:validation:Optional
 	CloudInitUserDataSecretRef *v2.LocalSecretKeySelector `json:"cloudInitUserDataSecretRef,omitempty" tf:"-"`
+
+	// (Attributes) :
+	// +kubebuilder:validation:Optional
+	ContainerRuntime *ContainerRuntimeParameters `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
 
 	// (Attributes List) :
 	// +kubebuilder:validation:Optional

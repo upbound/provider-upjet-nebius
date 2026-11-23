@@ -20,8 +20,8 @@ type EgressInitParameters struct {
 	//
 	// CIDR blocks as the destination.
 	// Optional. Empty list means any address.
-	// Must be a valid IPv4.
-	// Maximum of 8 CIDRs can be specified.
+	// Each value must be a valid IPv4 CIDR.
+	// Specify at most 8 CIDRs.
 	DestinationCidrs []*string `json:"destinationCidrs,omitempty" tf:"destination_cidrs,omitempty"`
 
 	// (List of Number) :
@@ -55,8 +55,8 @@ type EgressObservation struct {
 	//
 	// CIDR blocks as the destination.
 	// Optional. Empty list means any address.
-	// Must be a valid IPv4.
-	// Maximum of 8 CIDRs can be specified.
+	// Each value must be a valid IPv4 CIDR.
+	// Specify at most 8 CIDRs.
 	DestinationCidrs []*string `json:"destinationCidrs,omitempty" tf:"destination_cidrs,omitempty"`
 
 	// (List of Number) :
@@ -80,8 +80,8 @@ type EgressParameters struct {
 	//
 	// CIDR blocks as the destination.
 	// Optional. Empty list means any address.
-	// Must be a valid IPv4.
-	// Maximum of 8 CIDRs can be specified.
+	// Each value must be a valid IPv4 CIDR.
+	// Specify at most 8 CIDRs.
 	// +kubebuilder:validation:Optional
 	DestinationCidrs []*string `json:"destinationCidrs,omitempty" tf:"destination_cidrs,omitempty"`
 
@@ -127,8 +127,8 @@ type IngressInitParameters struct {
 	//
 	// CIDR blocks as the source.
 	// Optional. Empty list means any address.
-	// Must be a valid IPv4
-	// Maximum of 8 CIDRs can be specified.
+	// Each value must be a valid IPv4 CIDR.
+	// Specify at most 8 CIDRs.
 	SourceCidrs []*string `json:"sourceCidrs,omitempty" tf:"source_cidrs,omitempty"`
 
 	// (String) ID of the referenced Security Group as the source.
@@ -162,8 +162,8 @@ type IngressObservation struct {
 	//
 	// CIDR blocks as the source.
 	// Optional. Empty list means any address.
-	// Must be a valid IPv4
-	// Maximum of 8 CIDRs can be specified.
+	// Each value must be a valid IPv4 CIDR.
+	// Specify at most 8 CIDRs.
 	SourceCidrs []*string `json:"sourceCidrs,omitempty" tf:"source_cidrs,omitempty"`
 
 	// (String) ID of the referenced Security Group as the source.
@@ -188,8 +188,8 @@ type IngressParameters struct {
 	//
 	// CIDR blocks as the source.
 	// Optional. Empty list means any address.
-	// Must be a valid IPv4
-	// Maximum of 8 CIDRs can be specified.
+	// Each value must be a valid IPv4 CIDR.
+	// Specify at most 8 CIDRs.
 	// +kubebuilder:validation:Optional
 	SourceCidrs []*string `json:"sourceCidrs,omitempty" tf:"source_cidrs,omitempty"`
 
@@ -241,8 +241,8 @@ type SecurityRuleInitParameters struct {
 	// (Attributes) :
 	Metadata *SecurityRuleMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -363,8 +363,8 @@ type SecurityRuleObservation struct {
 	// (Attributes) :
 	Metadata *SecurityRuleMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -475,8 +475,8 @@ type SecurityRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *SecurityRuleMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 

@@ -88,8 +88,8 @@ spec:
 
                           CIDR blocks as the destination.
                           Optional. Empty list means any address.
-                          Must be a valid IPv4.
-                          Maximum of 8 CIDRs can be specified.
+                          Each value must be a valid IPv4 CIDR.
+                          Specify at most 8 CIDRs.
                         items:
                           type: string
                         type: array
@@ -215,8 +215,8 @@ spec:
 
                           CIDR blocks as the source.
                           Optional. Empty list means any address.
-                          Must be a valid IPv4
-                          Maximum of 8 CIDRs can be specified.
+                          Each value must be a valid IPv4 CIDR.
+                          Specify at most 8 CIDRs.
                         items:
                           type: string
                         type: array
@@ -321,8 +321,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -499,8 +499,8 @@ spec:
 
                           CIDR blocks as the destination.
                           Optional. Empty list means any address.
-                          Must be a valid IPv4.
-                          Maximum of 8 CIDRs can be specified.
+                          Each value must be a valid IPv4 CIDR.
+                          Specify at most 8 CIDRs.
                         items:
                           type: string
                         type: array
@@ -626,8 +626,8 @@ spec:
 
                           CIDR blocks as the source.
                           Optional. Empty list means any address.
-                          Must be a valid IPv4
-                          Maximum of 8 CIDRs can be specified.
+                          Each value must be a valid IPv4 CIDR.
+                          Specify at most 8 CIDRs.
                         items:
                           type: string
                         type: array
@@ -732,8 +732,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-
@@ -978,8 +978,8 @@ spec:
 
                           CIDR blocks as the destination.
                           Optional. Empty list means any address.
-                          Must be a valid IPv4.
-                          Maximum of 8 CIDRs can be specified.
+                          Each value must be a valid IPv4 CIDR.
+                          Specify at most 8 CIDRs.
                         items:
                           type: string
                         type: array
@@ -1027,8 +1027,8 @@ spec:
 
                           CIDR blocks as the source.
                           Optional. Empty list means any address.
-                          Must be a valid IPv4
-                          Maximum of 8 CIDRs can be specified.
+                          Each value must be a valid IPv4 CIDR.
+                          Specify at most 8 CIDRs.
                         items:
                           type: string
                         type: array
@@ -1059,8 +1059,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   parentId:
                     description: |-

@@ -197,8 +197,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   networkId:
                     description: |-
@@ -503,8 +503,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   networkId:
                     description: |-
@@ -908,8 +908,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   networkId:
                     description: |-
@@ -943,6 +943,11 @@ spec:
                     description: (Attributes) Status of the subnet. (see below for
                       nested schema)
                     properties:
+                      default:
+                        description: |-
+                          (Boolean) Indicates whether this is the network's default subnet.
+                          Indicates whether this is the network's default subnet.
+                        type: boolean
                       ipv4PrivateCidrs:
                         description: |-
                           (List of String, Deprecated) :
@@ -1004,7 +1009,7 @@ spec:
                         properties:
                           default:
                             description: |-
-                              (Boolean) :
+                              (Boolean) Indicates whether this is the network's default subnet.
                               :
 
                               Indicates whether this is the network's default route table.

@@ -42,7 +42,7 @@ type SymmetricKeyInitParameters struct {
 
 	Metadata *SymmetricKeyMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -107,7 +107,7 @@ type SymmetricKeyObservation struct {
 
 	Metadata *SymmetricKeyMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Identifier of the parent resource to which the resource belongs.
@@ -171,7 +171,7 @@ type SymmetricKeyParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *SymmetricKeyMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Human readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -219,6 +219,7 @@ type SymmetricKeyStatusObservation struct {
 	// - `KEY_STATE_UNSPECIFIED`
 	// - `ACTIVE` - Key is active, ready for use
 	// - `SCHEDULED_FOR_DELETION` - Key is scheduled for deletion.
+	// - `PENDING_IMPORT`
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 }
 

@@ -23,8 +23,8 @@ type SecurityGroupInitParameters struct {
 	// (Attributes) :
 	Metadata *SecurityGroupMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) ID of the VPC network this security group belongs to.
@@ -81,8 +81,8 @@ type SecurityGroupObservation struct {
 	// (Attributes) :
 	Metadata *SecurityGroupMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) ID of the VPC network this security group belongs to.
@@ -126,8 +126,8 @@ type SecurityGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *SecurityGroupMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 

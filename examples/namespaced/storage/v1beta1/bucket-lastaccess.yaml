@@ -1,0 +1,23 @@
+apiVersion: storage.nebius.m.upbound.io/v1beta1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storage/v1beta1/bucket-lastaccess
+  labels:
+    testing.upbound.io/example-name: storage-v1beta1-bucket-lastaccess
+  name: storagev1lastaccess
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: storagev1lastaccess
+    parentId: ${data.nebius_project_id}
+    defaultStorageClass: STANDARD
+    lastAccess:
+      conditions:
+        - type: EXCLUDE
+          userAgents:
+            - backup-agent
+        - type: INCLUDE
+          methods:
+            - GET_OBJECT
+            - HEAD_OBJECT

@@ -134,8 +134,8 @@ type PoolInitParameters struct {
 	// (Attributes) :
 	Metadata *PoolMetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -227,8 +227,8 @@ type PoolObservation struct {
 	// (Attributes) :
 	Metadata *PoolMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Identifier of the parent resource to which the resource belongs.
@@ -308,8 +308,8 @@ type PoolParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *PoolMetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Human readable name for the resource.
-	// Human readable name for the resource.
+	// readable name for the resource.
+	// Human-readable name for the resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 

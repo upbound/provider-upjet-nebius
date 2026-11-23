@@ -186,7 +186,7 @@ spec:
                             x-kubernetes-map-type: granular
                           name:
                             description: |-
-                              (String) Human readable name for the resource.
+                              readable name for the resource.
                               :
 
                               Name of a dependent disk.
@@ -649,8 +649,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   networkInterfaces:
                     description: '(Attributes List) :'
@@ -679,7 +679,7 @@ spec:
                           type: object
                         name:
                           description: |-
-                            (String) Human readable name for the resource.
+                            readable name for the resource.
                             :
 
                             Interface name
@@ -1116,7 +1116,7 @@ spec:
                               x-kubernetes-map-type: granular
                             name:
                               description: |-
-                                (String) Human readable name for the resource.
+                                readable name for the resource.
                                 :
 
                                 Name of a dependent disk.
@@ -1637,7 +1637,7 @@ spec:
                             x-kubernetes-map-type: granular
                           name:
                             description: |-
-                              (String) Human readable name for the resource.
+                              readable name for the resource.
                               :
 
                               Name of a dependent disk.
@@ -2100,8 +2100,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   networkInterfaces:
                     description: '(Attributes List) :'
@@ -2130,7 +2130,7 @@ spec:
                           type: object
                         name:
                           description: |-
-                            (String) Human readable name for the resource.
+                            readable name for the resource.
                             :
 
                             Interface name
@@ -2567,7 +2567,7 @@ spec:
                               x-kubernetes-map-type: granular
                             name:
                               description: |-
-                                (String) Human readable name for the resource.
+                                readable name for the resource.
                                 :
 
                                 Name of a dependent disk.
@@ -3069,7 +3069,7 @@ spec:
                             x-kubernetes-map-type: granular
                           name:
                             description: |-
-                              (String) Human readable name for the resource.
+                              readable name for the resource.
                               :
 
                               Name of a dependent disk.
@@ -3290,8 +3290,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Human readable name for the resource.
-                      Human readable name for the resource.
+                      readable name for the resource.
+                      Human-readable name for the resource.
                     type: string
                   networkInterfaces:
                     description: '(Attributes List) :'
@@ -3320,7 +3320,7 @@ spec:
                           type: object
                         name:
                           description: |-
-                            (String) Human readable name for the resource.
+                            readable name for the resource.
                             :
 
                             Interface name
@@ -3523,7 +3523,7 @@ spec:
                               x-kubernetes-map-type: granular
                             name:
                               description: |-
-                                (String) Human readable name for the resource.
+                                readable name for the resource.
                                 :
 
                                 Name of a dependent disk.
@@ -3678,7 +3678,7 @@ spec:
                               type: boolean
                             name:
                               description: |-
-                                (String) Human readable name for the resource.
+                                readable name for the resource.
                                 :
 
                                 Disk name used to match this status entry with the desired attachment
@@ -3750,7 +3750,7 @@ spec:
                               type: string
                             name:
                               description: |-
-                                (String) Human readable name for the resource.
+                                readable name for the resource.
                                 :
 
                                 Name for interface.
