@@ -265,7 +265,7 @@ func TestBuildConfiguration(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			cfg, err := buildConfiguration(tt.creds, tt.identityType, tt.parentID)
+			cfg, err := buildConfiguration(tt.creds, internalconfig.Identity{Type: tt.identityType}, tt.parentID)
 			if (err != nil) != tt.wantErr {
 				t.Fatalf("wantErr=%v got err=%v", tt.wantErr, err)
 			}
@@ -274,6 +274,68 @@ func TestBuildConfiguration(t *testing.T) {
 			}
 			if err == nil && tt.checkCfg != nil {
 				tt.checkCfg(t, cfg)
+			}
+		})
+	}
+}
+
+func TestBuildConfigurationImpersonation(t *testing.T) {
+	type args struct {
+		creds    map[string]string
+		identity internalconfig.Identity
+	}
+
+	cases := map[string]struct {
+		args args
+		want map[string]any
+	}{
+		"TokenImpersonatesServiceAccount": {
+			args: args{
+				creds: map[string]string{"token": "t1.abc"},
+				identity: internalconfig.Identity{
+					Type:                        internalconfig.IdentityTypeToken,
+					ImpersonateServiceAccountID: "serviceaccount-e00example",
+				},
+			},
+			want: map[string]any{
+				"token":                          "t1.abc",
+				"impersonate_service_account_id": "serviceaccount-e00example",
+			},
+		},
+		"ServiceAccountImpersonatesServiceAccount": {
+			args: args{
+				creds: map[string]string{"account_id": "serviceaccount-e00actor", "public_key_id": "publickey-e00actor", "private_key": "key"},
+				identity: internalconfig.Identity{
+					Type:                        internalconfig.IdentityTypeServiceAccount,
+					ImpersonateServiceAccountID: "serviceaccount-e00example",
+				},
+			},
+			want: map[string]any{
+				"service_account": map[string]any{
+					"account_id":    "serviceaccount-e00actor",
+					"public_key_id": "publickey-e00actor",
+					"private_key":   "key",
+				},
+				"impersonate_service_account_id": "serviceaccount-e00example",
+			},
+		},
+		"NoImpersonationOmitsKey": {
+			args: args{
+				creds:    map[string]string{"token": "t1.abc"},
+				identity: internalconfig.Identity{Type: internalconfig.IdentityTypeToken},
+			},
+			want: map[string]any{"token": "t1.abc"},
+		},
+	}
+
+	for name, tc := range cases {
+		t.Run(name, func(t *testing.T) {
+			got, err := buildConfiguration(tc.args.creds, tc.args.identity, nil)
+			if err != nil {
+				t.Fatalf("buildConfiguration(...): unexpected error: %v", err)
+			}
+			if diff := cmp.Diff(tc.want, got); diff != "" {
+				t.Errorf("buildConfiguration(...): -want, +got:\n%s", diff)
 			}
 		})
 	}

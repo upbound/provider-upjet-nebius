@@ -115,6 +115,14 @@ spec:
               identity:
                 description: Identity specifies the authentication identity configuration.
                 properties:
+                  impersonateServiceAccountID:
+                    description: |-
+                      ImpersonateServiceAccountID is the ID of a service account to
+                      impersonate. The provider authenticates with the identity selected by
+                      Type, then exchanges its token for a token of this service account and
+                      manages resources as it. The authenticating identity must be allowed to
+                      impersonate the service account.
+                    type: string
                   type:
                     description: |-
                       Type specifies the authentication method.
