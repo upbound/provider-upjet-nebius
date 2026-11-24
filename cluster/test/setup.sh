@@ -43,9 +43,27 @@ spec:
     source: Secret
     secretRef:
       name: provider-secret
-      namespace: upbound-system 
+      namespace: upbound-system
       key: credentials
 EOF
+
+echo "Creating the impersonation provider configs..."
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+datasource="${UPTEST_DATASOURCE_PATH:-}"
+if [[ -n "${datasource}" && "${datasource}" != /* ]]; then
+  datasource="${repo_root}/${datasource}"
+fi
+delegated_service_account_id=""
+if [[ -f "${datasource}" ]]; then
+  delegated_service_account_id="$(sed -n 's/^nebius_delegated_service_account_id:[[:space:]]*//p' "${datasource}" | tr -d "\"'\r")"
+fi
+if [[ -z "${delegated_service_account_id}" ]]; then
+  echo "WARNING: no nebius_delegated_service_account_id in the uptest datasource, skipping the impersonation provider configs"
+else
+  for scope in cluster namespaced; do
+    sed "s|\${data.nebius_delegated_service_account_id}|${delegated_service_account_id}|g" "${repo_root}/examples/${scope}/providerconfig/impersonation.yaml" | ${KUBECTL} apply -f -
+  done
+fi
 
 ${KUBECTL} wait provider.pkg --all --for condition=Healthy --timeout 5m
 ${KUBECTL} -n upbound-system  wait --for=condition=Available deployment --all --timeout=5m

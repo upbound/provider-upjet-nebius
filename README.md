@@ -40,6 +40,24 @@ Authenticate using a service-account key.
 }
 ```
 
+### Impersonating a service account
+
+With either mode, `identity.impersonateServiceAccountID` makes the provider
+exchange the token of the identity in the credentials Secret for a token of
+another service account, and manage resources as that service account. The
+identity in the Secret must be allowed to impersonate it in Nebius IAM.
+
+```yaml
+spec:
+  identity:
+    type: ServiceAccount
+    impersonateServiceAccountID: serviceaccount-e00example
+```
+
+The end-to-end tests set it up in
+[`examples/cluster/providerconfig/impersonation.yaml`](examples/cluster/providerconfig/impersonation.yaml)
+and [`examples/namespaced/providerconfig/impersonation.yaml`](examples/namespaced/providerconfig/impersonation.yaml).
+
 ## Getting Started
 
 ### 1. Install the provider
@@ -114,6 +132,7 @@ and [`examples/namespaced/`](examples/namespaced/).
 | Field | Required | Description |
 |---|---|---|
 | `spec.identity.type` | Yes | Authentication mode: `Token` or `ServiceAccount` |
+| `spec.identity.impersonateServiceAccountID` | No | ID of a service account to impersonate after authenticating with `spec.identity.type` |
 | `spec.projectID` | No | Default Nebius project ID for project-parented resources; can be overridden per-resource via `spec.forProvider.parentId` |
 | `spec.credentials.source` | Yes | One of `Secret`, `InjectedIdentity`, `Environment`, `Filesystem` |
 | `spec.credentials.secretRef` | When source=Secret | Reference to the credentials Secret |

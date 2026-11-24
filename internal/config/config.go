@@ -20,4 +20,12 @@ type Identity struct {
 	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:Enum=Token;ServiceAccount
 	Type IdentityType `json:"type"`
+
+	// ImpersonateServiceAccountID is the ID of a service account to
+	// impersonate. The provider authenticates with the identity selected by
+	// Type, then exchanges its token for a token of this service account and
+	// manages resources as it. The authenticating identity must be allowed to
+	// impersonate the service account.
+	// +optional
+	ImpersonateServiceAccountID string `json:"impersonateServiceAccountID,omitempty"`
 }

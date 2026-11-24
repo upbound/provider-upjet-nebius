@@ -52,7 +52,7 @@ func TerraformSetupBuilder(fwProvider fwprovider.Provider) terraform.SetupFn {
 			return terraform.Setup{}, errors.New("spec.identity is required but not set")
 		}
 
-		cfg, err := buildConfiguration(creds, pcSpec.Identity.Type, pcSpec.ProjectID)
+		cfg, err := buildConfiguration(creds, *pcSpec.Identity, pcSpec.ProjectID)
 		if err != nil {
 			return terraform.Setup{}, errors.Wrap(err, "cannot build provider configuration")
 		}
@@ -107,10 +107,10 @@ func resolveLegacy(ctx context.Context, client client.Client, mg resource.Legacy
 	return toSharedPCSpec(pc)
 }
 
-func buildConfiguration(creds map[string]string, identityType internalconfig.IdentityType, parentID *string) (map[string]any, error) {
+func buildConfiguration(creds map[string]string, identity internalconfig.Identity, parentID *string) (map[string]any, error) {
 	cfg := map[string]any{}
 
-	switch identityType {
+	switch identity.Type {
 	case internalconfig.IdentityTypeToken:
 		token := creds["token"]
 		if token == "" {
@@ -129,7 +129,11 @@ func buildConfiguration(creds map[string]string, identityType internalconfig.Ide
 		}
 
 	default:
-		return nil, errors.Errorf("unknown identityType %q", identityType)
+		return nil, errors.Errorf("unknown identityType %q", identity.Type)
+	}
+
+	if identity.ImpersonateServiceAccountID != "" {
+		cfg["impersonate_service_account_id"] = identity.ImpersonateServiceAccountID
 	}
 
 	if parentID != nil {
