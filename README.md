@@ -54,6 +54,10 @@ spec:
     impersonateServiceAccountID: serviceaccount-e00example
 ```
 
+The end-to-end tests set it up in
+[`examples/cluster/providerconfig/impersonation.yaml`](examples/cluster/providerconfig/impersonation.yaml)
+and [`examples/namespaced/providerconfig/impersonation.yaml`](examples/namespaced/providerconfig/impersonation.yaml).
+
 ## Getting Started
 
 ### 1. Install the provider

@@ -1,0 +1,17 @@
+# Authenticates with the uptest credentials, then impersonates the service
+# account in impersonateServiceAccountID. cluster/test/setup.sh applies this
+# file with the placeholder filled in from the uptest datasource.
+apiVersion: nebius.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: impersonation
+spec:
+  identity:
+    type: ServiceAccount
+    impersonateServiceAccountID: ${data.nebius_delegated_service_account_id}
+  credentials:
+    source: Secret
+    secretRef:
+      name: provider-secret
+      namespace: upbound-system
+      key: credentials
